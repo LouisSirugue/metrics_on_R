@@ -1,0 +1,50 @@
+---
+title: "Merge / append data illustration"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style/style.css
+    includes:
+      in_header: ../source/style/header.html
+
+---
+
+```{r setup, include=FALSE}
+lapply(c("tidyverse", "kableExtra"), library, character.only = T)
+```
+
+## Prepare data
+
+```{r}
+attainment <- read.csv("DP_LIVE_05082021113440482.csv") %>%
+  filter(ï..LOCATION %in% c("FRA", "GBR", "USA", "ITA", "ESP")) %>%
+  select(ï..LOCATION, TIME, Value) %>%
+  rename(country = ï..LOCATION,
+         year = TIME,
+         share_tertiary = Value)
+
+spending <- read.csv("DP_LIVE_05082021113332779.csv") %>%
+  filter(ï..LOCATION %in% c("FRA", "USA", "RUS")) %>%
+  select(ï..LOCATION, TIME, Value) %>%
+  rename(country = ï..LOCATION,
+         year = TIME,
+         share_gdp = Value)
+ 
+write.csv(attainment %>% filter(country %in% c("FRA", "GBR", "USA")), "attainment_FR_UK_US.csv", row.names = F)
+write.csv(attainment %>% filter(country %in% c("ITA", "ESP")), "attainment_IT_SP.csv", row.names = F)
+write.csv(spending, "spending.csv", row.names = F)
+```
+
+## Tables
+
+```{r}
+kable(attainment %>% filter(country %in% c("FRA", "GBR", "USA")), caption = "Dataset 1 on attainment")
+kable(attainment %>% filter(country %in% c("ITA", "ESP")), caption = "Dataset 2 on attainment")
+kable(spending, caption = "Dataset on spending")
+```
+
+#### Merge
+
+#### Append
+
+<br>
