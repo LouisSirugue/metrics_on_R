@@ -1,0 +1,164 @@
+---
+title: "shiny"
+output: html_document
+---
+
+# Présentation de shiny,
+
+deux parties ui + server. fichier app.R -> Run app (rien pour l'instant)
+
+```{r, eval = F}
+library(shiny)
+
+ui <- fluidPage(
+  
+)
+
+server <- function(input, output) {
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+
+# Input:
+
+We can add different types of inputs:
+
+```{r, eval = F}
+library(shiny)
+
+ui <- fluidPage(
+  
+  numericInput(inputId = "number", label = "Write a number", value = NA),
+  
+  textInput(inputId = "text", label = "Write text", value = NA),
+
+  checkboxGroupInput(inputId = "boxes", label = "Boxes to check", 
+                     choices = list("A" = 1, "B" = 2, "C" = 3), selected = 1),
+  
+  radioButtons(inputId = "radio", label = "Radio buttons",
+               choices = list("D" = 1, "E" = 2, "F" = 3), selected = 1),
+  
+  selectInput(inputId = "select", label = "Select box", 
+              choices = list("G" = 1, "H" = 2, "I" = 3), selected = 1),
+  
+  sliderInput(inputId = "slider", label = "Slide", 
+              min = 0, max = 10, step = 1, value = 5)
+  
+)
+
+server <- function(input, output) {
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+
+# Output
+
+Add a reactive table in the server function
+
+```{r, eval = F}
+server <- function(input, output) {
+  
+  output$control_table <- renderTable({reactive({
+    tibble(number = input$number,
+           text = input$text,
+           boxes = input$boxes,
+           radio = input$radio,
+           select = input$select,
+           slider = input$slider)})()})
+  
+}
+```
+
+And add `tableOutput("control_table")` in the fluidPage()
+
+```{r, eval = F}
+library(shiny)
+library(tidyverse)
+
+ui <- fluidPage(
+  
+  numericInput(inputId = "number", label = "Write a number", value = NA),
+  
+  textInput(inputId = "text", label = "Write text", value = NA),
+
+  checkboxGroupInput(inputId = "boxes", label = "Boxes to check", 
+                     choices = list("A" = 1, "B" = 2, "C" = 3), selected = 1),
+  
+  radioButtons(inputId = "radio", label = "Radio buttons",
+               choices = list("D" = 1, "E" = 2, "F" = 3), selected = 1),
+  
+  selectInput(inputId = "select", label = "Select box", 
+              choices = list("G" = 1, "H" = 2, "I" = 3), selected = 1),
+  
+  sliderInput(inputId = "slider", label = "Slide", 
+              min = 0, max = 10, step = 1, value = 5),
+  
+  tableOutput("control_table")
+  
+)
+
+server <- function(input, output) {
+  
+  output$control_table <- renderTable({reactive({
+    tibble(number = input$number,
+           text = input$text,
+           boxes = input$boxes,
+           radio = input$radio,
+           select = input$select,
+           slider = input$slider)})()})
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+# Layout 
+
+Usual format:
+
+```{r, eval = F}
+library(shiny)
+library(tidyverse)
+
+ui <- fluidPage(
+  
+  titlePanel("My shiny app"),
+  
+  sidebarLayout(
+    
+    sidebarPanel(
+      radioButtons(inputId = "radio", label = "Radio buttons",
+               choices =  c("D", "E", "F"), selected = "D"),
+      
+      selectInput(inputId = "select", label = "Select box", 
+              choices = l c("G", "H", "I"), selected = "G"))
+      ),
+    
+    mainPanel(
+      tableOutput("control_table")
+      ) 
+    
+    )
+  )
+
+server <- function(input, output) {
+  
+  output$control_table <- renderTable({reactive({
+    tibble(radio = input$radio, 
+           select = input$select)})()})
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+# With our data
+
+plotOutput, renderPlot, get, 
+

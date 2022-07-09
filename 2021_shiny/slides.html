@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Interactive data visualization</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+    <script src="shared/selectize/js/selectize.min.js"></script>
+    <script src="shared/selectize/accessibility/js/selectize-plugin-a11y.min.js"></script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Interactive data visualization
+## Lecture 15
+### <br>Louis SIRUGUE
+### 01/2022
+
+---
+
+
+
+
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 35%;} &lt;/style&gt;
+
+### Last time we saw
+
+--
+
+#### Shapefiles and rasters
+
+&lt;center&gt;&lt;b&gt;Two main types of geolocalized datasets:&lt;/b&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;Shapefiles&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One row per entity/one column per variable&lt;/li&gt;
+  &lt;li&gt;A geometry variable with the coordinates of the points/polylines/polygons&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+  
+]
+
+--
+
+.pull-right[
+
+&lt;center&gt;&lt;b&gt;Rasters&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Works like a picture, with cells like pixels&lt;/li&gt;
+  &lt;li&gt;And each cell can take a given value, e.g. pollution observed from satellites&lt;/li&gt;
+&lt;/ul&gt;
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### Last time we saw
+
+#### Coordinates Reference Systems
+
+&lt;ul&gt;
+  &lt;li&gt;A Coordinate Reference System (CRS) is a model of the Earth in which each location is coded using degrees&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It allows to &lt;b&gt;project the surface of the globe on a plane&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But there is a &lt;b&gt;tradeoff&lt;/b&gt; between preserving:&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+ 
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;Shape&lt;/b&gt; (like the Mercator projection)&lt;/center&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;center&gt;&lt;b&gt;Scale&lt;/b&gt; (like the Equal-Area Cylindrical projection)&lt;/center&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Most projections are somewhere in between&lt;/li&gt;
+  &lt;li&gt;For France: Lambert 93 projection (EPSG:2154)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; First thing to do: &lt;b&gt;reprojection&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+]
+
+---
+
+### Last time we saw
+
+#### Operations on geolocalized data
+
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;Zonal statistics&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Computing statistics on areas delimited by a shapefile from values of a raster&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Project shapefile and raster the same way&lt;/li&gt;
+    &lt;li&gt;Compute the mean/max/... of cell values&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+ 
+&lt;center&gt;&lt;b&gt;Centroids&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The centroid is the arithmetic mean position of all the points in the polygon&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To compute distances between polygons&lt;/li&gt;
+    &lt;li&gt;A centroid is not always within its polygon&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-6-1.png" width="82%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### Before we start: More on controls and interactions
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;We've seen in previous lectures that when regressing y on x:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Controlling for z&lt;/b&gt; allows to &lt;b&gt;net out&lt;/b&gt; the relationship between x and y from how they both relate to &lt;b&gt;z&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Interacting x with z&lt;/b&gt; allows to &lt;b&gt;estimate how the relationship&lt;/b&gt; between x and y &lt;b&gt;varies with z&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Given what I've seen in the homeworks it seems unclear for many of you&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; So let's get back to it with some visualization&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+--
+
+.pull-left[
+
+```r
+library(tidyverse)
+data &lt;- read.csv("household_data.csv")
+head(data, 7) # fake data
+```
+
+```
+##   Income Children    Education
+## 1     20        1 &lt; Highschool
+## 2     10        1 &lt; Highschool
+## 3     10        2 &lt; Highschool
+## 4     15        0 &lt; Highschool
+## 5     15        1 &lt; Highschool
+## 6     20        0 &lt; Highschool
+## 7     15        2   Highschool
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-8-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### Before we start: More on controls and interactions
+
+&lt;ul&gt;
+  &lt;li&gt;There's a clear positive relationship&lt;/li&gt;
+&lt;/ul&gt;
+  
+
+```
+##             Estimate Pr(&gt;|t|)
+## (Intercept)   -0.885    0.319
+## Income         0.166    0.000
+```
+
+--
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But what if this relationship was driven by a third variable?&lt;/li&gt;
+    &lt;li&gt;Maybe it's just that more educated parents tend to earn more and to have more children&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+--
+
+.pull-right[
+&lt;ul&gt;
+  &lt;li&gt;In this example, &lt;b&gt;education&lt;/b&gt; is indeed &lt;b&gt;positively correlated with both variables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So at least part of the positive relationship we observe is actually due to education&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Controlling&lt;/b&gt; for education estimates the relationship by &lt;b&gt;netting our the contribution of education&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### Before we start: More on controls and interactions
+
+ * &lt;b&gt;Controlling&lt;/b&gt; for education does the same to the slope &lt;b&gt;as recentering&lt;/b&gt; the graph with respect to education :
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The crosses are located at the average x and y values for each education group&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Controlling for education shifts x and y by group such that crosses superimpose&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+--
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+```
+##                     Estimate Pr(&gt;|t|)
+## (Intercept)           -0.120    0.892
+## Income                 0.064    0.196
+## EducationCollege       3.456    0.015
+## EducationHighschool    1.856    0.037
+```
+]
+
+---
+
+### Before we start: More on controls and interactions
+
+&lt;ul&gt;
+  &lt;li&gt;Here when we &lt;b&gt;do not control&lt;/b&gt; for education:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$Children_i = \alpha + \beta Income_i + \varepsilon_i$$`
+
+&lt;ul&gt;&lt;ul&gt;
+  &lt;li&gt;We estimate the overall relationship (here, significantly positive)&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But when we &lt;b&gt;control&lt;/b&gt; for education:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$Children_i = \alpha + \beta Income_i + \gamma_1 1\{Education_i=\text{Highschool}\} + \gamma_2 1\{Education_i=\text{College}\} +\varepsilon_i$$`
+
+&lt;ul&gt;&lt;ul&gt;
+  &lt;li&gt;We estimate the relationship net of the effect of education (here, not significant)&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Interacting&lt;/b&gt; the two variables is going one step further:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\begin{align}Children_i &amp; = \alpha + \beta Income_i + \gamma_1 1\{Education_i=\text{Highschool}\} + \gamma_2 1\{Education_i=\text{College}\} + \\ 
+&amp; \delta_1 Income_i\times1\{Education_i=\text{Highschool}\} + \delta_2 Income_i \times 1\{Education_i=\text{College}\} + \varepsilon_i\end{align}$$`
+
+&lt;ul&gt;&lt;ul&gt;
+  &lt;li&gt;It is not simply taking into account the fact that education may plays a role&lt;/li&gt;
+  &lt;li&gt;It estimates by how much the relationship between x and y varies according to z&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+---
+
+### Before we start: More on controls and interactions
+
+ * &lt;b&gt;Interacting&lt;/b&gt; income with education provides &lt;b&gt;one slope per education group&lt;/b&gt;:
+
+--
+
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+```
+##                            Estimate Pr(&gt;|t|)
+## (Intercept)                   2.333    0.225
+## Income                       -0.100    0.411
+## EducationCollege             -1.768    0.553
+## EducationHighschool           0.596    0.819
+## Income:EducationCollege       0.239    0.095
+## Income:EducationHighschool    0.111    0.445
+```
+]
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The principle is the same when the third variable is continuous:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Controlling nets out the slope from how the third variable enters the relationship&lt;/li&gt;
+    &lt;li&gt;Interacting gives by how much the slope changes on expectation when the third variable increases by 1&lt;/li&gt;
+    &lt;li&gt;And we can control for/interact with multiple third variables&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### Today: Interactive data visualization
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+#### 1. Introduction to shiny apps
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. General structure
+ * 1.2. User interface
+ * 1.3. Server
+ * 1.4. Layout
+
+#### 2. Our first shiny app
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import data in Shiny
+ * 2.2. Interactive plot
+ * 2.3. Interactive regression results
+
+#### 3. More advanced tools
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Input randomization
+ * 3.2. HTML formatting
+ 
+#### 4. Wrap up!
+
+---
+
+### Today: Interactive data visualization
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+#### 1. Introduction to shiny apps
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. General structure
+ * 1.2. User interface
+ * 1.3. Server
+ * 1.4. Layout
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.1. General structure
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Shiny&lt;/b&gt; is an R package that makes it easy to build &lt;b&gt;interactive web apps&lt;/b&gt; straight from R:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="https://gpilgrim.shinyapps.io/SwimmingProject-Click/"&gt;Shiny app to find the colleges that fit your criteria&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="https://shiny.rstudio.com/gallery/movie-explorer.html"&gt;Shiny app to visualize data on movies&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;The online quizzes of this course&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;To make a Shiny app you should create an R script and name it &lt;b&gt;app.R&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;You shiny app should contain two components&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;The &lt;b&gt;user interface:&lt;/b&gt; What is displayed on the screen, what the user can interact with&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;server:&lt;/b&gt; Where the calculations are made to display the interactive components accordingly&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+library(shiny)
+
+ui &lt;- fluidPage()
+server &lt;- function(input, output) {}
+
+shinyApp(ui = ui, server = server)
+```
+
+--
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; R will detect that you are creating a shiny app and you will have access to the &lt;img src = "runapp.png" width = "60"/&gt; button&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.1. General structure 
+
+ * You can already click on it to view you blank app:
+
+--
+
+&lt;center&gt;&lt;img src = "blankapp.png" width = "625"/&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; We have to program what we want to appear in the user interface&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### Introduction to shiny apps
+
+#### 1.2. User interface
+
+&lt;ul&gt;
+  &lt;li&gt;There are many different types of &lt;b&gt;input widgets&lt;/b&gt; to place in the UI:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;numericInput():&lt;/b&gt; Write a numeric input&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;textInput():&lt;/b&gt; Write a character input&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;checkbox[Group]Input():&lt;/b&gt; Box[es] to tick&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;radioButtons():&lt;/b&gt; One item to tick&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;selectInput():&lt;/b&gt; Select an item from a dropdown list&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+    
+--
+
+&lt;ul&gt;
+  &lt;li&gt;These functions take the following &lt;b&gt;arguments&lt;/b&gt;:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;inputId:&lt;/b&gt; The identifier of the input for use in the server function &lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;label:&lt;/b&gt; The title of the input widget that will appear in the UI&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;choices:&lt;/b&gt; The list of input options for multiple choices inputs&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;selected:&lt;/b&gt; Which option is selected by default when multiple choices&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;value:&lt;/b&gt; What is filled by default in the text/numeric input boxes&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; Let's try out a few of them&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.2. User interface
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+```r
+numericInput(inputId = "number", 
+             label = "Write a number", 
+             value = 0)
+```
+
+<div class="form-group shiny-input-container">
+<label class="control-label" id="number-label" for="number">Write a number</label>
+<input id="number" type="number" class="form-control" value="0"/>
+</div>
+
+```r
+textInput(inputId = "text", 
+          label = "Write text", 
+          value = "...")
+```
+
+<div class="form-group shiny-input-container">
+<label class="control-label" id="text-label" for="text">Write text</label>
+<input id="text" type="text" class="form-control" value="..."/>
+</div>
+
+```r
+checkboxInput(inputId = "box",
+              label = "Tick the box",
+              value = F)
+```
+
+<div class="form-group shiny-input-container">
+<div class="checkbox">
+<label>
+<input id="box" type="checkbox"/>
+<span>Tick the box</span>
+</label>
+</div>
+</div>
+]
+
+--
+
+.pull-right[
+
+```r
+checkboxGroupInput(inputId = "boxes", 
+                   label = "Boxes to check",  
+                   choices = c("A", "B", "C"),
+                   selected = "B")
+```
+
+<div id="boxes" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="boxes-label">
+<label class="control-label" id="boxes-label" for="boxes">Boxes to check</label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="boxes" value="A"/>
+<span>A</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="boxes" value="B" checked="checked"/>
+<span>B</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="boxes" value="C"/>
+<span>C</span>
+</label>
+</div>
+</div>
+</div>
+
+```r
+selectInput(inputId = "select", 
+            label = "Select option", 
+            choices = c("A", "B", "C"), 
+            selected = "A")
+```
+
+<div class="form-group shiny-input-container">
+<label class="control-label" id="select-label" for="select">Select option</label>
+<div>
+<select id="select"><option value="A" selected>A</option>
+<option value="B">B</option>
+<option value="C">C</option></select>
+<script type="application/json" data-for="select" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
+</div>
+</div>
+]
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.2. User interface
+
+&lt;ul&gt;
+  &lt;li&gt;In the UI these elements should be separated with a commas&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Let's do a user interface with radio buttons and a slider:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+library(shiny)
+
+ui &lt;- fluidPage(
+  radioButtons(inputId = "radio", label = "Radio buttons:",
+               choices = c("A", "B", "C"), selected = "A"),
+  
+  sliderInput(inputId = "slider", label = "Slide:", 
+              min = 1, max = 10, step = 1, value = 5)
+)
+
+server &lt;- function(input, output) {
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.2. User interface
+
+ * Now we have some inputs but nothing happens when we use them
+
+&lt;center&gt;&lt;img src = "ui.png" width = "625"/&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; We should make an output that will react to these inputs&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.3. Server
+ 
+&lt;ul&gt;
+  &lt;li&gt;We can add a reactive table in the server function:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Put a standard tibble() in a &lt;b&gt;reactive({})&lt;/b&gt; environment&lt;/li&gt;
+    &lt;li&gt;Fill this table with the inputs that should be called by their id as &lt;b&gt;input$inputId&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Assign it to an output through &lt;b&gt;renderTable({})&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+
+```r
+server &lt;- function(input, output) {
+  
+  reactive_tibble &lt;- reactive({
+    tibble(letter = input$radio,
+           number = input$slider)
+  })
+  
+  output$table &lt;- renderTable({reactive_tibble()})
+  
+}
+```
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Every time an input will change, &lt;b&gt;reactive({})&lt;/b&gt; function will notice it&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;And the updated table will be stored into the output named "table" through &lt;b&gt;renderTable({})&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.3. Server
+
+&lt;ul&gt;
+  &lt;li&gt;But for this reactive table to appear on the app, we should put it in the UI&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Use &lt;b&gt;tableOutput("output_label")&lt;/b&gt; to render a reactive table&lt;/li&gt;
+    &lt;li&gt;Don't forget the comma!&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+
+```r
+ui &lt;- fluidPage(
+  radioButtons(inputId = "radio", label = "Radio buttons:",
+               choices = c("A", "B", "C"), selected = "A"),
+  
+  sliderInput(inputId = "slider", label = "Slide:", 
+              min = 1, max = 10, step = 1, value = 5),
+  
+* tableOutput("table")
+)
+```
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We now have all the components of a shiny app:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some input widgets in the UI&lt;/li&gt;
+    &lt;li&gt;Reactive functions in the server&lt;/li&gt;
+    &lt;li&gt;The processed output in the UI&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.3. Server
+
+
+```r
+library(shiny)
+library(tidyverse)
+
+ui &lt;- fluidPage(
+  radioButtons(inputId = "radio", label = "Radio buttons:",
+               choices = c("A", "B", "C"), selected = "A"),
+  sliderInput(inputId = "slider", label = "Slide:", 
+              min = 1, max = 10, step = 1, value = 5),
+* tableOutput("table")
+)
+
+server &lt;- function(input, output) {
+* reactive_tibble &lt;- reactive({tibble(letter = input$radio,
+*                                     number = input$slider)})
+* 
+* output$table &lt;- renderTable({reactive_tibble()})
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.3. Server
+
+ * We created an interactive table:
+
+&lt;center&gt;&lt;img src = "reactiveapp.png" width = "725"/&gt;&lt;/center&gt;
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.3. Server
+
+&lt;ul&gt;
+  &lt;li&gt;As you might have guessed, tableOutput() and renderTable() only work for tables&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;There are specific UI and server function for each type of interactive element&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h4&gt;Main interactive elements in Shiny:&lt;/h4&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Interactive element &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Server render function &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; UI output function &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;"&gt; Table &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; renderTable() &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; tableOutput() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;"&gt; Plot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; renderPlot() &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; plotOutput() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;"&gt; Console output &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; renderPrint() &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; verbatimTextOutput() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;"&gt; Text &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; renderText() &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; textOutput() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;"&gt; UI element &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; renderUI() &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; uiOutput() &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.4. Layout
+
+&lt;ul&gt;
+  &lt;li&gt;Right now the presentation is not very convenient&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Everything is stacked at the left of the page&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The sidebarLayout() allows to display:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A control panel on the left with the inputs&lt;/li&gt;
+    &lt;li&gt;A main panel on the right with the reactive outputs&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+ 
+
+```r
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(width = 3,
+      #INPUTS_HERE
+    ),
+    mainPanel(width = 9,
+      #OUTPUTS_HERE
+    )
+  )
+)
+```
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.4. Layout
+
+ * We can also add a title to our app using the titlePanel() function:
+
+--
+
+
+```r
+ui &lt;- fluidPage(
+  
+  titlePanel("My shiny app"),
+  
+  sidebarLayout(
+    
+    sidebarPanel(width = 3,
+      radioButtons(inputId = "radio", label = "Radio buttons:",
+                   choices = c("A", "B", "C"), selected = "A"),
+      sliderInput(inputId = "slider", label = "Slide:", 
+                  min = 1, max = 10, step = 1, value = 5)
+    ),
+    
+    mainPanel(width = 9, tableOutput("table"))
+  )
+  
+)
+```
+
+---
+
+### 1. Introduction to shiny apps
+
+#### 1.4. Layout
+
+&lt;center&gt;&lt;img src = "sidebarlayout.png" width = "750"/&gt;&lt;/center&gt;
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+#### 1. Introduction to shiny apps &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. General structure
+ * 1.2. User interface
+ * 1.3. Server
+ * 1.4. Layout
+
+#### 2. Our first shiny app
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import data in Shiny
+ * 2.2. Interactive plot
+ * 2.3. Interactive regression results
+
+#### 3. More advanced tools 
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Input randomization
+ * 3.2. HTML formatting
+ 
+#### 4. Wrap up!
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+#### 1. Introduction to shiny apps &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. General structure
+ * 1.2. User interface
+ * 1.3. Server
+ * 1.4. Layout
+
+#### 2. Our first shiny app 
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import data in Shiny
+ * 2.2. Interactive plot
+ * 2.3. Interactive regression results
+
+---
+
+### 2. Our first shiny app
+
+#### 2.1. Import data on shiny
+
+&lt;ul&gt;
+  &lt;li&gt;We now know everything we need to build our first app&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Let's make an app that allows to visualize the relationship between department-level characteristics&lt;/li&gt;
+    &lt;li&gt;dep_data.csv contains department characteristics at the department-year level from 2012 to 2017&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+dep_data &lt;- as_tibble(read.csv("dep_data.csv"))
+head(dep_data)
+```
+
+```
+## # A tibble: 6 x 11
+##   Department  Year Metropole Main.river Unemployment.rate Median.income
+##   &lt;chr&gt;      &lt;int&gt;     &lt;int&gt;      &lt;int&gt;             &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Ain         2012         0          1              6.85        21122 
+## 2 Ain         2013         0          1              7.22        21490.
+## 3 Ain         2014         0          1              7.12        21700.
+## 4 Ain         2015         0          1              7.38        22020.
+## 5 Ain         2016         0          1              7.35        22272 
+## 6 Ain         2017         0          1              6.78        22640 
+## # ... with 5 more variables: Share.single.parents &lt;dbl&gt;,
+## #   PM2.5.concentration &lt;dbl&gt;, Population &lt;int&gt;, Log.population &lt;dbl&gt;,
+## #   Log.median.income &lt;dbl&gt;
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.1. Import data on shiny
+
+&lt;ul&gt;
+  &lt;li&gt;Importing data in a Shiny app is no different than usual&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can simply assign it to an object before specifying the UI and the server functions&lt;/li&gt;
+    &lt;li&gt;Every object stored at the beginning of the script is accessible by the app&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+library(shiny)
+library(tidyverse)
+
+*dep_data &lt;- as_tibble(read.csv("dep_data.csv"))
+
+ui &lt;- fluidPage(
+  selectInput(inputId = "variable", label = "Select variable:", 
+*             choices = names(dep_data), selected = names(dep_data)[1])
+)
+
+server &lt;- function(input, output) {
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.1. Import data on shiny
+
+ * We can now access the variable of the dataset from the dropdown list:
+
+&lt;center&gt;&lt;img src = "select_variables.png" width = "725"/&gt;&lt;/center&gt;
+
+---
+
+### 2. Our first shiny app
+
+#### 2.1. Import data on shiny
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Let's make a control panel containing:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Two dropdown lists for the x and y variables&lt;/li&gt;
+    &lt;li&gt;A slider for the year of observation&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But using sliderInput() would display years with a comma, e.g., 2,012&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To display years conveniently we should use sliderTextInput() from shinyWidgets&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+
+```r
+library(shiny)
+library(tidyverse)
+library(shinyWidgets)
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * And we do not want the `Department` and `Year` variables to appear in our lists
+
+--
+
+
+```r
+dep_data &lt;- as_tibble(read.csv("dep_data.csv"))
+depvars &lt;- names(dep_data)[!names(dep_data) %in% c("Department", "Year")]
+```
+
+
+---
+
+### 2. Our first shiny app
+
+#### 2.1. Import data on shiny
+
+ * The desired UI writes as follows
+
+
+```r
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(width = 3,
+      selectInput(inputId = "xvar", label = "X variable:", 
+                  choices = depvars, selected = "Log.population"),
+      
+      selectInput(inputId = "yvar", label = "Y variable:", 
+                  choices = depvars, selected = "PM2.5.concentration"),
+      
+      sliderTextInput(inputId = "year", label = "Select Year:",
+                      choices = 2012:2017, selected = 2015)
+    ), 
+    mainPanel(width = 9)
+  )
+)
+server &lt;- function(input, output) {}
+shinyApp(ui = ui, server = server)
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.1. Import data on shiny
+
+ * We now have a control panel that is linked to our data:
+ 
+&lt;center&gt;&lt;img src = "linked_panel.png" width = "825"/&gt;&lt;/center&gt;
+
+---
+
+### 2. Our first shiny app
+
+#### 2.2. Interactive plot
+
+&lt;ul&gt;
+  &lt;li&gt;To do an interactive plot that reacts to these inputs we should:&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Program the plot in a reactive({}) environment for the inputs to be updated&lt;/li&gt;
+    &lt;li&gt;Put the reactive plot in a render function to render the updated plot&lt;/li&gt;
+    &lt;li&gt;Include the resulting output in the user interface&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+--
+
+ * Because in aes() `input$xvar` and `input$yvar` should be treated as variable names instead of strings, they should be put in the `get()` function
+
+--
+
+
+```r
+server &lt;- function(input, output) {
+  
+  reactive_plot &lt;- reactive({
+    ggplot(dep_data %&gt;% filter(Year == input$year), 
+           aes(x = get(input$xvar), y = get(input$yvar))) +
+      geom_point(alpha = .6) + geom_smooth(method = "lm", se = F) + 
+      xlab(input$xvar) + ylab(input$yvar)
+  })
+   output$plot &lt;- renderPlot({reactive_plot()})
+}
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.2. Interactive plot
+
+ * Adding `plotOutput("plot")` in the `mainPanel()` ui function we get:
+ 
+&lt;center&gt;&lt;img src = "interactive_plot.png" width = "825"/&gt;&lt;/center&gt;
+
+---
+
+### 2. Our first shiny app
+
+#### 2.2. Interactive plot
+
+&lt;ul&gt;
+  &lt;li&gt;But we can make the graph even more interactive using the &lt;b&gt;plotly&lt;/b&gt; package&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It allows to have information on a data point in a tooltip on hover&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;In the reactive({}) environment we should:
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:2.67cm;"&gt;&lt;/p&gt;
+
+
+```r
+#
+   ggplot(dep_data %&gt;% filter(Year == input$year),
+          aes(x = get(input$xvar), y = get(input$yvar))) +
+     geom_point(alpha = .6) +
+#
+#
+#
+     geom_smooth(method = "lm", se = F) + xlab(input$xvar) + ylab(input$yvar)
+#
+#            
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.2. Interactive plot
+
+&lt;ul&gt;
+  &lt;li&gt;But we can make the graph even more interactive using the &lt;b&gt;plotly&lt;/b&gt; package&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It allows to have information on a data point in a tooltip on hover&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;ul&gt;
+  &lt;li&gt;In the reactive({}) environment we should:
+  &lt;ol&gt;
+    &lt;li&gt;Put the ggplot in the ggplotly() function&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.97cm;"&gt;&lt;/p&gt;
+
+
+```r
+*ggplotly(
+   ggplot(dep_data %&gt;% filter(Year == input$year),
+          aes(x = get(input$xvar), y = get(input$yvar))) +
+     geom_point(alpha = .6) +
+#
+#
+#
+     geom_smooth(method = "lm", se = F) + xlab(input$xvar) + ylab(input$yvar)
+#
+*)
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.2. Interactive plot
+
+&lt;ul&gt;
+  &lt;li&gt;But we can make the graph even more interactive using the &lt;b&gt;plotly&lt;/b&gt; package&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It allows to have information on a data point in a tooltip on hover&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In the reactive({}) environment we should:
+  &lt;ol&gt;
+    &lt;li&gt;Put the ggplot in the ggplotly() function&lt;/li&gt;
+    &lt;li&gt;Format the tooltip as the 'text' axis in aes()&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+```r
+*ggplotly(
+   ggplot(dep_data %&gt;% filter(Year == input$year),
+          aes(x = get(input$xvar), y = get(input$yvar))) +
+     geom_point(alpha = .6,
+*               aes(text = paste0(Department, "&lt;br&gt;",
+*                                 input$xvar, ": ", round(get(input$xvar), 2), "&lt;br&gt;",
+*                                 input$yvar, ": ", round(get(input$yvar), 2)))) + 
+     geom_smooth(method = "lm", se = F) + xlab(input$xvar) + ylab(input$yvar)
+#
+*)
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.2. Interactive plot
+
+&lt;ul&gt;
+  &lt;li&gt;But we can make the graph even more interactive using the &lt;b&gt;plotly&lt;/b&gt; package&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It allows to have information on a data point in a tooltip on hover&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In the reactive({}) environment we should:
+  &lt;ol&gt;
+    &lt;li&gt;Put the ggplot in the ggplotly() function&lt;/li&gt;
+    &lt;li&gt;Format the tooltip as the 'text' axis in aes()&lt;/li&gt;
+    &lt;li&gt;Assign the text axis to the tooltip argument of ggplotly()&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+
+```r
+*ggplotly(
+   ggplot(dep_data %&gt;% filter(Year == input$year),
+          aes(x = get(input$xvar), y = get(input$yvar))) +
+     geom_point(alpha = .6,
+*               aes(text = paste0(Department, "&lt;br&gt;",
+*                                 input$xvar, ": ", round(get(input$xvar), 2), "&lt;br&gt;",
+*                                 input$yvar, ": ", round(get(input$yvar), 2)))) + 
+     geom_smooth(method = "lm", se = F) + xlab(input$xvar) + ylab(input$yvar),
+*  tooltip = "text"
+*)
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.2. Interactive plot
+
+&lt;ul&gt;
+  &lt;li&gt;We also have to:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Replace the server renderPlot() function by &lt;b&gt;renderPlotly()&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Replace the UI plotOutput() function by &lt;b&gt;plotlyOutput()&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;center&gt;&lt;img src = "plotly.png" width = "750"/&gt;&lt;/center&gt;
+
+---
+
+### 2. Our first shiny app
+
+#### 2.3. Interactive regression results
+
+&lt;ul&gt;
+  &lt;li&gt;We can also include an interactive regression table&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We should put the &lt;b&gt;stargazer()&lt;/b&gt; function in a reactive({}) environment:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+reg_table &lt;- reactive({
+  
+  stargazer(lm(formula(paste0(c(input$yvar, input$xvar), collapse = "~")), 
+               dep_data %&gt;% filter(Year == input$year)), type  = "html",
+            dep.var.labels = input$yvar, keep.stat = c("n", "rsq"))
+    
+})
+```
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Then use the render function dedicated to console output: &lt;b&gt;renderPrint():&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+output$reg_table &lt;- renderPrint({reg_table()})
+```
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;And use the &lt;b&gt;htmlOuput()&lt;/b&gt; UI output function in a column layout to put it side to side with the plot:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+mainPanel(width = 9, column(7, plotlyOutput("plot")), column(5, htmlOutput("reg_table")))
+```
+
+---
+
+### 2. Our first shiny app
+
+#### 2.3. Interactive regression results
+  
+&lt;center&gt;&lt;img src = "reg_table.png" width = "1100"/&gt;&lt;/center&gt;
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+#### 1. Introduction to shiny apps &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. General structure
+ * 1.2. User interface
+ * 1.3. Server
+ * 1.4. Layout
+
+#### 2. Our first shiny app &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import data in Shiny
+ * 2.2. Interactive plot
+ * 2.3. Interactive regression results
+
+#### 3. More advanced tools
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Input randomization
+ * 3.2. HTML formatting
+ 
+#### 4. Wrap up!
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+#### 1. Introduction to shiny apps &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. General structure
+ * 1.2. User interface
+ * 1.3. Server
+ * 1.4. Layout
+
+#### 2. Our first shiny app &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import data in Shiny
+ * 2.2. Interactive plot
+ * 2.3. Interactive regression results
+
+#### 3. More advanced tools 
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Input randomization
+ * 3.2. HTML formatting
+
+---
+
+### 3. More advanced tools
+
+#### 3.1. Input randomization
+
+&amp;#10140; A nice feature would be a button to &lt;b&gt;randomly select&lt;/b&gt; the x and y &lt;b&gt;variables&lt;/b&gt; and the year
+
+--
+
+ * Adding a button is easy, we can simply add an `actionButton()` widget in the control panel:
+
+--
+
+
+```r
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(...,
+*     actionButton(inputId = "random", label = "Random selection")
+    ), 
+    mainPanel(...)
+  )
+)
+```
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But what should happen in the server when clicking on it is different from what we're used to:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We do not want a reactive output to place in the UI&lt;/li&gt;
+    &lt;li&gt;We want the selected inputs to change&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; This is why we're gonna use observeEvent() instead of reactive()&lt;/b&gt;&lt;/i&gt;&lt;/li&gt;
+
+---
+
+### 3. More advanced tools
+
+#### 3.1. Input randomization
+ 
+&lt;ul&gt;
+  &lt;li&gt;The arguments of &lt;b&gt;observeEvent()&lt;/b&gt; are:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;id&lt;/b&gt; of the input that should trigger the actions&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;actions&lt;/b&gt; to take when the input is triggered&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+observeEvent(input$random, {
+    # SELECT RANDOM INPUTS
+})
+```
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The action we want is to change the status of the input widgets&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This can be done with functions of the form &lt;b&gt;update[SelectInput/SliderTextInput/...]()&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The first argument should be "session"&lt;/li&gt;
+    &lt;li&gt;And the following arguments are those of the widget that we can update&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+
+```r
+updateSelectInput(session, inputId = "xvar", label = "X variable:", 
+                  choices = depvars, selected = sample(depvars, 1))
+```
+ 
+--
+
+`sample(depvars, 1)` picks 1 variable name randomly from the vector `depvars`
+ 
+---
+
+### 3. More advanced tools
+
+#### 3.1. Input randomization
+
+ * For it to work, the `session` argument should also be added to the `server()` function
+
+
+```r
+server &lt;- function(input, output, session) {
+  
+  ...
+  
+  observeEvent(input$random, {
+    
+    updateSelectInput(session, inputId = "xvar", label = "X variable:", 
+                      choices = depvars, selected = sample(depvars, 1))
+    
+    updateSelectInput(session, inputId = "yvar", label = "Y variable:",
+                      choices = depvars, selected = sample(depvars, 1))
+    
+    updateSliderTextInput(session, inputId = "year", label = "Select Year:",
+                          choices = 2012:2017, selected = sample(2012:2017, 1))
+    
+  })
+  
+}
+```
+
+---
+
+### 3. More advanced tools
+
+#### 3.1. Input randomization
+ 
+&lt;center&gt;&lt;img src = "random.png" width = "1100"/&gt;&lt;/center&gt;
+ 
+---
+
+### 3. More advanced tools
+
+#### 3.2. HTML formatting
+
+&lt;ul&gt;
+  &lt;li&gt;We can apply the final touch to our application by including some &lt;b&gt;html formatting&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To include html in the UI we can simply use the &lt;b&gt;HTML()&lt;/b&gt; function&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.7cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h4&gt;Some html tags&lt;/h4&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:-.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+
+
+```r
+HTML("&lt;b&gt;Text&lt;/b&gt;")
+```
+
+<b>Text</b>
+
+```r
+HTML("&lt;i&gt;Text&lt;/i&gt;")
+```
+
+<i>Text</i>
+
+```r
+HTML("&lt;center&gt;Text&lt;/center&gt;")
+```
+
+<center>Text</center>
+
+]
+ 
+.pull-right[
+
+
+```r
+HTML("&lt;h1&gt;Text&lt;/h1&gt;")
+```
+
+<h1>Text</h1>
+
+```r
+HTML("&lt;h3&gt;Text&lt;/h3&gt;")
+```
+
+<h3>Text</h3>
+
+]
+
+---
+
+### 3. More advanced tools
+
+#### 3.2. HTML formatting
+ 
+
+```r
+ui &lt;- fluidPage(
+  
+* HTML("&lt;center&gt;&lt;h2&gt;Relationships between department characteristics&lt;/h2&gt;&lt;/center&gt;&lt;br&gt;&lt;br&gt;"),
+  
+  sidebarLayout(
+    sidebarPanel(width = 3,
+                 
+*     HTML("&lt;center&gt;&lt;h4&gt;&lt;b&gt;Select inputs&lt;/b&gt;&lt;/h4&gt;&lt;/center&gt;&lt;br&gt;"),
+      
+      selectInput(...), selectInput(...), sliderTextInput(...),
+      
+*     HTML("&lt;br&gt;&lt;br&gt;&lt;center&gt;"), actionButton(...), HTML("&lt;/center&gt;&lt;br&gt;")
+    ), 
+    
+    mainPanel(width = 9,
+*             HTML("&lt;center&gt;&lt;h4&gt;&lt;b&gt;Regression results&lt;/b&gt;&lt;/h4&gt;&lt;/center&gt;"),
+              column(width = 7, plotlyOutput("plot")),
+*             column(width = 5, HTML("&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;"), htmlOutput("reg_table")))
+  )
+)
+```
+ 
+---
+
+### 3. More advanced tools
+
+#### 3.2. HTML formatting
+ 
+&lt;center&gt;&lt;a href="https://sirugue.shinyapps.io/lecture15/"&gt;&lt;img src = "html.png" width = "900"/&gt;&lt;/a&gt;&lt;/center&gt;
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+#### 1. Introduction to shiny apps &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. General structure
+ * 1.2. User interface
+ * 1.3. Server
+ * 1.4. Layout
+
+#### 2. Our first shiny app &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import data in Shiny
+ * 2.2. Interactive plot
+ * 2.3. Interactive regression results
+
+#### 3. More advanced tools &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Input randomization
+ * 3.2. HTML formatting
+ 
+#### 4. Wrap up!
+
+---
+
+### 4. Wrap up!
+ 
+#### General structure
+
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;A shiny app is composed of&lt;/b&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;user interface&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what is displayed to the user&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+library(shiny)
+
+ui &lt;- fluidPage(
+  
+  #
+  #
+  #
+  #
+  #
+  
+  #  
+  
+)
+```
+]
+
+--
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;server&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what should be computed in the background&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+server &lt;- function(input, output) {
+  
+  #
+  #
+  #
+  
+  #
+  
+}
+
+shinyApp(ui = ui, server = server)
+
+# The file should be named app.R
+```
+]
+
+---
+
+### 4. Wrap up!
+ 
+#### General structure
+
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;A shiny app is composed of&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;user interface&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what is displayed to the user, including:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Input widgets&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+library(shiny)
+
+ui &lt;- fluidPage(
+  
+  checkboxGroupInput(
+    inputId = "boxes",
+    label = "Boxes to check",
+    choices = c("A", "B", "C"),
+    selected = "B"),
+  
+  #  
+  
+)
+```
+]
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;server&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what should be computed in the background&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+server &lt;- function(input, output) {
+  
+  #
+  #
+  #
+  
+  #
+  
+}
+
+shinyApp(ui = ui, server = server)
+
+# The file should be named app.R
+```
+]
+
+---
+
+### 4. Wrap up!
+ 
+#### General structure
+
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;A shiny app is composed of&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;user interface&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what is displayed to the user, including:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Input widgets&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+library(shiny)
+
+ui &lt;- fluidPage(
+  
+  checkboxGroupInput(
+    inputId = "boxes",
+    label = "Boxes to check",
+    choices = c("A", "B", "C"),
+    selected = "B"),
+  
+  #  
+  
+)
+```
+]
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;server&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what should be computed in the background:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Update inputs with &lt;b&gt;reactive({})&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+server &lt;- function(input, output) {
+  
+  react_tb &lt;- reactive({
+    tibble(selected = input$boxes)
+  })
+  
+  #
+  
+}
+
+shinyApp(ui = ui, server = server)
+
+# The file should be named app.R
+```
+]
+
+---
+
+### 4. Wrap up!
+ 
+#### General structure
+
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;A shiny app is composed of&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;user interface&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what is displayed to the user, including:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Input widgets&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+library(shiny)
+
+ui &lt;- fluidPage(
+  
+  checkboxGroupInput(
+    inputId = "boxes",
+    label = "Boxes to check",
+    choices = c("A", "B", "C"),
+    selected = "B"),
+  
+  #  
+  
+)
+```
+]
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;server&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what should be computed in the background:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Update inputs with &lt;b&gt;reactive({})&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Render output with &lt;b&gt;render[Table/Plot/...]()&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+server &lt;- function(input, output) {
+  
+  react_tb &lt;- reactive({
+    tibble(selected = input$boxes)
+  })
+  
+  output$table &lt;- renderTable({react_tb()})
+  
+}
+
+shinyApp(ui = ui, server = server)
+
+# The file should be named app.R
+```
+]
+
+---
+
+### 4. Wrap up!
+ 
+#### General structure
+
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;A shiny app is composed of&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;user interface&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what is displayed to the user, including:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Input widgets&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Reactive outputs&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+library(shiny)
+
+ui &lt;- fluidPage(
+  
+  checkboxGroupInput(
+    inputId = "boxes",
+    label = "Boxes to check",
+    choices = c("A", "B", "C"),
+    selected = "B"),
+  
+  tableOutput("table")
+  
+)
+```
+]
+
+.pull-left[
+&lt;center&gt;A &lt;b&gt;server&lt;/b&gt; function&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is what should be computed in the background:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Update inputs with &lt;b&gt;reactive({})&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Render output with &lt;b&gt;render[Table/Plot/...]()&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+server &lt;- function(input, output) {
+  
+  react_tb &lt;- reactive({
+    tibble(selected = input$boxes)
+  })
+  
+  output$table &lt;- renderTable({react_tb()})
+  
+}
+
+shinyApp(ui = ui, server = server)
+
+# The file should be named app.R
+```
+]
+
+---
+
+### 4. Wrap up!
+
+.left-column[
+
+```r
+library(shiny)
+#
+#
+
+ui &lt;- fluidPage(
+#
+#
+#
+#
+#
+)
+
+server &lt;- function(input, output) {
+#
+#
+#
+#
+#
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+]
+
+---
+
+### 4. Wrap up!
+
+.left-column[
+
+```r
+library(shiny)
+#
+data(iris) 
+
+ui &lt;- fluidPage(
+  selectInput(inputId = "x", label = "Select X variable:", 
+              choices = names(iris), selected = names(iris)[1]),
+  selectInput(inputId = "y", label = "Select Y variable:", 
+              choices = names(iris), selected = names(iris)[2]),
+#
+)
+
+server &lt;- function(input, output) {
+#
+#
+#
+#
+#
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+]
+
+---
+
+### 4. Wrap up!
+
+.left-column[
+
+```r
+library(shiny)
+library(tidyverse)
+data(iris) 
+
+ui &lt;- fluidPage(
+  selectInput(inputId = "x", label = "Select X variable:", 
+              choices = names(iris), selected = names(iris)[1]),
+  selectInput(inputId = "y", label = "Select Y variable:", 
+              choices = names(iris), selected = names(iris)[2]),
+#
+)
+
+server &lt;- function(input, output) {
+  reactive_plot &lt;- reactive({
+    ggplot(iris, aes(x = get(input$x), y = get(input$y))) +
+      geom_point() + xlab(input$x) + ylab(input$y)
+  })
+#
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+]
+
+---
+
+### 4. Wrap up!
+
+.left-column[
+
+```r
+library(shiny)
+library(tidyverse)
+data(iris) 
+
+ui &lt;- fluidPage(
+  selectInput(inputId = "x", label = "Select X variable:", 
+              choices = names(iris), selected = names(iris)[1]),
+  selectInput(inputId = "y", label = "Select Y variable:", 
+              choices = names(iris), selected = names(iris)[2]),
+#
+)
+
+server &lt;- function(input, output) {
+  reactive_plot &lt;- reactive({
+    ggplot(iris, aes(x = get(input$x), y = get(input$y))) +
+      geom_point() + xlab(input$x) + ylab(input$y)
+  })
+  output$plot &lt;- renderPlot({reactive_plot()})
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+]
+
+---
+
+### 4. Wrap up!
+
+.left-column[
+
+```r
+library(shiny)
+library(tidyverse)
+data(iris) 
+
+ui &lt;- fluidPage(
+  selectInput(inputId = "x", label = "Select X variable:", 
+              choices = names(iris), selected = names(iris)[1]),
+  selectInput(inputId = "y", label = "Select Y variable:", 
+              choices = names(iris), selected = names(iris)[2]),
+  plotOutput("plot")
+)
+
+server &lt;- function(input, output) {
+  reactive_plot &lt;- reactive({
+    ggplot(iris, aes(x = get(input$x), y = get(input$y))) +
+      geom_point() + xlab(input$x) + ylab(input$y)
+  })
+  output$plot &lt;- renderPlot({reactive_plot()})
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+]
+
+--
+
+.right-column[
+&lt;center&gt;&lt;img src = "iris.png" width = "400"/&gt;&lt;/center&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
