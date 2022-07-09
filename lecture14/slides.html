@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Maps and geolocalized data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Maps and geolocalized data
+## Lecture 14
+### <br>Louis SIRUGUE
+### 01/2022
+
+---
+
+
+
+
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 35%;} &lt;/style&gt;
+
+### Last time we saw
+
+--
+
+#### Regular expressions
+
+.left-column[
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Regular expressions are strings of codified characters describing a pattern&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance the character "^" indicates the start of the string&lt;/li&gt;
+    &lt;li&gt;So the regular expression "^a" would match any "a" that is a the beginning of a string&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Regular expressions in R can be used in different functions with different purposes:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;grep: returns elements that match the regexpr&lt;/li&gt;
+    &lt;li&gt;grepl: returns TRUE for elements that match the regexpr and FALSE otherwise&lt;/li&gt;
+    &lt;li&gt;gsub: replaces the elements that match the regexpr with what you want&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+--
+
+.right-column[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Regexpr &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ^ &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Start of string (or 'not') &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; $ &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; End of string &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; . &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Any character &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; * &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 or more occurences &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; + &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 or more occurences &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [^abc] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Not a, b or c &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [a-z] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Any lowercase letter from a to z &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [A-Z] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Any capital letter from A to Z &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [0-9] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Any digit from 0 to 9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+---
+
+### Last time we saw
+
+#### Tokenization
+
+&lt;ul&gt;
+  &lt;li&gt;Tokenization is the fact of cleaning the data so that there is one unit of text per row&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A unit of text (token) can be a character, a letter, a word, a sentence, etc.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.pull-left[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; line &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; direction &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ACT I &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; SCENE I. A public place. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Enter Sampson and Gregory armed with swords and bucklers. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; SAMPSON. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Gregory, on my word, we’ll not carry coals. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; GREGORY. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No, for then we should be colliers. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+--
+
+.pull-right[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id_act &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; id_scene &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; id_line &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; id_char &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; line &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; SAMPSON &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Gregory, on my word, we’ll not carry coals. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; GREGORY &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No, for then we should be colliers. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; SAMPSON &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; I mean, if we be in choler, we’ll draw. &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### Last time we saw
+
+#### Stopwords and sentiments
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;ul&gt;
+  &lt;li&gt;The first step of a sentiment analysis is usually to get rid of &lt;i&gt;stopwords&lt;/i&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Stopwords are common words that do not carry much semantic meaning but take space and computing time&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+matrix(get_stopwords()[["word"]][1:24],ncol=3)
+```
+
+```
+##      [,1]        [,2]         [,3]     
+## [1,] "i"         "you"        "himself"
+## [2,] "me"        "your"       "she"    
+## [3,] "my"        "yours"      "her"    
+## [4,] "myself"    "yourself"   "hers"   
+## [5,] "we"        "yourselves" "herself"
+## [6,] "our"       "he"         "it"     
+## [7,] "ours"      "him"        "its"    
+## [8,] "ourselves" "his"        "itself"
+```
+]
+
+--
+
+.pull-right[
+&lt;ul&gt;
+  &lt;li&gt;The second step is to join the words to their corresponding sentiment using a dictionary&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some dictionaries are very simple: positive/negative&lt;/li&gt;
+    &lt;li&gt;And some are more elaborate: trust/fear/sadness/anger/...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+head(get_sentiments("bing"), 5)
+```
+
+```
+## # A tibble: 5 x 2
+##   word       sentiment
+##   &lt;chr&gt;      &lt;chr&gt;    
+## 1 2-faces    negative 
+## 2 abnormal   negative 
+## 3 abolish    negative 
+## 4 abominable negative 
+## 5 abominably negative
+```
+]
+
+---
+
+### Last time we saw
+
+#### Analysis
+
+
+
+.left-column[
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * Evolution of the average sentiment over the play 
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-7-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.right-column[
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+ * Sentiment of characters (rows) when mentioning other characters (columns)
+ 
+
+```
+## # A tibble: 3 x 4
+##   id_char  ROMEO  JULIET NURSE
+##   &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 JULIET  -0.255 -1.5    0.246
+## 2 NURSE    0.826 -0.267  0.111
+## 3 ROMEO   -0.737 -0.0746 2.4
+```
+]
+
+---
+
+### Today: Maps and geolocalized data
+
+&lt;p style = "margin-bottom:3cm;"&gt;
+
+#### 1. Geolocalized data
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Shapefiles and rasters
+ * 1.2. Opening geolocalized data
+ * 1.3. Coordinate Reference Systems
+ * 1.4. Subsetting geolocalized data
+
+#### 2. Geographic variables
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import from csv
+ * 2.2. Zonal statistics
+ * 2.3. Centroids and distance
+
+#### 3. Wrap up!
+
+---
+
+### Today: Maps and geolocalized data
+
+&lt;p style = "margin-bottom:3cm;"&gt;
+
+#### 1. Geolocalized data
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Shapefiles and rasters
+ * 1.2. Opening geolocalized data
+ * 1.3. Coordinate Reference Systems
+ * 1.4. Subsetting geolocalized data
+
+---
+
+### 1. Geolocalized data
+
+#### 1.1. Shapefiles and rasters
+
+&amp;#10140; The &lt;b&gt;shapefile&lt;/b&gt; is a format for storing &lt;b&gt;geographic location&lt;/b&gt; and associated attribute information
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+.left_column[
+&lt;ul&gt;
+  &lt;li&gt;Out-software it &lt;b&gt;can seem quite complicated:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;There are several files for a single dataset&lt;/li&gt;
+    &lt;li&gt;Always the necessary .shp, .shx, and .dbf&lt;/li&gt;
+    &lt;li&gt;Sometimes other files such as .prj, .cpg, etc.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.right-column[
+&lt;p style = "margin-bottom:-4.5cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;img src = "out_software.png" width = "150"/&gt;&lt;/center&gt;
+]
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But in-software, it is &lt;b&gt;not so far from what we're used to:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;There is one line per geographic entity&lt;/li&gt;
+    &lt;li&gt;And one column per variable about these entities&lt;/li&gt;
+    &lt;li&gt;But there is one non-standard variable: the &lt;b&gt;geometry&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The geometry can be:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Points&lt;/b&gt; at given coordinates: location of weather stations/of your phone&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Polylines&lt;/b&gt; that link sets of points: rivers/roads&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Polygons&lt;/b&gt; that link sets of points to form a closed shape: countries/land parcels&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.1. Shapefiles and rasters
+
+ * For instance consider a shapefile
+  * With two observations
+  * And a polygon geometry
+  
+--
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-9-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.1. Shapefiles and rasters
+
+ * The shapefile can also contain **attribute variable**
+  * For instance the **median income** of residents of the area delimited by the polygon
+  * We can plot this attribute variable using the fill aesthetic of the polygon geometry
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.1. Shapefiles and rasters
+
+ * The &lt;b&gt;raster&lt;/b&gt; is another type of format for storing geolocalized data
+
+--
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It works &lt;b&gt;like a picture&lt;/b&gt;, with cells like pixels&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;p style = "margin-bottom:1.22cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.1. Shapefiles and rasters
+
+ * The &lt;b&gt;raster&lt;/b&gt; is another type of format for storing geolocalized data
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It works &lt;b&gt;like a picture&lt;/b&gt;, with cells like pixels&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;And each cell can take a given value, e.g. pollution observed from satellites&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.1. Shapefiles and rasters
+
+ * The &lt;b&gt;raster&lt;/b&gt; is another type of format for storing geolocalized data
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It works &lt;b&gt;like a picture&lt;/b&gt;, with cells like pixels&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;And each cell can take a given value, e.g. pollution observed from satellites&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.1. Shapefiles and rasters
+
+ * Today we're gonna use this to estimate the relationship between &lt;b&gt;income and exposure to air pollution&lt;/b&gt;
+
+--
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Using &lt;b&gt;raster&lt;/b&gt; satellite data on pollution level&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;p style = "margin-bottom:1.22cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.1. Shapefiles and rasters
+
+ * Today we're gonna use this to estimate the relationship between &lt;b&gt;income and exposure to air pollution&lt;/b&gt;
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Using &lt;b&gt;raster&lt;/b&gt; satellite data on pollution level&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;And a &lt;b&gt;shapefile&lt;/b&gt; to compute the average exposure in different location and merge it with income data&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+### 1. Geolocalized data
+
+#### 1.2. Opening geolocalized data
+ 
+ * We can read shapefiles in R using the `read_sf()` function from the `sf` package (data from  [IGN](https://geoservices.ign.fr/adminexpress))
+
+--
+
+
+```r
+library(sf)
+dep_shp &lt;- read_sf("data/dep_shp/DEPARTEMENT.shp") 
+head(dep_shp, 5)
+```
+
+--
+
+
+```
+## Simple feature collection with 5 features and 5 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 0.06558525 ymin: 45.23103 xmax: 7.621946 ymax: 50.0722
+## Geodetic CRS:  WGS 84
+## # A tibble: 5 x 6
+##   ID                       NOM_DEP_M      NOM_DEP INSEE_DEP INSEE_REG                  geometry
+##   &lt;chr&gt;                    &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;            &lt;MULTIPOLYGON [°]&gt;
+## 1 DEPARTEM0000000000000001 JURA           Jura    39        27        (((5.442842 46.84592, 5.~
+## 2 DEPARTEM0000000000000002 SEINE-MARITIME Seine-~ 76        28        (((0.3875418 49.77178, 0~
+## 3 DEPARTEM0000000000000003 YONNE          Yonne   89        27        (((3.126677 47.99127, 3.~
+## 4 DEPARTEM0000000000000004 LOIRE          Loire   42        84        (((3.831716 45.99944, 3.~
+## 5 DEPARTEM0000000000000005 HAUT-RHIN      Haut-R~ 68        44        (((6.923645 47.95226, 6.~
+```
+
+---
+
+### 1. Geolocalized data
+
+#### 1.2. Opening geolocalized data
+
+ * We can then view the data using the `geom_sf()` geometry
+  * It will understand that the `geometry` variable contains the coordinates of the polygons to be plotted
+
+--
+
+
+```r
+library(tidyverse)
+ggplot(dep_shp) + geom_sf(fill = "#6794A7", color = "#014D64", alpha = .6) + theme_void()
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-19-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.2. Opening geolocalized data
+
+ * There are several formats of raster files (.tif, .nc, ...)
+  * We're gonna use NetCDF satellite data on PM&lt;sub&gt;2.5&lt;/sub&gt; from the [Atmospheric Composition Analysis Group](https://sites.wustl.edu/acag/datasets/surface-pm2-5/)
+  * So we're gonna need the packages `raster` and `ncdf4`
+
+--
+
+
+```r
+library(raster)
+select &lt;- dplyr::select # The raster packages has an overriding select function
+library(ncdf4)
+```
+
+--
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+
+
+```r
+pm_data &lt;- raster("data/acag_2016.nc")
+pm_data
+```
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+
+.left-column[
+
+```
+## class      : RasterLayer 
+## dimensions : 2300, 5000, 11500000  (nrow, ncol, ncell)
+## resolution : 0.01, 0.009999999  (x, y)
+## extent     : -15, 35, 36, 59  (xmin, xmax, ymin, ymax)
+## crs        : +proj=longlat +datum=WGS84 +no_defs 
+## source     : acag_2016.nc 
+## names      : Hybrid.PM_2_._5...mug.m.3. 
+## zvar       : GWRPM25
+```
+]
+
+--
+
+.right-column[
+&lt;ul&gt;
+  &lt;li&gt;As you can see NetCDFs are complex objects:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Not a simple table with figures&lt;/li&gt;
+    &lt;li&gt;Note that the PM&lt;sub&gt;2.5&lt;/sub&gt; variable is Hybrid.PM_2_._5...mug.m.3.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 1. Geolocalized data
+
+#### 1.2. Opening geolocalized data
+
+ * We can rename the PM&lt;sub&gt;2.5&lt;/sub&gt; variable into something more convenient
+
+
+```r
+names(pm_data) &lt;- "pm2.5"
+```
+
+--
+
+ * And convert the data into a standard dataset using the `rasterToPoints()` function
+  * It will generate a table with 1 row per cell
+  * An x variable for the longitude, y for latitude, and pm2.5 for pollution
+
+--
+
+
+```r
+head(as_tibble(rasterToPoints(pm_data)), 5)
+```
+
+```
+## # A tibble: 5 x 3
+##       x     y pm2.5
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 -3.38  59.0  4.60
+## 2 -3.37  59.0  4.60
+## 3 -3.36  59.0  4.60
+## 4 -3.35  59.0  4.70
+## 5 -3.34  59.0  4.70
+```
+
+---
+
+### 1. Geolocalized data
+
+#### 1.2. Opening geolocalized data
+
+ * This table format allows to easily plot raster data using the `geom_tile` geometry:
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+library(viridis) # for nice color gradient
+
+ggplot(as_tibble(rasterToPoints(pm_data)), # Data converted in table
+       aes(x = x,                          # Longitude on the x-axis
+           y = y,                          # Latitude on the y-axis
+           fill = pm2.5)) +                # Pollution on the fill-axis 
+  geom_tile() +                            # One filled square per cell
+  scale_fill_viridis(option = "B",         # Nice color gradient
+                     direction = -1) +     # The darker the more polluted
+  theme_void()                             # Remove axes and grid
+```
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+ * This is gonna plot the 2,300 x 5,000 = 11,500,000 cells
+  * With a color that is proportional to the value of `pm2.5`
+  * Like the pixels of picture
+  
+---
+
+### 1. Geolocalized data
+
+#### 1.2. Opening geolocalized data
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-26-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.3. Coordinate Reference Systems
+
+&lt;ul&gt;
+  &lt;li&gt;You might have noticed that France does not look the same on the two graphs&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This is because have not &lt;b&gt;reprojected the data&lt;/b&gt; yet&lt;/li&gt;
+    &lt;li&gt;But this is the &lt;b&gt;first thing to do&lt;/b&gt; when working with geolocalized data&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt; 
+  
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Right now our two maps may not be in the same CRS&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;CRS stands for &lt;b&gt;Coordinate Reference System&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;It is a model of the Earth in which each location is coded using degrees&lt;/li&gt;
+    &lt;li&gt;WGS84 is the standard CRS used by GPS, Google maps, ...&lt;/li&gt;
+    &lt;li&gt;But it is &lt;b&gt;not suited to all applications&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;To visualize spatial data, we need to &lt;b&gt;project the surface of the globe on a plane&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;There is &lt;b&gt;no correct way of doing that&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Like you cannot flatten an orange peel without distorting it&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt;&amp;#10140; There is a tradeoff between shape and scale preservation&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.3. Coordinate Reference Systems
+
+ * For instance the Mercator projection preserves shape but distorts scale:
+ 
+&lt;p style = "margin-bottom:-.58cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-27-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.3. Coordinate Reference Systems
+
+ * While the Equal-Area Cylindrical projection preserves scale but distorts shape:
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.3. Coordinate Reference Systems
+
+ * This is also the case for the Mollweide projection:
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-29-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.3. Coordinate Reference Systems
+
+ * But most projections are in between, like the Robin projection:
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-30-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.3. Coordinate Reference Systems
+
+&lt;ul&gt;
+  &lt;li&gt;The smaller the area you want to map the less it is a problem&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;While you would have a hard time flatten the whole orange peel&lt;/li&gt;
+    &lt;li&gt;Flattening a tiny bit of orange peel wouldn't require to distort it too much&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Even though there's no perfect projection, some are more suited to specific regions&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You wouldn't use the Mercator projection if you focus on the poles&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The website &lt;a href="https://epsg.io/?q=France"&gt;epsg.io&lt;/a&gt; allows you to find the appropriate CRS for the area you want to map&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For France, the recommended projection is Lambert 93, the corresponding EPSG code is 2154&lt;/li&gt;
+    &lt;li&gt;The most common projection is WGS84, the corresponding EPSG code is 4326&lt;/li&gt;
+    &lt;li&gt;What is important is that all the datasets are projected the same way&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.pull-left[
+
+ * For shapefile: `st_transform()`
+ 
+
+```r
+dep_shp &lt;- st_transform(dep_shp, "EPSG:4326")
+```
+
+]
+  
+.pull-right[
+
+ * For raster: `crs()`
+ 
+
+```r
+crs(pm_data) &lt;- "EPSG:4326"
+```
+
+]
+
+---
+
+### 1. Geolocalized data
+
+#### 1.3. Coordinate Reference Systems
+
+ * Data projected in WGS84:
+ 
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-33-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-34-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### 1. Geolocalized data
+
+#### 1.4. Subsetting geolocalized data
+
+ * To keep only metropolitan France in the shapefile, we can filter 2-digit department codes
+
+--
+
+
+```r
+dep_shp &lt;- dep_shp %&gt;% filter(nchar(INSEE_DEP) == 2)
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-36-1.png" width="35%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.4. Subsetting geolocalized data
+
+ * Then, we can drop from the raster everything outside the longitude/latitude frame of our shapefile
+
+--
+
+
+```r
+pm_data &lt;- crop(pm_data, extent(dep_shp))
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.4. Subsetting geolocalized data
+
+ * We can then replace everything that is not in a polygon of the shapefile by missing values
+
+--
+
+
+```r
+pm_data &lt;- mask(pm_data, dep_shp)
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-40-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.4. Subsetting geolocalized data
+
+ * The two datasets can now be overlaid:
+ 
+
+```r
+ggplot() +
+  geom_tile(data = as_tibble(rasterToPoints(pm_data)), aes(x = x, y = y, fill = pm2.5))  +
+  geom_sf(data = dep_shp, fill = NA, color = alpha("grey20", .6)) +
+  scale_fill_viridis(option = "A", direction = -1) + theme_void()
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-42-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Geolocalized data
+
+#### 1.4. Subsetting geolocalized data
+
+ * We do not see much variation... Let's take a look at the PM&lt;sub&gt;2.5&lt;/sub&gt; distribution
+
+--
+
+
+```r
+subset_data &lt;- as_tibble(rasterToPoints(pm_data))
+
+ggplot(subset_data, aes(x = pm2.5)) + 
+  geom_density(fill = "#6794A7", color = "#014D64", alpha = .6)
+```
+
+--
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-44-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.right-column[
+
+&lt;ul style = "margin-top:1cm;"&gt;
+  &lt;li style = "margin-left:-1.1cm;"&gt;There are &lt;b&gt;few&lt;/b&gt; very high and very low &lt;b&gt;values that stretch the scale&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;i&gt;&amp;#10140; To better visualize the variations, we can &lt;b&gt;discretize the variable into deciles&lt;/b&gt;&lt;/i&gt;
+ 
+]
+
+---
+
+### 1. Geolocalized data
+
+#### 1.4. Subsetting geolocalized data
+
+&lt;ul&gt;
+  &lt;li&gt;To convert a continuous into deciles we should:&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Arrange the values in ascending order&lt;/li&gt;
+    &lt;li&gt;Compute the ratio of their index of N to get smthg \(\in (0; 1]\)&lt;/li&gt;
+    &lt;li&gt;Multiply by the desired number of quantiles and take the ceiling&lt;/li&gt;
+    &lt;li&gt;Set as factor so that R does not interpret it as continuous&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+subset_data &lt;- subset_data %&gt;%
+  arrange(pm2.5) %&gt;%
+  mutate(decile = as.factor(ceiling(10 * row_number()/n())))
+```
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+ * And plot the deciles instead of the continuous values
+
+
+```r
+ggplot() +
+  geom_tile(data = subset_data, aes(x = x, y = y, fill = decile))  +
+  geom_sf(data = dep_shp, fill = NA, color = alpha("grey20", .6)) +
+  scale_fill_viridis_d(option = "A", direction = -1) + theme_void()
+```
+
+---
+
+### 1. Geolocalized data
+
+#### 1.4. Subsetting geolocalized data
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-47-1.png" width="48%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Practice
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+#### First, make sure we're on the same page
+
+
+```r
+# Load packages
+library(tidyverse)
+library(viridis)
+library(sf)
+library(raster)
+select &lt;- dplyr::select
+library(ncdf4)
+
+# Import data
+dep_shp &lt;- read_sf("data/dep_shp/DEPARTEMENT.shp")
+pm_data &lt;- raster("data/acag_2016.nc")
+
+# Reproject data
+dep_shp &lt;- st_set_crs(dep_shp, "EPSG:4326")
+crs(pm_data) &lt;- "EPSG:4326"
+
+# Rename PM 2.5 layer
+names(pm_data) &lt;- "pm2.5"
+```
+
+---
+
+### Practice
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+#### 1) Filter only the Île-de-France region both in the shapefile and the raster
+
+*Hint: The Île-de-France geographic code is 11*
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 2) Plot the PM&lt;sub&gt;2.5&lt;/sub&gt; concentration in Île-de-France and overlay the department shapefile 
+
+&lt;p style = "margin-bottom:3.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 5 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+---
+
+### Solution
+
+#### 1) Filter only the Île-de-France region both in the shapefile and the raster
+
+--
+
+
+```r
+# Filter only departments of Île-de-France in shapefile
+dep_shp &lt;- dep_shp %&gt;% filter(INSEE_REG == 11)
+```
+
+--
+
+&lt;p style = "margin-bottom:-.8cm;"&gt;&lt;/p&gt;
+
+
+```r
+# Drop fromraster everything outside the lon/lat frame of the shapefile
+pm_data &lt;- crop(pm_data, extent(dep_shp))
+```
+
+--
+
+&lt;p style = "margin-bottom:-.8cm;"&gt;&lt;/p&gt;
+
+
+```r
+# Replace everything that is not in a polygon of the shapefile by NA
+pm_data &lt;- mask(pm_data, dep_shp)
+```
+
+--
+
+#### 2) Plot the PM&lt;sub&gt;2.5&lt;/sub&gt; concentration in Île-de-France and overlay the department shapefile 
+
+
+```r
+ggplot() +
+```
+
+--
+
+&lt;p style = "margin-bottom:-.8cm;"&gt;&lt;/p&gt;
+
+
+```r
+  # Plot the raster
+  geom_tile(data = as_tibble(rasterToPoints(pm_data)), aes(x = x, y = y, fill = pm2.5))  +
+```
+
+--
+
+&lt;p style = "margin-bottom:-.8cm;"&gt;&lt;/p&gt;
+
+
+```r
+  # Plot the shapefile
+  geom_sf(data = dep_shp, fill = NA, color =" grey20") +
+```
+
+--
+
+&lt;p style = "margin-bottom:-.8cm;"&gt;&lt;/p&gt;
+
+
+```r
+  # Custom scale
+  scale_fill_viridis(option = "B") + theme_void()
+```
+
+---
+
+### Solution
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-56-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:3cm;"&gt;
+
+#### 1. Geolocalized data &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Shapefiles and rasters
+ * 1.2. Opening geolocalized data
+ * 1.3. Coordinate Reference Systems
+ * 1.4. Subsetting geolocalized data
+
+#### 2. Geographic variables
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import from csv
+ * 2.2. Zonal statistics
+ * 2.3. Centroids and distance
+
+#### 3. Wrap up!
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:3cm;"&gt;
+
+#### 1. Geolocalized data &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Shapefiles and rasters
+ * 1.2. Opening geolocalized data
+ * 1.3. Coordinate Reference Systems
+ * 1.4. Subsetting geolocalized data
+ 
+#### 2. Geographic variables
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import from csv
+ * 2.2. Zonal statistics
+ * 2.3. Centroids and distance
+
+---
+
+### 2. Geographic variables
+
+#### 2.1. Import from csv
+
+&lt;ul&gt;
+  &lt;li&gt;The simplest type of geographic variable is those you can directly import in csv:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The Gini index of inequality of countries&lt;/li&gt;
+    &lt;li&gt;The unemployment rate of departments&lt;/li&gt;
+    &lt;li&gt;The number of inhabitants of cities&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+--
+
+&lt;ul&gt;
+  &lt;li&gt;In this case you can simply&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Import the csv data you need&lt;/li&gt;
+    &lt;li&gt;Join it to the shapefile as you would do with any other data&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; Let's study the relationship between income and exposure to air pollution at the city level in Île-de-France&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;We need:&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;To import the shapefile of cities in Île-de-France&lt;/li&gt;
+    &lt;li&gt;To import and join median income by city&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Geographic variables
+
+#### 2.1. Import from csv
+
+ * Import shapefile of cities in Île-de-France and project it in WGS84
+
+--
+
+
+```r
+idf_shp &lt;- read_sf("data/idf_shp/idf.shp")
+idf_shp &lt;- st_set_crs(idf_shp, "EPSG:4326")
+head(idf_shp, 5)
+```
+
+--
+
+
+```
+## Simple feature collection with 5 features and 5 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 1.643507 ymin: 48.36067 xmax: 2.365918 ymax: 49.17332
+## Geodetic CRS:  WGS 84
+## # A tibble: 5 x 6
+##   NOM_COM           INSEE_COM INSEE_DEP INSEE_REG POPULATION                  geometry
+##   &lt;chr&gt;             &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;          &lt;int&gt;        &lt;MULTIPOLYGON [°]&gt;
+## 1 Haute-Isle        95301     95        11               278 (((1.691893 49.07523, 1.~
+## 2 Ambleville        95011     95        11               372 (((1.691683 49.12863, 1.~
+## 3 Chalou-Moulineux  91131     91        11               431 (((2.043785 48.36067, 2.~
+## 4 Morsang-sur-Orge  91434     91        11             20909 (((2.36231 48.64807, 2.3~
+## 5 Vienne-en-Arthies 95656     95        11               416 (((1.74087 49.07267, 1.7~
+```
+
+---
+
+### 2. Geographic variables
+
+#### 2.1. Import from csv
+
+&lt;ul&gt;
+  &lt;li&gt;Join csv data on median income by city and plot together with department shapefile&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We shall make sure that the joining variables have the same name and class&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+insee_data &lt;- as_tibble(read.csv("data/insee_2016.csv"))
+head(insee_data, 1)
+```
+
+```
+## # A tibble: 1 x 3
+##   INSEE_COM CITY  MED16
+##       &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1     75056 Paris  26.8
+```
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+ * Same name but not same class
+
+--
+
+
+```r
+idf_shp &lt;- idf_shp %&gt;% mutate(INSEE_COM = as.numeric(INSEE_COM)) %&gt;% left_join(insee_data)
+
+ggplot() + geom_sf(data = idf_shp, aes(fill = MED16), color = alpha("grey20", .4)) +
+  geom_sf(data = dep_shp, fill = NA, color = alpha("grey20", .6), size = 1.2) +
+  scale_fill_viridis(option = "B") + theme_void()
+```
+
+---
+
+### 2. Geographic variables
+
+#### 2.1. Import from csv
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-61-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Geographic variables
+
+#### 2.2. Zonal statistics
+
+ * Right now we have pollution at the cell level in our raster
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-62-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Geographic variables
+
+#### 2.2. Zonal statistics
+
+ * And a shapefile delimiting the cities in which we want to know the pollution level
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-63-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Geographic variables
+
+#### 2.2. Zonal statistics
+
+&lt;ul&gt;
+  &lt;li&gt;This is the principle of &lt;b&gt;zonal statistics:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Compute &lt;b&gt;statistics on areas delimited by a shapefile from values of a raster&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;We want the average PM&lt;sub&gt;2.5&lt;/sub&gt; value of the cells that fall within the municipality geometry&lt;/li&gt;
+    &lt;li&gt;With our shapefile and raster that cover the same area and are projected the same way&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In R zonal statistics can be computed with the function &lt;b&gt;extract()&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;x:&lt;/b&gt; the data containing the values to compute statistics from&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;y:&lt;/b&gt; the data delimiting the zones in which to compute statistics&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;FUN:&lt;/b&gt; the statistic to compute (min, max, median, mean, ...) &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+idf_shp &lt;- idf_shp %&gt;% mutate(pm2.5 = extract(x = pm_data, y = ., fun = mean))
+
+ggplot() +
+  geom_sf(data = idf_shp, aes(fill = pm2.5), color = alpha("grey20", .4)) +
+  geom_sf(data = dep_shp, fill = NA, color = alpha("grey20", .6), size = 1.2) +
+  scale_fill_viridis(option = "B") + theme_void()
+```
+
+---
+
+### 2. Geographic variables
+
+#### 2.2. Zonal statistics
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-65-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Geographic variables
+
+#### 2.2. Zonal statistics
+
+.pull-left[
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We now have in the same dataset:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Average exposure to PM&lt;sub&gt;2.5&lt;/sub&gt;&lt;/li&gt;
+    &lt;li&gt;Median income&lt;/li&gt;
+    &lt;li&gt;Both at the city level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt;&amp;#10140; Let's do the regression&lt;/i&gt;&lt;h4&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+
+```r
+stargazer(lm(pm2.5 ~ MED16, idf_shp), 
+          type = "text", 
+          keep.stat = c("n", "rsq"))
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```
+## 
+## ========================================
+##                  Dependent variable:    
+##              ---------------------------
+##                         pm2.5           
+## ----------------------------------------
+## MED16                 -0.051***         
+##                        (0.007)          
+##                                         
+## Constant              13.037***         
+##                        (0.183)          
+##                                         
+## ----------------------------------------
+## Observations            1,250           
+## R2                      0.040           
+## ========================================
+## Note:        *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+```
+
+]
+
+---
+
+### 2. Geographic variables
+
+#### 2.3. Centroids and distances
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Results indicate that the city level in in Île-de-France an increase of 1,000 euros is associated&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:-.65cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;with a reduction of 0.05 μg/m&lt;sup&gt;3&lt;/sup&gt; in the concentration of PM&lt;sub&gt;2.5&lt;/sub&gt;, ceteris paribus&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But could this effect just be do to the distance to Paris?&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Maybe richer individuals tend to live away from the urban center&lt;/li&gt;
+    &lt;li&gt;And thus to be less exposed to pollution&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We need to control for the distance to Paris&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To do so we can find the location of the centroid of each municipality with st_centroid()&lt;/li&gt;
+    &lt;li&gt;It corresponds to the arithmetic mean position of all the points in the polygon&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+
+```r
+idf_shp &lt;- idf_shp %&gt;%
+  mutate(centroid = st_centroid(geometry))
+
+ggplot() +
+  geom_sf(data = idf_shp$geometry, fill = "#6794A7", color = "#014D64", alpha = .6) +
+  geom_sf(data = idf_shp$centroid, color = "#014D64") + theme_void()
+```
+
+---
+
+### 2. Geographic variables
+
+#### 2.3. Centroids and distances
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-69-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Geographic variables
+
+#### 2.3. Centroids and distances
+
+&lt;ul&gt;&lt;li&gt;Note that the centroid of a polygon can be outside the polygon&lt;/li&gt;&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Take for instance the municipality Les Ulis:&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-70-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Geographic variables
+
+#### 2.3. Centroids and distances
+
+ * To compute distances we should first convert the centroid variable into a longitude and a latitude variable
+
+--
+
+
+```r
+idf_shp &lt;- idf_shp %&gt;%
+  group_by(INSEE_COM) %&gt;%
+  mutate(cent_lon = unlist(centroid)[1], cent_lat = unlist(centroid)[2]) 
+```
+
+--
+
+ * And store the coordinates of Paris
+ 
+
+```r
+paris &lt;- idf_shp %&gt;%
+  filter(NOM_COM == "Paris") %&gt;%
+  select(cent_lon, cent_lat) %&gt;% st_drop_geometry() # Specific function to drop geometry
+  
+paris
+```
+
+```
+## # A tibble: 1 x 2
+##   cent_lon cent_lat
+## *    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     2.34     48.9
+```
+
+---
+
+### 2. Geographic variables
+
+#### 2.3. Centroids and distances
+
+ * We can now compute the distance between each centroid and that of Paris using `geodist_vec()` 
+
+--
+
+
+```r
+library(geodist)
+idf_shp &lt;- idf_shp %&gt;% mutate(dist_paris = geodist_vec(x1 = cent_lon, y1 = cent_lat, 
+                                                       x2 = paris$cent_lon, y2 = paris$cent_lat, 
+                                                       measure = "geodesic") / 1000)
+```
+
+&lt;p style = "margin-bottom:.7cm;"&gt;&lt;/p&gt;
+
+--
+
+ * We can plot this new variable
+ 
+
+```r
+ggplot() +
+  geom_sf(data = idf_shp, aes(fill = dist_paris), color = alpha("grey20", .4)) +
+  geom_sf(data = dep_shp, fill = NA, color = alpha("grey20", .6), size = 1.2) +
+  scale_fill_viridis(option = "B") + theme_void()
+```
+
+&lt;p style = "margin-bottom:.7cm;"&gt;&lt;/p&gt;
+
+--
+
+ * And add it in the regression
+
+
+```r
+stargazer(lm(pm2.5 ~ MED16 + dist_paris, idf_shp), type = "text", keep.stat = c("n", "rsq"))
+```
+
+---
+
+### 2. Geographic variables
+
+#### 2.3. Centroids and distances
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-76-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Geographic variables
+
+#### 2.3. Centroids and distances
+
+.pull-left[
+
+&lt;p style = "margin-bottom:-.7cm;"&gt;&lt;/p&gt;
+
+
+```
+## 
+## ========================================
+##                  Dependent variable:    
+##              ---------------------------
+##                         pm2.5           
+## ----------------------------------------
+## MED16                 -0.092***         
+##                        (0.005)          
+##                                         
+## dist_paris            -0.041***         
+##                        (0.001)          
+##                                         
+## Constant              15.749***         
+##                        (0.131)          
+##                                         
+## ----------------------------------------
+## Observations            1,250           
+## R2                      0.620           
+## ========================================
+## Note:        *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+```
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li style = "margin-left:-.5cm;"&gt;Once controlling for distance to Paris, the coefficients associated with median income is even more negative&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li style = "margin-left:-.5cm;"&gt;Distance to Paris has opposite relationships with pollution and median income&lt;/li&gt;
+    &lt;li style = "margin-left:-.5cm;"&gt;Richer municipalities tend to be closer to Paris&lt;/li&gt;
+    &lt;li style = "margin-left:-.5cm;"&gt;But also to be less polluted than poorer municipalities&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li style = "margin-left:-.5cm;"&gt;In Île-de-France the relationship between exposure to PM&lt;sub&gt;2.5&lt;/sub&gt; and median income (in thousand euros) is even stronger than with distance to Paris (in km)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li style = "margin-left:-.5cm;"&gt;Both coefficients are significant at 99% confidence level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+]
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:3cm;"&gt;
+
+#### 1. Geolocalized data &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Shapefiles and rasters
+ * 1.2. Opening geolocalized data
+ * 1.3. Coordinate Reference Systems
+ * 1.4. Subsetting geolocalized data
+
+#### 2. Geographic variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Import from csv
+ * 2.2. Zonal statistics
+ * 2.3. Centroids and distance
+
+#### 3. Wrap up!
+
+---
+
+### 3. Wrap up!
+
+#### Shapefiles and rasters
+
+&lt;center&gt;&lt;b&gt;Two main types of geolocalized datasets:&lt;/b&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;Shapefiles&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One row per entity/one column per variable&lt;/li&gt;
+  &lt;li&gt;A geometry variable with the coordinates of the points/polylines/polygons&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-78-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+  
+]
+
+--
+
+.pull-right[
+
+&lt;center&gt;&lt;b&gt;Rasters&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Works like a picture, with cells like pixels&lt;/li&gt;
+  &lt;li&gt;And each cell can take a given value, e.g. pollution observed from satellites&lt;/li&gt;
+&lt;/ul&gt;
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-79-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### 3. Wrap up!
+
+#### Coordinates Reference Systems
+
+&lt;ul&gt;
+  &lt;li&gt;A Coordinate Reference System (CRS) is a model of the Earth in which each location is coded using degrees&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It allows to &lt;b&gt;project the surface of the globe on a plane&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But there is a &lt;b&gt;tradeoff&lt;/b&gt; between preserving:&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+ 
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;Shape&lt;/b&gt; (like the Mercator projection)&lt;/center&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-80-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;center&gt;&lt;b&gt;Scale&lt;/b&gt; (like the Equal-Area Cylindrical projection)&lt;/center&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-81-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Most projections are somewhere in between&lt;/li&gt;
+  &lt;li&gt;For France: Lambert 93 projection (EPSG:2154)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; First thing to do: &lt;b&gt;reprojection&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+]
+
+---
+
+### 3. Wrap up!
+
+#### Operations on geolocalized data
+
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;Zonal statistics&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Computing statistics on areas delimited by a shapefile from values of a raster&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Project shapefile and raster the same way&lt;/li&gt;
+    &lt;li&gt;Compute the mean/max/... of cell values&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-82-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+ 
+&lt;center&gt;&lt;b&gt;Centroids&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The centroid is the arithmetic mean position of all the points in the polygon&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To compute distances between polygons&lt;/li&gt;
+    &lt;li&gt;A centroid is not always within its polygon&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-83-1.png" width="82%" style="display: block; margin: auto;" /&gt;
+
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
