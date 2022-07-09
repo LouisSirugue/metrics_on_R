@@ -1,0 +1,113 @@
+---
+title: "Spring semester: Grading system"
+author: "Louis Sirugue"
+date: "`r format(Sys.time(), '%m/%Y')`"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+---
+
+<style type="text/css">
+.main-container {
+  max-width: 20cm;
+  min-width: 20cm;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+<br>
+
+```{r setup, include = F}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+lapply(c("tidyverse", "kableExtra"), library, character.only = T)
+display_groups <- 1:6 # Choose which group(s) to display
+```
+
+
+```{r data_notes}
+notes <- tibble(     group = c(paste("Groupe",   c(1, 2, 3, 4, 5, 6)), "Barème"), 
+                ### Reproducibility of the analysis (4 points) 
+                `Code runs without error`      = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Code well annotated`          = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Code optimization/automation` = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Directory/files management`   = c(0, 0, 0, 0, 0, 0,   "/1"),
+                ### Presentation of the document (5 points) 
+                `Relevance of graphs`          = c(0, 0, 0, 0, 0, 0,   "/2"),
+                `Relevance of tables/results`  = c(0, 0, 0, 0, 0, 0,   "/2"),
+                `Redaction quality`            = c(0, 0, 0, 0, 0, 0,   "/1"),
+                ### Data analysis (8 points)  
+                `Data cleaning`                = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Descriptive statistics`       = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Data visualization`           = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Regression analysis`          = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Causality assessment`         = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Robustness`                   = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Heterogeneity`                = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Interpretation of results`    = c(0, 0, 0, 0, 0, 0,   "/1"),
+                ### Along the semester (1 points)
+                `Work regularity`              = c(0, 0, 0, 0, 0, 0,   "/1"),
+                ### Final presentation (2 points)
+                `Relevance of selected info`   = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Slides and speech clarity`    = c(0, 0, 0, 0, 0, 0,   "/1")) 
+
+notes2  <- tibble(     group = c(paste("Groupe",   c(1, 2, 3, 4, 5, 6)), "Barème"), 
+                 ### Reproducibility of the analysis (4 points) 
+                `Relevance of research question` = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Presentation of the data`       = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Relevance of the data`          = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Literature review`              = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Clarity of slides and speech`   = c(0, 0, 0, 0, 0, 0,   "/1")) 
+```
+
+```{r table_notes}
+kable(notes2 %>%
+        mutate(`Final grade` = ifelse(group == "Barème", "/5", eval(parse(
+          text = paste0("as.numeric(`", names(.)[names(.) != "group"], "`)", 
+                        collapse = "+")))),
+          `Final grade` = ifelse(group == "Barème", "/5", 
+                                 ifelse(as.numeric(`Final grade`) > 5, 
+                                        "5", `Final grade`))) %>%
+        pivot_longer(!group, names_to = " ", values_to = "grade") %>%
+        pivot_wider(names_from = group, values_from = grade) %>% 
+        select(c(" ", 
+                 #paste0("Groupe ", display_groups), 
+                 "Barème")), 
+      caption = "Presentation of research idea",
+      col.names = NULL,
+      align = c("l", rep("c", dim(notes)[2]))) %>%
+  kable_styling(bootstrap_options = c("condensed"), full_width = F, position = "float_left") %>%
+  column_spec(1, width_min = "20em") %>%
+  pack_rows("Presentation (5 points)", 1, 5) %>%
+  pack_rows("Total (5 points)", 6, 6) 
+
+kable(notes %>%
+        mutate(`Final grade` = ifelse(group == "Barème", "/20", eval(parse(
+          text = paste0("as.numeric(`", names(.)[names(.) != "group"], "`)", 
+                        collapse = "+")))),
+          `Final grade` = ifelse(group == "Barème", "/20", 
+                                 ifelse(as.numeric(`Final grade`) > 20, 
+                                        "20", `Final grade`))) %>%
+        pivot_longer(!group, names_to = " ", values_to = "grade") %>%
+        pivot_wider(names_from = group, values_from = grade) %>% 
+        select(c(" ", 
+                 #paste0("Groupe ", display_groups), 
+                 "Barème")), 
+      caption = "Research project",
+      col.names = NULL,
+      align = c("l", rep("c", dim(notes)[2]))) %>%
+  kable_styling(bootstrap_options = c("condensed"), full_width = F, position = "float_right") %>%
+  column_spec(1, width_min = "20em") %>%
+  pack_rows("Reproducibility of the analysis (4 points)", 1, 4) %>%
+  pack_rows("Presentation of the results (5 points)", 5, 7) %>%
+  pack_rows("Data analysis (8 points)", 8, 15) %>%
+  pack_rows("Along the semester (1 points)", 16, 16) %>%
+  pack_rows("Final presentation (2 points)", 17, 18) %>%
+  pack_rows("Total (20 points)", 19, 19) 
+```
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
