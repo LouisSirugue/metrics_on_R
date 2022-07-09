@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introductory Econometrics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE  G1: Pauline CHAROUSSET G2: Sebastián GARCIA CORNEJO" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introductory Econometrics
+## Lecture 18
+### <br>Louis SIRUGUE<br><br>G1: Pauline CHAROUSSET<br>G2: Sebastián GARCIA CORNEJO
+### 01/2022
+
+---
+
+
+
+&lt;style&gt; .left-column {width: 70%;} .right-column {width: 30%;} &lt;/style&gt;
+
+&lt;h3&gt;Today: Refresher on Introductory Econometrics&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Regressions with continuous variables
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Estimation
+ * 1.2. Inference
+
+#### 2. Regressions with discrete variables
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Binary dependent variable
+ * 2.2. Binary independent variable
+ * 2.3. Categorical independent variable
+ 
+#### 3. Controls and interactions
+
+#### (4. Interpretation)
+ 
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.1. Estimation
+
+ * Consider these two relationships:
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-1-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+]
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;
+ 
+&amp;#10140; One is less noisy but flatter
+ 
+&lt;p style = "margin-bottom:.5cm;"&gt;
+ 
+&amp;#10140; One is noisier but steeper
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+ 
+&lt;h4&gt;Both have a correlation of .75&lt;/h4&gt;
+ 
+]
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.1. Estimation
+
+ * Consider these two relationships :
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-2-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+]
+
+.right-column[
+
+&lt;p style = "margin-bottom:3cm;"&gt;
+
+***But a given increase in x is not associated with a same increase in y!***
+ 
+]
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.1. Estimation
+
+ * The idea of a regression is to find the line that fits the data the best
+  * Such that its slope can indicate how we expect y to change if we increase x by 1 unit
+ 
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-3-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.1. Estimation
+
+ * To do so we should minimize the distance between each point and the line
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.1. Estimation
+
+.pull-left[
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+Take for instance the 20&lt;sup&gt;th&lt;/sup&gt; observation: Peru
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+And consider the following notations:
+
+  * We denote `\(y_i\)` the ige of the `\(i^{\text{th}}\)` country
+  
+  * We denote `\(x_i\)` the gini of the `\(i^{\text{th}}\)` country
+  
+  * We denote `\(\widehat{y_i}\)` the value of the `\(y\)` coordinate of our line when `\(x = x_i\)`
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+  
+&amp;#10140; The distance between the `\(i^{\text{th}}\)` y value and the line is thus `\(y_i - \widehat{y_i}\)`
+
+ * We label that distance `\(\widehat{\varepsilon_i}\)`
+
+]
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.1. Estimation
+
+.pull-left[
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+ * Because `\(\widehat{\varepsilon_i}\)` is the value of the distance between a point `\(y_i\)` and its corresponding value on the line `\(\widehat{y_i}\)` we can write:
+
+`$$y_i = \widehat{y_i} + \widehat{\varepsilon_i}$$`
+
+ * And because `\(\widehat{y_i}\)` is a straight line, it can be expressed as
+ 
+`$$\widehat{y_i} = \hat{\alpha} + \hat{\beta}x_i$$`
+
+ * Where:
+  * `\(\hat{\alpha}\)` is the y-intercept
+  * `\(\hat{\beta}\)` is the slope
+  * Both are estimations of the actual `\(\alpha\)` and `\(\beta\)` of the unknown DGP
+]
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.1. Estimation
+
+ * Combining these two definitions yields the equation:
+
+`$$y_i = \hat{\alpha} + \hat{\beta}x_i + \widehat{\varepsilon_i} \begin{cases}  y_i = \widehat{y_i} + \widehat{\varepsilon_i}&amp; \text{Definition of distance}\\
+\widehat{y_i} = \hat{\alpha} + \hat{\beta}x_i &amp; \text{Definition of the line}
+\end{cases}$$`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * Depending on the values of `\(\hat{\alpha}\)` and `\(\hat{\beta}\)`, the value of every `\(\widehat{\varepsilon_i}\)` will change
+
+--
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-7-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+]
+
+.right-column[
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+**Attempt 1:** `\(\hat{\alpha}\)` is too high and `\(\hat{\beta}\)` is too low &amp;#10140; `\(\widehat{\varepsilon_i}\)` are large
+ 
+**Attempt 2:** `\(\hat{\alpha}\)` is too low and `\(\hat{\beta}\)` is too high &amp;#10140; `\(\widehat{\varepsilon_i}\)` are large
+ 
+**Attempt 3:** `\(\hat{\alpha}\)` and `\(\hat{\beta}\)` seem appropriate &amp;#10140; `\(\widehat{\varepsilon_i}\)` are low
+
+]
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.1. Estimation
+
+ * We want to find the values of `\(\hat{\alpha}\)` and `\(\hat{\beta}\)` that minimize the overall distance between the points and the line
+
+--
+
+`$$\min_{\hat{\alpha}, \hat{\beta}}\sum_{i=1}^{n}\widehat{\varepsilon_i}^2$$`
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Note that we square \(\widehat{\varepsilon_i}\) to avoid that its positive and negative values compensate&lt;/li&gt;
+    &lt;li&gt;This method is what we call &lt;b&gt;Ordinary Least Squares (OLS)&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;If we replace \(\widehat{\varepsilon_i}\) with \(y_i -\hat{\alpha} - \hat{\beta}x_i\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can solve the minimization problem (see Lecture 7) to obtain:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}(x_i, y_i)}{\text{Var}(x_i)} \:\:\:\:\:\:\:\:\: ; \:\:\:\:\:\:\:\:\: \hat{\alpha} = \bar{y} - \hat{\beta} \times\bar{x}$$`
+
+---
+
+&lt;center&gt;&lt;h3&gt; Vocabulary &lt;/h3&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+ * This equation we're working on is called a &lt;b&gt;regression model&lt;/b&gt;
+ 
+`$$y_i = \alpha + \beta x_i + \varepsilon_i$$` 
+
+--
+
+&lt;ul&gt;&lt;ul&gt;
+&lt;li&gt; We say that we regress \(y\) on \(x\) to find the coefficients \(\hat{\alpha}\) and \(\hat{\beta}\) that characterize the regression line&lt;/li&gt; &lt;li&gt; We often call \(\hat{\alpha}\) and \(\hat{\beta}\) &lt;b&gt;&lt;i&gt;parameters&lt;/i&gt;&lt;/b&gt; of the regression because it is what we tune to fit our model to the data&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;We also have different names for the \(x\) and \(y\) variables&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt; \(y\) is called the &lt;b&gt;&lt;i&gt;dependent&lt;/i&gt;&lt;/b&gt; or &lt;i&gt;explained&lt;/i&gt; variable
+    &lt;li&gt; \(x\) is called the &lt;b&gt;&lt;i&gt;independent&lt;/i&gt;&lt;/b&gt; or &lt;i&gt;explanatory&lt;/i&gt; variable
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+ * We call `\(\widehat{\varepsilon_i}\)` the &lt;b&gt;residuals&lt;/b&gt; because it is what is left after we fitted the data the best we could
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+ * And `\(\hat{y_i} = \hat{\alpha} + \hat{\beta}x_i\)`, i.e., the value on the regression line for a given `\(x_i\)` are called the &lt;b&gt;fitted values&lt;/b&gt;
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.2. Inference
+
+&lt;ul&gt;
+  &lt;li&gt;Inference refers to the fact of being able to &lt;b&gt;conclude&lt;/b&gt; something from our estimation&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The \(\hat{\beta}\) from our sample is actually an &lt;b&gt;estimation&lt;/b&gt; of the unobserved \(\beta\) of the underlying population&lt;/li&gt;
+    &lt;li&gt;To make inference possible we would like to know how reliable \(\hat{\beta}\) is, &lt;b&gt;how confident we are&lt;/b&gt; in its estimation&lt;/li&gt;
+    &lt;li&gt;The first step of inference is to compute the &lt;b&gt;standard error&lt;/b&gt; of \(\hat{\beta}\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+`$$\text{se}(\hat{\beta}) = \sqrt{\widehat{\text{Var}(\hat{\beta})}} = \sqrt{\frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{(n-\#\text{parameters})\sum_{i = 1}^n(x_i-\bar{x})^2}}$$`
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Notice that the variance, and thus the standard error of our estimate:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Decreases as our sample gets bigger&lt;/li&gt;
+    &lt;li&gt;Gets larger if the points are further away from the regression line on average for a given variance of \(x\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.2. Inference
+
+ * The magnitude of the standard error gives an indication of the &lt;b&gt;precision&lt;/b&gt; of our estimate:
+  * The larger the estimate relative to its standard error, the more precise the estimate
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+ * But standard errors are not easily interpretable by themselves
+  * A more direct way to get a sense of the precision for inference is to construct a &lt;b&gt;confidence interval&lt;/b&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;center&gt;&amp;#10140; &lt;b&gt;Instead of saying that our estimation \(\hat{\beta}\) is equal to 1.02, we would like to say that we are 95% sure that the actual \(\beta\) lies between two given values&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+--
+
+ * To obtain a confidence interval we can use the fact that under specific conditions (that you're gonna see next year) it is possible to derive how this object is distributed:
+
+`$$\hat{t} \equiv \frac{\hat{\beta} - \beta}{\text{se}(\hat{\beta})}$$`
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.2. Inference
+
+ * Theory shows that `\(\hat{t} \equiv \frac{\hat{\beta} - \beta}{\text{se}(\hat{\beta})}\)` follows a Student t distribution whose number of degrees of freedom is equal to `\(n\)` (in our case 22 countries) minus the number of parameters estimated in the model (in our case 2: `\(\alpha\)` and `\(\beta\)`)
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-8-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.2. Inference
+
+ * Denote `\(t_{97.5\%}\)` the value such that 97.5% of the distribution is below that value
+  * Then 95% of the distribution lies between `\(-t_{97.5\%}\)` and `\(t_{97.5\%}\)`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-9-1.png" width="67%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.2. Inference
+
+ * Because we know that `\(\hat{t} \equiv \frac{\hat{\beta} - \beta}{\text{se}(\hat{\beta})}\)` follows this distribution, we know that it has a 95% chance to fall within the two values `\(-t_{97.5\%}\)` and `\(t_{97.5\%}\)`
+
+--
+ 
+`$$\text{Pr}\left[-t_{97.5\%}\leq\frac{\hat{\beta} - \beta}{\text{se}(\hat{\beta})}\leq t_{97.5\%}\right] = 95\%$$`
+
+--
+
+ * Rearranging the terms yields:
+
+`$$\text{Pr}\left[\hat{\beta} - t_{97.5\%}\times\text{se}(\hat{\beta})\leq \beta \leq\hat{\beta} + t_{97.5\%}\times\text{se}(\hat{\beta})\right] = 95\%$$`
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+.left-column[
+
+ * Thus, we can say that there is a 95% chance for `\(\beta\)` to be within
+ 
+$$\hat{\beta} \pm t_{97.5\%}\times\text{se}(\hat{\beta}) $$
+
+]
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:-.6cm;"&gt;&lt;/p&gt;
+
+ * To get `\(t_{97.5\%}\)` with 20 df:
+ 
+
+```r
+qt(.975, 20)
+```
+
+]
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.2. Inference
+
+ * ***Confidence intervals*** are very effective to get a sense of the precision of our estimates and of the **range of values the true parameters could reasonably take**
+
+--
+
+ * But the ***p-value*** is what we tend to ultimately focus on, it is the **% chance that our estimation of the true parameter is different from 0 just coincidentally**
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Confidence intervals and p-values are tightly linked&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If there is a 4% chance that a parameter equal to 2 is different from 0, I know that the 95% confidence interval will start above 0 but quite close, and stop a bit before 4&lt;/li&gt;
+    &lt;li&gt;If a 95% confidence interval is bounded by 4 and 5, I know the the p-value will be way below 5%&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But these two indicators are &lt;b&gt;complementary&lt;/b&gt; to easily get the full picture:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With a p-value we can easily know how sure we are that the parameter is different from 0, but it is difficult to get a sense of the set of values the parameters can reasonably take&lt;/li&gt;
+    &lt;li&gt;With the confidence interval it is the opposite&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+---
+
+### 1. Regressions with continuous variables
+
+#### 1.2. Inference
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;P-val. computation:&lt;/b&gt; The principle is the same as for standard errors but the reasoning is reversed&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For &lt;i&gt;confidence intervals&lt;/i&gt;: we want to know among which values the parameter has a given percentage chance to fall into&lt;/li&gt;
+    &lt;li&gt;For &lt;i&gt;p-value&lt;/i&gt;: we want to know with which percentage chance 0 is out of the set of values that the parameter could reasonably take&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Vocabulary:&lt;/b&gt; We talk about &lt;i&gt;significance level&lt;/i&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt; When \(\text{P-value} \leq .05\), we say that the estimate is significant(ly different from 0) at the 5% level&lt;/li&gt;
+    &lt;li&gt; When the p-value is greater than a given threshold of acceptability, we say that the estimate is not significant&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;In practice:&lt;/b&gt; Usually in Economics we use the 5% threshold&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But this is arbitrary, in other fields the benchmark p-value is different&lt;/li&gt;
+    &lt;li&gt;With this threshold we're wrong once in 20 times&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Regressions with continuous variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Estimation
+ * 1.2. Inference
+
+#### 2. Regressions with discrete variables
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Binary dependent variable
+ * 2.2. Binary independent variable
+ * 2.3. Categorical independent variable
+ 
+#### 3. Controls and interactions
+
+#### (4. Interpretation)
+ 
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Regressions with continuous variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Estimation
+ * 1.2. Inference
+
+#### 2. Regressions with discrete variables
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Binary dependent variable
+ * 2.2. Binary independent variable
+ * 2.3. Categorical independent variable
+ 
+---
+
+### 2. Regressions with discrete variables
+
+#### 2.1. Binary dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;So far we've considered only continuous variables in our regression models&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But what if our dependent variable is discrete?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Consider that we have data on candidates to a job:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Their &lt;i&gt;Baccalauréat&lt;/i&gt; grade (/20) &lt;/li&gt;
+    &lt;li&gt;Whether they got accepted&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Regressions with discrete variables
+
+#### 2.1. Binary dependent variable 
+
+&lt;ul&gt;
+  &lt;li&gt;Even if the outcome variable is binary we can regress it on the grade variable&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can convert it into a &lt;b&gt;dummy&lt;/b&gt; variable, a variable taking either the value 0 or 1&lt;/li&gt;
+    &lt;li&gt;Here consider a dummy variable taking the value 1 if the person was accepted&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+`$$1\{y_i = \text{Accepted}\} = \hat{\alpha} + \hat{\beta} \times \text{Grade}_i + \hat{\varepsilon_i}$$`
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 35%;} &lt;/style&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+### 2. Regressions with discrete variables
+
+#### 2.1. Binary dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;The fitted values can be viewed as the probability to be accepted for a given grade&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The slope is thus by how much the probability of being accepted would increase on expectation for a 1 point increase in the grade&lt;/li&gt;
+    &lt;li&gt;That's why we call OLS regression models with a binary outcome &lt;i&gt;Linear Probability Models&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Regressions with discrete variables
+
+#### 2.1. Binary dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;But with an LPM you can end up with 'probabilities' that are lower than 0 and greater than 1&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Interpretation is only valid for values of x sufficiently close to the mean&lt;/li&gt;
+    &lt;li&gt;Keep that in mind and be careful when interpreting the results of an LPM&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Regressions with discrete variables
+
+#### 2.2. Binary independent variable
+
+&lt;ul&gt;
+  &lt;li&gt;Now consider that we individual data containing:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The sex&lt;/li&gt;
+    &lt;li&gt;The height (centimeters)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+ 
+&lt;ul&gt;
+  &lt;li&gt;So instead of&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;having a binary dependent variable :&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+`$$1\{y_i = \text{Accepted}\} = \hat{\alpha} + \hat{\beta} \times \text{Grade}_i + \hat{\varepsilon_i}$$`
+ 
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;we have a binary independent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+`$$\text{Height}_i = \hat{\alpha} + \hat{\beta} \times 1\{x_i = \text{Male}\} + \hat{\varepsilon_i}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt; &amp;#10140; How to interpret the coefficient \(\hat{\beta}\) from this regression?&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+ 
+### 2. Regressions with discrete variables
+
+#### 2.2. Binary independent variable
+
+&lt;ul&gt;
+  &lt;li&gt;If the sex variable was continuous it would be the expected increase in height for a &lt;i&gt;'1 unit increase'&lt;/i&gt; in sex&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Here the &lt;i&gt;'1 unit increase'&lt;/i&gt; is switching from 0 to 1, i.e. from female to male&lt;/li&gt;
+    &lt;li&gt;Here is the traditionnal scatter plot representation&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+ 
+### 2. Regressions with discrete variables
+
+#### 2.2. Binary independent variable
+
+&lt;ul&gt;
+  &lt;li&gt;Replacing the point geometry by the corresponding boxplots: &lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;What this &lt;i&gt;'1 unit increase'&lt;/i&gt; corresponds to should be clearer&lt;/li&gt;
+    &lt;li&gt;The coefficient \(\hat{\beta}\) is actually the difference between the average height for males and females&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+ 
+### 2. Regressions with discrete variables
+
+#### 2.2. Binary independent variable
+
+ * Let's have a look at the regression results and at the summary statistics of both distributions:
+
+--
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+```
+## 
+## ========================================
+##                  Dependent variable:    
+##              ---------------------------
+##                        Height           
+## ----------------------------------------
+## SexMale                9.6***           
+##                         (0.7)           
+##                                         
+## Constant              164.8***          
+##                         (0.5)           
+##                                         
+## ----------------------------------------
+## Observations            1,000           
+## R2                       0.2            
+## ========================================
+## Note:        *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+```
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Height summary statistics by sex&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Sex &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Med &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Q3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Max &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 131.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 158.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 164.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 164.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 171.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 193.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 141.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 167.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 174.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 174.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 181.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 206.1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&amp;#10140; The `\(\hat{\alpha}\)` coefficient is equal to the expected value of `\(y\)` when `\(x = 0\)`, i.e., to the average height for females
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&amp;#10140; The `\(\hat{\beta}\)` coefficient is equal to expected increase in `\(y\)` when going from `\(x = 0\)` to `\(x = 1\)`, i.e., to the difference between male and female average height
+
+]
+
+---
+ 
+### 2. Regressions with discrete variables
+
+#### 2.2. Binary independent variable
+
+ * Let's think of it in terms of a regression model:
+ 
+`$$\text{Height}_i = \hat{\alpha} + \hat{\beta} \times 1\{x_i = \text{Male}\} + \hat{\varepsilon_i}$$`
+
+--
+
+ * We now have `\(\hat{\alpha}\)` and `\(\hat{\beta}\)`:
+ 
+`$$\text{Height}_i = 165.0 + 9.8 \times 1\{x_i = \text{Male}\} + \hat{\varepsilon_i}$$`
+
+--
+
+ * The fitted values write:
+
+`$$\widehat{\text{Height}_i} =  165.0 + 9.8 \times 1\{x_i = \text{Male}\}$$`
+
+--
+
+.pull-left[
+
+ * When the dummy equals 0 (females):
+ 
+`$$\begin{align}
+\widehat{\text{Height}_i} &amp; = 165.0 + 9.8 \times 0\\
+&amp;= 165.0 =\overline{\text{Height}_{\left[x_i = \text{Female}\right]}}
+\end{align}$$`
+
+]
+
+--
+
+.pull-right[
+
+ * When the dummy equals 1 (males):
+ 
+`$$\begin{align}\widehat{\text{Height}_i} &amp; = 165.0 + 9.8 \times 1\\
+&amp;= 174.8 =\overline{\text{Height}_{\left[x_i = \text{Male}\right]}}\end{align}$$`
+
+]
+
+---
+ 
+### 2. Regressions with discrete variables
+
+#### 2.3. Categorical independent variable
+
+&lt;ul&gt;
+  &lt;li&gt;So far we've been working with binary categorical variables:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Accepted vs. Rejected, Male vs. Female&lt;/li&gt;
+    &lt;li&gt;But what about discrete variables with more than two categories?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+--
+
+ * Take for instance the race variable:
+ 
+
+```r
+asec_2020 &lt;- read.csv("asec_2020.csv")
+kable(asec_2020 %&gt;% group_by(Race) %&gt;% summarise(N = n()) %&gt;% t(),
+      caption = "Distribution of the Race categorical variable")
+```
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Distribution of the Race categorical variable&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Race &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asian &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Black &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; White &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; N &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4528 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6835 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2422 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50551 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&lt;i&gt;&amp;#10140; How can we use this variable as an independent variable in our regression framework?&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+
+---
+ 
+### 2. Regressions with discrete variables
+
+#### 2.3. Categorical independent variable
+
+ * Just as we converted our `\(2\)`-category variable into `\(1\)` dummy variable, we can convert an `\(n\)`-category variable into `\(n-1\)` dummy variables:
+ 
+--
+
+.pull-left[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt; &lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Sex &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Male &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Race &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Black &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Other &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; White &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asian &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asian &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Black &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Black &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; White &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; White &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+***&amp;#10140; But why do we omit one category every time?***
+
+ * Females are observations for which Male equals 0
+ * Asians are observations for which Black, Other, and White each equals 0
+
+&amp;#10140; Females and Asians are ***reference categories***
+
+ * The coefficient associated with the Male dummy was interpreted ***relative*** to females
+ * The coefficients associated with the Black, Other, and White dummies will be interpreted ***relative*** to Asians
+
+]
+
+---
+
+### 2. Regressions with discrete variables
+
+#### 2.3. Categorical independent variable
+
+ * Thus, regressing earnings on the race categorical variable amounts to estimate the equation:
+ 
+`$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1} 1\{\text{Race}_i = \text{Black}\} + \hat{\beta_2} 1\{\text{Race}_i = \text{Other}\} + \hat{\beta_3} 1\{\text{Race}_i = \text{White}\} + \hat{\varepsilon_i}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+* And if we compare the regression results to the average earnings by group:
+
+&lt;p style = "margin-bottom:-.75cm;"&gt;&lt;/p&gt;
+
+--
+
+.left-column[
+
+```r
+summary(lm(Earnings ~ Race, asec_2020))$coefficients
+```
+
+```
+##              Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept)  77990.78   1149.552  67.84449 0.000000e+00
+## RaceBlack   -27413.29   1482.197 -18.49503 3.571079e-76
+## RaceOther   -28512.08   1947.305 -14.64181 1.819073e-48
+## RaceWhite   -15110.29   1199.933 -12.59262 2.559272e-36
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;&lt;ul&gt;
+&lt;li&gt;\(\alpha\) is still the average earnings for the reference category &lt;/li&gt;
+&lt;li&gt;coefficient are still &lt;i&gt;relative&lt;/i&gt; to the reference category&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+]
+
+.right-column[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Mean earnings by race&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Race &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean earnings &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Asian &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 77990.78 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Black &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50577.49 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49478.70 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; White &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 62880.49 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### 2. Regressions with discrete variables
+
+#### 2.3. Categorical independent variable
+
+ * As you can see from the previous regression results, by default R sorts categories by alphabetical order:
+ 
+
+```
+##              Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept)  77990.78   1149.552  67.84449 0.000000e+00
+## RaceBlack   -27413.29   1482.197 -18.49503 3.571079e-76
+## RaceOther   -28512.08   1947.305 -14.64181 1.819073e-48
+## RaceWhite   -15110.29   1199.933 -12.59262 2.559272e-36
+```
+
+--
+
+ * But oftentimes we would prefer the reference category to be the majority group
+  * In R we can use the `relevel()` function to change the reference category of a factor
+
+--
+
+
+```r
+summary(lm(Earnings ~ relevel(as.factor(Race), "White"), asec_2020))$coefficients[, c(1, 2, 4)]
+```
+
+```
+##                                         Estimate Std. Error     Pr(&gt;|t|)
+## (Intercept)                             62880.49   344.0464 0.000000e+00
+## relevel(as.factor(Race), "White")Asian  15110.29  1199.9326 2.559272e-36
+## relevel(as.factor(Race), "White")Black -12302.99   996.8981 5.947231e-35
+## relevel(as.factor(Race), "White")Other -13401.79  1609.0045 8.294160e-17
+```
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Regressions with continuous variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Estimation
+ * 1.2. Inference
+
+#### 2. Regressions with discrete variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Binary dependent variable
+ * 2.2. Binary independent variable
+ * 2.3. Categorical independent variable
+ 
+#### 3. Controls and interactions
+
+#### (4. Interpretation)
+ 
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Regressions with continuous variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Estimation
+ * 1.2. Inference
+
+#### 2. Regressions with discrete variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Binary dependent variable
+ * 2.2. Binary independent variable
+ * 2.3. Categorical independent variable
+ 
+#### 3. Controls and interactions
+
+---
+
+### 3. Controls and interactions
+
+&lt;ul&gt;
+  &lt;li&gt;We can add a third variable z in the regression for two reasons:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Controlling for z&lt;/b&gt; allows to &lt;b&gt;net out&lt;/b&gt; the relationship between x and y from how they both relate to &lt;b&gt;z&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Interacting x with z&lt;/b&gt; allows to &lt;b&gt;estimate how the relationship&lt;/b&gt; between x and y &lt;b&gt;varies with z&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Consider the following fictitious dataset at the household level&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Household annual income&lt;/li&gt;
+    &lt;li&gt;Number of children in the household&lt;/li&gt;
+    &lt;li&gt;Parents' education level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+.pull-left[
+
+```r
+data &lt;- read.csv("household_data.csv")
+head(data, 7) # fictitious data
+```
+
+```
+##   Income Children    Education
+## 1     20        1 &lt; Highschool
+## 2     10        1 &lt; Highschool
+## 3     10        2 &lt; Highschool
+## 4     15        0 &lt; Highschool
+## 5     15        1 &lt; Highschool
+## 6     20        0 &lt; Highschool
+## 7     15        2   Highschool
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-26-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 3. Controls and interactions
+
+&lt;ul&gt;
+  &lt;li&gt;There's a clear positive relationship&lt;/li&gt;
+&lt;/ul&gt;
+  
+
+```
+##             Estimate Pr(&gt;|t|)
+## (Intercept)   -0.885    0.319
+## Income         0.166    0.000
+```
+
+--
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But what if this relationship was driven by a third variable?&lt;/li&gt;
+    &lt;li&gt;Maybe it's just that more educated parents tend to earn more and to have more children&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-28-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+--
+
+.pull-right[
+&lt;ul&gt;
+  &lt;li&gt;In this example, &lt;b&gt;education&lt;/b&gt; is indeed &lt;b&gt;positively correlated with both variables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So at least part of the positive relationship we observe is actually due to education&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Controlling&lt;/b&gt; for education estimates the relationship by &lt;b&gt;netting our the contribution of education&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 3. Controls and interactions
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Controlling&lt;/b&gt; for education does the same to the slope &lt;b&gt;as recentering&lt;/b&gt; the graph with respect to education&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;In that way, when moving along the x axis, &lt;b&gt;z&lt;/b&gt; does not increase but &lt;b&gt;remains constant&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:-.75cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-29-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The crosses are located at the average x and y values for each education group&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Controlling for education shifts x and y by group such that crosses superimpose&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+--
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-30-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+```
+##                     Estimate Pr(&gt;|t|)
+## (Intercept)           -0.120    0.892
+## Income                 0.064    0.196
+## EducationCollege       3.456    0.015
+## EducationHighschool    1.856    0.037
+```
+]
+
+---
+
+### 3. Controls and interactions
+
+&lt;ul&gt;
+  &lt;li&gt;Here when we &lt;b&gt;do not control&lt;/b&gt; for education:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$Children_i = \alpha + \beta Income_i + \varepsilon_i$$`
+
+&lt;ul&gt;&lt;ul&gt;
+  &lt;li&gt;We estimate the overall relationship (here, significantly positive)&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But when we &lt;b&gt;control&lt;/b&gt; for education:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$Children_i = \alpha + \beta Income_i + \gamma_1 1\{Education_i=\text{Highschool}\} + \gamma_2 1\{Education_i=\text{College}\} +\varepsilon_i$$`
+
+&lt;ul&gt;&lt;ul&gt;
+  &lt;li&gt;We estimate the relationship net of the effect of education (here, not significant)&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Interacting&lt;/b&gt; the two variables is going one step further:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\begin{align}Children_i &amp; = \alpha + \beta Income_i + \gamma_1 1\{Education_i=\text{Highschool}\} + \gamma_2 1\{Education_i=\text{College}\} + \\ 
+&amp; \delta_1 Income_i\times1\{Education_i=\text{Highschool}\} + \delta_2 Income_i \times 1\{Education_i=\text{College}\} + \varepsilon_i\end{align}$$`
+
+&lt;ul&gt;&lt;ul&gt;
+  &lt;li&gt;It is not simply taking into account the fact that education may plays a role&lt;/li&gt;
+  &lt;li&gt;It estimates by how much the relationship between x and y varies according to z&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+---
+
+### 3. Controls and interactions
+
+ * &lt;b&gt;Interacting&lt;/b&gt; income with education provides &lt;b&gt;one slope per education group&lt;/b&gt;:
+
+--
+
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-32-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+```
+##                            Estimate Pr(&gt;|t|)
+## (Intercept)                   2.333    0.225
+## Income                       -0.100    0.411
+## EducationCollege             -1.768    0.553
+## EducationHighschool           0.596    0.819
+## Income:EducationCollege       0.239    0.095
+## Income:EducationHighschool    0.111    0.445
+```
+]
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The principle is the same when the third variable is continuous:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Controlling nets out the slope from how the third variable enters the relationship&lt;/li&gt;
+    &lt;li&gt;Interacting gives by how much the slope changes on expectation when the third variable increases by 1&lt;/li&gt;
+    &lt;li&gt;And we can control for/interact with multiple third variables&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Regressions with continuous variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Estimation
+ * 1.2. Inference
+
+#### 2. Regressions with discrete variables &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Binary dependent variable
+ * 2.2. Binary independent variable
+ * 2.3. Categorical independent variable
+ 
+#### 3. Controls and interactions &amp;#10004;
+
+#### (4. Interpretation)
+
+---
+
+### (4. Interpretation)
+
+#### If time train at interpreting randomly drawn relationships
+
+&lt;center&gt;&lt;a href="https://sirugue.shinyapps.io/lecture15/"&gt;&lt;img src = "html.png" width = "900"/&gt;&lt;/a&gt;&lt;/center&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
