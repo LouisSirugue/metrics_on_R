@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>R Programming &amp; Descriptive statistics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE  G1: Pauline CHAROUSSET G2: Sebastián GARCIA CORNEJO" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# R Programming &amp; Descriptive statistics
+## Lecture 17
+### <br>Louis SIRUGUE<br><br>G1: Pauline CHAROUSSET<br>G2: Sebastián GARCIA CORNEJO
+### 02/2022
+
+---
+
+
+
+
+&lt;h3&gt;Today: Refresher on R Programming and Descriptive Statistics&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. The basics of R programming
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Types of R objects
+ * 1.2. The dplyr grammar
+ * 1.3. Data visualization
+
+#### 2. Descriptive statistics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Distributions
+ * 2.2. Central tendency
+ * 2.3. Spread
+ * 2.4. Joint distributions
+ 
+#### 3. A few words on using R
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. When it doesn't work the way you want
+ * 3.2. Where to find help
+ * 3.3. When it doesn't work at all
+
+---
+
+&lt;h3&gt;Today: Refresher on R Programming and Descriptive Statistics&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. The basics of R programming
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Types of R objects
+ * 1.2. The dplyr grammar
+ * 1.3. Data visualization
+ 
+---
+
+### 1. The basics of R programming
+
+#### 1.1. Types of R objects
+
+ * The most &lt;b&gt;basic&lt;/b&gt; element in R is just a &lt;b&gt;value&lt;/b&gt;, an object of dimension `\(1\times1\)`:
+
+--
+
+
+```r
+a &lt;- 1
+a
+```
+
+```
+## [1] 1
+```
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+
+```r
+b &lt;- "monday"
+b
+```
+
+```
+## [1] "monday"
+```
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+
+```r
+c &lt;- a == b
+c
+```
+
+```
+## [1] FALSE
+```
+
+---
+
+### 1. The basics of R programming
+
+#### 1.1. Types of R objects
+
+&lt;ul&gt;
+  &lt;li&gt;Next, there are &lt;b&gt;vectors&lt;/b&gt;, objects of dimension \(n\times1\):&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Vectors can be created with &lt;b&gt;c()&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The elements of a vector should be of the &lt;b&gt;same class&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Class can be changed with &lt;b&gt;as&lt;/b&gt; functions: as.[numeric/character/logical]()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+.pull-left[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+
+```r
+a &lt;- 1:4
+a
+```
+
+```
+## [1] 1 2 3 4
+```
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+```r
+a * 2
+```
+
+```
+## [1] 2 4 6 8
+```
+
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+
+```r
+b &lt;- c("a", "xyz")
+b
+```
+
+```
+## [1] "a"   "xyz"
+```
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+```r
+paste0("b", b)
+```
+
+```
+## [1] "ba"   "bxyz"
+```
+]
+]
+
+--
+
+.pull-left[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+
+```r
+c &lt;- c(F, 1 &lt; 2)
+c
+```
+
+```
+## [1] FALSE  TRUE
+```
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+```r
+!c
+```
+
+```
+## [1]  TRUE FALSE
+```
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Factor&lt;/b&gt;&lt;/center&gt;
+
+```r
+d &lt;- as.factor(a)
+d
+```
+
+```
+## [1] 1 2 3 4
+## Levels: 1 2 3 4
+```
+&lt;p style = "margin-bottom:.9cm;"&gt;
+
+```r
+relevel(d, 3)
+```
+
+```
+## [1] 1 2 3 4
+## Levels: 3 1 2 4
+```
+]
+]
+
+---
+
+### 1. The basics of R programming
+
+#### 1.1. Types of R objects
+
+ * Some useful functions/operators for vectors
+
+
+```r
+vec &lt;- c("a", "b", "c", "d")
+```
+
+--
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+```r
+length(vec)
+```
+
+```
+## [1] 4
+```
+
+--
+&lt;p style = "margin-bottom:.8cm;"&gt;
+
+```r
+match("b", vec)
+```
+
+```
+## [1] 2
+```
+
+--
+&lt;p style = "margin-bottom:.8cm;"&gt;
+
+```r
+vec[3]
+```
+
+```
+## [1] "c"
+```
+
+---
+
+### 1. The basics of R programming
+
+#### 1.1. Types of R objects
+
+&lt;ul&gt;
+  &lt;li&gt;Finally, there are &lt;b&gt;tables&lt;/b&gt;, objects of dimension \(n\times m\):&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Gather \(m\) vectors (columns) of \(n\)  observations&lt;/li&gt;
+    &lt;li&gt;Several possible classes, e.g., &lt;b&gt;tibble()&lt;/b&gt; from tidyverse&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+library(tidyverse)
+
+data &lt;- tibble(name = c("Bob", "Tom", "Kim"),
+               age = c(43, 19, 27),
+               male = c(T, T, F))
+```
+
+--
+
+
+```r
+data
+```
+
+```
+## # A tibble: 3 x 3
+##   name    age male 
+##   &lt;chr&gt; &lt;dbl&gt; &lt;lgl&gt;
+## 1 Bob      43 TRUE 
+## 2 Tom      19 TRUE 
+## 3 Kim      27 FALSE
+```
+
+---
+
+### 1. The basics of R programming
+
+#### 1.1. Types of R objects
+
+&lt;ul&gt;
+  &lt;li&gt;Such datasets can be imported on R with &lt;b&gt;read functions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;There is one read function per &lt;b&gt;data format&lt;/b&gt; (csv, xls, dta, ...)&lt;/li&gt;
+    &lt;li&gt;The main argument is the &lt;b&gt;path&lt;/b&gt;, with slashes: "C:/User/.../data.csv"&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+
+```r
+data &lt;- read.csv("data/cereals.csv") # Import csv data
+data &lt;- as_tibble(data)              # Put in tibble format
+head(data, 5)                        # Print first 5 rows 
+```
+
+--
+
+
+```
+## # A tibble: 5 x 16
+##   name       mfr   type  calories protein   fat sodium fiber carbo sugars potass
+##   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;int&gt;  &lt;int&gt;
+## 1 100% Bran  N     C           70       4     1    130    10     5      6    280
+## 2 100% Natu~ Q     C          120       3     5     15     2     8      8    135
+## 3 All-Bran   K     C           70       4     1    260     9     7      5    320
+## 4 All-Bran ~ K     C           50       4     0    140    14     8      0    330
+## 5 Almond De~ R     C          110       2     2    200     1    14      8     -1
+## # ... with 5 more variables: vitamins &lt;dbl&gt;, shelf &lt;int&gt;, weight &lt;dbl&gt;,
+## #   cups &lt;dbl&gt;, rating &lt;dbl&gt;
+```
+
+---
+
+### 1. The basics of R programming
+
+#### 1.2. The dplyr grammar
+
+ * `dplyr` provides **useful functions** to manipulate data and the **pipe operator (%&gt;%)** to chain operations
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;b&gt;Important functions of the dplyr grammar&lt;/b&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Function &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mutate() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Modify or create a variable &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; select() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Keep a subset of variables &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; filter() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Keep a subset of observations &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; arrange() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Sort the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; group_by() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; summarise() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Summarizes variables into 1 observation per group &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; left/right/inner/full_join() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Merge data &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### 1. The basics of R programming
+
+#### 1.2. The dplyr grammar
+
+&lt;ul&gt;
+  &lt;li&gt;We can first subset the data:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The type &lt;b&gt;variable&lt;/b&gt; only takes the value "C", we can remove it with &lt;b&gt;select()&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;observations&lt;/b&gt; have negative values of potassium, we can remove them with &lt;b&gt;filter()&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;These two operations can be &lt;b&gt;chained&lt;/b&gt; using the pipe operator &lt;b&gt;%&gt;%&lt;/b&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+
+```r
+dim(data) # Dimensions of the data before the operation
+```
+
+```
+## [1] 77 16
+```
+
+--
+
+
+```r
+data &lt;- data %&gt;% 
+  select(-type) %&gt;% 
+  filter(potass &gt;= 0)
+```
+
+--
+
+
+```r
+dim(data) # Dimensions of the data after the operation
+```
+
+```
+## [1] 75 15
+```
+ 
+---
+
+### 1. The basics of R programming
+
+#### 1.2. The dplyr grammar
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;mutate()&lt;/b&gt; function allows to modify and create variables&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Using simple &lt;b&gt;vector operations&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;With &lt;b&gt;ifelse()&lt;/b&gt; to create a binary variable based on a condition&lt;/li&gt;
+    &lt;li&gt;With &lt;b&gt;case_when()&lt;/b&gt; to create a categorical variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+data &lt;- data %&gt;% 
+  mutate(cal_100g = 100 * (calories / weight),
+```
+
+--
+&lt;p style = "margin-bottom:-.7cm;"&gt;&lt;/p&gt;
+
+
+```r
+         low_cal = ifelse(cal_100g &lt; 100, T, F),
+```
+
+--
+&lt;p style = "margin-bottom:-.7cm;"&gt;&lt;/p&gt;
+
+```r
+         mfr = case_when(mfr == "N"           ~ "Nestlé",
+                         mfr == "Q"           ~ "Quaker Oats",
+                         mfr == "K"           ~ "Kellogg's",
+                         mfr %in% c("G", "R") ~ "General Mills",
+                         mfr == "P"           ~ "Post Consumer Brands LLC",
+                         mfr == "A"           ~ "Maltex Co."))
+```
+
+
+
+---
+
+### 1. The basics of R programming
+
+#### 1.2. The dplyr grammar
+
+ * Such computations can also be done &lt;b&gt;separately&lt;/b&gt; for each value of a variable &lt;b&gt;with group_by()&lt;/b&gt;
+
+--
+
+
+```r
+data &lt;- data %&gt;% 
+  group_by(mfr) %&gt;% 
+  mutate(n_brands = n()) %&gt;% 
+  ungroup()
+```
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+
+&lt;ul&gt;
+  &lt;li&gt;Using &lt;b&gt;summarise()&lt;/b&gt; instead of mutate() allows to:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Keep only the grouping and summarized variables&lt;/li&gt;
+    &lt;li&gt;Keep one value per group (no duplicate row)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+
+```r
+data %&gt;% 
+  group_by(mfr) %&gt;% 
+  summarise(n_brands = n())
+```
+]
+
+--
+
+.pull-right[
+
+```
+## # A tibble: 6 x 2
+##   mfr                      n_brands
+##   &lt;chr&gt;                       &lt;int&gt;
+## 1 General Mills                  29
+## 2 Kellogg's                      23
+## 3 Maltex Co.                      1
+## 4 Nestlé                          5
+## 5 Post Consumer Brands LLC        9
+## 6 Quaker Oats                     8
+```
+]
+---
+
+### 1. The basics of R programming
+
+#### 1.2. The dplyr grammar
+
+ * `dplyr` also provides functions to:
+
+--
+
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Rename variables &amp;#10140; &lt;b&gt;rename()&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+ 
+
+```r
+data &lt;- data %&gt;% rename(manufacturer = mfr)
+```
+
+--
+
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Sort rows according to the values of one or several variables &amp;#10140; &lt;b&gt;arrange()&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+
+```r
+data &lt;- data %&gt;% arrange(cal_100g)
+```
+
+--
+
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Joining another dataset with a common variable &amp;#10140; &lt;b&gt;[left/right/full/inner]_join()&lt;/b&gt;:&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+
+```r
+data &lt;- data %&gt;% 
+  left_join(tibble(manufacturer = c("Kellogg's", "Nestlé", "General Mills", 
+                                    "Post Consumer Brands LLC", "Quaker Oats", "Maltex Co."),
+                   creation = c(1906, 1966, 1928, 1895, 1877, 1899)),
+            by = "manufacturer")
+```
+
+---
+
+### 1. The basics of R programming
+
+#### 1.3. Data visualization
+
+ * The tidyverse packages also gives access to the &lt;b&gt;ggplot&lt;/b&gt; grammar for data visualization
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The core arguments of the ggplot() function are the following&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Data&lt;/b&gt;: the values to plot&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Mapping&lt;/b&gt; (aes, for aesthetics): the structure of the plot&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Geometry&lt;/b&gt;: the type of plot&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;These arguments should be specified as follows:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Data and mapping should be specified within the parentheses&lt;/li&gt;
+    &lt;li&gt;The geometry and any other element should be added with a &lt;b&gt;+&lt;/b&gt; sign&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+ggplot(data, aes) + geometry + anything_else
+```
+
+--
+
+ * You can also apply the `ggplot()` function to your data with a pipe:
+
+
+```r
+data %&gt;% ggplot(., aes) + geometry
+```
+
+---
+
+### 1. The basics of R programming
+
+#### 1.3. Data visualization
+
+
+```r
+test_data &lt;- tibble(V1 = 1:6, 
+                    V2 = c(64, 60, 16, 8, 16, 32))
+ggplot(test_data, aes(x = V1, y = V2)) + geom_point(size = 3)
+```
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+--
+
+.pull-left[
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * We first specified our data: 
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; V1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; V2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+ * Then assigned `V1` to the x-axis and `V2` to the y-axis with `aes()` 
+ 
+ * And chose the `point` geometry with a size of 3
+
+]
+
+--
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 1. The basics of R programming
+
+#### 1.3. Data visualization
+
+&lt;ul&gt;
+  &lt;li&gt;In some cases you would convey information with other means than a position on axis&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It can be with the color, size or shape of a geometry, ...&lt;/li&gt;
+    &lt;li&gt;For instance if you have two groups&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+ 
+
+```r
+test_data &lt;- test_data %&gt;% mutate(Group = paste("Group", c(1, 1, 2, 2, 2, 2)))
+```
+
+--
+
+.pull-left[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; V1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; V2 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Group &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group 2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+
+ * Just as we assigned the two numeric variables to the x an y axis with aes, we have to assign the group variable to the 'color axis' with aes
+
+
+```r
+ggplot(test_data, aes(x = V1, y = V2, 
+                      color = Group)) + ...
+```
+
+ * But there is no proper 'color axis', that's why a legend will be generated
+
+]
+
+---
+
+### 1. The basics of R programming
+
+#### 1.3. Data visualization
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-42-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. The basics of R programming
+
+#### 1.3. Data visualization
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+&lt;b&gt;&amp;#10140; Case 1:&lt;/b&gt; The style does not depend on the value of a variable
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The style element should be &lt;b&gt;uniform&lt;/b&gt; across all data points&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So it should be specified &lt;b&gt;within the geometry&lt;/b&gt; function&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + 
+  geom_point(color = "red", shape = 18)
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+&lt;b&gt;&amp;#10140; Case 2:&lt;/b&gt; The style element depends on the value of a variable
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The style should &lt;b&gt;depend on the value of the variable&lt;/b&gt; it has been assign to in &lt;b&gt;aes&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So just as for regular axes, modifications should take place in a scale function&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+ggplot(test_data, aes(x = V1, y = V2, color = Group)) + 
+  scale_color_manual(name = "Group:", values = c("red", "blue"))  + 
+  geom_point(shape = 18)
+```
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. The basics of R programming &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Types of R objects
+ * 1.2. The dplyr grammar
+ * 1.3. Data visualization
+
+#### 2. Descriptive statistics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Distributions
+ * 2.2. Central tendency
+ * 2.3. Spread
+ * 2.4. Joint distributions
+ 
+#### 3. A few words on using R
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. When it doesn't work the way you want
+ * 3.2. Where to find help
+ * 3.3. When it doesn't work at all
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. The basics of R programming &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Types of R objects
+ * 1.2. The dplyr grammar
+ * 1.3. Data visualization
+
+#### 2. Descriptive statistics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Distributions
+ * 2.2. Central tendency
+ * 2.3. Spread
+ * 2.4. Joint distributions
+ 
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+--
+
+ * The point of &lt;b&gt;descriptive statistics&lt;/b&gt; is to &lt;b&gt;summarize variables&lt;/b&gt; into a small set of tractable statistics. 
+ * The most comprehensive way to characterize a variable is to compute its distribution:
+  * What are the values the variable takes?
+  * How frequently does each of these values appear?
+
+--
+
+&lt;b&gt; &amp;#10140; Consider for instance the following variable:&lt;/b&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Variable 1&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+.pull-left[
+
+ * We can count how many times each value appears
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Variable 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; n &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom: 1.5cm;"&gt;&lt;/p&gt;
+
+ * And we can represent this distribution graphically with a bar plot
+  * Each possible value on the x-axis
+  * Their number of occurrences on the y-axis
+]
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-47-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+ * But what if we would like to do the same thing for the following variable?
+
+--
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Variable 2&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.912877 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.006781 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.517149 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.854849 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.177872 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.815240 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.666582 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.422721 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.025062 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.411020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.889811 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.729103 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4.160800 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.519049 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.849172 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.368158 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.167404 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.882974 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6.751888 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.202183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.390224 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.942039 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.488909 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.195647 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7.073922 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.790039 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.297919 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.218109 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.754213 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.225030 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+--
+
+ * Each value appears only once
+  * So the count of each value does not help summarizing the variable
+
+--
+
+&lt;center&gt;&lt;h4&gt;&amp;#10140;&lt;i&gt;We should rather do a histogram&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount.
+
+--
+
+&lt;p style = "margin-bottom: 1.97cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-49-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount.
+  * We can divide the domain of this variable into 5 bins
+
+&lt;p style = "margin-bottom: 1.25cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-50-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount.
+  * We can divide the domain of this variable into 5 bins
+  * And count the number of observations within each bin
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-51-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount.
+  * We can divide the domain of this variable into 5 bins
+  * And count the number of observations within each bin
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-52-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+&lt;ul&gt;
+  &lt;li&gt;There's no definitive rule to choose the number of bins&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But too many or too few can yield misleading histograms&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-53-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Densities are often used instead of histograms&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Both are based on the same principle, but densities are continuous&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+ * Distributions are comprehensive representations but not simple statistics
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-54-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+ * How to summarize these distributions with simple statistics?
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+ * Distributions are comprehensive representations but not simple statistics
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-55-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+ * How to summarize these distributions with simple statistics?
+  * By describing their central tendency (e.g., mean, median)
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.1. Distributions
+
+ * Distributions are comprehensive representations but not simple statistics
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-56-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+ * How to summarize these distributions with simple statistics?
+  * By describing their central tendency (e.g., mean, median)
+  * And their spread (e.g., standard deviation, inter-quartile range)
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.2. Central tendency
+
+&lt;ul&gt;
+  &lt;li&gt;The mean is the most common statistic to describe central tendencies&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Take for instance the grades of group 2 last year for the second-semester final project&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Grades of G2 last year&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+--
+
+ * The mean is simply the sum of all the grades divided by the number of grades:
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+
+`$$\bar{x} = \frac{1}{N}\sum_{i = 1}^Nx_i$$` 
+
+--
+
+`$$\frac{20 + 20 + 17.5 + 17.5 + 16 + 16 + 16 + 14.5 + 14.5 + 19.5 + 19.5 + 18.5 + 18.5 + 18.5}{14} = 17.61$$`
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.2. Central tendency
+
+&lt;ul&gt;
+  &lt;li&gt;The mean is the most common statistic to describe central tendencies&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Take for instance the grades of group 2 last year for the second-semester final project&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Grades of G2 last year&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+ * It can also be expressed as the average of each possible value weighted by its number of occurrences:
+ 
+ &lt;p style = "margin-bottom:.5cm;"&gt;
+ 
+`$$\bar{x} = \frac{1}{N}\sum_{i = 1}^Nx_i$$` 
+
+`$$\bar{x} = \frac{(2 \times 20) + (2 \times 17.5) + (3 \times 16) + (2 \times 14.5) + (2 \times 19.5) + (3 \times 18.5)}{2 + 2 + 3 + 2 + 2 + 3 = 14} = 17.61$$`
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.2. Central tendency
+
+ * To obtain the median you first need to sort the values:
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Grades of G2 last year&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The median is the value that divides the distribution into two halves&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With N even: Average of the last value of the first half and the first value of the second half&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * As we have 14 observations, here the median is the average of the 7&lt;sup&gt;th&lt;/sup&gt; and the 8&lt;sup&gt;th&lt;/sup&gt; observations:
+
+`$$\text{Med}(x) = \begin{cases} x[\frac{N+1}{2}] &amp; \text{if } N \text{ is odd}\\
+\frac{x[\frac{N}{2}]+x[\frac{N}{2}+1]}{2} &amp; \text{if } N \text{ is even}
+\end{cases} = \frac{17.5 + 18.5}{2} = 18$$`
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.3. Spread
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The most intuitive statistic to describe the spread of a variable is probably its &lt;b&gt;range&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The minimum and maximum value of the distribution&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+ * But consider the following two distributions:
+
+&lt;p style = "margin-bottom: 1.25cm;"&gt;&lt;/p&gt;
+
+&lt;style&gt; .left-column {width: 66%;} .right-column {width: 32%;} &lt;/style&gt;
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-60-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In the presence of outliers or very skewed distributions, the full range of a variable may not be representative of what we mean by 'spread'&lt;/li&gt;
+&lt;/ul&gt;
+ 
+&lt;ul&gt;
+  &lt;li&gt;That's why we tend to prefer:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;inter-quantile range&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;standard deviation&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+]
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.3. Spread
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Quantiles&lt;/b&gt; are observations that divide the population into &lt;b&gt;groups of equal size&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The median divides the population into 2 groups of equal size&lt;/li&gt;
+    &lt;li&gt;Quartiles divide the population into 4 groups of equal size&lt;/li&gt;
+    &lt;li&gt;There are also terciles, quintiles, deciles, and so on&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;The interquartile range&lt;/b&gt; is the difference between the third and the first quartile: \(\text{IQR} = Q_3 - Q_1\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Put differently, it corresponds to the bounds of the set which contains the &lt;b&gt;middle half of the distribution&lt;/b&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-61-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.3. Spread
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;variance&lt;/b&gt; is a way to quantify how values of a variable tend to deviate from their mean&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If values tend to be close to the mean, then the spread is low&lt;/li&gt;
+    &lt;li&gt;If values tend to be far from the mean, then the spread is large&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Because deviations from the mean sum to 0, they have to be squared&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This is how the variance is computed: by &lt;b&gt;averaging the squared deviations from the mean&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+--
+
+`$$\text{Var}(x) = \frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2$$`
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The variance is a sum of squares, so we have to take its square root to remain in the same unit as the data&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This is what we call the &lt;b&gt;standard deviation&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+`$$\text{SD}(x) = \sqrt{\text{Var}(x)} = \sqrt{\frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2}$$`
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.4. Joint distributions
+
+ * The joint distribution shows the possible values and associated frequencies for two variables simultaneously
+  * Earlier we plotted the observations of a variable on a line, randomly shifted on the vertical axis
+
+--
+
+&lt;p style = "margin-bottom: .75cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-62-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.4. Joint distributions
+
+ * The joint distribution shows the possible values and associated frequencies for two variable simultaneously
+  * Earlier we plotted the observations of a variable on a line, randomly shifted on the vertical axis
+  * Instead of shifting observations randomly, vertical coordinates can indicate the value of a second variable
+
+&lt;p style = "margin-bottom: -.5cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-63-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.4. Joint distributions 
+
+ * When describing a &lt;b&gt;single distribution&lt;/b&gt;, we're interested in its &lt;b&gt;spread and central tendency&lt;/b&gt;
+ * When describing a &lt;b&gt;joint distribution&lt;/b&gt;, we're interested in the &lt;b&gt;relationship between the two variables&lt;/b&gt;
+  * This can be characterized by the covariance
+ 
+--
+
+$$ \text{Cov}(x, y) = \frac{1}{N}\sum_{i=1}^{N}(x_i − \bar{x})(y_i − \bar{y}) $$
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The contribution of observation \(i\) to \(\text{Cov}(x, y)\) is:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Positive when both \(x_i\) and \(y_i\) are above their respective mean&lt;/li&gt;
+    &lt;li&gt;Positive when both \(x_i\) and \(y_i\) are below their respective mean&lt;/li&gt;
+    &lt;li&gt;Negative when \(x_i\) and \(y_i\) are on different sides of their respective mean&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+ 
+&lt;center&gt;&lt;h4&gt;  &amp;#10140; &lt;i&gt; If y tends to be large relative to its mean when x is large relative to its mean, their covariance is positive. Conversely, if one tends to be large when the other tends to be low, the covariance is negative.&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.4. Joint distributions
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-64-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One disadvantage of the &lt;b&gt;covariance&lt;/b&gt; is that is it &lt;b&gt;not standardized&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You cannot directly compare the covariance of two pairs of completely different variables&lt;/li&gt;
+    &lt;li&gt;Theoretically the covariance can take values from \(-\infty\) to \(+\infty\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Descriptive statistics
+
+#### 2.4. Joint distributions
+
+&lt;ul&gt;
+  &lt;li&gt;This is why we often use the &lt;b&gt;correlation coefficient&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It is obtained by dividing the covariance by the product of the standard deviation of the two variables&lt;/li&gt;
+    &lt;li&gt;This allows to &lt;b&gt;standardize the coefficient&lt;/b&gt; between -1 and 1&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+`$$\text{Corr}(x, y) = \frac{\text{Cov}(x, y)}{\text{SD}(x)\times\text{SD}(y)}$$`
+
+--
+
+ * Consider for instance the following two distributions:
+ 
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-65-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;ul&gt;
+  &lt;li&gt;Here the association between the two variables feels tighter on the right panel&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But the covariance is larger for the first relationship because units are larger&lt;/li&gt;
+    &lt;li&gt;While the correlation, standardized between 0 and 1, is larger for the second one&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+#### 1. The basics of R programming &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Types of R objects
+ * 1.2. The dplyr grammar
+ * 1.3. Data visualization
+
+#### 2. Descriptive statistics &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Distributions
+ * 2.2. Central tendency
+ * 2.3. Spread
+ * 2.4. Joint distributions
+ 
+#### 3. A few words on using R
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. When it doesn't work the way you want
+ * 3.2. Where to find help
+ * 3.3. When it doesn't work at all
+ 
+---
+
+### 3. A few words on using R
+
+#### 3.1. When it doesn't work the way you want
+
+&lt;ul&gt;
+  &lt;li&gt;When things do not work the way you want, &lt;b&gt;NA&lt;/b&gt;s are the usual suspects&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance, this is how the mean function reacts to NAs:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+.pull-left[
+
+```r
+mean(c(1, 2, NA))
+```
+
+```
+## [1] NA
+```
+]
+
+--
+
+.pull-right[
+
+```r
+mean(c(1, 2, NA), na.rm = T)
+```
+
+```
+## [1] 1.5
+```
+]
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Here it is obvious that NAs are the problem, but when chaining operations it's not always that transparent&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So check your data using &lt;b&gt;is.na()&lt;/b&gt; to see whether NAs could mess things up&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+is.na(c(1, 2, NA))
+```
+
+```
+## [1] FALSE FALSE  TRUE
+```
+
+---
+
+### 3. A few words on using R
+
+#### 3.2. Where to find help
+
+&lt;ul&gt;
+  &lt;li&gt;You can find help on &lt;b&gt;help files&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Sometimes things don't work just because you did not understand the arguments of the function&lt;/li&gt;
+    &lt;li&gt;Just enter the name of the function preceded by a &lt;b&gt;?&lt;/b&gt; in your console&lt;/li&gt;
+    &lt;li&gt;The help file will appear in the Help tab of R studio&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+?pivot_longer
+```
+
+--
+
+&lt;center&gt;
+&lt;img src = "pivot_longer.png"/&gt;
+&lt;/center&gt;
+
+---
+
+### 3. A few words on using R
+
+#### 3.2. Where to find help
+
+&lt;ul&gt;
+  &lt;li&gt;When it doesn't work, search on the &lt;b&gt;internet&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Every question&lt;/b&gt; you might have at that stage is already asked and &lt;b&gt;answered&lt;/b&gt; at &lt;a href="https://stackoverflow.com/"&gt;stackoverflow.com&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+&lt;center&gt;
+&lt;img src = "ask_google.png" width = 750 /&gt;
+&lt;/center&gt;
+
+---
+
+### 3. A few words on using R
+
+#### 3.3. When it doesn't work at all
+
+ * Sometimes R breaks and returns an error, which is usually kind of cryptic
+
+--
+
+
+```r
+read.csv("C:\Users\l.sirugue\Documents\R")
+```
+
+```
+## Error: '\U' non suivi de chiffres hexadécimaux dans la chaîne de caractères débutant ""C:\U"
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * Try to look for keywords that might help you understand where it comes from
+ * And paste it in Google with the name of your command, chances are many people already struggled with that 
+
+--
+
+&lt;center&gt;
+&lt;img src = "error.png" width = 750 /&gt;
+&lt;/center&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
