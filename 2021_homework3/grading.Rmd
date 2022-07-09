@@ -1,0 +1,42 @@
+---
+title: "Homework 3: Grading System"
+author: "Louis Sirugue"
+date: "`r format(Sys.time(), '%m/%Y')`"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+---
+
+<br>
+
+```{r setup, include = F}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+lapply(c("tidyverse", "kableExtra"), library, character.only = T)
+```
+
+```{r table_notes}
+kable(tibble(question = c("Code runs without error and reproduces every result",
+                          "Clean and sufficiently annotated code",
+                          "Relevance of the dataset for the analysis", 
+                          "Relevance of the data visualization exercise",
+                          "Relevance of the graph(s)",
+                          "Clarity/visual aspect of the graph(s)",
+                          "The analysis stresses the importance of data visualization",
+                          "Interpretation of the results",
+                          "Presentation of the data/main variables",
+                          "Presentation of the data visualization exercise",
+                          "Overall clarity of the slides"),
+             grade = paste0("/", c(rep(1, 6), 2, rep(1, 4)))),
+      col.names = NULL,
+      align = c("lc")) %>%
+  kable_styling(bootstrap_options = c("condensed"), full_width = F) %>%
+  column_spec(1, width_min = "20em") %>%
+  pack_rows("Reproducibility of the analysis (2 points)", 1, 2) %>%
+  pack_rows("Relevance of the data analysis exercise (7 points)", 3, 8) %>%
+  pack_rows("Clarity of the presentation (3 points)", 9, 11)
+```
+
+<br><br>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Star temperature and light intensity</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Star temperature and light intensity
+## The case of the star cluster CYGOB1
+### <br>Louis SIRUGUE
+### 08/2021
+
+---
+
+
+
+
+
+&lt;style&gt; .pull-left {width: 54%;} .pull-right {width: 44%;} .left-column {width: 71%;} .right-column {width: 28%;} 
+.remark-slide thead, .remark-slide tr:nth-child(2n) {background-color:#DFE6EB;} &lt;/style&gt;
+
+### Data presentation
+
+The package `HSAUR` comes with a data set of **2 variables** on the **47 stars** of the CYGOB1 star cluster in the Cygnus constellation:  
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+--
+
+ * Effective temperature: &amp;ensp;&amp;ensp; `\(\text{log}(T_e)\)`
+--
+
+ * Light intensity: &amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp; `\(\text{log}(L/L_0)\)`
+
+--
+ 
+
+```r
+# Load necessary packages
+invisible(lapply(c("HSAUR", "tidyverse", "stargazer"), library, character.only = TRUE))
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+# Load data
+data("CYGOB1", package = "HSAUR")
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+# Look at the ten first observations
+kable(t(head(CYGOB1, 10)), caption = "10 first observations") %&gt;% column_spec(1, bold = T)
+```
+
+--
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;10 first observations&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;"&gt; logst &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.46 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.84 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.37 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;font-weight: bold;"&gt; logli &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.23 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.74 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.74 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.46 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.12 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h4&gt; &amp;#10140; &lt;i&gt;We would like to know the relationship between these two variables&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### Data visualization
+
+Let's start with a regression line on top of a scatter plot of the light intensity against the temperature:
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+# Rename variables with convenient names
+CYGOB1 &lt;- CYGOB1 %&gt;% rename(Temperature = logst, 
+                            `Light intensity` = logli)
+```
+--
+&lt;p style = "margin-bottom:-.56cm;"&gt;&lt;/p&gt;
+
+```r
+# Specify the data to use for the plot
+ggplot(data = CYGOB1, 
+```
+--
+&lt;p style = "margin-bottom:-.56cm;"&gt;&lt;/p&gt;
+
+```r
+       # Tell which variable should plotted on which axis
+       aes(x = Temperature,  y = `Light intensity`)) +
+```
+--
+&lt;p style = "margin-bottom:-.56cm;"&gt;&lt;/p&gt;
+
+```r
+  # Scatter plot
+  geom_point(color = "#014D64", alpha = .5, size = 4) + 
+```
+--
+&lt;p style = "margin-bottom:-.56cm;"&gt;&lt;/p&gt;
+
+```r
+  # Fit of a linear regression model
+  geom_smooth(method = "lm", se = F, color = "#6794A7") + 
+```
+--
+&lt;p style = "margin-bottom:-.56cm;"&gt;&lt;/p&gt;
+
+```r
+  # Styling of the plot
+  theme_minimal(base_size = 18) 
+```
+
+---
+
+### Data visualization
+
+.left-column[
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+&lt;img src="example_files/figure-html/unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+--
+
+.right-column[
+&lt;br&gt;&lt;br&gt;
+
+&lt;center&gt;&lt;h4&gt; Something's wrong: &lt;/h4&gt;&lt;/center&gt; 
+ * &lt;p style = "text-align: justify;"&gt;The relationship is negative overall...&lt;/p&gt;  
+ &lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+ * &lt;p style = "text-align: justify;"&gt;... but this seems to be fallaciously driven by four stars at the top left&lt;/p&gt;  
+]
+
+---
+
+### Data manipulation
+
+Indeed, the documentation of the data mentions that there are **two types of stars**:  
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+--
+
+ * Stars that lie on the main sequence &amp;#128171;
+--
+
+ * Giants stars &amp;#127775;  
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+--
+
+There's no variable in the data to distinguish between these two groups, but the documentation indicates that Giants are located at the following rows: 
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+--
+
+ * The 11&lt;sup&gt;th&lt;/sup&gt;;  
+ * The 20&lt;sup&gt;th&lt;/sup&gt;;  
+ * The 30&lt;sup&gt;th&lt;/sup&gt;;  
+ * The 34&lt;sup&gt;th&lt;/sup&gt;. 
+
+--
+
+Based on these information, a variable indicating the type of star can easily be created as follows.
+
+
+```r
+CYGOB1 &lt;- CYGOB1 %&gt;%
+  mutate(Type = ifelse(row_number() %in% c(11, 20, 30, 34), # If this condition is met:
+                       "Giant",                             # Type = Giant,
+                       "Main-sequence"))                    # else: Type = Main-sequence
+```
+
+---
+
+### Data visualization
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+We can now distinguish the two types of stars in the plot by attributing them separate colors and regression lines:  
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+# Same code as previous plot
+ggplot(data = CYGOB1, 
+       aes(x = Temperature, 
+           y = `Light intensity`, 
+
+  geom_point(alpha = .5, size = 4) + 
+  geom_smooth(method = "lm", se = F, show_guide = FALSE) + 
+  theme_minimal(base_size = 18) 
+```
+
+--
+&lt;p style = "margin-bottom:-3.35cm;"&gt;&lt;/p&gt;
+
+```r
+*          color = Type)) + # But specifying to group by star type
+```
+
+--
+&lt;p style = "margin-bottom:.66cm;"&gt;&lt;/p&gt;
+
+
+```r
+                                + 
+  
+  # And specify the location and text-alignment of the legend
+  theme(legend.position = "top", legend.justification = "left") 
+```
+
+---
+
+### Data visualization
+
+&lt;img src="example_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Conclusion
+
+.pull-left[
+
+&lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="3"&gt;&lt;em&gt;Dependent variable:&lt;/em&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="3"&gt;Light intensity&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;Whole Sample&lt;/td&gt;&lt;td&gt;Giant&lt;/td&gt;&lt;td&gt;Main-sequence&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Temperature&lt;/td&gt;&lt;td&gt;-0.413&lt;/td&gt;&lt;td&gt;-8.000&lt;/td&gt;&lt;td&gt;2.047&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(0.286)&lt;/td&gt;&lt;td&gt;(33.307)&lt;/td&gt;&lt;td&gt;(0.420)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;6.793&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;33.890&lt;/td&gt;&lt;td&gt;-4.057&lt;sup&gt;**&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1.237)&lt;/td&gt;&lt;td&gt;(116.157)&lt;/td&gt;&lt;td&gt;(1.844)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;47&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;43&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Adjusted R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.023&lt;/td&gt;&lt;td&gt;-0.458&lt;/td&gt;&lt;td&gt;0.351&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="3" style="text-align:right"&gt;&lt;i&gt;&lt;sup&gt;&amp;sstarf;&lt;/sup&gt;p&lt;0.1;&lt;sup&gt;&amp;sstarf;&amp;sstarf;&lt;/sup&gt;p&lt;0.05;&lt;sup&gt;&amp;sstarf;&amp;sstarf;&amp;sstarf;&lt;/sup&gt;p&lt;0.01&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+ 
+&lt;p style = "text-align: justify;"&gt; &amp;ensp;&amp;ensp;&amp;ensp; By naively regressing light intensity on temperature, we would have &lt;b&gt;fallaciously&lt;/b&gt; concluded that the two variables have a statistically non-significant &lt;b&gt;negative relationship&lt;/b&gt;.&lt;/p&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;  
+
+&lt;p style = "text-align: justify;"&gt; &amp;#10140; &lt;i&gt;But data visualization allowed to notice that there is actually:&lt;/i&gt;&lt;/p&gt; 
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;  
+
+ * &lt;p style = "text-align: justify;"&gt;&lt;b&gt;No relationship for the Giants&lt;/b&gt; (very large standard error/coefficient ratio)  &lt;/p&gt;  
+ 
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;  
+ 
+ * &lt;p style = "text-align: justify;"&gt;And a highly significant (p-value &lt;0.01) &lt;b&gt;positive relationship for&lt;/b&gt; stars that lie on the &lt;b&gt;main sequence&lt;/b&gt;&lt;/p&gt;  
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

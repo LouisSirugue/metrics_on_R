@@ -1,0 +1,271 @@
+---
+title: "Star temperature and light intensity"
+subtitle: "The case of the star cluster CYGOB1"
+author: "<br>Louis SIRUGUE"
+date: "`r format(Sys.time(), '%m/%Y')`"
+output: 
+  xaringan::moon_reader:  
+    css: 
+        - xaringan-themer.css
+        - theme.css
+    includes:
+      in_header: header.html
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include = FALSE}
+source(paste0(getwd(), "/../source/style.R"))
+theme_minimal <- theme_Rcourse
+kable <- function(data, caption, ...) {
+  knitr::kable(data, caption = caption, booktabs = TRUE, digits = 2, col.names = NULL, ...) %>% 
+    kable_styling(bootstrap_options = c('hover', 'condensed'), full_width = F)
+}
+knitr::opts_chunk$set(echo = T, message = F, warning = F, out.width = "100%", dpi = 300)
+```
+
+
+<style> .pull-left {width: 54%;} .pull-right {width: 44%;} .left-column {width: 71%;} .right-column {width: 28%;} 
+.remark-slide thead, .remark-slide tr:nth-child(2n) {background-color:#DFE6EB;} </style>
+
+### Data presentation
+
+The package `HSAUR` comes with a data set of **2 variables** on the **47 stars** of the CYGOB1 star cluster in the Cygnus constellation:  
+<p style = "margin-bottom:-.25cm;"></p>
+
+--
+
+ * Effective temperature: &ensp;&ensp; $\text{log}(T_e)$
+--
+
+ * Light intensity: &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; $\text{log}(L/L_0)$
+
+--
+ 
+```{r, eval = FALSE}
+# Load necessary packages
+invisible(lapply(c("HSAUR", "tidyverse", "stargazer"), library, character.only = TRUE))
+```
+--
+<p style = "margin-bottom:-1.01cm;"></p>
+```{r, eval = FALSE}
+# Load data
+data("CYGOB1", package = "HSAUR")
+```
+--
+<p style = "margin-bottom:-1.01cm;"></p>
+```{r, eval = FALSE}
+# Look at the ten first observations
+kable(t(head(CYGOB1, 10)), caption = "10 first observations") %>% column_spec(1, bold = T)
+```
+
+--
+
+```{r, echo = FALSE}
+# Load necessary packages
+invisible(lapply(c("HSAUR", "tidyverse", "stargazer"), library, character.only = TRUE))
+# Load data
+data("CYGOB1", package = "HSAUR")
+# Look at the ten first observations
+kable(t(head(CYGOB1, 10)), caption = "10 first observations") %>% column_spec(1, bold = T)
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><h4> &#10140; <i>We would like to know the relationship between these two variables</i></h4></center>
+
+---
+
+### Data visualization
+
+Let's start with a regression line on top of a scatter plot of the light intensity against the temperature:
+
+<p style = "margin-bottom:.8cm;"></p>
+
+--
+
+```{r, eval = FALSE}
+# Rename variables with convenient names
+CYGOB1 <- CYGOB1 %>% rename(Temperature = logst, 
+                            `Light intensity` = logli)
+```
+--
+<p style = "margin-bottom:-.56cm;"></p>
+```{r, eval = FALSE}
+# Specify the data to use for the plot
+ggplot(data = CYGOB1, 
+```
+--
+<p style = "margin-bottom:-.56cm;"></p>
+```{r, eval = FALSE} 
+       # Tell which variable should plotted on which axis
+       aes(x = Temperature,  y = `Light intensity`)) +
+```
+--
+<p style = "margin-bottom:-.56cm;"></p>
+```{r, eval = FALSE}
+  # Scatter plot
+  geom_point(color = "#014D64", alpha = .5, size = 4) + 
+```
+--
+<p style = "margin-bottom:-.56cm;"></p>
+```{r, eval = FALSE} 
+  # Fit of a linear regression model
+  geom_smooth(method = "lm", se = F, color = "#6794A7") + 
+```
+--
+<p style = "margin-bottom:-.56cm;"></p>
+```{r, eval = FALSE}
+  # Styling of the plot
+  theme_minimal(base_size = 18) 
+```
+
+---
+
+### Data visualization
+
+.left-column[
+<p style = "margin-bottom:-.25cm;"></p>
+```{r, echo = FALSE, fig.width = 11.5, fig.height = 7, fig.align = "left"}
+CYGOB1 <- CYGOB1 %>% rename(Temperature = logst, `Light intensity` = logli)
+ggplot(data = CYGOB1, aes(x = Temperature, y = `Light intensity`)) +
+  geom_point(color = "#014D64", alpha = .5, size = 4) + geom_smooth(method = "lm", se = F, color = "#6794A7") + theme_minimal(base_size = 18) 
+```
+]
+
+--
+
+.right-column[
+<br><br>
+
+<center><h4> Something's wrong: </h4></center> 
+ * <p style = "text-align: justify;">The relationship is negative overall...</p>  
+ <p style = "margin-bottom:.5cm;"></p>
+ * <p style = "text-align: justify;">... but this seems to be fallaciously driven by four stars at the top left</p>  
+]
+
+---
+
+### Data manipulation
+
+Indeed, the documentation of the data mentions that there are **two types of stars**:  
+<p style = "margin-bottom:-.5cm;"></p>
+
+--
+
+ * Stars that lie on the main sequence &#128171;
+--
+
+ * Giants stars &#127775;  
+
+<p style = "margin-bottom:.8cm;"></p>
+
+--
+
+There's no variable in the data to distinguish between these two groups, but the documentation indicates that Giants are located at the following rows: 
+<p style = "margin-bottom:-.5cm;"></p>
+
+--
+
+ * The 11<sup>th</sup>;  
+ * The 20<sup>th</sup>;  
+ * The 30<sup>th</sup>;  
+ * The 34<sup>th</sup>. 
+
+--
+
+Based on these information, a variable indicating the type of star can easily be created as follows.
+
+```{r}
+CYGOB1 <- CYGOB1 %>%
+  mutate(Type = ifelse(row_number() %in% c(11, 20, 30, 34), # If this condition is met:
+                       "Giant",                             # Type = Giant,
+                       "Main-sequence"))                    # else: Type = Main-sequence
+```
+
+---
+
+### Data visualization
+
+<p style = "margin-bottom:2cm;"></p>
+
+We can now distinguish the two types of stars in the plot by attributing them separate colors and regression lines:  
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, eval = FALSE}
+# Same code as previous plot
+ggplot(data = CYGOB1, 
+       aes(x = Temperature, 
+           y = `Light intensity`, 
+
+  geom_point(alpha = .5, size = 4) + 
+  geom_smooth(method = "lm", se = F, show_guide = FALSE) + 
+  theme_minimal(base_size = 18) 
+```
+
+--
+<p style = "margin-bottom:-3.35cm;"></p>
+```{r, eval = FALSE}
+*          color = Type)) + # But specifying to group by star type
+```
+
+--
+<p style = "margin-bottom:.66cm;"></p>
+
+```{r, eval = FALSE}
+                                + 
+  
+  # And specify the location and text-alignment of the legend
+  theme(legend.position = "top", legend.justification = "left") 
+```
+
+---
+
+### Data visualization
+
+```{r, echo = FALSE, fig.width = 11.5, fig.height = 6.7, fig.align = "center", out.width="80%"}
+ggplot(data = CYGOB1, aes(x = Temperature, y = `Light intensity`, color = Type)) +
+  geom_point(alpha = .5, size = 4) + geom_smooth(method = "lm", se = F, show_guide = FALSE) + 
+  theme_minimal(base_size = 14) + theme(legend.position = "top", legend.justification = "left") 
+```
+
+---
+
+### Conclusion
+
+.pull-left[
+```{r, echo = FALSE, results = 'asis'}
+stargazer(lm(`Light intensity` ~ Temperature, CYGOB1), # First regression on the whole sample
+          lm(`Light intensity` ~ Temperature, CYGOB1 %>% filter(Type == "Giant")), # Only for Giants
+          lm(`Light intensity` ~ Temperature, CYGOB1 %>% filter(Type == "Main-sequence")), # Only for main sequence
+          column.labels = c("Whole Sample", "Giant", "Main-sequence"),
+          dep.var.labels = "Light intensity", model.numbers = F) # Set table format parameters
+```
+]
+
+--
+
+.pull-right[
+<p style = "margin-bottom:1.25cm;"></p>
+ 
+<p style = "text-align: justify;"> &ensp;&ensp;&ensp; By naively regressing light intensity on temperature, we would have <b>fallaciously</b> concluded that the two variables have a statistically non-significant <b>negative relationship</b>.</p>
+
+<p style = "margin-bottom:1.75cm;"></p>  
+
+<p style = "text-align: justify;"> &#10140; <i>But data visualization allowed to notice that there is actually:</i></p> 
+
+<p style = "margin-bottom:-.25cm;"></p>  
+
+ * <p style = "text-align: justify;"><b>No relationship for the Giants</b> (very large standard error/coefficient ratio)  </p>  
+ 
+<p style = "margin-bottom:-.25cm;"></p>  
+ 
+ * <p style = "text-align: justify;">And a highly significant (p-value <0.01) <b>positive relationship for</b> stars that lie on the <b>main sequence</b></p>  
+]

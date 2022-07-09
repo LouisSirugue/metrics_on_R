@@ -1,0 +1,48 @@
+---
+title: "Homework 3: Data visualization"
+author: "Louis Sirugue"
+date: "`r format(Sys.time(), '%m/%Y')`"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+---
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<center><h3>Present an original data visualization exercise on the dataset of your choice</h3></center>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+### General guidelines
+
+&ensp;&ensp;&ensp;&ensp;&ensp;The grade will be based on a **3 minutes (maximum) presentation** in which you should briefly introduce your data/main variables and explain your data visualization exercise. You should not present more than **1 or 2 graphs**, but you should make the **best graph you can**. Graph(s) should be clear and relevant, and should **stress the importance of data visualization** in the data analysis process. The interest of your graph could lie in how efficient it is to convey a story about your data, or in how it helps uncover underlying patterns in your data. The grading system is available [here](https://louissirugue.github.io/data-analysis-course/homework3/grading.html).
+
+<p style = "margin-bottom:.5cm;"></p>
+
+*[Here](https://louissirugue.github.io/data-analysis-course/homework3/example.html) is an example of what it could look like.*
+
+### Practical matters
+
+This homework should be done individually. Slides should be sent to <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> **no later than 48h before the last course** (Lecture 15: Presentation of your data visualization exercise) **in pdf format**. Slides should be sent together **with replication files** in a zipped folder. Replication files include every necessary file to replicate the results you present, i.e., **raw data (without modification) and all your code**. Apart from that, feel free to use your favorite software to make your slides. The slides and speech can be in French or in English. 
+
+### Where to find data
+
+ * [data.gouv.fr](https://www.data.gouv.fr/)
+ * [data.gov](https://www.data.gov/)
+ * [data.oecd.org](https://data.oecd.org/)
+ * [data.worldbank.org](https://data.worldbank.org/)
+ * [ec.europa.eu](https://ec.europa.eu/eurostat/web/main/data/database) 
+ * [www.bfi.org.uk](https://www.bfi.org.uk/industry-data-insights)
+ * [apps.who.int](https://apps.who.int/gho/data/node.home)
+ * [dataverse.harvard.edu](https://dataverse.harvard.edu/)
+ * [archive.ics.uci.edu](https://archive.ics.uci.edu/ml/datasets.php)
+ * [kaggle.com](https://www.kaggle.com/datasets)
+ * [datahub.io](https://datahub.io/collections)
+ * [wid.world](https://wid.world/data/)
+ * [opportunityinsights.org](https://opportunityinsights.org/data/)
+ * ...
+
+<br><br>
