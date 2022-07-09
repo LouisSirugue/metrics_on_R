@@ -1,0 +1,85 @@
+sentiment_evolution <- function(file) {
+  
+  # Read the play
+  play <- tibble(line = readLines(paste0("shakespeare/", file), encoding = "UTF-8"))
+  
+  # Remove everything before the play
+  beginning <- play %>% 
+    mutate(line_number = row_number()) %>%
+    filter(line == "ACT I")
+  play <- play %>% filter(row_number() >= beginning$line_number[2])
+  
+  # Remove everything after the play
+  play <- play %>% mutate(direction = grepl("\\[.+\\]", line))
+  end <- play %>% 
+    group_by(direction) %>%
+    mutate(last_obs = row_number() == n()) %>% 
+    ungroup() %>% 
+    mutate(line_number = row_number()) %>% 
+    filter(direction & last_obs)
+  play <- play %>% filter(row_number() <= end$line_number)
+  
+  # Remove empty lines and create delimiters
+  play <- play %>% 
+    filter(line != "") %>% 
+    mutate(acte_delim = grepl("^ACT", line),
+           scene_delim = grepl("^SCENE", line),
+           line_delim = grepl("^[A-Z ']*\\.$", line))
+  
+  # Tokenization
+  play <- play %>%
+    mutate(id_acte = NA,
+           id_scene = NA,
+           id_line = NA,
+           id_char = NA)
+  
+  temp_acte <- 0
+  temp_scene <- 0
+  temp_line <- 0
+  temp_char <- ""
+  
+  for (i in 1:nrow(play)) {
+    
+    if (play[i, "acte_delim"] == TRUE) {
+      temp_acte <- temp_acte + 1
+      temp_scene <- 0
+      temp_line <- 0
+    }
+    if (play[i, "scene_delim"] == TRUE) {
+      temp_scene <- temp_scene + 1
+      temp_line <- 0
+    }
+    if (play[i, "line_delim"] == TRUE) {
+      temp_line <- temp_line + 1
+      temp_char <- gsub(pattern = "\\.$", "", play[i, "line"])
+    }
+    
+    play[i, "id_acte"] <- temp_acte
+    play[i, "id_scene"] <- temp_scene
+    play[i, "id_line"] <- temp_line
+    play[i, "id_char"] <- temp_char
+  }
+  
+  play <- play %>% 
+    filter(id_line > 0 & !line_delim) %>%
+    group_by(id_acte, id_scene, id_line, id_char) %>%
+    summarise(line = paste(line, collapse = " ")) %>%
+    ungroup() %>% 
+    mutate(line = gsub("\\[[^\\[\\]+\\]", "", line))
+  
+  # Sentiments
+  play <- play %>%
+    mutate(to_unnest = line) %>%
+    unnest_tokens(token = "words", input = to_unnest, output = word) %>%
+    anti_join(get_stopwords()) %>% 
+    left_join(get_sentiments("afinn"))
+  
+  # Return the graph
+  return(play %>% 
+           group_by(id_acte, id_scene) %>%
+           summarise(mean = mean(value, na.rm = T)) %>% ungroup() %>%
+           mutate(scene = row_number()) %>%
+           ggplot(aes(x = scene, y = mean)) +
+           geom_bar(stat = 'identity', fill = "#6794A7", 
+                    color = "#014D64", alpha = .8))
+}

@@ -1,0 +1,2198 @@
+---
+title: "Text data & sentiment analysis"
+subtitle: "Lecture 6"
+author: "<br>Louis SIRUGUE"
+date: "CPES 2 - Fall 2022"
+output:
+  xaringan::moon_reader: 
+    css: 
+        - xaringan-themer.css
+        - theme.css
+    includes:
+      in_header: header.html
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{css, echo = F, eval = F}
+body{background-color:black;filter:invert(1)}
+```
+
+```{r setup, include = FALSE}
+source(paste0(getwd(), "/../source/style.R"))
+library(DT)
+stargazer <- stargazer::stargazer
+theme_minimal <- theme_Rcourse
+options(htmltools.dir.version = F)
+knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", dpi = 300, out.width = "100%")
+set.seed(1)
+```
+
+<style> .left-column {width: 65%;} .right-column {width: 35%;} </style>
+
+### Last time we saw
+
+#### 1. Three types of contents
+
+<p style = "margin-bottom:2cm;"></p>
+
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YAML header &#10140;</b>
+
+<p style = "margin-bottom:1.75cm;">
+
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Code chunks &#10140;</b>
+
+<p style = "margin-bottom:1.75cm;">
+
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text &#10140;</b>
+
+<p style="margin-left:6.5cm; margin-top:-7.3cm;"><img src = "report_example_3.png" width = "700"/></p>
+
+---
+
+### Last time we saw
+
+#### 2. Useful features
+
+&#10140; **Inline code** allows to include the output of some **R code within text areas** of your report
+
+<p style = "margin-bottom:-.5cm;">
+
+--
+
+.pull-left[
+<center> <h4> Syntax </h4> </center>
+
+```{r, eval=F}
+`paste("a", "b", sep = "-")`
+```
+
+```{r, eval=F}
+`r paste("a", "b", sep = "-")`
+```
+
+]
+
+.pull-right[
+<center> <h4> Output </h4> </center>
+
+`paste("a", "b", sep = "-")`
+
+<p style = "margin-bottom:1cm;">
+
+`r paste("a", "b", sep = "-")`
+ 
+]
+
+<p style = "margin-bottom:2cm;">
+
+--
+
+&#10140; **`kable()`** for clean **html tables** and **`datatable()`** to navigate in **large tables**
+ 
+```{r, eval = FALSE}
+kable(results_table)
+datatable(results_table)
+```
+
+---
+
+### Last time we saw
+
+#### 3. LaTeX for equations
+
+ * $\LaTeX$ is a convenient way to display **mathematical** symbols and to structure **equations**
+  * The **syntax** is mainly based on **backslashes \ and braces {}**
+
+--
+
+<p style = "margin-bottom:1cm;">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&#10140; What you **type** in the text area: `$x \neq \frac{\alpha \times \beta}{2}$`  
+&nbsp;&nbsp;&nbsp;&nbsp;&#10140; What is **rendered** when knitting the document: $x \neq \frac{\alpha \times \beta}{2}$
+
+--
+
+<p style = "margin-bottom:1.5cm;">
+
+<center>To <b>include</b> a <b>LaTeX equation</b> in R Markdown, you simply have to surround it with the <b>$ sign</b></center>
+
+<p style = "margin-bottom:0cm;">
+
+.pull-left[
+
+<h4 style = "margin-bottom:0cm;">The mean formula with one `$` on each side</h4>  
+&nbsp;&nbsp;&nbsp;&nbsp;&#10140; For inline equations  
+ 
+$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$ 
+
+]
+
+.pull-right[
+
+<h4 style = "margin-bottom:0cm;">The mean formula with two `$` on each side</h4>  
+&nbsp;&nbsp;&nbsp;&nbsp;&#10140; For large/emphasized equations  
+ 
+$$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$ 
+
+]
+
+---
+
+### Today: Text data and sentiment analysis
+
+<p style = "margin-bottom:3cm;">
+
+#### 1. Cleaning text data
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Exploring the data
+ * 1.2. Regular expressions
+ * 1.3. Tokenization
+
+#### 2. Sentiment analysis
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Stopwords
+ * 2.2. Sentiments
+ * 2.3. Analysis
+
+#### 3. Wrap up!
+
+---
+
+### Today: Text data and sentiment analysis
+
+<p style = "margin-bottom:3cm;">
+
+#### 1. Cleaning text data
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Exploring the data
+ * 1.2. Regular expressions
+ * 1.3. Tokenization
+
+---
+
+### 1. Cleaning text data
+
+#### 1.1. Exploring the data
+
+<ul>
+  <li>Being able to <b>handle</b> strings and <b>text</b> data can be very useful</li>
+  <ul>
+    <li>For <b>webscrapping</b></li>
+    <li>To enlarge your set of observable (from <b>tweets</b>, reviews, political speeches/brochures)</li>
+    <li>Even with <b>standard data</b> containing character variables</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>But text data is <b>quite complicated</b> to handle</li>
+  <ul>
+    <li><b>Not as codified</b> as conventional datasets</li>
+    <li>Can take <b>various formats</b></li>
+    <li>Usually <b>very messy</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>The most <b>tedious</b> part of text-data analysis is <b>data cleaning</b></li>
+  <ul>
+    <li>The key tool for that purpose is <b>regular expressions</b></li>
+    <li>Today we're giving it a go by doing a <b>sentiment analysis</b></li>
+  </ul>
+</ul>   
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<center><h4><i>&#10140; Let's do a sentiment analysis on Romeo and Juliet by Shakespeare</i></h4></center>
+
+---
+
+### 1. Cleaning text data
+
+#### 1.1. Exploring the data
+
+<ul>
+  <li>The first step is to have a <b>look at the data</b></li>
+  <ul>
+    <li>For the type of data we work with today it is particularly easy: just <b>open the .txt</b> file in a notepad</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+&#10140; Open `romeo_and_juliet.txt` (you can view it [here](https://louissirugue.github.io/metrics_on_R/lecture6/shakespeare/romeo_and_juliet.txt))
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>The .txt file is organized as follows</li>
+  <ul>
+    <li>Some general information about the file</li>
+    <li>The table of contents</li>
+    <li>The <i>dramatis personæ</i></li>
+    <li><b>The play</b></li>
+    <li>Some copyright considerations</li>
+  </ul>
+</ul>
+
+--
+
+ * Note that **stage directions** are mentioned **[within brackets]**
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><h4><i>&#10140; To start working on it we should import the text in R</i></h4></center>
+
+---
+
+### 1. Cleaning text data
+
+#### 1.1. Exploring the data
+
+<ul>
+  <li>The function to read .txt files is <b>readLines()</b></li>
+  <ul>
+    <li>Don't forget to specify the correct <b>encoding</b></li>
+    <li>At the beggining of the file is indicated <i>"Character set encoding: UTF-8"</i></li>
+  </ul>
+</ul>
+
+--
+
+```{r}
+raj <- readLines("shakespeare/romeo_and_juliet.txt", encoding = "UTF-8")
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+Let's take a look at how this file is stored:
+
+```{r}
+summary(raj)
+raj[1]
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.1. Exploring the data
+
+
+<ul>
+  <li>readLines() stored the data as a <b>vector</b> containing <b>5,640</b> strings, one for every <b>line</b> of the file</li>
+  <ul>
+    <li>To handle the data conveniently, we should put it in a <b>database</b> format</li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+raj <- tibble(line = raj)
+head(raj, 10)
+```
+
+--
+
+```{r, echo = F}
+raj <- tibble(line = raj)
+head(raj, 10)
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.1. Exploring the data
+
+<ul>
+  <li>Now we need to <b>get rid of</b> what comes <b>before and after the play</b></li>
+  <ul>
+    <li>The play starts at the second occurrence of "ACT I" (the first one being in the contents)</li>
+    <li>Let's identify the corresponding line and remove everything before that</li>
+  </ul>
+</ul>
+
+--
+
+ * First, let's store the row numbers of every line that states `"ACT I"`:
+
+```{r}
+beginning <- raj %>% 
+  mutate(line_number = row_number()) %>%
+  filter(line == "ACT I")
+```
+
+--
+
+.pull-left[
+```{r}
+beginning
+```
+]
+
+.pull-right[
+
+<p style = "margin-bottom:2cm;"></p>
+<ul>
+  <li>There are indeed 2 occurrences of "ACT 1":</li>
+  <ul>
+    <li>One at line 40 in the table of contents</li>
+    <li>And one at <b>line 144</b> where the <b>play starts</b></li>
+  </ul>
+</ul>
+]
+
+---
+
+### 1. Cleaning text data
+
+#### 1.1. Exploring the data
+ 
+ * We can thus get rid of every line whose row number is below that of the second occurrence of `"ACT 1"`:
+
+--
+
+```{r, eval = F}
+raj <- raj %>% filter(row_number() >= beginning$line_number[2])
+head(raj, 10)
+```
+
+--
+
+```{r, echo = F}
+raj <- raj %>% filter(row_number() >= beginning$line_number[2])
+head(raj, 10)
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.1. Exploring the data
+
+<ul>
+  <li>Note that proceeding this ways allows to <b>automatize the process</b> for other plays</li>
+  <ul>
+    <li>Looking at the line number in the data to remove what's before wouldn't be transposable</li>
+    <li>But this code can be applied directly to other plays (see <a href="https://louissirugue.github.io/metrics_on_R/lecture6/shakespeare/macbeth.txt">macbeth</a>, <a href="https://louissirugue.github.io/metrics_on_R/lecture6/shakespeare/othello_the_moor_of_venice.txt">othello</a>, ...)</li>
+    <li>We'll do so <b>for the whole data cleaning</b> so that we can clean other plays with virtually no additional code</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>What all plays have in <b>common</b> at the end is a <b>final stage direction</b></li>
+  <ul>
+    <li>Romeo and Juliet: [_Exeunt._]</li>
+    <li>Macbeth: [_Flourish. Exeunt._]</li>
+    <li>Othello: [_Exeunt._]</li>
+    <li>A midsummer night's dream: [_Exit._]</li>
+    <li>...</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>But how to get the line number of the final stage direction?</li>
+  <ul>
+    <li>The last stage direction is not always the same</li>
+    <li>We need to use <b>regular expressions</b>!</li>
+  </ul>
+</ul>
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+<ul>
+  <li><b>Regular expressions</b> are used to identify strings that <b>match a given pattern</b></li>
+  <ul>
+    <li>Extremely useful tool when analyzing <b>text data</b></li>
+    <li>Used in most programming languages, <b>not specific to R</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>In practice regular expressions are <b>strings of codified characters</b> describing a pattern</li>
+  <ul>
+    <li>For instance the character <b>"^"</b> indicates the <b>start of the string</b></li>
+    <li>So the regular expression "^a" would match any "a" that is a the beginning of a string</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>Regular expressions in R can be used in different functions with different purposes:</li>
+  <ul>
+    <li><b>grep:</b> returns elements that match the regexp</li>
+    <li><b>grepl:</b> returns TRUE for elements that match the regexp and FALSE otherwise</li>
+    <li><b>gsub:</b> replaces the elements that match the regexp with what you want</li>
+    <li>...</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><h4><i>&#10140; Let's play around with regexp to get the idea</i></h4></center>
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+ * Consider the following vector:
+
+```{r}
+txt <- c("One", "two", "three", "four", "5", "6", "7even", "Eight")
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>How to <b>find</b> all the elements that <b>start with "t"?</b></li>
+  <ul>
+    <li>We can use the regular expression <b>"^t"</b></li>
+    <li>And use <b>grepl</b> to know for every element whether it matches this pattern or not</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r}
+grepl("^t", txt)
+```
+
+--
+
+```{r}
+grepl("^th", txt)
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+ * Using <b>`grep`</b> instead or `grepl` will <b>return the indices</b> of the strings that match the pattern
+
+```{r, eval = F}
+grep("^f", txt)
+```
+
+--
+
+```{r, echo = F}
+grep("^f", txt)
+```
+
+--
+
+ * Specifying `value = TRUE` will <b>return the values</b> instead of the indices
+
+```{r, eval = F}
+grep("^f", txt, value = T)
+```
+ 
+--
+
+```{r, echo = F}
+grep("^f", txt, value = T)
+```
+
+--
+
+ * Using <b>`gsub`</b> allows to <b>replace the pattern</b> by something else
+
+```{r, eval = F}
+gsub("^f", "4", txt)
+```
+ 
+--
+
+```{r, echo = F}
+gsub("^f", "4", txt)
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+```{r, echo = F}
+regexp_table <- tibble(
+  Regexp = c("^",	"$", ".", "*", "+", "{n}", "{n,}", "{n,m}", 
+              "[]", "[^abc]", "[a-z]", "[A-Z]", "[0-9]"),
+  Meaning = c("Start of string (or 'not')", "End of string", "Any character", 
+              "0 or more occurences", "1 or more occurences", "n occurences", 
+              "n or more occurences", "between n and m occurences", "A range of characters", 
+              "Not a, b or c", "Any lowercase letter from a to z", "Any capital letter from A to Z", 
+              "Any digit from 0 to 9")
+)
+```
+
+.pull-left[
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, echo = F}
+kable(regexp_table %>% filter(row_number() < 9), caption = "")
+```
+]
+
+.pull-right[
+
+<p style = "margin-bottom:2cm;"></p>
+
+```{r, echo = F}
+kable(regexp_table %>% filter(row_number() >= 9), caption = "")
+```
+]
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+<ul>
+  <li>Thus, if we do not want to replace only any "f" that is in first position but any string starting with "f"</li>
+  <ul>
+    <li><b>"^f":</b> f in first position</li>
+    <li><b>"^f.":</b> f in first position followed by any character</li>
+    <li><b>"^f.+":</b> f in first position followed by any occurrence of any character</li>
+  </ul>
+</ul>
+
+--
+
+```{r}
+gsub("^f.+", "4", txt)
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * Other examples
+ 
+```{r}
+txt <- c("One", "two", "three", "four", "5", "6", "7even", "Eight")
+```
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+.pull-left[
+.pull-left[
+```{r}
+grep("e$", txt)
+```
+
+]
+.pull-right[
+```{r}
+grep(".e", txt)
+```
+
+]
+]
+
+.pull-left[
+.pull-left[
+```{r}
+grep(".e.", txt)
+```
+
+]
+.pull-right[
+```{r}
+grep("[0-9]e", txt)
+```
+
+]
+]
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+ * It is also possible to use the <b>logical operators</b> `&` (and) and `|` (or)
+
+```{r, eval = F}
+grep("e$|o$", txt, value = T)
+```
+
+--
+
+```{r, echo = F}
+grep("e$|o$", txt, value = T)
+```
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+ * To use <b>symbols</b> such as `^`, `$`, `.`, `&` as characters instead of operators, they <b>should be preceded by `\\`</b>
+ 
+--
+ 
+```{r, eval = F}
+grep("^^", c("^a", "b", "^c", "^d", "e", "f"), value = T)
+```
+ 
+--
+
+```{r, echo = F}
+grep("^^", c("^a", "b", "^c", "^d", "e", "f"), value = T)
+```
+
+--
+
+```{r, eval = F}
+grep("^\\^", c("^a", "b", "^c", "^d", "e", "f"), value = T)
+```
+
+--
+
+```{r, echo = F}
+grep("^\\^", c("^a", "b", "^c", "^d", "e", "f"), value = T)
+```
+
+---
+
+### Practice
+
+#### &#10140; Use `grepl` to create a variable that identifies every line that contains a (complete) stage direction
+
+--
+
+```{r, eval = F}
+raj <- raj %>%
+  mutate(direction = grepl("....", line))
+```
+
+--
+
+ * Remember that stage directions are in brackets `[ ]`
+
+```{r}
+# Read the play
+raj <- tibble(line = readLines("shakespeare/romeo_and_juliet.txt", encoding = "UTF-8"))
+
+# Identify the lines "ACT I"
+beginning <- raj %>% 
+  mutate(line_number = row_number()) %>%
+  filter(line == "ACT I")
+
+# Remove everything before the second occurence
+raj <- raj %>% filter(row_number() >= beginning$line_number[2])
+```
+
+--
+
+<center><h3><i>You've got 10 minutes!</i></h3></center>
+
+---
+
+### Solution
+
+<ul><li>Basically we're looking for strings containing <b>"[something]"</b></li></ul>
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+--
+
+<ul><ul><li>The <b>"[" and "]"</b> symbols should be <b>preceded by "\\"</b></li></ul></ul>
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+--
+
+<ul><ul><li>And the "something" translates into <b>".+"</b>, <i>i.e.</i>, any character any number of times</li></ul></ul>
+
+--
+
+```{r}
+raj <- raj %>%
+  mutate(direction = grepl("\\[.+\\]", line))
+```
+
+--
+
+```{r}
+head(raj %>% filter(direction), 8)
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+<ul>
+  <li>We can now find the last stage direction</li>
+</ul>
+
+--
+
+```{r, echo = F}
+end <- raj %>%
+  group_by(direction) %>% # Do the computations separately for stage direction lines and other lines
+  mutate(last_obs = row_number() == n()) %>% # Mark the last row of each group with TRUE
+  ungroup() %>% # Ungroup the data
+  mutate(line_number = row_number()) %>% # Create a line_number variable 
+  filter(direction & last_obs) # Keep the last stage direction
+```
+
+```{r, eval = F}
+end <- raj %>% # Do the computations separately for stage direction lines and other lines
+  group_by(direction) %>%
+```
+
+<p style = "margin-bottom:-.55cm;"></p>
+
+--
+
+```{r, eval = F}
+  mutate(last_obs = row_number() == n()) %>% # Mark the last row of each group with TRUE
+```
+<p style = "margin-bottom:-.55cm;"></p>
+--
+
+```{r, eval = F}
+  ungroup() %>% # Ungroup the data
+```
+<p style = "margin-bottom:-.55cm;"></p>
+--
+
+```{r, eval = F}
+  mutate(line_number = row_number()) %>% # Create a line_number variable 
+```
+<p style = "margin-bottom:-.55cm;"></p>
+--
+
+```{r, eval = F}
+  filter(direction & last_obs) # Keep the last stage direction
+```
+
+--
+
+```{r}
+end
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+```{r}
+raj <- raj %>% filter(row_number() <= end$line_number)
+```
+
+--
+
+ * The play is now properly delimited:
+ 
+```{r}
+kable(head(raj, 5), "Start of the play")
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.2. Regular expressions
+
+```{r, eval = F}
+kable(tail(raj, 8), "End of the play")
+```
+
+.left-column[
+```{r, echo = F}
+kable(tail(raj, 8), "End of the play")
+```
+]
+
+--
+
+.right-column[
+
+<p style = "margin-bottom:4cm;"></p>
+
+ * We should also remove empty lines:
+
+```{r}
+raj <- raj %>% filter(line != "")
+```
+
+]
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+<ul>
+  <li>But the data is not ready yet, we need to <b>tokenize</b> it first</li>
+  <ul>
+    <li><b>Tokenization</b> is the fact of cleaning the data so that there is <b>one unit of text per row</b></li>
+    <li>Like in a regular database where each row corresponds to an observation</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>A token (unit of text) can be:</li>
+  <ul>
+    <li>A character</li>
+    <li>A letter</li>
+    <li>A word</li>
+    <li>A sentence</li>
+    <li>etc.</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>In our case it would be great to <b>tokenize</b> the data at the <b>line level</b>, documenting for each line:</li>
+  <ul>
+    <li>The corresponding act</li>
+    <li>The corresponding scene</li>
+    <li>The corresponding character</li>
+  </ul>
+</ul>  
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+ * We can start by identifying the <b>act and scene delimiters</b>
+ 
+```{r}
+raj <- raj %>% 
+  mutate(act_delim = grepl("^ACT", line),
+         scene_delim = grepl("^SCENE", line))
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Identifying the <b>line delimiters</b> is more complicated:</li>
+  <ul>
+    <li>There's no systematic word like "ACT" or "SCENE"</li>
+    <li>But they have the specificity to be in <b>uppercase</b> and to <b>end with a dot</b></li>
+    <li>They can also contain a space and the character ’</li>
+  </ul>
+</ul>
+
+--
+
+```{r}
+raj <- raj %>% 
+  mutate(line_delim = grepl("^[A-Z ’]*\\.$", line))
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><h4><i>&#10140; We should check it worked</i></h4></center>
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+```{r, eval = F}
+library("DT")
+datatable(raj %>% filter(act_delim|scene_delim), options = list(pageLength = 6))
+```
+
+--
+
+```{r, echo = F}
+library("DT")
+datatable(raj %>% filter(act_delim|scene_delim), options = list(pageLength = 6))
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+ * We indeed observe the same table of contents as in the preamble [here](https://louissirugue.github.io/metrics_on_R/lecture6/shakespeare/romeo_and_juliet.txt)
+
+--
+
+<ul>
+  <li>What about the characters?</li>
+  <ul>
+    <li>Let's compute the number of <b>lines per character</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+raj %>%
+  # Keep only the line delimiters (character names)
+  filter(line_delim) %>% 
+  # Group by character
+  group_by(line) %>% 
+  # Count the number of line (creates variable n)
+  tally() %>% 
+  # Plot it 
+  ggplot(., aes(x = reorder(line, -n), y = n)) + 
+  geom_bar(stat = "identity") + 
+  xlab("Character") + ylab("Number of lines") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+```{r, echo = F, fig.width = 8, fig.height = 5, out.width = '70%'}
+raj %>%
+  # Keep only the line delimiters (character names)
+  filter(line_delim) %>% 
+  # Group by character
+  group_by(line) %>% 
+  # Count the number of line (creates variable n)
+  tally() %>% 
+  # Plot it 
+  ggplot(., aes(x = reorder(line, -n), y = n)) + 
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  xlab("Character") + ylab("Number of lines") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+```{r}
+kable(head(raj, 8), "Head of the data")
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+<ul>
+  <li>We managed to <b>identify</b> the indicators of <b>act/scene/line</b></li>
+  <ul>
+    <li>But the data is <b>not tokenized</b></li>
+    <li>We want one row per line</li>
+    <li>And the corresponding act/scene/character of each line</li>
+  </ul>
+</ul>
+
+--
+
+<ul>
+  <li>One way to do that would be to:</li>
+  <ul>
+    <li>Start counters of act/scene/line</li>
+    <li><b>Go through each row</b> of the data</li>
+    <li>Each time we cross a marker, increase the counter</i>
+  </ul>
+</ul>
+
+--
+
+ * We can create <b>empty variables</b> that we will <b>fill in progressively</b>:
+ 
+```{r}
+raj <- raj %>%
+  mutate(id_act = NA,
+         id_scene = NA,
+         id_line = NA,
+         id_char = NA)
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+<ul>
+  <li>These vectors should be filled <b>row</b> after row with the corresponding values</li>
+  <ul>
+    <li>We should first <b>initialize</b> the counters that we will <b>update</b> each time we pass a marker</li>
+  </ul>
+</ul>
+
+--
+
+```{r}
+temp_act <- 0
+temp_scene <- 0
+temp_line <- 0
+temp_char <- ""
+```
+
+--
+
+ * We're all set to <b>start the loop</b>
+
+```{r, eval = F}
+for (i in 1:nrow(raj)) {
+  
+  # Update counters
+  if (raj[i, "act_delim"] == TRUE) { }
+  if (raj[i, "scene_delim"] == TRUE) { }
+  if (raj[i, "line_delim"] == TRUE) { }
+  
+  # Fill the vectors
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+<ul>
+  <li>Each time we pass an act marker we should</li>
+  <ul>
+    <li>Increase the act counter</li>
+    <li>Reset the scene counter</li>
+    <li>Reset the line counter</li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+for (i in 1:nrow(raj)) {
+  
+  if (raj[i, "act_delim"] == TRUE) {
+    temp_act <- temp_act + 1
+    temp_scene <- 0
+    temp_line <- 0
+  }
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+ <li>The same applies to the scene/line/character counters</li>
+</ul>
+
+<ul>
+ <li>After what every updated counter should be stored in its vector</li>
+</ul>
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+ * Update counters each time we pass a scene/line marker and store all counters
+ 
+```{r, eval = F}
+  if (raj[i, "scene_delim"] == TRUE) {
+    temp_scene <- temp_scene + 1
+    temp_line <- 0
+  }
+  if (raj[i, "line_delim"] == TRUE) {
+    temp_line <- temp_line + 1
+    temp_char <- gsub(pattern = "\\.$", "", raj[i, "line"])
+  }
+
+  raj[i, "id_act"] <- temp_act
+  raj[i, "id_scene"] <- temp_scene
+  raj[i, "id_line"] <- temp_line
+  raj[i, "id_char"] <- temp_char
+}
+
+kable(head(raj, 7), caption = "")
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+```{r, echo = F}
+temp_act <- 0
+temp_scene <- 0
+temp_line <- 0
+temp_char <- ""
+
+for (i in 1:nrow(raj)) {
+  
+  if (raj[i, "act_delim"] == TRUE) {
+    temp_act <- temp_act + 1
+    temp_scene <- 0
+    temp_line <- 0
+  }
+  if (raj[i, "scene_delim"] == TRUE) {
+    temp_scene <- temp_scene + 1
+    temp_line <- 0
+  }
+  if (raj[i, "line_delim"] == TRUE) {
+    temp_line <- temp_line + 1
+    temp_char <- gsub(pattern = "\\.$", "", raj[i, "line"])
+  }
+  
+  raj[i, "id_act"] <- temp_act
+  raj[i, "id_scene"] <- temp_scene
+  raj[i, "id_line"] <- temp_line
+  raj[i, "id_char"] <- temp_char
+}
+
+kable(head(raj, 7), caption = "")
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+<ul>
+  <li>We can now keep only the rows whose line id is positive</li>
+  <ul>
+    <li>It removes everything that comes before the first line of a scene such as act and scene indicators</li>
+  </ul>
+  <li>And remove all the rows indicating the characters</li>
+  <ul>
+    <li>Because we now have a column indicating the corresponding character for each line</li>
+  </ul>
+</ul>
+
+--
+
+```{r}
+raj <- raj %>% filter(id_line > 0 & !line_delim) 
+kable(head(raj, 3), "")
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+<ul>
+  <li>But there are still <b>lines spanning on multiple rows</b></li>
+  <ul>
+    <li>We need to <b>paste together</b> all the rows that correspond to a same line</li>
+    <li>We can use <b>group_by(id_act, id_scene, id_line)</b> to do the operation <b>for each line</b></li>
+    <li>And use <b>paste()</b> in the <b>summarise()</b> function to paste all the rows of a given line</li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+raj <- raj %>%
+  # Do the computations separately for each line
+  group_by(id_act, id_scene, id_line, id_char) %>%
+  # Paste together all the rows of each line
+  summarise(line = paste(line, collapse = " ")) %>%
+  # Ungroup the data for future computations
+  ungroup()
+```
+
+--
+
+ * Let's browse the data 
+
+```{r, eval = F}
+datatable(raj, options = list(pageLength = 5))
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+```{r, echo = F}
+raj <- raj %>%
+  # Do the computations separately for each line
+  group_by(id_act, id_scene, id_line, id_char) %>%
+  # Paste all together all the rows of each line
+  summarise(line = paste(line, collapse = " ")) %>%
+  # Ungroup the data for future computations
+  ungroup()
+
+datatable(raj, options = list(pageLength = 5))
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+ * The last thing to do is to **remove stage directions**
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+**Example:**
+ 
+```{r}
+kable(raj %>% filter(id_act == 1 & id_scene == 2 & id_line == 18), caption = "")
+```
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+<ul>
+  <li>We can do it using the <b>gsub()</b> function</li>
+  <ul>
+    <li>Let's try with the regexp we used to detect stage directions</li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+raj %>% 
+  mutate(line = gsub("\\[.+\\]", "", line)) %>% 
+  filter(id_act == 1 & id_scene == 2 & id_line == 18) %>%
+  kable(., caption = "")
+```
+
+--
+
+```{r, echo = F}
+raj %>% 
+  mutate(line = gsub("\\[.+\\]", "", line)) %>% 
+  filter(id_act == 1 & id_scene == 2 & id_line == 18) %>%
+  kable(., caption = "")
+```
+
+--
+
+<ul>
+  <li>It <b>removed everything</b> between the first [ and the last ] of the line</li>
+  <ul>
+    <li>But we want it to remove the two <b>stage directions separately</b></li>
+  </ul>
+</ul>
+
+--
+
+<ul>
+  <li>We should change <i>"any character"</i>: <b>"."</b></li>
+  <ul>
+    <li>By <i>"not [ nor ]"</i>: <b>"[^\\[\\]]"</b></li>
+  </ul>
+</ul>
+
+---
+
+### 1. Cleaning text data
+
+#### 1.3. Tokenization
+
+```{r}
+raj <- raj %>% 
+  mutate(line = gsub("\\[[^\\[\\]+\\]", "", line))
+```
+
+--
+
+```{r}
+kable(raj %>% filter(id_act == 1 & id_scene == 2 & id_line == 18), caption = "")
+```
+
+--
+
+<center><h4> &#10140; It worked, we're finally done</h4></center>
+
+---
+
+### Overview
+
+<p style = "margin-bottom:3cm;">
+
+#### 1. Cleaning text data &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Exploring the data
+ * 1.2. Regular expressions
+ * 1.3. Tokenization
+
+#### 2. Sentiment analysis
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Stopwords
+ * 2.2. Sentiments
+ * 2.3. Analysis
+
+#### 3. Wrap up!
+
+---
+
+### Overview
+
+<p style = "margin-bottom:3cm;">
+
+#### 1. Cleaning text data &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Exploring the data
+ * 1.2. Regular expressions
+ * 1.3. Tokenization
+
+#### 2. Sentiment analysis
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Stopwords
+ * 2.2. Sentiments
+ * 2.3. Analysis
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.1. Stopwords
+
+<ul>
+  <li>We <b>now</b> have clean data at the <b>line level</b></li>
+  <ul>
+    <li>But <b>sentiment analyses</b> are usually performed at the <b>word level</b></li>
+    <li>The idea is to use a <b>dictionary</b> that attributes a <b>sentiment</b> to each (some) words</li>
+  </ul>
+</ul>
+
+--
+
+&#10140; To <b>tokenize</b> our data at the word level, we can use the <b>`unnest_token()`</b> function from the `tidytext` package
+
+--
+
+<p style = "margin-bottom:-.5cm;">
+
+<ul>
+  <ul>
+    <li>It will attribute one row to each word of each line</li>
+    <li>Put everything in lower case</li>
+    <li>And remove punctuation</li>
+  </ul>
+</ul>
+
+--
+
+```{r}
+library("tidytext")
+raj <- raj %>%
+  mutate(to_unnest = line) %>%
+  unnest_tokens(token = "words", input = to_unnest, output = word)
+```
+
+ * Let's have a look
+ 
+```{r, eval = F}
+kable(head(raj, 9), "Unnested data")
+```
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.1. Stopwords
+
+```{r, echo = F}
+kable(head(raj, 9), "Unnested data")
+```
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.1. Stopwords
+
+<ul>
+  <li>The <b>first step</b> of a sentiment analysis is usually to <b>get rid of <i>stopwords</i></b></li>
+  <ul>
+    <li>Stopwords are common words that do not carry much semantic meaning</li>
+    <li>These words take space and computing time without adding to the analysis, so we drop them</li>
+  </ul>
+</ul>
+
+--
+
+&#10140; We can use the list of stopwords from the `tidytext` package with <b>`get_stopwords()`</b>
+
+```{r, eval = F}
+get_stopwords()[["word"]][1:50]
+```
+
+--
+
+```{r, echo = F}
+get_stopwords()[["word"]][1:50]
+```
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.1. Stopwords
+
+ * We want to <b>remove</b> every row that corresponds to a <b>stopword</b> to <b>reduce</b> the <b>dimensionality</b> of the data
+ 
+```{r}
+nrow(raj)
+```
+
+--
+
+<p style = "margin-bottom:1cm;">
+
+ * We can do so using the <b>`anti_join()`</b> function:
+ 
+```{r}
+raj <- raj %>%
+  anti_join(get_stopwords())
+
+nrow(raj)
+```
+
+
+<center><h4>&#10140; It reduced the number of rows by almost half!</h4></center>
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.1. Stopwords
+
+ * Here are the 50 <b>most common words</b> in the piece after removing the stopwords from the list
+ 
+--
+
+.left-column[
+```{r, echo = F, fig.width = 6, fig.height = 3.75, out.width = '95%'}
+raj %>%
+  count(word, sort = T) %>%
+  filter(row_number() <= 50) %>%
+  ggplot(., aes(x = reorder(word, -n), y = n)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  xlab("") + ylab("") + theme(axis.text.x = element_text(angle = 90))
+```
+]
+
+--
+
+.right-column[
+
+<p style = "margin-bottom:2cm;">
+
+<ul>
+  <li><b>Some stopwords</b> remained, in particular archaic pronouns that were <b>not in our list</b> such as thou, thy, thee, ...</li>
+</ul>
+
+<p style = "margin-bottom:1cm;">
+
+<ul>
+  <li>But we can already see that <b>love</b>, Romeo, night, death, are among the <b>most frequent words</b> in the play</li>
+</ul>
+ 
+]
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.2. Sentiments
+
+<ul>
+  <li>The next step is to <b>join</b> the words to their <b>corresponding sentiments</b> using a <b>dictionary</b></li>
+  <ul>
+    <li>Some dictionaries are very simple: positive/negative</li>
+    <li>And some are more elaborate: trust/fear/sadness/anger/...</li>
+  </ul>
+</ul>
+
+--
+
+ * The `tidytext` packages contains several sentiment dictionaries:
+
+--
+
+.pull-left[
+```{r}
+head(get_sentiments("bing"))
+```
+]
+
+--
+
+.pull-right[
+
+```{r}
+unique(get_sentiments("bing")[["sentiment"]])
+```
+
+<p style = "margin-bottom:2cm;">
+
+```{r} 
+unique(get_sentiments("nrc")[["sentiment"]])
+```
+]
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.2. Sentiments
+
+ * We're gonna use the <b>`afinn`</b> dictionary that rates words with integers from <b>-5 (negative) to 5 (positive)</b>
+
+```{r}
+raj <- raj %>% left_join(get_sentiments("afinn"))
+summary(raj$value)
+```
+--
+
+ * *Notice that most words have no associated sentiment*
+ 
+<p style = "margin-bottom:1cm;">
+
+--
+
+&#10140; Let's start by computing the average sentiment for the main characters
+
+```{r, eval = F, fig.width = 9, fig.height = 4, out.width = '95%'}
+raj %>% group_by(id_char) %>%
+  summarise(mean = mean(value, na.rm = T), n_words = n()) %>% filter(n_words > 100) %>%
+  ggplot(., aes(x = reorder(id_char, -mean), y = mean)) +
+  geom_bar(stat = "identity", fill = "#6794A7", color = "#014D64", alpha = .8) + 
+  theme(axis.text.x = element_text(angle = 90)) + xlab("")
+```
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.3. Analysis
+
+ * Average sentiment for the main characters
+ 
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = '70%'}
+raj %>% group_by(id_char) %>%
+  summarise(mean = mean(value, na.rm = T), n_words = n()) %>% filter(n_words > 100) %>%
+  ggplot(., aes(x = reorder(id_char, -mean), y = mean)) +
+  geom_bar(stat = "identity", fill = "#6794A7", color = "#014D64", alpha = .8) + 
+  theme(axis.text.x = element_text(angle = 90)) + xlab("")
+```
+
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.3. Analysis
+
+ * We can also look at the sentiment of the lines of the main characters when they mention other characters
+
+```{r}
+raj %>% 
+  filter(id_char %in% c("ROMEO", "JULIET", "NURSE")) %>%
+  group_by(id_char) %>%
+  summarise(about_romeo = mean(ifelse(grepl(pattern = "Romeo", line), value, NA), na.rm = T),
+            about_juliet = mean(ifelse(grepl(pattern = "Juliet", line), value, NA), na.rm = T),
+            about_nurse = mean(ifelse(grepl(pattern = "Nurse", line), value, NA), na.rm = T)) %>%
+  kable(., caption = "Crossed sentiments")
+```
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.3. Analysis
+
+ * We can also look at the evolution of the sentiment over the play
+ 
+<p style = "margin-bottom:.5cm;">
+ 
+--
+
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height = 4, out.width = '95%'}
+raj %>% 
+  group_by(id_act, id_scene) %>%
+  summarise(
+    mean = mean(value, na.rm = T)
+    ) %>% ungroup() %>%
+  mutate(scene = row_number()) %>%
+  ggplot(aes(x = scene, y = mean))+ 
+  geom_bar(stat = 'identity', 
+           fill = "#6794A7", 
+           color = "#014D64", 
+           alpha = .8)
+```
+
+<center><b><i>&#10140; Not a happy end</i></b></center>
+ 
+]
+
+.right-column[
+```{r, eval = F}
+raj %>% 
+  group_by(id_act, id_scene) %>%
+  summarise(
+    mean = mean(value, na.rm = T)
+    ) %>% ungroup() %>%
+  mutate(scene = row_number()) %>%
+  ggplot(aes(x = scene,y = mean))+
+  geom_bar(stat = 'identity', 
+           fill = "#6794A7", 
+           color = "#014D64", 
+           alpha = .8)
+```
+]
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.3. Analysis
+
+<ul> 
+  <li>We can put our code into a <b>function</b> and <b>apply</b> it to <b>other plays</b></li>
+  <ul>
+    <li>Create a function sentiment_evolution() that takes the file name as an argument</li>
+    <li>And that return the evolution of positivity over the play as the output</li>
+    <li>See the code <a href="https://louissirugue.github.io/metrics_on_R/lecture6/sentiment_evolution.txt">here</a></li>
+  </ul>
+</ul>
+  
+
+```{r, echo = F}
+sentiment_evolution <- function(file) {
+  
+  # Read the play
+  play <- tibble(line = readLines(paste0("shakespeare/", file), encoding = "UTF-8"))
+  
+  # Remove everything before the play
+  beginning <- play %>% 
+    mutate(line_number = row_number()) %>%
+    filter(line == "ACT I")
+  play <- play %>% filter(row_number() >= beginning$line_number[2])
+  
+  # Remove everything after the play
+  play <- play %>% mutate(direction = grepl("\\[.+\\]", line))
+  end <- play %>% 
+    group_by(direction) %>%
+    mutate(last_obs = row_number() == n()) %>% 
+    ungroup() %>% 
+    mutate(line_number = row_number()) %>% 
+    filter(direction & last_obs)
+  play <- play %>% filter(row_number() <= end$line_number)
+  
+  # Remove empty lines and create delimiters
+  play <- play %>% 
+    filter(line != "") %>% 
+    mutate(act_delim = grepl("^ACT", line),
+           scene_delim = grepl("^SCENE", line),
+           line_delim = grepl("^[A-Z ’]*\\.$", line))
+  
+  # Tokenization
+  play <- play %>%
+    mutate(id_act = NA,
+           id_scene = NA,
+           id_line = NA,
+           id_char = NA)
+  
+  temp_act <- 0
+  temp_scene <- 0
+  temp_line <- 0
+  temp_char <- ""
+  
+  for (i in 1:nrow(play)) {
+    
+    if (play[i, "act_delim"] == TRUE) {
+      temp_act <- temp_act + 1
+      temp_scene <- 0
+      temp_line <- 0
+    }
+    if (play[i, "scene_delim"] == TRUE) {
+      temp_scene <- temp_scene + 1
+      temp_line <- 0
+    }
+    if (play[i, "line_delim"] == TRUE) {
+      temp_line <- temp_line + 1
+      temp_char <- gsub(pattern = "\\.$", "", play[i, "line"])
+    }
+    
+    play[i, "id_act"] <- temp_act
+    play[i, "id_scene"] <- temp_scene
+    play[i, "id_line"] <- temp_line
+    play[i, "id_char"] <- temp_char
+  }
+  
+  play <- play %>% 
+    filter(id_line > 0 & !line_delim) %>%
+    group_by(id_act, id_scene, id_line, id_char) %>%
+    summarise(line = paste(line, collapse = " ")) %>%
+    ungroup() %>% 
+    mutate(line = gsub("\\[[^\\[\\]+\\]", "", line))
+  
+  # Sentiments
+  play <- play %>%
+    mutate(to_unnest = line) %>%
+    unnest_tokens(token = "words", input = to_unnest, output = word) %>%
+    anti_join(get_stopwords()) %>% 
+    left_join(get_sentiments("afinn"))
+  
+  # Return the graph
+  return(play)
+}
+
+```
+
+--
+ 
+<p style = "margin-bottom:1.5cm;">
+
+<ul>
+  <li>This function can then be applied to different plays of Shakespeare:</li>
+</ul>
+
+
+```{r, eval = F}
+plays <- c("a_midsummer_nights_dream.txt", "macbeth.txt", 
+           "othello_the_moor_of_venice.txt", "romeo_and_juliet.txt", 
+           "the_merchant_of_venice.txt", "the_taming_of_the_shrew.txt",
+           "the_tragedy_of_king_lear.txt", "the_winters_tale.txt")
+
+for (file in plays) {
+  sentiment_evolution(file)
+}
+```
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.3. Analysis
+
+```{r, echo = F, fig.width = 11, fig.height = 5, out.width = '95%'}
+sentiment_evolution("a_midsummer_nights_dream.txt") %>%
+  mutate(play = "A Midsummer Night's Dream") %>%
+  bind_rows(sentiment_evolution("macbeth.txt") %>%
+              mutate(play = "MacBeth")) %>%
+  group_by(play, id_act, id_scene) %>%
+  summarise(mean = mean(value, na.rm = T)) %>% 
+  ungroup() %>% 
+  group_by(play) %>%
+  mutate(scene = row_number()) %>%
+  ungroup() %>%
+  ggplot(aes(x = scene, y = mean)) +
+  geom_bar(stat = 'identity', fill = "#6794A7", 
+           color = "#014D64", alpha = .8) +
+  facet_wrap(~play, ncol = 1, scales = "free_y") + ylab("Positivity") +
+  scale_x_continuous(name = "", breaks = c(1, seq(5, 35, 5))) +
+  theme(axis.ticks.x = element_blank(), axis.text.x = element_blank(),
+        axis.line.x = element_blank())
+```
+
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.3. Analysis
+
+```{r, echo = F, fig.width = 11, fig.height = 5, out.width = '95%'}
+sentiment_evolution("othello_the_moor_of_venice.txt") %>%
+              mutate(play = "Othello the Moor of Venice") %>%
+  bind_rows(sentiment_evolution("romeo_and_juliet.txt") %>%
+              mutate(play = "Romeo and Juliet")) %>% 
+  group_by(play, id_act, id_scene) %>%
+  summarise(mean = mean(value, na.rm = T)) %>% 
+  ungroup() %>% 
+  group_by(play) %>%
+  mutate(scene = row_number()) %>%
+  ungroup() %>%
+  ggplot(aes(x = scene, y = mean)) +
+  geom_bar(stat = 'identity', fill = "#6794A7", 
+           color = "#014D64", alpha = .8) +
+  facet_wrap(~play, ncol = 1, scales = "free_y") + ylab("Positivity") +
+  scale_x_continuous(name = "", breaks = c(1, seq(5, 35, 5))) +
+  theme(axis.ticks.x = element_blank(), axis.text.x = element_blank(),
+        axis.line.x = element_blank())
+```
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.3. Analysis
+
+```{r, echo = F, fig.width = 11, fig.height = 5, out.width = '95%'}
+sentiment_evolution("the_merchant_of_venice.txt") %>%
+  mutate(play = "The Merchant of Venice") %>%
+  bind_rows(sentiment_evolution("the_taming_of_the_shrew.txt") %>%
+              mutate(play = "The Taming of the Shrew")) %>% 
+  group_by(play, id_act, id_scene) %>%
+  summarise(mean = mean(value, na.rm = T)) %>% 
+  ungroup() %>% 
+  group_by(play) %>%
+  mutate(scene = row_number()) %>%
+  ungroup() %>%
+  ggplot(aes(x = scene, y = mean)) +
+  geom_bar(stat = 'identity', fill = "#6794A7", 
+           color = "#014D64", alpha = .8) +
+  facet_wrap(~play, ncol = 1, scales = "free_y") + ylab("Positivity") +
+  scale_x_continuous(name = "", breaks = c(1, seq(5, 35, 5))) +
+  theme(axis.ticks.x = element_blank(), axis.text.x = element_blank(),
+        axis.line.x = element_blank())
+```
+
+---
+
+### 2. Sentiment analysis
+
+#### 2.3. Analysis
+
+```{r, echo = F, fig.width = 11, fig.height = 5, out.width = '95%'}
+sentiment_evolution("the_tragedy_of_king_lear.txt") %>%
+              mutate(play = "The Tragedy of King Lear") %>%
+  bind_rows(sentiment_evolution("the_winters_tale.txt") %>%
+              mutate(play = "The Winter's Tale")) %>% 
+  group_by(play, id_act, id_scene) %>%
+  summarise(mean = mean(value, na.rm = T)) %>% 
+  ungroup() %>% 
+  group_by(play) %>%
+  mutate(scene = row_number()) %>%
+  ungroup() %>%
+  ggplot(aes(x = scene, y = mean)) +
+  geom_bar(stat = 'identity', fill = "#6794A7", 
+           color = "#014D64", alpha = .8) +
+  facet_wrap(~play, ncol = 1, scales = "free_y") + ylab("Positivity") +
+  scale_x_continuous(name = "", breaks = c(1, seq(5, 35, 5))) +
+  theme(axis.ticks.x = element_blank(), axis.text.x = element_blank(),
+        axis.line.x = element_blank())
+```
+
+
+---
+
+### Overview
+
+<p style = "margin-bottom:3cm;">
+
+#### 1. Cleaning text data &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Exploring the data
+ * 1.2. Regular expressions
+ * 1.3. Tokenization
+
+#### 2. Sentiment analysis &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Stopwords
+ * 2.2. Sentiments
+ * 2.3. Analysis
+
+#### 3. Wrap up!
+
+---
+
+### 3. Wrap up!
+
+#### 1. Regular expressions
+
+.pull-left[
+
+<ul>
+  <li><b>Regular expressions are strings of codified characters describing a pattern</b></li>
+  <ul>
+    <li>For instance the character "^" indicates the start of the string</li>
+    <li>So the regular expression "^a" would match any "a" that is a the beginning of a string</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Regular expressions in R can be used in different functions with different purposes:</li>
+  <ul>
+    <li><b>grep:</b> return elements that match the regexp</li>
+    <li><b>grepl:</b> return TRUE for elements that match the regexp and FALSE otherwise</li>
+    <li><b>gsub:</b> replace the elements that match the regexp with what you want</li>
+  </ul>
+</ul>
+
+]
+
+--
+
+.pull-right[
+```{r, echo = F}
+kable(regexp_table %>% filter(row_number() %in% c(1:5, 10:13)), caption = "")
+```
+
+]
+
+---
+
+### 3. Wrap up!
+
+#### 2. Tokenization
+
+<ul>
+  <li><b>Tokenization</b> is the fact of cleaning the data so that there is <b>one unit of text per row</b></li>
+  <ul>
+    <li>A unit of text (token) can be a character, a letter, a word, a sentence, etc.</li>
+  </ul>
+</ul>
+
+--
+
+.pull-left[
+```{r, echo = F}
+# Read the play
+raj <- tibble(line = readLines("shakespeare/romeo_and_juliet.txt", encoding = "UTF-8"))
+# Identify the lines "ACT I"
+beginning <- raj %>% 
+  mutate(line_number = row_number()) %>%
+  filter(line == "ACT I")
+# Remove everything before the second occurence
+raj <- raj %>% filter(row_number() >= beginning$line_number[2])
+raj <- raj %>%
+  mutate(direction = grepl("\\[.+\\]", line))
+end <- raj %>% # Do the computations separately for stage direction lines and other lines
+  group_by(direction) %>%
+  mutate(last_obs = row_number() == n()) %>% # Mark the last row of each group with TRUE
+  ungroup() %>% # Ungroup the data
+  mutate(line_number = row_number()) %>% # Create a line_number variable
+  filter(direction & last_obs) # Keep the last stage direction
+raj <- raj %>% filter(row_number() <= end$line_number)
+raj <- raj %>% filter(line != "")
+kable(head(raj, 7), caption = "")
+```
+
+]
+
+--
+
+.pull-right[
+```{r, echo = F}
+raj <- raj %>% 
+  mutate(act_delim = grepl("^ACT", line),
+         scene_delim = grepl("^SCENE", line))
+raj <- raj %>% 
+  mutate(line_delim = grepl("^[A-Z ’]*\\.$", line))
+raj <- raj %>%
+  mutate(id_act = NA,
+         id_scene = NA,
+         id_line = NA,
+         id_char = NA)
+temp_act <- 0
+temp_scene <- 0
+temp_line <- 0
+temp_char <- ""
+for (i in 1:nrow(raj)) {
+  if (raj[i, "act_delim"] == TRUE) {
+    temp_act <- temp_act + 1
+    temp_scene <- 0
+    temp_line <- 0
+  }
+  if (raj[i, "scene_delim"] == TRUE) {
+    temp_scene <- temp_scene + 1
+    temp_line <- 0
+  }
+  if (raj[i, "line_delim"] == TRUE) {
+    temp_line <- temp_line + 1
+    temp_char <- gsub(pattern = "\\.$", "", raj[i, "line"])
+  }
+  raj[i, "id_act"] <- temp_act
+  raj[i, "id_scene"] <- temp_scene
+  raj[i, "id_line"] <- temp_line
+  raj[i, "id_char"] <- temp_char
+}
+raj <- raj %>% filter(id_line > 0 & !line_delim) 
+raj <- raj %>%
+  # Do the computations separately for each line
+  group_by(id_act, id_scene, id_line, id_char) %>%
+  # Paste all together all the rows of each line
+  summarise(line = paste(line, collapse = " ")) %>%
+  # Ungroup the data for future computations
+  ungroup()
+kable(head(raj, 3), caption = "")
+```
+]
+
+---
+
+### 3. Wrap up!
+
+#### 3. Stopwords and sentiments
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+.pull-left[
+<ul>
+  <li><u>First step:</u> <b>get rid of <i>stopwords</i></b></li>
+  <ul>
+    <li>Stopwords are common words that do not carry much semantic meaning but take space and computing time</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+```{r}
+matrix(get_stopwords()[["word"]][1:24],ncol=3)
+```
+]
+
+--
+
+.pull-right[
+<ul>
+  <li><u>Second step:</u> <b>join sentiments dictionary</b></li>
+  <ul>
+    <li>Some dictionaries are very simple: positive/negative</li>
+    <li>And some are more elaborate: trust/fear/sadness/anger/...</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+```{r}
+head(get_sentiments("bing"), 5)
+```
+]
+
+---
+
+### 3. Wrap up!
+
+#### 4. Analysis
+
+```{r, echo = F}
+raj <- raj %>% 
+  mutate(line = gsub("\\[[^\\[\\]+\\]", "", line)) %>%
+  mutate(to_unnest = line) %>%
+  unnest_tokens(token = "words", input = to_unnest, output = word) %>%
+  anti_join(get_stopwords()) %>% 
+  left_join(get_sentiments("afinn"))
+```
+
+.left-column[
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * Evolution of the average sentiment **over the play** 
+
+```{r, echo = F, fig.width = 8, fig.height = 4, out.width = '95%'}
+raj %>% 
+  group_by(id_act, id_scene) %>%
+  summarise(
+    mean = mean(value, na.rm = T)
+    ) %>% ungroup() %>%
+  mutate(scene = row_number()) %>%
+  ggplot(aes(x = scene,y = mean))+
+  geom_bar(stat = 'identity', 
+           fill = "#6794A7", 
+           color = "#014D64", 
+           alpha = .8)
+```
+
+]
+
+.right-column[
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * Sentiment of characters (rows) **when mentioning other characters** (columns)
+ 
+<p style = "margin-bottom:1cm;"></p>
+ 
+```{r, echo = F}
+raj %>% 
+  filter(id_char %in% c("ROMEO", "JULIET", "NURSE")) %>%
+  group_by(id_char) %>%
+  summarise(ROMEO = mean(ifelse(grepl(pattern = "Romeo", line), value, NA), na.rm = T),
+            JULIET = mean(ifelse(grepl(pattern = "Juliet", line), value, NA), na.rm = T),
+            NURSE = mean(ifelse(grepl(pattern = "Nurse", line), value, NA), na.rm = T))
+```
+]
