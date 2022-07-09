@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to R
+## Lecture 1
+### <br>Louis SIRUGUE
+### CPES 2 - Fall 2022
+
+---
+
+
+
+
+
+
+### Welcome to the course!
+
+--
+
+&lt;p style = "margin-bottom:-.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+#### About me:
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li style = "margin-bottom:.75cm;"&gt;PhD student at the Paris School of Economics&lt;/li&gt;
+  &lt;li&gt;I work primarily on:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Intergenerational (income) mobility&lt;/li&gt; 
+    &lt;li&gt;Residential segregation&lt;/li&gt;
+    &lt;li style = "margin-bottom:.75cm;"&gt;Discrimination&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;li style = "margin-bottom:.75cm;"&gt;I do empirical research, so I use Econometrics and (R) programming on a daily basis&lt;/li&gt;
+  &lt;li&gt;You can reach me at &lt;a href="mailto:louis.sirugue@psemail"&gt;louis.sirugue@psemail&lt;/a&gt; for any question or comment about the course&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+--
+
+.pull-right[
+
+#### About the course:
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Objective:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li style = "margin-bottom:.3cm;"&gt;Give you the necessary statistical and data visualization tools to perform data analyses&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;li&gt;&lt;b&gt;Prerequisites:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li style = "margin-bottom:.3cm;"&gt;None (middle-school maths level)&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;li&gt;&lt;b&gt;What you'll learn:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Find and manipulate data&lt;/li&gt;
+    &lt;li&gt;Summarize data with relevant statistics and compelling graphics&lt;/li&gt;
+    &lt;li style = "margin-bottom:.3cm;"&gt;Carry out an empirical research project&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;li&gt;&lt;b&gt;Thus, this course is a mix of:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Programming on R&lt;/li&gt;
+    &lt;li&gt;Basic Statistics&lt;/li&gt;
+    &lt;li&gt;Introductory Econometrics&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+
+---
+
+### First semester
+
+#### Course format:
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;
+
+&lt;p style = "margin-left:.5cm;"&gt; &amp;#10140; 15 formal lectures divided into 3 parts:&lt;/p&gt;
+&lt;p style = "margin-bottom:-.25cm;"&gt;
+
+--
+
+&lt;ol style = "padding-left:4em"&gt;
+  &lt;li&gt;Introduction to R Programming &lt;/li&gt;
+  &lt;li&gt;Data analysis&lt;/li&gt;
+  &lt;li&gt;Data visualization&lt;/li&gt;
+&lt;/ol&gt;
+ 
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+#### Grading:
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Weekly short online quizzes (25% of the grade) &lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;5 shorts questions related to the content of the previous class &lt;/li&gt;
+    &lt;li&gt;The quiz opens at the end of the lecture and closes at the beginning of the following one&lt;/li&gt;
+    &lt;li&gt;Possibility to retry the quiz as many times as you want before submitting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt; 
+
+--
+
+&lt;p style = "margin-bottom:.15cm;"&gt;
+  
+&lt;ul&gt;
+  &lt;li&gt;Homeworks (3, one for each part, 25% of the grade each)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Homeworks are already available &lt;a href="https://louissirugue.github.io/data-analysis-course/home.html"&gt;here&lt;/a&gt;, work on it progressively as we go through the course &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### Second semester
+
+#### Course format:
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li style = "margin-bottom:.25cm;"&gt;Apart from 2 refreshers at the beginning, the whole semester will be dedicated to you research projects &lt;/li&gt;
+  &lt;li style = "margin-bottom:.25cm;"&gt;At each session a T.A. will guide you through the research process &lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;From framing a relevant question and finding appropriate data &lt;/li&gt;
+    &lt;li&gt;To the final details of your data analysis&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt; 
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+#### Grading:
+&lt;ul&gt;
+  &lt;li style = "margin-bottom:.25cm;"&gt;Basically the whole grade will be based on your research project &lt;/li&gt;
+  &lt;li style = "margin-bottom:.25cm;"&gt;The detailed (indicative) grading scheme is available &lt;a href="https://louissirugue.github.io/data-analysis-course/project/grading.html"&gt;here&lt;/a&gt;. &lt;/li&gt;
+&lt;/ul&gt; 
+
+--
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+&lt;center&gt;&lt;h3 style = "font-size: 20pt;"&gt;&lt;i&gt; &amp;#10140; Visit the &lt;a href="https://louissirugue.github.io/data-analysis-course/home.html"&gt;course webpage&lt;/a&gt; for more detail, everything's there!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+---
+
+&lt;h3&gt;Let's delve into it!&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+
+#### 3. Vectors
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+]
+
+.pull-right[
+#### 4. Functions and packages
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Functions
+ * 4.2. Packages
+
+#### 5. A few words on learning R
+
+#### 6. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Let's delve into it!&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+]
+
+---
+
+### 1. Getting started
+
+#### 1.1. About R
+
+ * R is a **programming language** and free software environment for **statistical computing and graphics**
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+ &lt;li style = "margin-bottom:.25cm;"&gt;The R language is widely (and increasingly) used in &lt;b&gt;academic and non-academic research&lt;/b&gt; in fields like:&lt;/li&gt;
+   &lt;ul&gt;
+     &lt;li&gt;Economics&lt;/li&gt;
+     &lt;li&gt;Statistics&lt;/li&gt;
+     &lt;li&gt;Biostats&lt;/li&gt;
+   &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+ &lt;li style = "margin-bottom:.25cm;"&gt;Things you can do with R:&lt;/li&gt;
+   &lt;ul&gt;
+     &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/project/example.html"&gt;Reports&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://www.r-graph-gallery.com/bubble_chart_interactive_ggplotly.html"&gt;Nice plots&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/home.html"&gt;All the material of this course&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://pubs.aeaweb.org/doi/pdfplus/10.1257/app.20200447"&gt;Academic research&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://www.kaggle.com/xavierconort"&gt;Win kaggle competitions&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://vac-lshtm.shinyapps.io/ncov_tracker/?_ga=2.29922175.1739025613.1656421238-871875772.1628005923"&gt;Interactive data visualization&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://www.data-to-art.com/"&gt;Art&lt;/a&gt;&lt;/li&gt;
+   &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R studio environment
+
+&lt;center&gt;
+&lt;img src = "rstudio.png" width = "770"/&gt;
+&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.2. The R studio environment
+
+&amp;#10140; &lt;b&gt;The Console panel&lt;/b&gt;
+
+&lt;p style = "margin-bottom:-.3cm;"&gt;
+
+ * This is where you **communicate with R**. You can write instructions after the `&gt;`, press enter and R will **execute**  
+    - Try with `1+1`:
+
+--
+
+
+```r
+1+1
+```
+
+```
+## [1] 2
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&amp;#10140; &lt;b&gt;The Source panel&lt;/b&gt;
+
+&lt;p style = "margin-bottom:-.3cm;"&gt;
+
+* This is where you **write and save your code** (File &gt; New File &gt; R Script) 
+ * Separate different commands with a line break 
+ * The `#` symbol allows to annotate the code, everything after `#` will be ignored by R until the next line break
+
+--
+
+
+```r
+1+1 # Do not put 2+2 on the same line, press enter to go to next line 
+2+2
+```
+
+---
+
+### 1. Getting started
+
+#### 1.2. The R studio environment
+
+&amp;#10140; &lt;b&gt;The Source panel&lt;/b&gt;
+
+&lt;p style = "margin-bottom:-.3cm;"&gt;
+
+ * To send the command from the source panel to the console panel:
+   1. Highlight the lines you want to execute 
+   2. Press `crtl` + `enter`
+ * If you do not highlight anything the line of code where your cursor stands will be executed
+ * Check the console to see the output of your code
+ 
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&amp;#10140; &lt;b&gt;The Environment panel&lt;/b&gt;
+
+&lt;p style = "margin-bottom:-.3cm;"&gt;
+
+ * Data analysis requires manipulating datasets, vectors, functions, etc. 
+    * These **elements are stored in the environment** panel.
+ * For instance we can assign a value to an object using `&lt;-`
+
+--
+
+
+```r
+x &lt;- 1
+```
+
+--
+
+&lt;center&gt;&lt;i&gt; &amp;#10140; You now have an object called 'x' in your environment, which takes the value 1&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.2. The R studio environment
+
+&amp;#10140; &lt;b&gt;The Environment panel&lt;/b&gt;
+
+ * Now that the object `x` is stored in your environment, you can use it:
+
+--
+
+
+```r
+x + 1
+```
+
+```
+## [1] 2
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * You can also modify that object at any point:
+
+
+```r
+x &lt;- x + 1 # What's gonna be the value of x?
+```
+
+--
+
+
+```r
+x
+```
+
+```
+## [1] 2
+```
+
+
+---
+
+### 1. Getting started
+
+&lt;style&gt; .left-column {width: 60%;} .right-column {width: 36%;} &lt;/style&gt;
+
+&lt;p style = "margin-bottom:-.7cm;"&gt;
+
+.left-column[
+
+#### 1.2. The R studio environment
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+&amp;#10140; &lt;b&gt;The Files/Plots/... panel&lt;/b&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+ * In this panel we'll mainly be interested in the following 4 tabs
+   * **Files:** Shows your working directory
+   * **Plots:** Where R returns plots
+   * **Packages:** A library of tools that we can load if needed
+   * **Help:** Where to look for documentation on R functions
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * Enter `?getwd()` in the console to see what a **help file** looks like
+   * It **describes** what the command does
+   * It **explains** the different parameters of the command
+   * It **gives examples** of how to use the command
+]
+
+--
+
+.right-column[
+
+&lt;img src = "help_file.png" width = "370"/&gt;
+
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+
+#### 3. Vectors
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+]
+
+.pull-right[
+#### 4. Functions and packages
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Functions
+ * 4.2. Packages
+
+#### 5. A few words on learning R
+
+#### 6. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+]
+
+---
+
+### 2. Classes of R objects
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; There are 3 main classes of R objects&lt;/b&gt;&lt;/center&gt;
+
+--
+
+.pull-left[
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1cm;"&gt;
+  &lt;li&gt;&lt;b&gt;Numeric values:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;42&lt;/li&gt;
+    &lt;li&gt;-10^3&lt;/li&gt;
+    &lt;li&gt;2.6879098767&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1cm;"&gt;
+  &lt;li&gt;&lt;b&gt;Character values:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A&lt;/li&gt;
+    &lt;li&gt;Hello world&lt;/li&gt;
+    &lt;li&gt;PM2.5&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1cm;"&gt;
+  &lt;li&gt;&lt;b&gt;Logical values:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;TRUE (&lt;i&gt;or equivalently&lt;/i&gt; T)&lt;/li&gt;
+    &lt;li&gt;FALSE (&lt;i&gt;or equivalently&lt;/i&gt; F)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;
+
+The class of an object is a &lt;b&gt;key attribute&lt;/b&gt;:
+
+&lt;ul style = "margin-left:-2.5cm;"&gt;
+  &lt;li&gt;Different types of operations are available for different classes of object&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul style = "margin-left:-2.5cm;"&gt;
+  &lt;li&gt;Objects of different classes may react differently to a same operation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul style = "margin-left:-2.5cm;"&gt;
+  &lt;li&gt;Class mistakes is a common source of programming errors&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+---
+
+### 2. Classes of R objects
+
+#### 2.1. Numeric values
+
+&lt;center&gt;&lt;b&gt;Basic operations with numeric values:&lt;/b&gt;&lt;/center&gt;
+
+--
+
+.pull-left[
+ 
+
+```r
+2 + 3 # Addition
+```
+
+```
+## [1] 5
+```
+
+
+```r
+2 - 3 # Subtraction
+```
+
+```
+## [1] -1
+```
+
+
+```r
+2 * 3 # Multiplication
+```
+
+```
+## [1] 6
+```
+
+
+```r
+2 / 3 # Division
+```
+
+```
+## [1] 0.6666667
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+2 ^ 2 # Exponent
+```
+
+```
+## [1] 4
+```
+
+
+```r
+4 ^ (1/2) # Root
+```
+
+```
+## [1] 2
+```
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+ * Store the result of a computation in an object:
+
+
+```r
+result &lt;-((2 + 2)^(2 / (2 * 2))) - 2
+result
+```
+
+```
+## [1] 0
+```
+
+]
+
+---
+
+### 2. Classes of R objects
+
+#### 2.2. Character values
+
+&lt;center&gt;&lt;b&gt;Character values need to be surrounded by quotation marks (' or ")&lt;/b&gt;&lt;/center&gt;
+
+--
+
+
+```r
+language &lt;- "R"
+language
+```
+
+```
+## [1] "R"
+```
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Without quotation marks, R will think that you refer to an object&lt;/b&gt;&lt;/center&gt;
+
+
+```r
+R
+```
+
+```
+## Error in eval(expr, envir, enclos): objet 'R' introuvable
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Characters are not necessarily letters&lt;/b&gt;&lt;/center&gt;
+
+
+```r
+character_string &lt;- "R'{ç^*µ,,,_hi3"
+```
+
+---
+
+### 2. Classes of R objects
+
+#### 2.2. Character values
+
+&lt;center&gt;&lt;b&gt;Useful functions with characters&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;Combining strings&lt;/b&gt;&lt;/center&gt;
+
+
+```r
+paste("Hello", "world") 
+```
+
+```
+## [1] "Hello world"
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+paste("a", "b", "c", sep = "-") 
+```
+
+```
+## [1] "a-b-c"
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+paste0("a", "b", "c") 
+```
+
+```
+## [1] "abc"
+```
+
+]
+
+--
+
+.pull-right[
+
+&lt;center&gt;&lt;b&gt;Splitting strings&lt;/b&gt;&lt;/center&gt;
+
+
+```r
+substr("abcdefghijklmnopqrstuvwxyz", 3, 5)
+```
+
+```
+## [1] "cde"
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+nchar("Hello world")
+```
+
+```
+## [1] 11
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+substr("Hello world", 5, nchar("Hello world"))
+```
+
+```
+## [1] "o world"
+```
+
+]
+
+---
+
+### 2. Classes of R objects
+
+#### 2.3. Logical values
+
+.pull-left[
+
+A logical value/**Boolean**, is a value that can be either:
+ 
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+ 
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;TRUE&lt;/b&gt; (can be abbreviated as &lt;b&gt;T&lt;/b&gt;)&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+
+```r
+T
+```
+
+```
+## [1] TRUE
+```
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;or &lt;b&gt;FALSE&lt;/b&gt; (can be abbreviated as &lt;b&gt;F&lt;/b&gt;)&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+
+```r
+F
+```
+
+```
+## [1] FALSE
+```
+
+]
+ 
+--
+
+.pull-right[
+ 
+
+```r
+2 + 2 == 4 # Equality
+```
+
+```
+## [1] TRUE
+```
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+
+```r
+2 + 2 != 4 # Inequality
+```
+
+```
+## [1] FALSE
+```
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+
+```r
+1 &gt; 2 # Strictly lower/greater
+```
+
+```
+## [1] FALSE
+```
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+
+```r
+2 &lt;= 2 # Weakly lower/greater
+```
+
+```
+## [1] TRUE
+```
+
+]
+
+---
+
+### 2. Classes of R objects
+
+#### 2.3. Logical values
+
+
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;And (&amp;) / or (|)&lt;/b&gt;&lt;/center&gt;
+ 
+
+```r
+(1 == 1) &amp; (1 == 2) #AND
+```
+
+```
+## [1] FALSE
+```
+
+
+```r
+(1 == 1) | (1 == 2) #OR
+```
+
+```
+## [1] TRUE
+```
+
+
+```r
+1 == 1 | (2 == 2 &amp; 1 == 2) #Parentheses matter
+```
+
+```
+## [1] TRUE
+```
+
+
+```r
+(1 == 1 | 2 == 2) &amp; 1 == 2 #Parentheses matter
+```
+
+```
+## [1] FALSE
+```
+
+]
+
+--
+
+.pull-right[
+
+&lt;center&gt;&lt;b&gt;Opposite (!)&lt;/b&gt;&lt;/center&gt;
+ 
+
+```r
+is.numeric(1)
+```
+
+```
+## [1] TRUE
+```
+
+
+```r
+!is.numeric(1)
+```
+
+```
+## [1] FALSE
+```
+
+
+```r
+3 &lt; 2
+```
+
+```
+## [1] FALSE
+```
+
+
+```r
+!3 &lt; 2
+```
+
+```
+## [1] TRUE
+```
+
+]
+
+---
+
+### 2. Classes of R objects
+
+#### 2.4. Manipulate classes
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;It is important to &lt;b&gt;keep in mind the class&lt;/b&gt; of the object you are working with because they work differently&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance, you can add two numeric values together but not two characters&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;You can &lt;b&gt;find the class&lt;/b&gt; of an object by hovering your mouse over its name in the environment panel, or using the &lt;b&gt;class()&lt;/b&gt; function:&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+class(2)
+```
+
+```
+## [1] "numeric"
+```
+
+--
+
+
+```r
+class("a")
+```
+
+```
+## [1] "character"
+```
+
+--
+
+
+```r
+class(FALSE)
+```
+
+```
+## [1] "logical"
+```
+
+---
+
+### 2. Classes of R objects
+
+#### 2.4. Manipulate classes
+
+&lt;ul&gt;&lt;li&gt;You can &lt;b&gt;change the class&lt;/b&gt; of an object using functions of the form &lt;b&gt;as.[character/numeric/logical]()&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Class conversion table:&lt;/b&gt;&lt;/center&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; as.numeric() &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; as.character() &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; as.logical() &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;numeric&lt;/b&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Converts numeric values &lt;br&gt; into strings of numbers &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns TRUE if != 0 &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns FALSE if 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;character&lt;/b&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Converts strings of numbers &lt;br&gt; into numeric values &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns NA if characters in the string &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns TRUE if "T" or"TRUE" &lt;br&gt; Returns FALSE if "F" or "FALSE" &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns NA otherwise &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;logical&lt;/b&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns 1 if TRUE  &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns 0 if FALSE &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns "TRUE" if TRUE &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns "FALSE" if FALSE &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;NA&lt;/b&gt; stands for &lt;i&gt;'Not Available'&lt;/i&gt;, it corresponds to a &lt;b&gt;missing value&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Beware of NAs&lt;/b&gt;, it is a common source of programming errors (more on that next week)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Classes of R objects
+
+#### 2.4. Manipulate classes
+
+&lt;center&gt;&lt;b&gt;Some examples&lt;/b&gt;&lt;/center&gt;
+
+--
+
+.pull-left[
+
+
+```r
+as.numeric("2022")
+```
+
+```
+## [1] 2022
+```
+
+
+```r
+as.numeric("2022-2023")
+```
+
+```
+## [1] NA
+```
+
+
+```r
+as.numeric(T)
+```
+
+```
+## [1] 1
+```
+
+
+```r
+as.numeric(FALSE)
+```
+
+```
+## [1] 0
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+as.character(2022)
+```
+
+```
+## [1] "2022"
+```
+
+
+```r
+as.logical(0)
+```
+
+```
+## [1] FALSE
+```
+
+
+```r
+as.logical(1)
+```
+
+```
+## [1] TRUE
+```
+
+
+```r
+as.logical(-.75)
+```
+
+```
+## [1] TRUE
+```
+
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+
+#### 3. Vectors
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+]
+
+.pull-right[
+#### 4. Functions and packages
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Functions
+ * 4.2. Packages
+
+#### 5. A few words on learning
+
+#### 6. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+ 
+#### 3. Vectors
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+]
+
+---
+
+### 3. Vectors
+
+#### 3.1. Definition
+
+&lt;ul&gt;
+  &lt;li&gt;In R, a vector is a &lt;b&gt;sequence of objects that have the same class&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To create a vector you should list its elements separated by commas inside &lt;b&gt;c()&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+months &lt;- c("January", "February", "March", "April", "May", "June", "July", 
+            "August", "September", "October", "November", "December")
+```
+
+--
+
+ * Vectors are &lt;b&gt;ordered&lt;/b&gt;, you can recover elements of a vector using their position in the sequence using `[]`
+
+--
+
+
+```r
+months[3]
+```
+
+```
+## [1] "March"
+```
+
+--
+
+ * Conversely, the function `match()` allows you to recover the position of specific elements in a vector:
+
+--
+
+
+```r
+match(c("August", "December"), months)
+```
+
+```
+## [1]  8 12
+```
+
+---
+
+### 3. Vectors
+
+#### 3.2. Operations with vectors
+
+ * Numeric operations apply to every element of the vector:
+
+
+```r
+4 + c(10, 20, 30)
+```
+
+```
+## [1] 14 24 34
+```
+
+--
+
+
+```r
+c(1, 2, 3) * 4
+```
+
+```
+## [1]  4  8 12
+```
+
+--
+
+
+```r
+4 ^ c(1, 2, 3)
+```
+
+```
+## [1]  4 16 64
+```
+
+--
+
+
+```r
+c(1, 2, 3) ^ 4
+```
+
+```
+## [1]  1 16 81
+```
+
+---
+
+### 3. Vectors
+
+#### 3.3. Useful functions
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * The `length()` function for the &lt;b&gt;number of elements&lt;/b&gt; in a vector
+
+--
+
+
+```r
+length(months)
+```
+
+```
+## [1] 12
+```
+
+--
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+ * The `rep()` function for &lt;b&gt;repeating a vector&lt;/b&gt;
+
+--
+
+.pull-left[
+
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Vector-wise:&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+
+```r
+rep(c(1, 2, 3), 2)
+```
+
+```
+## [1] 1 2 3 1 2 3
+```
+
+]
+
+--
+
+.pull-right[
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Or element-wise:&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+
+```r
+rep(c(1, 2, 3), each = 2)
+```
+
+```
+## [1] 1 1 2 2 3 3
+```
+]
+
+---
+
+### 3. Vectors
+
+#### 3.3. Useful functions
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * The `seq()` function for &lt;b&gt;sequences&lt;/b&gt;
+
+--
+
+
+```r
+seq(0, 100, 10)
+```
+
+```
+##  [1]   0  10  20  30  40  50  60  70  80  90 100
+```
+--
+
+```r
+seq(2, 3, .2)
+```
+
+```
+## [1] 2.0 2.2 2.4 2.6 2.8 3.0
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+ * Sequences of &lt;b&gt;consecutive integers&lt;/b&gt; can be easily produced using `:`
+ 
+
+```r
+1:10
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+---
+
+### 3. Vectors
+
+#### 3.3. Useful functions
+
+ * The `paste()` function also applies to all the elements of the vector
+
+--
+
+
+```r
+paste0("A", 1:5) 
+```
+
+```
+## [1] "A1" "A2" "A3" "A4" "A5"
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+ * And can merge the elements of a vector with the `collapse` argument
+
+--
+
+
+```r
+sentence &lt;- c("Lorem", "ipsum", "dolor", "sit", "amet")
+sentence
+```
+
+```
+## [1] "Lorem" "ipsum" "dolor" "sit"   "amet"
+```
+
+```r
+paste0(sentence, collapse = " ")
+```
+
+```
+## [1] "Lorem ipsum dolor sit amet"
+```
+
+---
+
+### 3. Vectors
+
+#### 3.4. Classes of vectors
+
+ * As the elements of a vector should be of the same class, the class of a vector is always that of its elements:
+
+
+```r
+class(c(1, 2, 3))
+```
+
+```
+## [1] "numeric"
+```
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But there is &lt;b&gt;another class&lt;/b&gt; you should know for vectors: the &lt;b&gt;factor&lt;/b&gt; class&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It's made for vectors with numeric values that can't be interpreted but simply indicate a &lt;b&gt;group/category&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Consider for instance the following age vectors:&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Vector age1 indicates the actual age of an individual, it should be of class numeric&lt;/li&gt;
+    &lt;li&gt;Vector age2 indicates an age group (1 = 1 to 10, 2 = 10 to 20, ...) it should be of class factor&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+***&amp;#10140; In vector age2, numbers don't mean anything, they're just group indicators and R should interpret it as such***
+
+---
+
+### 3. Vectors
+
+#### 3.4. Classes of vectors
+
+ * R understands that multiplying the values of a factor by 2 makes no sense
+ 
+--
+ 
+
+```r
+as.factor(c(1, 2, 2)) * 2
+```
+
+```
+## [1] NA NA NA
+```
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+ * R converts a factor to the numeric format by attributing a number from 1 to `\(n\)` to each category
+ 
+
+```r
+as.numeric(as.factor(c(46, 44, 46, 45)))
+```
+
+```
+## [1] 3 1 3 2
+```
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+ * To have a numeric vector with the values of a factor, you should thus go through the character class
+ 
+
+```r
+as.numeric(as.character(as.factor(c(46, 44, 46, 45))))
+```
+
+```
+## [1] 46 44 46 45
+```
+
+---
+
+### Practice
+
+#### &amp;#10140; You have the social security number of 4 individuals
+
+
+```r
+ssn &lt;- c("1970248765890", "2891135987473", "17875109483", "29931298043")
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+`$$\text{How SSNs are constructed:}\hspace{2em}\underbrace{1}_{\text{Sex}}\underbrace{97}_{\substack{\text{Year} \\ \text{of birth}}}\underbrace{02}_{\substack{\text{Month} \\ \text{of birth}}}\underbrace{48}_{\substack{\text{Department} \\ \text{of birth}}}\underbrace{765}_{\substack{\text{Municipality} \\ \text{INSEE code}}}\underbrace{890}_{\substack{\text{Registration} \\ \text{number}}}$$`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+#### Task: Use R programming to compute the age of these 4 individuals
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ol&gt;
+  &lt;li&gt;Copy/paste the line above into an .R script and run it&lt;/li&gt;
+  &lt;li&gt;Extract the second to third characters from the SSNs&lt;/li&gt;
+  &lt;li&gt;Convert these values to the numeric class&lt;/li&gt;
+  &lt;li&gt;Add 1900 to these number to obtain the year of birth&lt;/li&gt;
+  &lt;li&gt;Substract these number from 2022 to get the age&lt;/li&gt;
+&lt;/ol&gt;
+
+--
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+---
+
+### Solution
+
+#### 1) Copy/paste the line above into an .R script and run it
+
+
+```r
+ssn &lt;- c("1970248765890", "2891135987473", "17875109483", "29931298043")
+```
+
+--
+
+#### 2) Extract the second to third characters from the SSNs
+
+
+```r
+birth_year &lt;- substr(ssn, 2, 3)
+```
+
+--
+
+#### 3) Convert these values to the numeric class
+
+
+```r
+birth_year &lt;- as.numeric(birth_year)
+```
+
+--
+
+#### 4) Add 1900 to these numbers and substract from 2022 to get the age
+
+
+```r
+age &lt;- 2022 - (birth_year + 1900)
+age
+```
+
+```
+## [1] 25 33 44 23
+```
+
+--
+
+#### 5) 
+
+
+```r
+age &lt;- 2022 - birth_year
+age
+```
+
+```
+## [1] 1925 1933 1944 1923
+```
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+
+#### 3. Vectors &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+]
+
+.pull-right[
+#### 4. Functions and packages
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Functions
+ * 4.2. Packages
+
+#### 5. A few words on learning
+
+#### 6. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+ 
+#### 3. Vectors &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+] 
+
+.pull-right[
+#### 4. Functions and packages
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Functions
+ * 4.2. Packages
+]
+
+---
+
+### 4. Functions and packages
+
+#### 4.1. Functions
+
+ * &lt;b&gt;Functions&lt;/b&gt;, like `paste()`, `match()`, `sep()`, etc., are &lt;b&gt;sequences of operations&lt;/b&gt; condensed into one command.  
+ * Functions take &lt;b&gt;arguments as inputs&lt;/b&gt;, specified in the parentheses and separated by commas, and &lt;b&gt;return an output&lt;/b&gt; given these arguments.  
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+Consider the following example: 
+
+
+```r
+paste("Hello", "world")
+```
+
+```
+## [1] "Hello world"
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+ * Here the **function** `paste()`:
+   * Takes `"Hello"` and `"world"` as **inputs** 
+   * Produces `"Hello world"` as an **output**  
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt; &amp;#10140; Let's make our own function! &lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 4. Functions and packages
+
+#### 4.1. Functions
+
+ * Imagine you have the following grade distribution
+
+
+```r
+grades &lt;- c(8, 10, 12, 13, 15, 15, 16, 17.5, 18, 19.5, 20)
+```
+
+--
+
+ * You want to add two points to everybody but grades should not be higher than 20
+
+
+```r
+grades &lt;- grades + 2 # add 2 each element of the vector
+grades # Some grades are greater than 20
+```
+
+```
+##  [1] 10.0 12.0 14.0 15.0 17.0 17.0 18.0 19.5 20.0 21.5 22.0
+```
+
+```r
+grades &gt; 20 # Their location in the vector can be found with a logical statement...
+```
+
+```
+##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+```
+
+```r
+grades[grades &gt; 20] &lt;- 20 # ... so we can easily replace their values
+```
+
+---
+
+### 4. Functions and packages
+
+#### 4.1. Functions
+
+ * If you need to do such computations frequently, it is handy to make a function so that it boils down to a single line of code
+
+--
+
+
+```r
+shift_grades &lt;- function(grades, shift) {
+  grades &lt;- grades + shift # Shift grades
+  grades[grades &gt; 20] &lt;- 20 # Cap to 20
+  return(grades) # Return output
+}
+```
+--
+
+```r
+shift_grades(grades = c(0, 10, 20), shift = 5)
+```
+
+```
+## [1]  5 15 20
+```
+--
+
+```r
+shift_grades(grades = 10:20, shift = 3)
+```
+
+```
+##  [1] 13 14 15 16 17 18 19 20 20 20 20
+```
+
+
+---
+
+### 4. Functions and packages
+
+#### 4.2. Packages
+
+It is often the case that user-created functions can be very useful to many other users. That's what packages are about. **Packages are bundles of functions** that R users put to the disposal of other R users. Packages are centralized on the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/). **To download a CRAN package** you can simply use **`install.packages()`**. Next time we will use functions from the `tidyverse` package. Let's install it already.
+
+--
+
+
+```r
+install.packages("tidyverse") # Requires and internet connection
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * The `tidyverse` package is now installed on your computer and you won't have to do it again. But to be able to use `tidyverse` functions the **package should also be loaded** in our R session with the function `library()`.
+
+--
+
+
+```r
+library(tidyverse)
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * Once this command is run you have access to all the tidyverse functions in your environment. But even though the package is permanently installed, it is **loaded only for your current session**. So each time you start a new R session, you'll have to load the packages you need with the `library()` command.
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+
+#### 3. Vectors &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+]
+
+.pull-right[
+#### 4. Functions and packages &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Functions
+ * 4.2. Packages
+
+#### 5. A few words on learning R
+
+#### 6. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+
+#### 3. Vectors &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+]
+
+.pull-right[
+#### 4. Functions and packages &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Functions
+ * 4.2. Packages
+
+#### 5. A few words on learning R
+]
+
+---
+
+### 5. A few words on learning R
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+#### We're finally done with the "theoretical" part of programming!
+
+ * That's normal if some concepts we saw are not completely obvious to you, fluency will comes with practice 
+ * Take time to go through the first two lectures by yourself and tell me if anything's unclear. 
+ * There are still some important coding tools you need to learn but we'll see that progressively throughout the course.
+
+--
+
+#### When your code won't work
+
+To finish the Lecture I'd like to give you some tips about learning programming. Often times it can be quite frustrating when you can't make your code work.
+ * When it doesn't not work the way you want 
+ * When it doesn't work at all
+
+---
+
+### 5. A few words on learning R
+
+#### When it doesn't work the way you want
+
+ * When things do not work the way you want, NAs are the usual suspects. For instance, this is how the mean function reacts to NAs.
+ 
+--
+
+
+```r
+mean(c(1, 2, NA))
+```
+
+```
+## [1] NA
+```
+--
+
+```r
+mean(c(1, 2, NA), na.rm = T)
+```
+
+```
+## [1] 1.5
+```
+
+--
+
+ * From the output it obvious in this case that NAs are the problem, but sometimes it's not that transparent. So take a look at your data to see whether NAs could mess things up. You can seek for NAs using `is.na()`:
+ 
+
+```r
+is.na(c(1, 2, NA))
+```
+--
+
+```
+## [1] FALSE FALSE  TRUE
+```
+
+---
+
+### 5. A few words on learning R
+
+#### Where to find help
+
+ * Help files are made for that. Sometimes things don't work just because you did not understand a function's argument or you don't know that there exists an argument you should use. Every function has a help file, just enter the name of the function preceded by a question mark in your console and it will appear in the Help tab of R studio.
+ 
+
+```r
+?pivot_longer
+```
+
+--
+
+&lt;center&gt;
+&lt;img src = "pivot_longer.png"/&gt;
+&lt;/center&gt;
+
+---
+
+### 5. A few words on learning R
+
+#### Where to find help
+
+ * Search on the internet. I'm pretty sure that any question you might have during these first months of programming is already asked and answered on https://stackoverflow.com/.
+ 
+--
+
+&lt;center&gt;
+&lt;img src = "ask_google.png" width = 750 /&gt;
+&lt;/center&gt;
+
+---
+
+### 5. A few words on learning R
+
+#### When it doesn't work at all
+
+ * Sometimes R breaks and returns an error. And errors are usually kind of cryptic.
+
+--
+
+
+```r
+read.csv("C:\Users\l.sirugue\Documents\R")
+```
+
+```
+## Error: '\U' non suivi de chiffres hexadécimaux dans la chaîne de caractères débutant ""C:\U"
+```
+
+--
+
+ * Try to look for keywords that might help you understand where it comes from, and paste your it in Google with the name of your command. Chances are many people already struggled with that 
+
+--
+
+&lt;center&gt;
+&lt;img src = "error.png" width = 750 /&gt;
+&lt;/center&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Getting started &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. About R
+ * 1.2. The R Studio environment
+
+#### 2. Classes of R objects &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Numeric values
+ * 2.2. Character values
+ * 2.3. Logical values
+ * 2.4. Manipulate classes
+
+#### 3. Vectors &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Definition
+ * 3.2. Operations with vectors
+ * 3.3. Useful functions
+ * 3.4. Classes of vectors
+]
+
+.pull-right[
+#### 4. Functions and packages &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Functions
+ * 4.2. Packages
+
+#### 5. A few words on learning R &amp;#10004;
+
+#### 6. Wrap up!
+]
+
+---
+
+### 6. Wrap up!
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+#### 1. Main classes of R objects: numeric, character, logical
+
+
+```r
+is.numeric("a") # What would be the output?
+```
+--
+
+```
+## [1] FALSE
+```
+
+--
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 2. Vectors
+
+
+```r
+week &lt;- c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+length(week) # What would be the output?
+```
+--
+
+```
+## [1] 7
+```
+--
+
+```r
+match(7, week) # What would be the output?
+```
+--
+
+```
+## [1] NA
+```
+
+---
+
+### 6. Wrap up!
+
+#### 3. Functions
+
+
+```r
+shift_grades &lt;- function(grades, shift) { # Inputs
+  grades &lt;- grades + shift
+  grades[grades &gt; 20] &lt;- 20 
+  return(grades) # Output
+}
+
+shift_grades(grades = c(0, 10, 20), shift = 5)
+```
+
+```
+## [1]  5 15 20
+```
+
+--
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+#### 4. Packages
+
+
+```r
+install.packages("tidyverse") # Run only once to download the package
+library(tidyverse) # Run at each session to load the package
+```
+
+---
+
+### To do by next time
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;
+
+--
+
+#### 1) Go through the slides once again
+
+--
+
+#### 2) Do Quiz 1 and send me your results
+
+--
+
+#### 3) Install all the packages required for this course
+
+
+```r
+install.packages()
+```
+
+--
+
+#### 4) Send me your questions if you have some
+
+--
+
+&lt;p style = "margin-bottom:3cm;"&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;See you next week!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

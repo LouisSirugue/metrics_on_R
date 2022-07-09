@@ -1,0 +1,37 @@
+:root {
+  --background-color: #DFE6EB;
+  --header-font-family: 'Noto Sans'; 
+  --header-color: #014D64;
+  --text-color: #014D64;
+  --link-color: #2780E3;
+  --text-bold-color: #014D64;
+  --inverse-text-color: #DFE6EB;
+  --inverse-background-color: #014D64;
+  --title-slide-background-color: #014D64;
+  --title-slide-text-color: #DFE6EB;
+}
+
+h1, h2, h3 {
+  font-family: var(--header-font-family);
+  font-weight: 150;
+  color: var(--header-color);
+}
+
+.remark-inline-code {
+  font-size: var(--code-inline-font-size);
+  color: #014D64;
+  background-color: #d5dce1;
+}
+
+.title-slide {
+  background-image: url(title_bg.png);
+  background-size: cover;
+}
+
+/* Code chunks styling */
+/***********************/
+.hljs-github .hljs {color: #014D64; background: #EFF3F5;}
+.hljs-github .hljs-string{color: #2780E3;}
+.hljs-github .hljs-number{color: #6794A7;}
+.hljs-github .hljs-keyword{color: #6794A7;}
+.hljs-github .hljs-literal{color: #6794A7;}
