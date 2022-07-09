@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data visualization</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data visualization
+## Lecture 4
+### <br>Louis SIRUGUE
+### CPES 2 - Fall 2022
+
+---
+
+
+&lt;style type="text/css"&gt;
+body{background-color:black;filter:invert(1)}
+&lt;/style&gt;
+
+
+
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 30%;} &lt;/style&gt;
+
+### Last time we saw
+
+#### Read data
+
+
+```r
+starbucks &lt;- read.csv("C:/User/Documents/folder/starbucks.csv", sep = ";", encoding = "UTF-8")
+```
+
+
+
+&lt;center&gt;&lt;b&gt;&lt;i&gt;&amp;#10140; Make sure to use / and not \&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+
+--
+
+#### Chaining operations
+
+
+
+```r
+starbucks %&gt;%
+  arrange(-Calories) %&gt;%
+  select(Beverage_category, Beverage_prep, Calories) %&gt;%
+  filter(row_number() &lt;= 3)
+```
+
+```
+##             Beverage_category Beverage_prep Calories
+## 1   Signature Espresso Drinks       2% Milk      510
+## 2   Signature Espresso Drinks       Soymilk      460
+## 3 Frappuccino® Blended Coffee    Whole Milk      460
+```
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;&lt;i&gt;&amp;#10140; Make sure to view your data at each step&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### Last time we saw
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;b&gt;Important functions of the dplyr grammar&lt;/b&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Function &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mutate() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Modify or create a variable &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; select() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Keep a subset of variables &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; filter() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Keep a subset of observations &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; arrange() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Sort the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; group_by() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; summarise() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Summarizes variables into 1 observation per group &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; bind_rows() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Append data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; left/right/inner/full_join() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Merge data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; pivot_longer/wider() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Reshape data &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+&lt;h3&gt;Today we learn how to plot data&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+--
+
+.pull-left[
+#### 1. The `ggplot()` function
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation
+ 
+#### 2. Adding dimensions
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. More axes
+ * 2.2. More facets
+ * 2.3. More labels
+]
+
+.pull-right[
+#### 3. Types of geometry
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Points and lines
+ * 3.2. Barplots and histograms
+ * 3.3. Densities and boxplots
+ 
+#### 4. How (not) to lie with graphics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Cumulative representations
+ * 4.2. Axis manipulations
+ * 4.3. Interpolation
+ 
+#### 5. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Today we learn how to plot data&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. The `ggplot()` function
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation
+]
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.1. Basic structure 
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;ggplot()&lt;/b&gt; is the function that we're gonna use for all our plots&lt;/li&gt;
+  &lt;li&gt;It takes the following &lt;b&gt;core arguments&lt;/b&gt;:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Data&lt;/b&gt;: the values to plot&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Mapping&lt;/b&gt; (aes, for aesthetics): the structure of the plot&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Geometry&lt;/b&gt;: the type of plot&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+&lt;center&gt;&lt;img src = "ggplot.png" width = "150" style="margin-left:17cm; margin-top:-8cm"/&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Data and mapping&lt;/b&gt; should be specified within the &lt;b&gt;parentheses&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Geometry&lt;/b&gt; and any &lt;b&gt;other element&lt;/b&gt; should be added with a &lt;b&gt;+&lt;/b&gt; sign&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+ggplot(data, aes()) + geometry + anything_else
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+  * You can also **apply** the `ggplot()` function to your data with a **pipe**
+  
+
+```r
+data %&gt;% ggplot(aes()) + geometry
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.1. Basic structure: Example 
+
+
+```r
+test_data &lt;- tibble(V1 = 1:6, V2 = c(64, 60, 16, 8, 16, 32))
+```
+
+--
+
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + geom_point(size = 3)
+```
+
+--
+
+.pull-left[
+
+ * We first specified our **data**: 
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; V1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; V2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Then assigned in &lt;b&gt;aes()&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;V1 to the x-axis&lt;/li&gt;
+    &lt;li&gt;V2 to the y-axis&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+ 
+ * And chose the **point geometry** with a size of 3
+
+]
+
+--
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.2. Axes 
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Axes can be modified using with &lt;b&gt;scale functions&lt;/b&gt;:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;scale_x_continuous()&lt;/b&gt;: when a &lt;b&gt;continuous&lt;/b&gt; variable is assigned to the &lt;b&gt;x-axis&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;scale_x_discrete()&lt;/b&gt;: when a &lt;b&gt;discrete&lt;/b&gt; variable is assigned to the &lt;b&gt;x-axis&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;scale_y_continuous()&lt;/b&gt;: when a &lt;b&gt;continuous&lt;/b&gt; variable is assigned to the &lt;b&gt;y-axis&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;scale_y_discrete()&lt;/b&gt;: when a &lt;b&gt;discrete&lt;/b&gt; variable is assigned to the &lt;b&gt;y-axis&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt; The following &lt;b&gt;parameters&lt;/b&gt; can be modified in these scale functions:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt; &lt;b&gt;name:&lt;/b&gt; The label of the corresponding axis &lt;/li&gt;
+    &lt;li&gt; &lt;b&gt;limits:&lt;/b&gt; Where the axis should start and end &lt;/li&gt;
+    &lt;li&gt; &lt;b&gt;breaks:&lt;/b&gt; Where to put ticks and values on the axis &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + geom_point(size = 3) +
+  scale_x_continuous(name = "X variable label", limits = c(0, 7), breaks = 0:7) +
+  scale_y_continuous(name = "Y variable label", limits = c(0, 70), breaks = seq(0, 70, 10))
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.2. Axes 
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.3. Theme()
+
+&lt;ul&gt;
+  &lt;li&gt;You can use one of the &lt;b&gt;default R themes&lt;/b&gt; to easily change the layout of your plot&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt; ... + theme_&lt;b&gt;bw&lt;/b&gt;()&lt;/li&gt;
+    &lt;li&gt; ... + theme_&lt;b&gt;minimal&lt;/b&gt;()&lt;/li&gt;
+    &lt;li&gt; ... + theme_&lt;b&gt;dark&lt;/b&gt;()&lt;/li&gt;
+    &lt;li&gt;You can also tune the &lt;b&gt;font size&lt;/b&gt; inside these functions with the &lt;b&gt;base_size&lt;/b&gt; argument&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.3. Theme()
+
+&lt;ul&gt;
+  &lt;li&gt;You can also custom your graph using the &lt;b&gt;theme()&lt;/b&gt; function&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It allows to &lt;b&gt;custom&lt;/b&gt; virtually &lt;b&gt;anything&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Enter ?theme to see the &lt;b&gt;endless&lt;/b&gt; list of possible &lt;b&gt;arguments&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Obviously we won't go through all of them but here are a few&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + 
+  geom_point(size = 4) +
+  # Axes
+  scale_x_continuous(name = "X variable label", limits = c(0, 7), breaks = 0:7) +
+  scale_y_continuous(name = "Y variable label", limits = c(0, 70), breaks = seq(0, 70, 10)) +
+  # Theme
+  theme_minimal(base_size = 14) + 
+  theme(# Color of the background and of its border
+        plot.background = element_rect(fill = "#DFE6EB", colour = "#DFE6EB"),
+        # Size of the axis lines
+        axis.line = element_line(size = rel(0.8)),
+        # Color of the grid lines
+        panel.grid = element_line(color = "gray85"))  
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.3. Theme()
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.3. Theme()
+
+&lt;ul&gt;
+  &lt;li&gt;Geometries can also be modified&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;alpha:&lt;/b&gt; opacity from 0 to 1&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;color:&lt;/b&gt; color of the geometry (for geometries that are filled such as bars, it will color the border)&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;fill:&lt;/b&gt; fill color for geometries such as bars&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;size:&lt;/b&gt; size of the geometry&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;shape:&lt;/b&gt; change shape for geometries like points&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;linetype:&lt;/b&gt; solid, dashed, dotted, etc., for line geometries&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + 
+  geom_point(size = 3, 
+             color = "#6794A7",
+             alpha = .6,
+             shape = 18)  +
+  theme_minimal(base_size = 14)
+```
+
+]
+
+--
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-18-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 1. The `ggplot` function
+
+#### 1.4. Annotation
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;It is sometimes useful to &lt;b&gt;annotate&lt;/b&gt; a graph so that certain things become &lt;b&gt;more salient&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Separate&lt;/b&gt; two groups with a &lt;b&gt;dashed line&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Add a few &lt;b&gt;words somewhere&lt;/b&gt; for clarity&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Circle&lt;/b&gt; a specific group of &lt;b&gt;data points&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Add &lt;b&gt;labels&lt;/b&gt; to data points&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * **Straight lines** can easily be added with their respective geometry
+ 
+
+```r
++ geom_hline(yintercept = , linetype = )
+```
+ 
+
+```r
++ geom_vline(xintercept = , linetype = )
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * And **punctual text annotations** can be added with `annotate()`
+ 
+
+```r
++ annotate("text", x = , y = , label = )
+```
+
+---
+
+### 1. The `ggplot` function
+
+#### 1.4. Annotation: Adding lines
+
+--
+
+.pull-left[
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + 
+  geom_point(size = 3) + 
+  geom_hline(yintercept = 45)
+```
+
+&lt;p style = "margin-bottom:1.14cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-23-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + 
+  geom_point(size = 3) + 
+  geom_vline(xintercept = 2.5, 
+             linetype = "dashed")
+```
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 1. The `ggplot` function
+
+#### 1.4. Annotation: Adding text
+
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + geom_point(size = 3) + 
+  annotate("text", x = 2.5, y = 40, label = "Relevant info", size = 5)
+```
+--
+&lt;img src="slides_files/figure-html/unnamed-chunk-26-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. The `ggplot` function
+
+#### Combining everything
+
+--
+
+
+```r
+ggplot(test_data, aes(x = V1, y = V2)) + 
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+  geom_point(size = 5, color = "#014D64", alpha = .6) + 
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+  # Annotations
+  geom_vline(xintercept = 2.5, linetype = "dashed", size = 1, color = "#727272") +
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+  annotate("text", x = 2.36, y = 7, label = "Threshold", angle = 90, size = 5, color = "#727272") +
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+  # Axes
+  scale_x_continuous(name = "X variable label", limits = c(0, 7), breaks = 0:7) +
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+  scale_y_continuous(name = "Y variable label", limits = c(0, 70), breaks = seq(0, 70, 10)) +
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+  # Theme
+  theme_minimal(base_size = 14) + 
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+        # Custom background 
+  theme(plot.background = element_rect(fill = "#DFE6EB", colour = "#DFE6EB"),
+        panel.grid = element_line(color = "gray85"),
+```
+--
+&lt;p style = "margin-bottom:-1.01cm;"&gt;&lt;/p&gt;
+
+```r
+        # Custom axes
+        axis.line.x = element_line(size = rel(0.8), color = "#727272"),
+        axis.ticks.x = element_line(size = rel(0.4), color = "#727272"),
+        axis.line.y = element_blank(), axis.ticks.y = element_blank(),
+        axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)),
+        axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 0, l = 0)),
+```
+
+---
+
+### 1. The `ggplot` function
+
+#### Combining everything
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-36-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+#### 1. The `ggplot()` function &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation
+ 
+#### 2. Adding dimensions
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. More axes
+ * 2.2. More facets
+ * 2.3. More labels
+]
+
+.pull-right[
+#### 3. Types of geometry
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Points and lines
+ * 3.2. Barplots and histograms
+ * 3.3. Densities and boxplots
+ 
+#### 4. How (not) to lie with graphics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Cumulative representations
+ * 4.2. Axis manipulations
+ * 4.3. Interpolation
+ 
+#### 5. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+#### 1. The `ggplot()` function &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation 
+ 
+#### 2. Adding dimensions
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. More axes
+ * 2.2. More facets
+ * 2.3. More labels
+]
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+&lt;ul&gt;
+  &lt;li&gt;We now know how to produce a &lt;b&gt;scatter plot&lt;/b&gt; involving two variables, \(x\) and \(y\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But often times it may be useful to add information from a &lt;b&gt;third variable&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;To illustrate that, let's open an &lt;b&gt;actual dataset&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;These data come from the &lt;a href = "https://wid.world/"&gt;World Inequality database&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+wid &lt;- read.csv("wid.csv")
+```
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;It contains the following variables&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Observation level&lt;/b&gt;: Continent/Country/Year&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;f_share&lt;/b&gt;: Female labor income share&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;top1&lt;/b&gt;: Top 1% income share&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;inc_head&lt;/b&gt;: Per adult national income&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+names(wid)
+```
+
+```
+## [1] "country"   "continent" "year"      "fshare"    "top1"      "inc_head"
+```
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+&lt;center&gt;&lt;img src = "wid.png" width = "675"/&gt;&lt;/center&gt;
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+&lt;ul&gt;
+  &lt;li&gt;Let's start with a &lt;b&gt;simple scatterplot&lt;/b&gt; for European countries in 2019&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Female labor income share&lt;/b&gt; on the \(y\) axis, and &lt;b&gt;national income&lt;/b&gt; per adult on the \(x\) axis&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+wid %&gt;% filter(year == 2019 &amp; continent == "Europe") %&gt;%
+  ggplot(aes(x = inc_head, y = top1)) + geom_point()
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-40-1.png" width="48%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+&lt;ul&gt;
+  &lt;li&gt;In some cases you would &lt;b&gt;convey information&lt;/b&gt; with other means than a position on axis&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;color, size, or shape&lt;/b&gt; of a geometry can be used to represent a &lt;b&gt;third variable&lt;/b&gt;:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;We can assign a &lt;b&gt;different color to each point&lt;/b&gt; depending on its female labor income share&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This allows to see how \(x\) and \(y\) are related to this variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Here, the &lt;b&gt;color shade&lt;/b&gt; should be viewed as a &lt;b&gt;dimension&lt;/b&gt; just like x and y&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;fshare should be assigned to the &lt;i&gt;"color axis"&lt;/i&gt; in &lt;b&gt;aes()&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But because there is no proper &lt;i&gt;"color axis"&lt;/i&gt;, a &lt;b&gt;legend&lt;/b&gt; will be generated&lt;/li&gt;
+    &lt;li&gt;And just like &lt;b&gt;scale functions&lt;/b&gt; custom axes of the x and y dimensions...
+    &lt;li&gt;... scale functions also custom the legend of the color dimension&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+
+```r
+wid %&gt;% 
+  filter(year == 2019 &amp; continent == "Europe") %&gt;%
+  ggplot(aes(x = inc_head, y = top1, color = fshare)) + 
+  geom_point() +
+  scale_color_gradient(name = "Female income %", low = "grey80", high = "steelblue")
+```
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-42-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+&lt;ul&gt;
+  &lt;li&gt;The color axis can also be used to &lt;b&gt;distinguish&lt;/b&gt; different &lt;b&gt;groups&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can indeed assign a &lt;b&gt;discrete&lt;/b&gt; variable to the &lt;b&gt;color&lt;/b&gt; axis&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+wid %&gt;% 
+  filter(year == 2019) %&gt;%
+  ggplot(aes(x = inc_head, y = top1, color = continent)) + 
+  geom_point() + 
+  scale_color_manual(values = c("red", "blue", "green", "purple", "yellow", "orange"))
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But color is not this only &lt;b&gt;property&lt;/b&gt; that can be used as a &lt;b&gt;dimension&lt;/b&gt;, you can use:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;fill&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;size&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;shape&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;alpha&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;linetype&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-44-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-45-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-46-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-47-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 2. Adding dimensions
+
+#### 2.2. More facets
+
+&lt;ul&gt;
+  &lt;li&gt;Another way to &lt;b&gt;distinguish groups&lt;/b&gt; is to divide the plot into &lt;b&gt;facets&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To do so, indicate your faceting variable into the &lt;b&gt;facet_wrap()&lt;/b&gt; function&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+wid %&gt;% 
+  filter(year == 2019) %&gt;%
+  ggplot(aes(x = inc_head, y = top1)) + 
+  geom_point() +
+  facet_wrap(~continent, ncol = 3, scales = "fixed")
+```
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;You should specify the number of columns or rows:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;nrow&lt;/b&gt; to indicate the number of rows&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;ncol&lt;/b&gt; to indicate the number of columns&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;As well as which &lt;b&gt;scale&lt;/b&gt; should be free or fixed&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The default &lt;b&gt;"fixed"&lt;/b&gt; will set all facet on the same \(x\) and \(y\) scales&lt;/li&gt;
+    &lt;li&gt;Set scales to &lt;b&gt;"free_y"&lt;/b&gt; to let the \(y\) axis fit the domain of each facet&lt;/li&gt;
+    &lt;li&gt;Set scales to &lt;b&gt;"free_x"&lt;/b&gt; to let the \(x\) axis fit the domain of each facet&lt;/li&gt;
+    &lt;li&gt;Set scales to &lt;b&gt;"free"&lt;/b&gt; to let the both axis fit the domain of each facet&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Adding dimensions
+
+#### 2.2. More facets
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-49-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Adding dimensions
+
+#### 2.3. More labels
+
+&lt;ul&gt;
+  &lt;li&gt;The last dimension I want to mention is the &lt;b&gt;&lt;i&gt;label&lt;/i&gt; axis&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;When using &lt;b&gt;geom_text()&lt;/b&gt; instead of geom_point(), it will plot the corresponding &lt;b&gt;text instead of points&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+wid %&gt;% filter(year == 2019 &amp; continent == "Europe") %&gt;%
+  ggplot(aes(x = inc_head, y = top1, label = country)) + geom_text(alpha = .6)
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-51-1.png" width="48%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Practice
+
+#### 1) Open the `starbucks.csv` data and reproduce that graph:
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+---
+
+### Solution
+
+
+#### 1) Open the `starbucks.csv` data and reproduce that graph:
+
+
+```r
+starbucks &lt;- read.csv("starbucks.csv", sep = ";", encoding = "UTF-8") # Same as last week
+```
+--
+&lt;p style = "margin-bottom:-.85cm;"&gt;&lt;/p&gt;
+
+```r
+# Use the ggplot function and specify the data
+ggplot(starbucks, 
+```
+--
+&lt;p style = "margin-bottom:-.85cm;"&gt;&lt;/p&gt;
+
+```r
+       # In aes, assign the Calories variable to the x axis
+       aes(x = Calories, 
+```
+--
+&lt;p style = "margin-bottom:-.85cm;"&gt;&lt;/p&gt;
+
+```r
+           # Cholesterol to the y axis
+           y = Cholesterol,
+```
+--
+&lt;p style = "margin-bottom:-.85cm;"&gt;&lt;/p&gt;
+
+```r
+           # Trans.Fat to the size axis
+           size = Trans.Fat, 
+```
+--
+&lt;p style = "margin-bottom:-.85cm;"&gt;&lt;/p&gt;
+
+```r
+           # Sugars to the color axis
+           color = Sugars)) + 
+```
+--
+&lt;p style = "margin-bottom:-.85cm;"&gt;&lt;/p&gt;
+
+```r
+  # Add a point geometry and set opacity to 30%
+  geom_point(alpha = .3) + 
+```
+--
+&lt;p style = "margin-bottom:-.85cm;"&gt;&lt;/p&gt;
+
+```r
+  # Custom the color gradient from green to red
+  scale_color_gradient(low = "green", high = "red") +
+```
+--
+&lt;p style = "margin-bottom:-.85cm;"&gt;&lt;/p&gt;
+
+```r
+  # Apply the minimal default theme with a base font size of 14
+  theme_minimal(base_size = 14)
+```
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+#### 1. The `ggplot()` function &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation
+ 
+#### 2. Adding dimensions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. More axes
+ * 2.2. More facets
+ * 2.3. More labels
+]
+
+.pull-right[
+#### 3. Types of geometry
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Points and lines
+ * 3.2. Barplots and histograms
+ * 3.3. Densities and boxplots
+ 
+#### 4. How (not) to lie with graphics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Cumulative representations
+ * 4.2. Axis manipulations
+ * 4.3. Interpolation
+ 
+#### 5. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+#### 1. The `ggplot()` function &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation
+ 
+#### 2. Adding dimensions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. More axes
+ * 2.2. More facets
+ * 2.3. More labels
+]
+
+.pull-right[
+#### 3. Types of geometry
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Points and lines
+ * 3.2. Barplots and histograms
+ * 3.3. Densities and boxplots
+]
+
+---
+
+### 3. Types of geometry
+
+#### 3.1. Points and lines
+
+&lt;ul&gt;
+  &lt;li&gt;So far we only represented scatterplots, but &lt;b&gt;many other geometries&lt;/b&gt; can be used&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance, &lt;b&gt;lines&lt;/b&gt; are particularly suited for &lt;b&gt;evolutions&lt;/b&gt; over time&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggplot(wid %&gt;% filter(country == "USA"), aes(x = year, y = top1)) + 
+  geom_point() + geom_line()
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-63-1.png" width="48%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.2. Barplots and histograms
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Barplots&lt;/b&gt; however are great for categorical \(x\) variables and continuous \(y\) variables&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Setting the &lt;b&gt;stat&lt;/b&gt; argument to &lt;b&gt;"identity"&lt;/b&gt; allows to display the corresponding &lt;b&gt;y value&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggplot(wid %&gt;% filter(continent == "South America" &amp; year == 2019), 
+       aes(x = country, y = top1)) + geom_bar(stat = "identity")
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-65-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.2. Barplots and histograms
+
+&lt;ul&gt;
+  &lt;li&gt;Note that you can &lt;b&gt;reorder the bars&lt;/b&gt; according to their y value using the reorder() function&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggplot(wid %&gt;% filter(continent == "South America" &amp; year == 2019), 
+       aes(x = reorder(country, top1), y = top1)) + geom_bar(stat = "identity")
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-67-1.png" width="68%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.2. Barplots and histograms
+
+&lt;ul&gt;
+  &lt;li&gt;You can also set stat to &lt;b&gt;"count"&lt;/b&gt; to plot the &lt;b&gt;number of observations&lt;/b&gt; per category&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;In that case, no variable should be assigned to the y axis&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggplot(wid, aes(x = continent)) + geom_bar(stat = "count")
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-69-1.png" width="68%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.2. Barplots and histograms
+
+&lt;ul&gt;
+  &lt;li&gt;Finally, histograms can be used to describe the distribution of a continuous variable&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You can tune the bin width with &lt;b&gt;binwidth&lt;/b&gt; or the number of bins with &lt;b&gt;bins&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggplot(wid %&gt;% filter(year == 2019), aes(x = fshare)) + 
+  geom_histogram(bins = 20, color = "white", fill = "steelblue")
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-71-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;As you may remember from last class, the &lt;b&gt;continuous&lt;/b&gt; equivalent of the histogram is the &lt;b&gt;density&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Similarly you can tune the &lt;b&gt;bandwidth&lt;/b&gt; with the &lt;b&gt;bw&lt;/b&gt; argument &lt;i&gt;(don't do it)&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggplot(wid %&gt;% filter(year == 2019), aes(x = fshare)) + 
+    geom_density(color = "white", fill = "steelblue")
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-73-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;A handy geometry to plot &lt;b&gt;densities&lt;/b&gt; for different &lt;b&gt;groups&lt;/b&gt; is the &lt;b&gt;violin&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Note that the &lt;b&gt;grouping variable&lt;/b&gt; should be assigned to the &lt;b&gt;\(x\) axis&lt;/b&gt;&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) + 
+    geom_violin(color = "white", fill = "steelblue") 
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-75-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Violins&lt;/b&gt; are particularly interesting when &lt;b&gt;combined with boxplots&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;When overlaying these geometries, make sure to tune the &lt;b&gt;width and opacity&lt;/b&gt; appropriately&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) + 
+    geom_violin(fill = "steelblue", alpha = .4)  + geom_boxplot(width = .1, alpha = .4)
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-77-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;This is how &lt;b&gt;boxplots&lt;/b&gt; are constructed:&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-78-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;This is how &lt;b&gt;boxplots&lt;/b&gt; are constructed:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-79-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;This is how &lt;b&gt;boxplots&lt;/b&gt; are constructed:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-80-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;This is how &lt;b&gt;boxplots&lt;/b&gt; are constructed:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-81-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+#### 1. The `ggplot()` function &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation
+ 
+#### 2. Adding dimensions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. More axes
+ * 2.2. More facets
+ * 2.3. More labels
+]
+
+.pull-right[
+#### 3. Types of geometry &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Points and lines
+ * 3.2. Barplots and histograms
+ * 3.3. Densities and boxplots
+ 
+#### 4. How (not) to lie with graphics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Cumulative representations
+ * 4.2. Axis manipulations
+ * 4.3. Interpolation
+ 
+#### 5. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+#### 1. The `ggplot()` function &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation
+ 
+#### 2. Adding dimensions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. More axes
+ * 2.2. More facets
+ * 2.3. More labels
+]
+
+.pull-right[
+#### 3. Types of geometry &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Points and lines
+ * 3.2. Barplots and histograms
+ * 3.3. Densities and boxplots
+ 
+#### 4. How (not) to lie with graphics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Cumulative representations
+ * 4.2. Axis manipulations
+ * 4.3. Interpolation
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.1. Cumulative representations
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.left-column[
+&lt;center&gt;&lt;img src = "trump.png" width = "720"/&gt;&lt;/center&gt;
+]
+ 
+.right-column[
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+&lt;center&gt;Donald Trump during his daily coronavirus task force briefing on April 6, 2020&lt;/center&gt;
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;b&gt;The legend indicates:&lt;/b&gt; &lt;i&gt;''&gt;1,790,000 tests completed through April 5''&lt;/i&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.1. Cumulative representations
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-82-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.right-column[
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Let's take a closer look&lt;/b&gt;&lt;/center&gt;
+  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;''&gt;1,790,000 tests completed through April 5''&lt;/i&gt;&lt;/center&gt;
+  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;center&gt;Isn't there something tricky here?&lt;/center&gt;
+]
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.1. Cumulative representations
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-83-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.right-column[
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;They plotted the &lt;b&gt;cumulative&lt;/b&gt; number tests!&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;This make it &lt;b&gt;looks&lt;/b&gt; like an &lt;b&gt;exponential&lt;/b&gt; progression&lt;/li&gt;&lt;/ul&gt;
+  
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;While the daily number of tests &lt;b&gt;actually did not increase that exponentially&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-84-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.right-column[
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;What about that increase?&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-85-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.right-column[
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
+&lt;i&gt;&lt;b&gt;Same data&lt;/b&gt;, but starting &lt;b&gt;from 0&lt;/b&gt;&lt;/i&gt;
+  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&amp;#10140; &lt;b&gt;Zooming&lt;/b&gt; or unzooming on a graph can be very &lt;b&gt;misleading&lt;/b&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+&lt;center&gt;&lt;img src = "foxnews.png" width = "600"/&gt;&lt;/center&gt;
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-86-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Misleading&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-87-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Not misleading&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+ * But in this case which is the most adequate representation?
+
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-88-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-89-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+ * There is no universal rule, but always &lt;b&gt;pay attention to axes and scales&lt;/b&gt;
+
+.pull-left[
+
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-90-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;p style = "margin-bottom:-1.25cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-91-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-92-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;p style = "margin-bottom:-1.25cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-93-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+.pull-left[
+&lt;center&gt;&lt;img src = "double_axes.png" width = "650"/&gt;&lt;/center&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;&amp;#9888; &lt;i&gt;Be very careful with double axes&lt;/i&gt; &amp;#9888; &lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;You can make a them tell basically everything&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Interpolation
+
+ * Here is the **previous graph** on the tax increase using a **line geometry**
+ 
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-94-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
+&lt;center&gt;This line has &lt;b&gt;infinitely many&lt;/b&gt; points&lt;/center&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+&lt;center&gt;But &lt;b&gt;only two&lt;/b&gt; of them are &lt;b&gt;correct&lt;/b&gt;&lt;/center&gt;
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Interpolation
+
+&lt;ul&gt;
+  &lt;li&gt;This figure also has &lt;b&gt;finitely many&lt;/b&gt; values but feels more natural&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This is because values are &lt;b&gt;sufficiently close&lt;/b&gt; to each other to be &lt;b&gt;considered&lt;/b&gt; as &lt;b&gt;continuous&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-95-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Interpolation
+
+&lt;ul&gt;
+  &lt;li&gt;There is no rule either on when &lt;b&gt;lines&lt;/b&gt; should be used or not&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But the &lt;b&gt;observation level&lt;/b&gt; should be &lt;b&gt;clear&lt;/b&gt; on the graph&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;img src="slides_files/figure-html/unnamed-chunk-96-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-97-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. The `ggplot()` function &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Basic structure
+ * 1.2. Axes
+ * 1.3. Theme
+ * 1.4. Annotation
+ 
+#### 2. Adding dimensions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. More axes
+ * 2.2. More facets
+ * 2.3. More labels
+]
+
+.pull-right[
+#### 3. Types of geometry &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Points and lines
+ * 3.2. Barplots and histograms
+ * 3.3. Densities and boxplots
+ 
+#### 4. How (not) to lie with graphics
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Cumulative representations
+ * 4.2. Axis manipulations
+ * 4.3. Interpolation
+ 
+#### 5. Wrap up!
+]
+
+---
+
+### 5. Wrap up!
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+&lt;center&gt;&lt;h4&gt; The 3 core components of the ggplot() function &lt;/h4&gt;&lt;/center&gt;
+
+--
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Component &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Contribution &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Implementation &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Data &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Underlying values &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; ggplot(data, | data %&amp;gt;% ggplot(., &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mapping &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Axis assignment &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; aes(x = V1, y = V2, ...)) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Geometry &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Type of plot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; + geom_point() + geom_line() + ... &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+--
+
+ * Any **other element** should be added with a **`+` sign**
+
+--
+
+
+```r
+ggplot(data, aes(x = V1, y = V2)) + 
+  geom_point() + geom_line() +
+  anything_else()
+```
+
+---
+
+### 5. Wrap up!
+
+.pull-left[
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;center&gt;&lt;h4&gt; Main customization tools &lt;/h4&gt;&lt;/center&gt;
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Item to customize &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Main functions &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Axes &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; scale_[x/y]_[continuous/discrete] &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Baseline theme &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; theme_[void/minimal/.../dark]() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Annotations &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; geom_[[h/v]line/text](), annotate() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Theme &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; theme(axis.[line/ticks].[x/y] = ..., &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;h4&gt; Main types of geometry &lt;/h4&gt;&lt;/center&gt;
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Geometry &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Function &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bar plot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_bar() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Histogram &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_histogram() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Area &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_area() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Line &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_line() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Density &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_density() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Boxplot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_boxplot() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Violin &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_violin() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Scatter plot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_point() &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### 5. Wrap up!
+
+.pull-left[
+
+&lt;center&gt;&lt;h4&gt; Main types of aesthetics &lt;/h4&gt;&lt;/center&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Argument &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; alpha &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; opacity from 0 to 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; color &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; color of the geometry &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; fill &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; fill color of the geometry &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; size &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; size of the geometry &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; shape &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; shape for geometries like points &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; linetype &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; solid, dashed, dotted, etc. &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:3.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If specified &lt;b&gt;in the geometry&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It will apply uniformly to every &lt;b&gt;all the geometry&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If assigned to a variable &lt;b&gt;in aes&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;it will &lt;b&gt;vary with the variable&lt;/b&gt; according to a scale documented in legend&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+&lt;br&gt;
+
+--
+
+
+```r
+ggplot(data, aes(x = V1, y = V2, size = V3)) + 
+  geom_point(color = "steelblue", alpha = .6)
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
