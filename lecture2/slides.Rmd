@@ -1,0 +1,2129 @@
+---
+title: "Descriptive statistics"
+subtitle: "Lecture 2"
+author: "<br>Louis SIRUGUE"
+date: "CPES 2 - Fall 2022"
+output:
+  xaringan::moon_reader:  
+    css: 
+        - xaringan-themer.css
+        - theme.css
+    includes:
+      in_header: header.html
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{css, echo = F, eval = F}
+body{background-color:black;filter:invert(1)}
+```
+
+```{r setup, include = FALSE}
+source(paste0(getwd(), "/../source/style.R"))
+stargazer <- stargazer::stargazer
+theme_minimal <- theme_Rcourse
+options(htmltools.dir.version = F)
+knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", dpi = 300, out.width = "100%")
+```
+
+### Last time we saw
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+ * **Different classes of R objects**
+
+```{r, eval = F}
+class("numeric") # What would be the output and why?
+```
+
+--
+
+ * **Vectors**
+ 
+```{r, eval = F}
+match(8, c(6, 1, 9, 5, 8, 4)) # What would be the output and why?
+```
+ 
+--
+ 
+ * **Functions**
+ 
+```{r, eval = F}
+age_from_ssn <- function(ssn) {
+  return(2022 - (as.numeric(substr(ssn, 2, 3)) + 1900))
+}
+```
+
+--
+
+ * **Packages**
+
+```{r}
+library(tidyverse)
+```
+
+---
+
+<h3>Today we learn how to describe data</h3>
+
+--
+
+.pull-left[
+#### 1. Distributions
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+
+]
+
+.pull-right[
+#### 4. Inference
+<p style = "margin-bottom:-.5cm;">
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+<h3>Today we learn how to describe data</h3>
+
+.pull-left[
+#### 1. Distributions
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+]
+
+---
+
+### 1. Distributions
+
+#### 1.1. Definition
+
+--
+
+ * The point of descriptive statistics is to **summarize a big table** of values with a small set of **tractable statistics**  
+ * The most comprehensive way to characterize a variable/vector is to compute its **distribution**:
+  * **What** are the **values** the variable takes?
+  * **How frequently** does each of these values appear?
+
+--
+
+<b> &#10140; Consider for instance the following variable:</b>
+
+```{r, echo = F}
+data <- read.csv("distribution_data.csv")
+kable(t(data$V1), "Variable 1")
+```
+
+--
+
+.pull-left[
+
+ * We can count how many times each value appears
+
+```{r, echo = F}
+kable(data %>% group_by(V1) %>% tally() %>% rename(`Variable 1` = V1) %>% t(), caption = "")
+```
+
+]
+
+--
+
+.pull-right[
+
+<p style = "margin-bottom: 1.5cm;"></p>
+
+ * And we can represent this distribution graphically with a bar plot
+  * Each possible value on the x-axis
+  * Their number of occurrences on the y-axis
+]
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+```{r, echo = F, fig.width = 12, fig.height = 6.25, dpi=300, out.width = "83%"}
+ggplot(data, aes(x = V1)) +
+  geom_bar(stat = "count", fill = "#6794A7", color = "#014D64", alpha = .8) +
+  scale_y_continuous(limits = c(0, 9), breaks = 0:9) + 
+  scale_x_discrete(name = "Variable 1", limits = 1:8) +
+  theme_minimal(base_size = 16)
+```
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * But what if we would like to do the same thing for the following variable?
+
+--
+
+```{r, echo = F}
+knitr::kable(matrix(data$V2, ncol = 6), caption = "Variable 2", booktabs = TRUE, digits = 6) %>% 
+    kable_styling(bootstrap_options = c('hover', 'condensed'), full_width = F)
+```
+
+<p style = "margin-bottom:1.5cm;">
+
+--
+
+ * Each value appears only once
+  * So the count of each variable does not help summarizing the variable
+
+--
+
+<center><h4>  &#10140; <i> Let's have a look at the corresponding bar plot </i></h4></center>
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+```{r, echo = F, fig.width = 12, fig.height = 6.25, dpi=300, out.width = "83%"}
+ggplot(data, aes(x = V2)) +
+  geom_bar(stat = "count", fill = "#6794A7", color = "#014D64", alpha = .8) +
+  scale_y_continuous(limits = 0:1, breaks = 0:1) + 
+  scale_x_continuous(name = "Variable 2", limits = c(0, 9), breaks = 0:9) +
+  theme_minimal(base_size = 16)
+```
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+<ul>
+  <li>It does not look good for this variable because it is continuous, while the first one was discrete</li>
+  <ul>
+    <li><b>Discrete variables:</b> variables that can take a finite (or, in practice, a sufficiently small) number of values, e.g., number of siblings, eye color, ...</li>
+    <li><b>Continuous variables:</b> variables that can take an infinite (or, in practice, a sufficiently large) number of values, e.g., annual income, height in centimeters, ...</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1.25cm;">
+
+<center><i>&#10140; In practice some variables can be difficult to classify. For instance, <b>age (in years)</b> can be viewed <b>as a discrete</b> variable because it can take a finite set of values, but this set being possibly quite wide, one could also view it <b>as a continuous variable</b>. It often depends on the context.</i></center>
+
+<p style = "margin-bottom:1.25cm;">
+  
+--
+
+<ul>
+<li> One solution to get a sense of the <b>distribution</b> of a <b>continuous variable</b> is to do a <b>histogram</b></li>
+  <ul>
+    <li>Instead of taking each value separately, group them into <i>bins</i> and show how many values fall into each bin</li>
+    <li>The bar plots we've seen so far are basically histograms with the number of bins being equal to the number of possible values</li>
+  </ul>
+</ul>
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+
+--
+
+<p style = "margin-bottom: 1.97cm;"></p>
+
+```{r, echo = F, fig.width = 12, fig.height = 5, dpi=300, out.width = "78%"}
+hist_data <- read.csv("hist_illustration.csv") %>%
+  mutate(y = runif(1000, 0, 1.45))
+jitter_plot <- ggplot(hist_data, aes(x = x, y = y)) + 
+  geom_point(alpha = .15, size = 2, fill = "#6794A7", color = "#014D64", height = .5, width = 0) + 
+  scale_x_continuous(name = "Variable 3", limits = c(-1.1775, 10.4925), breaks = seq(0, 10, 2.5)) +
+  scale_y_continuous(name = "", limits = c(0, 1.6)) + 
+  theme_minimal(base_size = 16) + theme(axis.text.y = element_blank())
+jitter_plot
+```
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+  * We can divide the domain of this variable into 5 bins
+
+<p style = "margin-bottom: 1.25cm;"></p>
+
+```{r, echo = F, fig.width = 12, fig.height = 5, dpi=300, out.width = "78%"}
+jitter_plot +
+  geom_vline(xintercept = c(1.160, 3.49, 5.825, 8.160), linetype = "dashed") +
+  annotate("text", x = -.5, y = 1.55, label = "Bin 1", size = 6, color = "#505050") +
+  annotate("text", x = 1.6, y = 1.55, label = "Bin 2", size = 6, color = "#505050") +
+  annotate("text", x = 4, y = 1.55, label = "Bin 3", size = 6, color = "#505050") +
+  annotate("text", x = 6.25, y = 1.55, label = "Bin 4", size = 6, color = "#505050") +
+  annotate("text", x = 8.6, y = 1.55, label = "Bin 5", size = 6, color = "#505050")
+```
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+  * We can divide the domain of this variable into 5 bins
+  * And count the number of observations within each bin
+
+```{r, echo = F, fig.width = 12, fig.height = 5, dpi=300, out.width = "78%"}
+jitter_plot +
+  geom_vline(xintercept = c(1.160, 3.49, 5.825, 8.160), linetype = "dashed") +
+  annotate("text", x = -.35, y = 1.55, label = "Bin 1: 8", size = 6, color = "#505050") +
+  annotate("text", x = 1.9, y = 1.55, label = "Bin 2: 145", size = 6, color = "#505050") +
+  annotate("text", x = 4.31, y = 1.55, label = "Bin 3: 528", size = 6, color = "#505050") +
+  annotate("text", x = 6.55, y = 1.55, label = "Bin 4: 300", size = 6, color = "#505050") +
+  annotate("text", x = 8.815, y = 1.55, label = "Bin 5: 19", size = 6, color = "#505050")
+```
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+  * We can divide the domain of this variable into 5 bins
+  * And count the number of observations within each bin
+
+```{r, echo = F, fig.width = 12, fig.height = 5, dpi=300, out.width = "78%"}
+ggplot(hist_data, aes(x = x)) +
+  geom_histogram(fill = "#6794A7", color = "#014D64", alpha = .8, bins = 5) + 
+  ylab("") + geom_vline(xintercept = c(1.160, 3.49, 5.825, 8.160), linetype = "dashed") + 
+  xlab("Variable 3") + theme_minimal(base_size = 16) + theme(axis.text.y = element_blank()) 
+```
+ 
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+<ul>
+  <li>There's no definitive rule to choose the number of bins</li>
+  <ul>
+    <li>But too many or too few can yield misleading histograms</li>
+  </ul>
+</ul>
+
+--
+
+```{r, echo = F, fig.width = 12, fig.height = 4, dpi=300, out.width = "83%"}
+library("ggpubr")
+myhist <- function(b) {
+  ggplot(hist_data, aes(x = x)) + 
+    geom_histogram(fill = "#6794A7", color = "#014D64", alpha = .8, bins = b) +
+    ylab("") + xlab("") + ggtitle(paste(b, "bins")) + theme_minimal(base_size = 14)
+}
+ggarrange(myhist(5), myhist(50), myhist(500), ncol = 3)
+```
+
+--
+
+<center><h4> &#10140; <i>  Note that choosing the number of bins is equivalent to choosing the width of each bin </i></h4></center>
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+<ul>
+  <li><b>Densities</b> are often used instead of <b>histograms</b></li>
+  <ul>
+    <li>Both are based on the <b>same principle</b>, but densities are <b>continuous</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:-.5cm;">
+
+--
+
+<ul>
+  <li>We won't learn how to derive it in this course but the idea is the same</li>
+  <ul>
+    <li>The <b>higher the value</b> on the y-axis, the <b>more observations</b> there are around the corresponding x location</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:-.5cm;">
+
+--
+
+<ul>
+  <li>The <b>smoothness</b> of the density can be tuned with the <b>bandwidth</b></li>
+  <ul>
+    <li>The larger the smoother</li>
+  </ul>
+</ul>
+
+--
+ 
+```{r, echo = F, fig.width = 12, fig.height = 4, dpi=300, out.width = "83%"}
+mydens <- function(b) {
+  ggplot(hist_data, aes(x = x)) +
+  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = b) +
+    ylab("") + xlab("") + ggtitle(paste("Bandwidth:", b)) + theme_minimal(base_size = 14)
+}
+ggarrange(mydens(.025), mydens(.25), mydens(2.5), ncol = 3)
+```
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Normal distribution
+
+```{r, echo = F, fig.width = 12, fig.height = 6.25, dpi=300, out.width = "83%"}
+norm <- rnorm(1000000, 0, 1)
+norm_plot <- ggplot(tibble(x = norm), aes(x = x)) +
+  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) +
+  theme_minimal(base_size = 16)
+norm_plot
+```
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Log-normal distribution
+
+```{r, echo = F, fig.width = 12, fig.height = 6.25, dpi=300, out.width = "83%"}
+lnorm <- rlnorm(1000000, 0, 1)
+lnorm_plot <- ggplot(tibble(x = lnorm), aes(x = x)) +
+  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .55) +
+  theme_minimal(base_size = 16)
+lnorm_plot
+```
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Uniform distribution
+
+```{r, echo = F, fig.width = 12, fig.height = 6.25, dpi=300, out.width = "83%"}
+unif <- runif(1000, 0, 1)
+unif_plot <- ggplot(tibble(x = unif), aes(x = x)) +
+  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = 100) +
+  theme_minimal(base_size = 16)
+unif_plot
+```
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Summarizing distributions
+
+<p style = "margin-bottom:1cm;">
+
+--
+
+```{r, echo = F, fig.width = 14, fig.height = 4, out.width = "100%", dpi=300}
+ggarrange(norm_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + ggtitle("Normal distribution"), 
+          lnorm_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + ggtitle("Log-normal distribution"), 
+          unif_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + ggtitle("Uniform distribution"), ncol = 3)
+```
+
+--
+
+ * How to **summarize** these distributions with simple statistics?
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Summarizing distributions
+
+<p style = "margin-bottom:1cm;">
+
+```{r, echo = F, fig.width = 14, fig.height = 4, out.width = "100%", dpi=300}
+ggarrange(norm_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + 
+            geom_vline(xintercept = mean(norm), linetype = "dashed") + 
+            ggtitle("Normal distribution"), 
+          
+          lnorm_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + 
+            geom_vline(xintercept = mean(lnorm), linetype = "dashed") + 
+            ggtitle("Log-normal distribution"), 
+          
+          unif_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + 
+            geom_vline(xintercept = mean(unif), linetype = "dashed") + 
+            ggtitle("Uniform distribution"), ncol = 3)
+```
+
+ * How to **summarize** these distributions with simple statistics?
+  * By describing their **central tendency** (e.g., mean, median)
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Summarizing distributions
+
+<p style = "margin-bottom:1cm;">
+
+```{r, echo = F, fig.width = 14, fig.height = 4, out.width = "100%", dpi=300}
+ggarrange(norm_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + 
+            geom_vline(xintercept = mean(norm), linetype = "dashed") + 
+            annotate("segment", x = mean(norm), xend = mean(norm) - sd(norm), y = .18, yend = .18, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            annotate("segment", x = mean(norm), xend = mean(norm) + sd(norm), y = .18, yend = .18, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            ggtitle("Normal distribution"), 
+          
+          lnorm_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + 
+            geom_vline(xintercept = mean(lnorm), linetype = "dashed") +
+            annotate("segment", x = mean(lnorm), xend = mean(lnorm) - sd(lnorm), y = .2, yend = .2, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            annotate("segment", x = mean(lnorm), xend = mean(lnorm) + sd(lnorm), y = .2, yend = .2, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            ggtitle("Log-normal distribution"), 
+          
+          unif_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank()) + 
+            geom_vline(xintercept = mean(unif), linetype = "dashed") + 
+            annotate("segment", x = mean(unif), xend = mean(unif) - sd(unif), y = .002, yend = .002, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            annotate("segment", x = mean(unif), xend = mean(unif) + sd(unif), y = .002, yend = .002, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            ggtitle("Uniform distribution"), ncol = 3)
+```
+
+ * How to **summarize** these distributions with simple statistics?
+  * By describing their **central tendency** (e.g., mean, median)
+  * And their **spread** (e.g., standard deviation, inter-quartile range)
+
+---
+
+<h3>Overview</h3>
+
+.pull-left[
+
+#### 1. Distributions &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+.pull-right[
+
+#### 4. Inference
+<p style = "margin-bottom:-.5cm;">
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+<h3>Overview</h3>
+
+.pull-left[
+#### 1. Distributions &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+]
+ 
+---
+
+### 2. Central tendency
+
+#### 2.1. Mean
+
+<ul>
+  <li>The mean is the most common statistic to describe central tendencies</li>
+  <ul>
+    <li>Take for instance the grades I gave to the final projects in spring 2021:</li>
+  </ul>
+</ul>
+ 
+--
+ 
+```{r, echo = F}
+grades <- c(20, 20, 17.5, 17.5, 16, 16, 16, 14.5, 
+            14.5, 19.5, 19.5, 18.5, 18.5, 18.5)
+
+kable(matrix(grades, nrow = 2), 
+      caption = "Grades I gave in spring 2021")
+```
+
+<p style = "margin-bottom:1.5cm;">
+
+--
+
+ * The mean is simply the sum of all the grades divided by the number of grades:
+
+--
+
+<p style = "margin-bottom:.5cm;">
+
+
+$$\bar{x} = \frac{1}{N}\sum_{i = 1}^Nx_i$$ 
+
+--
+
+$$\frac{20 + 20 + 17.5 + 17.5 + 16 + 16 + 16 + 14.5 + 14.5 + 19.5 + 19.5 + 18.5 + 18.5 + 18.5}{14} = `r round(mean(grades), 2)`$$
+
+---
+
+### 2. Central tendency
+
+#### 2.1. Mean
+
+<ul>
+  <li>The mean is the most common statistic to describe central tendencies</li>
+  <ul>
+    <li>Take for instance the grades I gave to the final projects in spring 2021:</li>
+  </ul>
+</ul>
+ 
+```{r, echo = F}
+kable(matrix(grades, nrow = 2), 
+      caption = "Grades I gave in spring 2021")
+```
+
+<p style = "margin-bottom:1.5cm;">
+
+ * Note that it can also be expressed as the sum of each value weighted by its proportion in the distribution
+ 
+ <p style = "margin-bottom:1.5cm;">
+
+$$\bar{x} = \frac{2}{14} \times 20 + \frac{2}{14} \times 17.5 + \frac{3}{14} \times 16 + \frac{2}{14} \times 14.5 + \frac{2}{14} \times 19.5 + \frac{3}{14} \times 18.5 = `r round(mean(grades), 2)`$$
+
+---
+
+### 2. Central tendency
+
+#### 2.2. Median
+
+ * To obtain the median you first need to **sort the values**:
+
+--
+ 
+```{r, echo = F}
+kable(matrix(c(as.character(1:14), sort(grades)), nrow = 2, byrow = T), 
+      caption = "Grades I gave in spring 2021") %>%
+  row_spec(1:2, align = "c")
+```
+
+--
+
+<p style = "margin-bottom:1cm;">
+
+ * The median is the value that **divides** the distribution into **two halves**
+ * When there is an even number of observations, the median is the average of the last value of the first half and the first value of the second half
+ 
+--
+ 
+As we have 14 observations, the median is the average of the 7<sup>th</sup> and the 8<sup>th</sup> observations:
+
+$$\text{Med}(x) = \begin{cases} x[\frac{N+1}{2}] & \text{if } N \text{ is odd}\\
+\frac{x[\frac{N}{2}]+x[\frac{N}{2}+1]}{2} & \text{if } N \text{ is even}
+\end{cases} = \frac{17.5 + 18.5}{2} = 18$$
+
+---
+
+### 2. Central tendency
+
+#### 2.3. Mean vs. median: relative magnitude
+
+--
+
+ * The **relative magnitude** of the mean and the median depends on the **symmetry of the distribution**:
+  * The **mean is larger** than the median if the distribution is **right-skewed**
+  * The mean and the median are **equal** if the distribution is **symmetric**
+  * The **mean is lower** than the median if the distribution is **left-skewed**
+
+--
+
+<p style = "margin-bottom:1.25cm;">
+
+```{r, echo = F, fig.width = 14, fig.height = 4, dpi=300, out.width="100%"}
+mean_vs_median <- function(x) {
+  ggplot(tibble(x = x), aes(x = x)) +
+    geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .01) + 
+    geom_vline(xintercept = mean(x), linetype = "dashed", alpha = .5, size = 1) +
+    geom_vline(xintercept = median(x), linetype = "dashed", alpha = .5, size = 1) +
+    theme_minimal(base_size = 16)  + ylab("") + xlab("") + 
+    theme(axis.text.y = element_blank())
+    
+}
+
+right <- rbeta(10000, 1, 100)
+symm <- rbeta(10000, 100, 100)
+left <- rbeta(10000, 100, 1)
+ggarrange(mean_vs_median(right) + ggtitle("Right-skewed") +
+            annotate("text", x = mean(right) + .0035, y = 10, label = "Mean", angle = 90, size = 6) +
+            annotate("text", x = median(right) - .004, y = 10, label = "Median", angle = 90, size = 6),
+          mean_vs_median(symm) + ggtitle("Symmetric") +
+            annotate("text", x = mean(symm) - .01, y = 5, label = "Mean = Median", angle = 90, size = 6),
+          mean_vs_median(left) + ggtitle("Left-skewed") +
+            annotate("text", x = mean(left) - .004, y = 10, label = "Mean", angle = 90, size = 6) +
+            annotate("text", x = median(left) + .0035, y = 10, label = "Median", angle = 90, size = 6),
+          ncol = 3)
+```
+
+---
+
+### 2. Central tendency
+
+#### 2.3. Mean vs. median: robustness
+
+ * The **median** is indeed **less sensitive** than the mean to thick tails and outliers
+ * For this reason we say that the median is a ***robust statistic***
+ 
+--
+
+<center><h4><i>Let's illustrate that with a small example!</i></h4></center>
+
+--
+
+.pull-left[
+ 
+ * Consider the following variable:
+ 
+```{r, echo = F}
+symmetric_var <- c(-3, -2, -2, -1, -1, -1, 0, 1, 1, 1, 2, 2, 3)
+kable(t(tibble(` ` = symmetric_var)), caption = "")
+```
+
+ * How would the mean and the median **react** if we were to **add one single observation**?
+
+  - We can plot the value of the additional observation on the $x$ axis and the value of the mean and the median on the $y$ axis
+]
+
+--
+
+.pull-right[
+
+<p style = "margin-bottom:-1cm;">
+
+```{r, echo = F, fig.width=6.5, fig.height=4.5, dpi=300, out.width="95%"}
+avg <- c()
+med <- c()
+for (i in -50:50) {
+  avg <- c(avg, mean(c(symmetric_var, i)))
+  med <- c(med, median(c(symmetric_var, i)))
+}
+
+ggplot(tibble(`Value of the additional observation` = rep(-50:50, 2), 
+              `Central tendency` = c(avg, med), 
+              Statistic = rep(c("Mean", "Median"), each = 101)), 
+       aes(x = `Value of the additional observation`, y = `Central tendency`, color = Statistic)) +
+    geom_line(alpha = .8, bw = .05) + theme_minimal(base_size = 16)
+```
+]
+
+---
+
+### 2. Central tendency
+
+#### 2.3. Mean vs median: in R
+
+ * Both statistics have **dedicated R functions**
+ 
+--
+
+```{r}
+variable <- c(1, 2, 4, 8, 12)
+c(mean(variable), median(variable))
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;">
+
+ * As always, you should **pay attention to NAs** when using these functions
+
+--
+
+```{r}
+mean(c(1, 2, 3, 4, NA))
+mean(c(1, 2, 3, 4, NA), na.rm = T)
+```
+
+---
+
+### 2. Central tendency
+
+#### 2.3. Mean vs median: with binary variable
+
+<ul>
+  <li>A <b>binary variable</b> is a variable that can take only <b>two values</b> <i>(e.g., male/female, accepted/rejected)</i></li>
+  <ul>
+    <li>Any binary variable can be expressed as a sequence of <b>0s and 1s</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;">
+
+ * Consider the following binary variable of length 4
+
+--
+
+```{r, echo = F}
+kable(t(tibble(` ` = c(0, 1, 1, 1))), caption = "")
+```
+
+<p style = "margin-bottom:1cm;">
+
+--
+
+  - The **mean** of a binary variable is equal the the **percentage of 1s**:
+ 
+$$\frac{0 + 1 + 1 + 1}{4} = \frac{3}{4} = 75\%$$
+
+<p style = "margin-bottom:1cm;">
+
+--
+
+  - The **median** of a binary variable is equal to the **mode** *(mode = most frequent value of a variable)*
+
+$$\frac{1 + 1}{2} = 1$$
+
+---
+
+<h3>Overview</h3>
+
+.pull-left[
+#### 1. Distributions &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+
+]
+
+.pull-right[
+#### 4. Inference
+<p style = "margin-bottom:-.5cm;">
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+<h3>Overview</h3>
+
+.pull-left[
+#### 1. Distributions &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+---
+
+### 3. Spread
+
+#### 3.1. Range, quantiles, and the IQR
+
+--
+
+<ul>
+  <li>The <b>most intuitive</b> statistic to describe the spread of a variable is probably</li>
+  <ul>
+    <li><b>The range: the minimum and maximum value it can take</b></li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom: 1.25cm;"></p>
+ 
+ * But consider the following two distributions:
+
+<p style = "margin-bottom: 1.25cm;"></p>
+
+<style> .left-column {width: 66%;} .right-column {width: 32%;} </style>
+
+.left-column[
+```{r, echo = F, fig.width = 11, fig.height = 4, dpi=300, out.width="100%"}
+mynorm <- rnorm(1000000, 0, 1)^3
+mynorm <- mynorm[abs(mynorm) < 20]
+ggarrange(ggplot(tibble(x = mynorm), aes(x = x)) +
+  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) +
+  theme_minimal(base_size = 16) + xlab("") + ylab(""),
+  ggplot(tibble(x = norm), aes(x = x)) +
+  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) +
+  theme_minimal(base_size = 16) + xlab("") + ylab("")
+)
+```
+]
+
+--
+
+.right-column[
+
+<p style = "margin-bottom:-1cm;">
+
+ * In the presence of outliers or very skewed distributions, the <b>full range</b> of a variable <b>may not be representative</b> of what we mean by *'spread'*
+ 
+ * That's why we tend to prefer **inter-quantile** ranges 
+ 
+]
+
+---
+
+### 3. Spread
+
+#### 3.1. Range, quantiles, and the IQR
+
+<ul>
+  <li><b>Quantiles</b> are observations that <b>divide</b> the population into <b>groups of equal size</b></li>
+  <ul>
+    <li>The <b>median</b> divides the population into <b>2 groups</b> of equal size</li>
+    <li><b>Quartiles</b> divide the population into <b>4 groups</b> of equal size</li>
+    <li>There are also <b>terciles</b>, <b>quintiles</b>, <b>deciles</b>, and so on</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom: 1.25cm;"></p>
+
+--
+
+<ul>
+  <li>One way to <b>compute quartiles</b>: divide the ordered variable according to the median</li>
+    <ul>
+      <li>The lower quartile value is the median of the lower half of the data</li>
+      <li>The upper quartile value is the median of the upper half of the data</li>
+      <li><i>If there is an odd number of data points in the original ordered data set, don't include the median in either half</i></li>
+  </ul>
+</ul>
+ 
+--
+
+<p style = "margin-bottom:1.5cm;">
+
+.pull-left[
+```{r, echo = F}
+kable(t(tibble(` ` = c(-3, -2, -1, 0, 1, 2, 3))), caption = "")
+```
+
+$$Q_1 = -2,\:\:Q_2 = 0,\:\:Q_3 = 2$$
+]
+
+--
+
+.pull-right[
+```{r, echo = F}
+kable(t(tibble(` ` = c(-3, -2, -1, 0, 0, 1, 2, 3))), caption = "")
+```
+
+$$Q_1 = -1.5,\:\:Q_2 = 0,\:\:Q_3 = 1.5$$
+]
+
+---
+
+### 3. Spread
+
+#### 3.1. Range, quantiles, and the IQR
+
+ * The **interquartile range** is the difference between the third and the first quartile: $\text{IQR} = Q_3 - Q_1$
+ 
+--
+ 
+ * Put differently, it corresponds to the **bounds** of the set which contains the **middle half** of the distribution
+ 
+--
+
+<p style = "margin-bottom:.5cm;">
+
+```{r, echo = F, fig.width = 14, fig.height = 5, dpi=75, dpi=300, out.width="100%"}
+ggarrange(ggplot(tibble(x = mynorm[abs(mynorm) < 20]), aes(x = x)) +
+            geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) +
+            theme_minimal(base_size = 16) + xlab("") + ylab("") +
+            geom_vline(xintercept = quantile(mynorm)[c(2, 4)], linetype = "dashed"),
+          
+          ggplot(tibble(x = norm), aes(x = x)) +
+            geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) +
+            theme_minimal(base_size = 16) + xlab("") + ylab("") +
+            geom_vline(xintercept = quantile(norm)[c(2, 4)], linetype = "dashed"))
+```
+
+---
+
+### 3. Spread
+
+#### 3.2. Variance and standard deviation
+
+<ul>
+  <li>The <b>variance</b> is a way to quantify how the values of a variable tend to <b>deviate</b> from their <b>mean</b></li>
+  <ul>
+    <li>If values tend to be <b>close to the mean</b>, then the <b>spread is low</b></li>
+    <li>If values tend to be far <b>from the mean</b>, then the <b>spread is large</b></li>
+  </ul>
+</ul>
+  
+--
+
+<p style = "margin-bottom:1cm;">
+
+.pull-left[
+
+ * Can we just take the **average deviation** from the mean?
+
+```{r, echo = F}
+kable(tibble(x = c(1, 4, -3, 8), `mean(x)` = mean(c(1, 4, -3, 8)),
+             `x - mean(x)` = c(1, 4, -3, 8) - mean(c(1, 4, -3, 8))), 
+      caption = "", align = "ccc")
+```
+]
+
+--
+
+.pull-right[
+
+<br>
+
+ * By construction it would **always be 0**: values above and under the mean compensate
+ 
+  * But we can use the **absolute value** of each deviation: $|x_i-\bar{x}|$
+  
+  * Or their **square**: $(x_i-\bar{x})^2$
+  
+]
+
+---
+
+### 3. Spread
+
+#### 3.2. Variance and standard deviation
+
+
+ * This is how the **variance** is computed: by **averaging the squared deviations from the mean**
+ 
+--
+
+$$\text{Var}(x) = \frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2$$
+
+--
+
+<p style = "margin-bottom:1cm;">
+
+ * Because the **variance** is a **sum of squares**, it can get **quite big** compared to the other statistics like the mean, the median or the interquartile range.
+  * To express the spread in the **same unit** as the data, we can take the **square root** of the variance, which is called the **standard deviation**    
+  * In a way, *the standard deviation is to the mean what the IQR is to the median*
+
+<p style = "margin-bottom:1cm;">
+
+--
+
+$$\text{SD}(x) = \sqrt{\text{Var}(x)} = \sqrt{\frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2}$$
+
+---
+
+### 3. Spread
+
+#### 3.3. Standard deviation vs. interquartile range
+
+
+ * Remember that the median is **less sensitive** than the mean to thick tails and outliers
+ * This is also the case for the **IQR** relative to the **standard deviation**
+ 
+--
+
+<center><h4><i>Let's go back to our previous example!</i></h4></center>
+
+--
+
+.pull-left[
+ 
+ * Consider the following variable:
+ 
+```{r, echo = F}
+symmetric_var <- c(-3, -2, -2, -1, -1, -1, 0, 1, 1, 1, 2, 2, 3)
+kable(t(tibble(` ` = symmetric_var)), caption = "")
+```
+
+ * How would the standard deviation and the IQR **react** if we were to **add one single observation**?
+
+  - We can plot the value of the additional observation on the $x$ axis and the value of the mean and the median on the $y$ axis
+]
+
+--
+
+.pull-right[
+
+<p style = "margin-bottom:-.5cm;">
+
+```{r, echo = F, fig.width=6.5, fig.height=4.5, dpi=300, out.width="95%"}
+store_iqr <- c()
+store_sd <- c()
+for (i in -50:50) {
+  store_iqr <- c(store_iqr, IQR(c(symmetric_var, i)))
+  store_sd <- c(store_sd, sd(c(symmetric_var, i)))
+}
+
+ggplot(tibble(`Value of the additional observation` = rep(-50:50, 2), 
+              `Central tendency` = c(store_iqr, store_sd), 
+              Statistic = rep(c("IQR", "SD"), each = 101)), 
+       aes(x = `Value of the additional observation`, y = `Central tendency`, color = Statistic)) +
+    geom_line(alpha = .8, bw = .05) + theme_minimal(base_size = 16)
+```
+]
+
+---
+
+### 3. Spread
+
+#### 3.3. Standard deviation vs. interquartile range
+
+ * But like for the median vs. the mean, it does **not** mean that one is **better than the other**
+   * They just **capture different things**
+ 
+--
+
+.left-column[
+```{r, echo = F, fig.width=10, fig.height=5.2, dpi=300, out.width="100%"}
+far_obs <- runif(300000, 5, 6)
+close_obs <- runif(300000, 3, 4)
+
+distrib1 <- c(norm, close_obs, -close_obs)
+distrib2 <- c(norm, far_obs, -far_obs)
+
+distribs <- tibble(x = c(distrib1, distrib2), 
+                   distrib = rep(c("1", "2"), each = length(distrib1)))
+
+ggplot(distribs, aes(x = x, fill = distrib)) +
+  geom_density(alpha = .2, bw = .5, show.legend = F) +
+  theme_minimal(base_size = 16) + xlab("") + ylab("") +
+  facet_wrap(~distrib, nrow = 2) +
+  geom_vline(data = filter(distribs, distrib == "1")[1:2, ], aes(xintercept = quantile(distrib1)[c(2, 4)]), linetype = "dashed") +
+  geom_vline(data = filter(distribs, distrib == "2")[1:2, ], aes(xintercept = quantile(distrib2)[c(2, 4)]), linetype = "dashed") +
+  geom_vline(data = filter(distribs, distrib == "1")[1:2, ], 
+             aes(xintercept = c(mean(distrib1) - .5*sd(distrib1), mean(distrib1) + .5*sd(distrib1))), linetype = "solid") +
+  geom_vline(data = filter(distribs, distrib == "2")[1:2, ], 
+             aes(xintercept = c(mean(distrib2) - .5*sd(distrib2), mean(distrib2) + .5*sd(distrib2))), linetype = "solid") +
+  theme(strip.background = element_blank(), strip.text.x = element_blank())
+```
+]
+
+--
+
+.right-column[
+
+<br>
+
+ * These two distributions
+ 
+   * Have the **same interquartile range**
+   
+   * Have **different standard deviations**
+   
+]
+
+
+---
+
+### 3. Spread
+
+#### 3.3. Standard deviation vs. interquartile range: in R
+
+ * Both statistics have **dedicated R functions**
+ 
+--
+
+```{r}
+variable <- c(0, 1, 3, 4, 6, 7, 8, 10, 11)
+c(sd(variable), IQR(variable))
+```
+
+--
+
+<p style = "margin-bottom:1.5cm;">
+
+ * You can obtain the **quantiles** of a variable using the `quantile()` function
+
+--
+
+```{r}
+quantile(variable)
+```
+
+<p style = "margin-bottom:1cm;">
+
+<center> &#10140; <i><b> See the help file ?quantile() for more info on quantile computation</b> </i></center>
+
+---
+
+### Practice
+
+#### &#10140; Consider the following variable
+
+```{r}
+variable <- c(1, 3, 8, 4, 9, 5, 3, 8, 8, 7, 4, 9, 
+              6, 5, 1, 999, 1, 2, 4, 5, 6, 9, 7, NA)
+```
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 1) Copy/paste the line above into an .R script and run it
+
+#### 2) Compute the mean of this distribution
+
+#### 3) Compute the three quartiles of this distribution
+
+#### 4) Compute the interquartile range of this distribution
+
+--
+
+<p style = "margin-bottom:2cm;"></p>
+
+<center><h3><i>You've got 5 minutes!</i></h3></center>
+
+---
+
+### Solution
+
+#### 1) Compute the mean of this distribution
+
+```{r}
+mean(variable, na.rm = T)
+```
+
+--
+
+#### 2) Compute the three quartiles 
+
+```{r}
+quartiles <- quantile(variable, 1:3/4, na.rm = T, names = F)
+quartiles
+```
+
+--
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+.pull-left[
+
+#### 3) Compute the inter quartile range
+
+```{r}
+quartiles[3] - quartiles[1]
+```
+
+]
+
+--
+
+
+.pull-right[
+
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+
+<center> &#10140; <i><b>The outlier 999 pulls the mean outside of the IQR! Descriptive statistics is a good tool to make sure the data is clean</b></i></center>
+
+]
+
+---
+
+<h3>Overview</h3>
+
+.pull-left[
+#### 1. Distributions &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+.pull-right[
+#### 4. Inference
+<p style = "margin-bottom:-.5cm;">
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+<h3>Overview</h3>
+
+.pull-left[
+#### 1. Distributions &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+.pull-right[
+#### 4. Inference
+<p style = "margin-bottom:-.5cm;">
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+]
+
+---
+
+### 4. Inference
+
+#### 4.1. Data generating process
+
+ * In **practice**, we manipulate **concrete** variables such as age, sex, earnings, etc.
+  * But on the **theoretical** side, we denote such variables with an **abstract** letter like $x$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * In Statistics and Econometrics, we indeed use letters like $x$ to denote what we call **random variables**
+  * These variables can take values according to a **data generating process** (DGP)
+  * The data generating process is the *mechanism that causes the data to be the way we observe it*
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * For instance your grades can be seen as a random variable
+  * Which takes given values according to an unknown data generating process
+  * The DGP probably depends on your effort, your background, many environmental factors, ...
+  
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * With descriptive statistics, we actually **infer** properties of the DGP **given the outcomes** we observe
+  * **Like backward engineering**, from the output we try to understand the process
+  * One **crucial implication** is that the mean we compute is just an **estimation** of the parameter of the DGP we're interested in
+
+---
+
+### 4. Inference
+
+#### 4.1. Data generating process
+
+<ul>
+  <li>Consider for instance the <b>outcome of two dice</b> as a random variable</li>
+  <ul>
+    <li>Contrarily to the variables we usually study, <b>we know the DGP</b> of this one</li>
+  </ul>
+</ul>
+
+--
+
+ * The DGP causes our random variable to take the following values with the following probabilities:
+
+.pull-left[
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 - 1/36 (&#x2680;&#x2680;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 - 2/36 (&#x2680;&#x2681; - &#x2681;&#x2680;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 - 3/36 (&#x2680;&#x2682; - &#x2682;&#x2680; - &#x2681;&#x2681;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5 - 4/36 (&#x2681;&#x2682; - &#x2682;&#x2681; - &#x2681;&#x2683; - &#x2683;&#x2681;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6 - 5/36 (&#x2682;&#x2682; - &#x2681;&#x2683; - &#x2683;&#x2681; - &#x2684;&#x2680; - &#x2680;&#x2684;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7 - 6/36 (&#x2682;&#x2683; - &#x2683;&#x2682; - &#x2684;&#x2681; - &#x2681;&#x2684; - &#x2680;&#x2685; - &#x2685;&#x2680;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8 - 5/36 (&#x2683;&#x2683; - &#x2684;&#x2682; - &#x2682;&#x2684; - &#x2685;&#x2681; - &#x2681;&#x2685;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9 - 4/36 (&#x2683;&#x2684; - &#x2684;&#x2683; - &#x2685;&#x2682; - &#x2682;&#x2685;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 - 3/36 (&#x2685;&#x2683; - &#x2683;&#x2685; - &#x2684;&#x2684;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11 - 2/36 (&#x2685;&#x2684; - &#x2684;&#x2685;)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12 - 1/36 (&#x2685;&#x2685;)  
+
+]
+
+.pull-right[
+```{r, echo = F, fig.width = 6, fig.height = 4, out.width = "100%"}
+tibble(Outcome = 2:12,
+       Probability = c(1:6, 5, 4, 3, 2, 1)/36) %>%
+  ggplot(., aes(x = Outcome, y = Probability)) +
+  geom_bar(stat = "identity", fill = "#6794A7", color = "#014D64", alpha = .5, width = 1) +
+  scale_x_continuous(breaks = 2:12)
+```
+
+]
+---
+
+### 4. Inference
+
+#### 4.2. Empirical vs. theoretical moments
+
+ * Because we know the data generating process of our random variable, we can compute its **expected value**:
+
+
+<p style = "margin-bottom:1cm;"></p>
+
+$$\begin{align} \text{E}(x) = \frac{(2\times1) + (3\times2) + (4\times3) + (5\times4) + (6\times5) + (7\times6)}{36} +\\ \frac{(8\times5) + (9\times4) + (10\times3) + (11\times2) + (12\times1)}{36} = \frac{252}{36} = 7\end{align}$$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>This is the parameter we are actually interested in</li>
+  <ul>
+    <li>The <b>expected value</b> is what we call a <b>theoretical moment</b> <i>(the first one)</i></li>
+    <li>While the <b>mean</b> is the corresponding <b>empirical moment</b></li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+
+<ul>
+  <li><b>How confident</b> to be in our estimate of the expected value (i.e., <i>the mean</i>) depends on the <b>sample size</b></li>
+  <ul>
+    <li>For a given number of draws the mean won't necessarily be exactly 7</li>
+    <li>But if we were to do <b>infinitely many draws</b>, the mean would <b>converge</b> towards 7 <i>(Law of Large Numbers)</i></li>
+  </ul>
+</ul>
+ 
+---
+
+### 4. Inference
+
+#### 4.2. Empirical vs. theoretical moments
+
+ * Just like the **mean** that we compute empirically is an estimate of the **first moment** of the distribution,
+  * the **variance** that we compute empirically is an estimate of the **second moment** of the distribution
+
+--
+
+.pull-left[
+
+.pull-left[
+
+<p style = "margin-bottom:4cm;"></p>
+
+<b>First moment:</b>  
+
+<p style = "margin-bottom:3.5cm;"></p>
+
+<b>Second moment:</b>
+
+]
+
+.pull-right[
+
+<center><h4>Theoretical moment</h4></center>
+
+$$\text{E}(x_{\text{discrete}}) = \sum_{i=1}^{k}x_ip_i$$
+
+$$\text{E}(x_{\text{continuous}}) = \int_{\text{R}}xf(x)dx$$
+
+<p style = "margin-bottom:2cm;"></p>
+
+$$\text{Var}(x) = \text{E}\left[(x - \text{E}(x))^2\right] \equiv \sigma^2$$
+
+]
+
+]
+
+.pull-right[
+
+<center><h4>Empirical moment</h4></center>
+
+<p style = "margin-bottom:1.9cm;"></p>
+
+$$\bar{x} = \frac{1}{N}\sum_{i=1}^Nx_i$$
+
+<p style = "margin-bottom:2.25cm;"></p>
+
+$$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$
+
+]
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+<ul>
+  <li>Because the mean is an empirical <b>estimation</b> of the theoretical expected value</li>
+  <ul>
+    <li>We need a measure of the <b>confidence</b> we can have in this estimations</li>
+    <li>This is something we can do as long as our variable is <b>normally distributed</b> <i>(bell-shaped)</i></li>
+  </ul>
+</ul>
+
+--
+
+```{r, echo = F, fig.width=8, fig.height=4.2, dpi=300, out.width="65%"}
+norm_distribs <- tibble(d3 = rnorm(10000, -4, 1.5),
+                        d1 = rnorm(10000, 7, 0.1),
+                        d2 = rnorm(10000, 3, 4)) %>%
+  pivot_longer(everything(), names_to = "dist", values_to = "val")
+
+ggplot(norm_distribs, aes(x = val, fill = dist, color = dist)) +
+  geom_density(bw = 1, alpha = .7, show.legend = F) +
+  theme(axis.text.y = element_blank(), 
+        axis.title.x = element_blank())
+```
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+<ul>
+  <li>Indeed, with such distributions we can recover <b>something we know</b></li>
+</ul>
+
+<p style = "margin-bottom:1.95cm;"></p>
+
+```{r, echo = F, fig.width=8, fig.height=4.2, dpi=300, out.width="65%"}
+ggplot(norm_distribs, aes(x = val, fill = dist, color = dist)) +
+  geom_density(bw = 1, alpha = .7, show.legend = F) +
+  theme(axis.text.y = element_blank(), axis.title.x = element_blank())
+```
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+<ul>
+  <li>Indeed, with such distributions we can recover <b>something we know</b></li>
+  <ul>
+    <li>If we <b>divide</b> all the values of the variable by its <b>standard deviation</b>, the <b>variance becomes 1</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.2cm;"></p>
+
+```{r, echo = F, fig.width=8, fig.height=4.2, dpi=300, out.width="65%"}
+norm_distribs <- tibble(d3 = rnorm(10000, -4, 1),
+                        d1 = rnorm(10000, 7, 1),
+                        d2 = rnorm(10000, 3, 1)) %>%
+  pivot_longer(everything(), names_to = "dist", values_to = "val")
+
+ggplot(norm_distribs, aes(x = val, fill = dist, color = dist)) +
+  geom_density(bw = 1, alpha = .7, show.legend = F) +
+  theme(axis.text.y = element_blank(), axis.title.x = element_blank())
+```
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+<ul>
+  <li>Indeed, with such distributions we can recover <b>something we know</b></li>
+  <ul>
+    <li>If we <b>divide</b> all the values of the variable by its <b>standard deviation</b>, the <b>variance becomes 1</b></li>
+    <li>If we <b>subtract the mean</b> from all the values of the variable, the <b>mean becomes 0</b></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width=8, fig.height=4.2, dpi=300, out.width="65%"}
+norm_distribs <- tibble(d3 = rnorm(10000, 0, 1),
+                        d1 = rnorm(10000, 0, 1),
+                        d2 = rnorm(10000, 0, 1)) %>%
+  pivot_longer(everything(), names_to = "dist", values_to = "val")
+
+ggplot(norm_distribs, aes(x = val, fill = dist, color = dist)) +
+  geom_density(bw = 1, alpha = .7, show.legend = F) +
+  theme(axis.text.y = element_blank(), axis.title.x = element_blank())
+```
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+<p style = "margin-bottom:-.75cm;"></p>
+
+.pull-left[
+
+<ul>
+  <li>In mathematical notation, what we just saw writes:</li>
+</ul>
+
+$$\frac{x - \text{E}(x)}{\text{SD}(x)} \sim \mathcal{N}(0, 1)$$
+]
+
+--
+
+.pull-right[
+
+<ul>
+  <li>And if we compute means on random draws of \(x\)</li>
+  <ul>
+    <li>These means would behave the same way:</li>
+  </ul>
+</ul>
+
+$$\frac{\bar{x} - \text{E}(x)}{\text{SD}(x)} \sim \mathcal{N}(0, 1)$$
+]
+
+--
+
+<p style = "margin-bottom:.5cm;"></p>
+
+<ul>
+  <ul>
+    <li>This is actually <b>true with</b> a theoretical <b>infinite sample</b> of \(x\) (i.e., the DGP)</li>
+    <li>But <b>in practice</b>, we work with <b>finite samples</b> so things work slightly differently</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>When we have a limited number \(n\) of observations:</li>
+  <ul>
+    <li>We standardize using the <b>standard <i>error</i></b> of the mean \(\text{SE}(x) = \text{SD}(x)/\sqrt{n}\)</li>
+    <li>And we know that:</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:-.25cm;"></p>
+
+
+$$\frac{\bar{x} - \text{E}(x)}{\text{SE}(x)} \equiv t \sim t_{n-1}$$
+    
+<p style = "margin-bottom:.5cm;"></p>
+
+<ul>
+  <ul>    
+    <li>Where \(t\) reads <i>"t-stat"</i> and \(t_{n-1}\) denotes a Student's \(t\) distribution with \(n-1\) degrees of freedom</li>
+  </ul>
+</ul>
+
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+<ul>
+  <li>The Student's \(t\) distribution is <b>very similar to the normal</b> distribution</li>
+  <ul>
+    <li>It is just <b>a bit flatter</b> when \(n\) is low</li>
+    <li>But it <b>converges quickly</b> to a normal distribution as \(n \rightarrow \infty\)</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "65%"}
+ggplot(tibble(x = c(rt(10000, 1), rt(10000, 5), rt(10000, 60)),
+              df = rep(c("1", "5", "60"), each = 10000)) %>%
+         filter(x>-4&x<4),
+       aes(x = x, color = df, fill = df)) + 
+  geom_density(alpha = .1, bw = .8) + xlab("") +
+  #ggtitle("Student t distributions") +
+  theme(legend.direction = "vertical",
+        legend.position = "right")
+```
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+<ul>
+  <li>The good news is that:</li>
+  <ul>
+    <li>Because <b>we know</b> how \(t \equiv \frac{\bar{x} - \text{E}(x)}{\text{SE}(x)}\) is distributed (\(\sim t_{n-1}\))</li>
+    <li>We also know what are <b>the chances</b> that \(\frac{\bar{x} - \text{E}(x)}{\text{SE}(x)}\) takes <b>certain values</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:.75cm;"></p>
+
+--
+
+.pull-left[
+
+<ul>
+  <li>Consider a variable \(x \sim \mathcal{N}(\text{E}(x), \text{SD}(x)^2)\)</li>
+</ul>
+
+<ul>
+  <ul>
+    <li>We know that with \(n = 100\), \(\frac{\bar{x} - \text{E}(x)}{\text{SD}(x)/\sqrt{n}} \sim t_{99}\)</li>
+    </ul>
+</ul>
+
+<ul>
+  <ul>
+    <li>And we know between which values lies a given share of the \(t_{99}\) distribution</li>
+  </ul>
+</ul>
+  
+<ul>
+  <ul>
+    <li>For instance, 95% of the distribution lie in</li>
+  </ul>
+</ul>
+
+$$[-t_{99, 97.5\%};\:t_{99, 97.5\%}]\: \approx\: [-1.98;\: 1.98]$$
+
+]
+
+.pull-right[
+```{r, echo = F, fig.width = 6, fig.height = 3.3, out.width = "150%"}
+ggplot(tibble(x = rt(10000, 99)) %>%
+         filter(x>-4&x<4),
+       aes(x = x)) + 
+  geom_density(alpha = .1, bw = .8, fill = "#014D64", color ="#014D64") + 
+  scale_x_continuous(limits = c(-4, 4), breaks = c(-1.984217, 0, 1.984217), labels = c(-1.984217, 0, 1.984217)) +
+  geom_segment(x = -1.984217, y = 0, xend = -1.984217, yend = .095, linetype = "dashed") +
+  geom_segment(x = 1.984217, y = 0, xend = 1.984217, yend = .095, linetype = "dashed") +
+  annotate("text", x = 0, y = .125, label = "95%") +
+  annotate("text", x = -2.5, y = .02, label = "2.5%") +
+  annotate("text", x = 2.5, y = .02, label = "2.5%") +
+  ylab("density") +
+  theme(axis.title = element_blank(), axis.text.y = element_blank())
+```
+]
+
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+ * In mathematical notation, what the previous graph shows writes:
+
+--
+ 
+$$\text{Pr}\left[-t_{99, 97.5\%}\leq\frac{\bar{x} - \text{E}(x)}{\text{SE}(x)}\leq t_{99, 97.5\%}\right] = 95\%$$
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+ * Rearranging the terms yields:
+
+$$\text{Pr}\left[\bar{x} - t_{99, 97.5\%}\times \text{SE}(x)\leq \text{E}(x) \leq\bar{x} + t_{99, 97.5\%}\times \text{SE}(x)\right] = 95\%$$
+
+--
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+ * Thus, we can say that there's 95% chance for $\text{E}(x)$ to be within:
+ 
+$$\bar{x} \pm t_{99, 97.5\%}\times \text{SE}(x)$$
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<center><i><b>&#10140; This is our 95% confidence interval of the mean!</b></i></center>
+
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+ * We can apply this calculations **in R** to get a **95% CI of the mean** of the grade distribution
+ 
+```{r}
+grades <- c(20, 20, 17.5, 17.5, 16, 16, 16, 14.5, 14.5, 19.5, 19.5, 18.5, 18.5, 18.5)
+```
+
+<p style = "margin-bottom:-.55cm;"></p>
+
+--
+
+```{r}
+# Mean, standard deviation, and n
+mean <- mean(grades)
+sd <- sd(grades)
+n <- length(grades)
+```
+
+<p style = "margin-bottom:-.55cm;"></p>
+
+--
+
+```{r}
+# Standard error
+se <- sd / sqrt(n)
+```
+
+<p style = "margin-bottom:-.55cm;"></p>
+
+--
+
+```{r}
+# t-stat 
+t <- qt(.975, n - 1) # qt returns t-stat from confidence level and degrees of freedom
+```
+
+<p style = "margin-bottom:-.55cm;"></p>
+
+--
+
+```{r}
+# Confidene interval
+c(mean - t*se, mean + t*se)
+```
+
+---
+
+<h3>Overview</h3>
+
+.pull-left[
+#### 1. Distributions &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+.pull-right[
+#### 4. Inference &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+### 5. Wrap up!
+
+#### 1. Distributions
+
+  * The **distribution** of a variable documents all its possible values and how frequent they are
+
+--
+
+```{r, echo = F, fig.width = 12, fig.height = 4, dpi=300, out.width="95%"}
+ggarrange(ggplot(data, aes(x = V1)) +
+  geom_bar(stat = "count", fill = "#6794A7", color = "#014D64", alpha = .8) +
+  scale_y_continuous(limits = c(0, 9), breaks = 0:9) + 
+  scale_x_discrete(name = "", limits = 1:8) + ylab("") +
+  theme_minimal(base_size = 16) + ggtitle("Barplot"),
+  myhist(50) + ggtitle("Histogram"), mydens(.25) + ggtitle('Density'), 
+  nrow = 1)
+```
+
+--
+
+<p style = "margin-bottom:-1cm;">
+
+ * We can describe a distribution with:
+  
+---
+
+### 5. Wrap up!
+
+#### 1. Distributions
+
+  * The **distribution** of a variable documents all its possible values and how frequent they are
+
+```{r, echo = F, fig.width = 12, fig.height = 4, dpi=300, out.width="95%"}
+ggarrange(ggplot(data, aes(x = V1)) +
+            geom_bar(stat = "count", fill = "#6794A7", color = "#014D64", alpha = .8) +
+            scale_y_continuous(limits = c(0, 9), breaks = 0:9) + 
+            scale_x_discrete(name = "", limits = 1:8) + ylab("") +
+            theme_minimal(base_size = 16) + ggtitle("Barplot") +
+            geom_vline(xintercept = mean(data$V1)),
+          myhist(50) + ggtitle("Histogram") +
+            geom_vline(xintercept = mean(hist_data$x)), 
+          mydens(.25) + ggtitle('Density') +
+            geom_vline(xintercept = mean(hist_data$x)), 
+  nrow = 1)
+```
+
+<p style = "margin-bottom:-1cm;">
+
+ * We can describe a distribution with:
+  * Its **central tendency**
+
+---
+
+### 5. Wrap up!
+
+#### 1. Distributions
+
+  * The **distribution** of a variable documents all its possible values and how frequent they are
+
+```{r, echo = F, fig.width = 12, fig.height = 4, dpi=300, out.width="95%"}
+ggarrange(ggplot(data, aes(x = V1)) +
+            geom_bar(stat = "count", fill = "#6794A7", color = "#014D64", alpha = .8) +
+            scale_y_continuous(limits = c(0, 9), breaks = 0:9) + 
+            scale_x_discrete(name = "", limits = 1:8) + ylab("") +
+            theme_minimal(base_size = 16) + ggtitle("Barplot") +
+            geom_vline(xintercept = mean(data$V1)) + 
+            annotate("segment", x = mean(data$V1), xend = mean(data$V1) - sd(data$V1), y = 5.65, yend = 5.65, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            annotate("segment", x = mean(data$V1), xend = mean(data$V1) + sd(data$V1), y = 5.65, yend = 5.65, 
+                     arrow = arrow(length = unit(0.25, "cm"))),
+          
+          myhist(50) + ggtitle("Histogram") +
+            geom_vline(xintercept = mean(hist_data$x)) + 
+            annotate("segment", x = mean(hist_data$x), xend = mean(hist_data$x) - sd(hist_data$x), y = 35.2, yend = 35.2, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            annotate("segment", x = mean(hist_data$x), xend = mean(hist_data$x) + sd(hist_data$x), y = 35.2, yend = 35.2, 
+                     arrow = arrow(length = unit(0.25, "cm"))), 
+          
+          mydens(.25) + ggtitle('Density') +
+            geom_vline(xintercept = mean(hist_data$x)) + 
+            annotate("segment", x = mean(hist_data$x), xend = mean(hist_data$x) - sd(hist_data$x), y = .165, yend = .165, 
+                     arrow = arrow(length = unit(0.25, "cm"))) + 
+            annotate("segment", x = mean(hist_data$x), xend = mean(hist_data$x) + sd(hist_data$x), y = .165, yend = .165, 
+                     arrow = arrow(length = unit(0.25, "cm"))), 
+  nrow = 1)
+```
+
+<p style = "margin-bottom:-1cm;">
+
+ * We can describe a distribution with:
+  * Its **central tendency**
+  * And its **spread**
+  
+---
+
+### 5. Wrap up!
+
+#### 2. Central tendency
+
+--
+
+.pull-left[
+
+ * The **mean** is the sum of all values divided by the number of observations
+
+$$\bar{x} = \frac{1}{N}\sum_{i = 1}^Nx_i$$ 
+
+]
+
+--
+
+.pull-right[
+
+ * The **median** is the value that divides the (sorted) distribution into two groups of equal size
+
+$$\text{Med}(x) = \begin{cases} x[\frac{N+1}{2}] & \text{if } N \text{ is odd}\\
+\frac{x[\frac{N}{2}]+x[\frac{N}{2}+1]}{2} & \text{if } N \text{ is even}
+\end{cases}$$
+
+]
+
+--
+
+#### 3. Spread
+
+--
+
+.pull-left[
+
+ * The **standard deviation** is square root of the average squared deviation from the mean
+
+$$\text{SD}(x) = \sqrt{\text{Var}(x)} = \sqrt{\frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2}$$
+ 
+]
+
+--
+
+.pull-right[
+
+<p style = "margin-bottom:-5.5cm;"></p>
+
+ * The **interquartile range** is the difference between the maximum and the minimum value from the middle half of the distribution
+
+<p style = "margin-bottom:1cm;"></p>
+
+$$\text{IQR} = Q_3 - Q_1 $$
+
+]
+
+---
+
+### 5. Wrap up!
+
+#### 4. Inference
+
+<ul> 
+  <li>In Statistics, we view variables as a given realization of a <b>data generating process</b></li>
+  <ul>
+    <li>Hence, the <b>mean</b> is what we call an <b>empirical moment</b>, which is an <b>estimation</b>...</li>
+    <li>... of the <b>expected value</b>, the <b>theoretical moment</b> of the DGP we're interested in</li>
+  </ul>
+</ul>
+
+--
+
+<ul> 
+  <li>To know how confident we can be in this estimation, we need to compute a <b>confidence interval</b></li>
+</ul>
+
+$$[\bar{x} - t_{n-1, \:97.5\%}\times\frac{\text{SD}(x)}{\sqrt{n}}; \:\bar{x} + t_{n-1, \:97.5\%}\times\frac{\text{SD}(x)}{\sqrt{n}}]$$
+
+--
+
+<ul>
+  <ul>
+    <li>It gets <b>larger</b> as the <b>variance</b> of the distribution of \(x\) increases</li>
+    <li>And gets <b>smaller</b> as the <b>sample size</b> \(n\) increases</li>
+  </ul>
+</ul>
+
+--
+
+```{r, echo = F, fig.width = 12, fig.height = 1.75, dpi=300, out.width="95%"}
+distribs <- tibble(val = c(rnorm(30, 0, 1), rnorm(100, 0, 1), rnorm(30, 0, 2), rnorm(100, 0, 2)),
+                   dist = c(rep("d1",30), rep("d2", 100), rep("d3", 30), rep("d4", 100)),
+                   y = 1) 
+
+distribs <-distribs %>%
+  bind_rows(distribs %>%
+              group_by(dist) %>%
+              summarise(lb = mean(val) - qt(.999, n()-1)*(sd(val)/sqrt(n())),
+                        ub = mean(val) + qt(.999, n()-1)*(sd(val)/sqrt(n())),
+                        val = mean(val),
+                        y = 1.75) %>%
+              pivot_longer(c(lb, ub), names_to = "interlab", values_to = "interval"))
+
+ggplot() +
+  geom_point(data = distribs %>% filter(y == 1), 
+             aes(x = val, y = y, color = dist, fill = dist), 
+             position = "jitter", show.legend = F) +
+  geom_point(data = distribs %>% filter(y == 1.75), 
+             aes(x = val, y = y, color = dist, fill = dist), 
+             show.legend = F, size = 2) +
+  geom_line(data = distribs, aes(x = interval, y = y, color = dist, fill = dist), show.legend = F, size = 1) +
+  facet_wrap(~dist, nrow = 1) +
+  theme(axis.title = element_blank(),
+        axis.text.y = element_blank(),
+        strip.text = element_blank(),
+        strip.background = element_blank())
+```

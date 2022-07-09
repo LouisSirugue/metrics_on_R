@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Descriptive statistics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Descriptive statistics
+## Lecture 2
+### <br>Louis SIRUGUE
+### CPES 2 - Fall 2022
+
+---
+
+
+
+
+
+
+### Last time we saw
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+ * **Different classes of R objects**
+
+
+```r
+class("numeric") # What would be the output and why?
+```
+
+--
+
+ * **Vectors**
+ 
+
+```r
+match(8, c(6, 1, 9, 5, 8, 4)) # What would be the output and why?
+```
+ 
+--
+ 
+ * **Functions**
+ 
+
+```r
+age_from_ssn &lt;- function(ssn) {
+  return(2022 - (as.numeric(substr(ssn, 2, 3)) + 1900))
+}
+```
+
+--
+
+ * **Packages**
+
+
+```r
+library(tidyverse)
+```
+
+---
+
+&lt;h3&gt;Today we learn how to describe data&lt;/h3&gt;
+
+--
+
+.pull-left[
+#### 1. Distributions
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+
+]
+
+.pull-right[
+#### 4. Inference
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Today we learn how to describe data&lt;/h3&gt;
+
+.pull-left[
+#### 1. Distributions
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+]
+
+---
+
+### 1. Distributions
+
+#### 1.1. Definition
+
+--
+
+ * The point of descriptive statistics is to **summarize a big table** of values with a small set of **tractable statistics**  
+ * The most comprehensive way to characterize a variable/vector is to compute its **distribution**:
+  * **What** are the **values** the variable takes?
+  * **How frequently** does each of these values appear?
+
+--
+
+&lt;b&gt; &amp;#10140; Consider for instance the following variable:&lt;/b&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Variable 1&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+.pull-left[
+
+ * We can count how many times each value appears
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Variable 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; n &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom: 1.5cm;"&gt;&lt;/p&gt;
+
+ * And we can represent this distribution graphically with a bar plot
+  * Each possible value on the x-axis
+  * Their number of occurrences on the y-axis
+]
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-8-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * But what if we would like to do the same thing for the following variable?
+
+--
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Variable 2&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.912877 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.006781 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.517149 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.854849 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.177872 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.815240 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.666582 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.422721 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.025062 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.411020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.889811 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.729103 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4.160800 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.519049 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.849172 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.368158 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.167404 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.882974 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6.751888 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.202183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.390224 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.942039 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.488909 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.195647 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7.073922 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.790039 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.297919 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.218109 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.754213 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.225030 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+--
+
+ * Each value appears only once
+  * So the count of each variable does not help summarizing the variable
+
+--
+
+&lt;center&gt;&lt;h4&gt;  &amp;#10140; &lt;i&gt; Let's have a look at the corresponding bar plot &lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+&lt;ul&gt;
+  &lt;li&gt;It does not look good for this variable because it is continuous, while the first one was discrete&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Discrete variables:&lt;/b&gt; variables that can take a finite (or, in practice, a sufficiently small) number of values, e.g., number of siblings, eye color, ...&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Continuous variables:&lt;/b&gt; variables that can take an infinite (or, in practice, a sufficiently large) number of values, e.g., annual income, height in centimeters, ...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; In practice some variables can be difficult to classify. For instance, &lt;b&gt;age (in years)&lt;/b&gt; can be viewed &lt;b&gt;as a discrete&lt;/b&gt; variable because it can take a finite set of values, but this set being possibly quite wide, one could also view it &lt;b&gt;as a continuous variable&lt;/b&gt;. It often depends on the context.&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+  
+--
+
+&lt;ul&gt;
+&lt;li&gt; One solution to get a sense of the &lt;b&gt;distribution&lt;/b&gt; of a &lt;b&gt;continuous variable&lt;/b&gt; is to do a &lt;b&gt;histogram&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Instead of taking each value separately, group them into &lt;i&gt;bins&lt;/i&gt; and show how many values fall into each bin&lt;/li&gt;
+    &lt;li&gt;The bar plots we've seen so far are basically histograms with the number of bins being equal to the number of possible values&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+
+--
+
+&lt;p style = "margin-bottom: 1.97cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+  * We can divide the domain of this variable into 5 bins
+
+&lt;p style = "margin-bottom: 1.25cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+  * We can divide the domain of this variable into 5 bins
+  * And count the number of observations within each bin
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+  * We can divide the domain of this variable into 5 bins
+  * And count the number of observations within each bin
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+&lt;ul&gt;
+  &lt;li&gt;There's no definitive rule to choose the number of bins&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But too many or too few can yield misleading histograms&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&lt;center&gt;&lt;h4&gt; &amp;#10140; &lt;i&gt;  Note that choosing the number of bins is equivalent to choosing the width of each bin &lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Densities&lt;/b&gt; are often used instead of &lt;b&gt;histograms&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Both are based on the &lt;b&gt;same principle&lt;/b&gt;, but densities are &lt;b&gt;continuous&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;We won't learn how to derive it in this course but the idea is the same&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;higher the value&lt;/b&gt; on the y-axis, the &lt;b&gt;more observations&lt;/b&gt; there are around the corresponding x location&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;smoothness&lt;/b&gt; of the density can be tuned with the &lt;b&gt;bandwidth&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The larger the smoother&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Normal distribution
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-17-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Log-normal distribution
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-18-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Uniform distribution
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-19-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Summarizing distributions
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+--
+
+ * How to **summarize** these distributions with simple statistics?
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Summarizing distributions
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+ * How to **summarize** these distributions with simple statistics?
+  * By describing their **central tendency** (e.g., mean, median)
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Summarizing distributions
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+ * How to **summarize** these distributions with simple statistics?
+  * By describing their **central tendency** (e.g., mean, median)
+  * And their **spread** (e.g., standard deviation, inter-quartile range)
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+
+#### 1. Distributions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+.pull-right[
+
+#### 4. Inference
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Distributions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+]
+ 
+---
+
+### 2. Central tendency
+
+#### 2.1. Mean
+
+&lt;ul&gt;
+  &lt;li&gt;The mean is the most common statistic to describe central tendencies&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Take for instance the grades I gave to the final projects in spring 2021:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Grades I gave in spring 2021&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+--
+
+ * The mean is simply the sum of all the grades divided by the number of grades:
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+
+`$$\bar{x} = \frac{1}{N}\sum_{i = 1}^Nx_i$$` 
+
+--
+
+`$$\frac{20 + 20 + 17.5 + 17.5 + 16 + 16 + 16 + 14.5 + 14.5 + 19.5 + 19.5 + 18.5 + 18.5 + 18.5}{14} = 17.61$$`
+
+---
+
+### 2. Central tendency
+
+#### 2.1. Mean
+
+&lt;ul&gt;
+  &lt;li&gt;The mean is the most common statistic to describe central tendencies&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Take for instance the grades I gave to the final projects in spring 2021:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Grades I gave in spring 2021&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+ * Note that it can also be expressed as the sum of each value weighted by its proportion in the distribution
+ 
+ &lt;p style = "margin-bottom:1.5cm;"&gt;
+
+`$$\bar{x} = \frac{2}{14} \times 20 + \frac{2}{14} \times 17.5 + \frac{3}{14} \times 16 + \frac{2}{14} \times 14.5 + \frac{2}{14} \times 19.5 + \frac{3}{14} \times 18.5 = 17.61$$`
+
+---
+
+### 2. Central tendency
+
+#### 2.2. Median
+
+ * To obtain the median you first need to **sort the values**:
+
+--
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Grades I gave in spring 2021&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 14 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 14.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 17.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 19.5 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:left;text-align: center;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * The median is the value that **divides** the distribution into **two halves**
+ * When there is an even number of observations, the median is the average of the last value of the first half and the first value of the second half
+ 
+--
+ 
+As we have 14 observations, the median is the average of the 7&lt;sup&gt;th&lt;/sup&gt; and the 8&lt;sup&gt;th&lt;/sup&gt; observations:
+
+`$$\text{Med}(x) = \begin{cases} x[\frac{N+1}{2}] &amp; \text{if } N \text{ is odd}\\
+\frac{x[\frac{N}{2}]+x[\frac{N}{2}+1]}{2} &amp; \text{if } N \text{ is even}
+\end{cases} = \frac{17.5 + 18.5}{2} = 18$$`
+
+---
+
+### 2. Central tendency
+
+#### 2.3. Mean vs. median: relative magnitude
+
+--
+
+ * The **relative magnitude** of the mean and the median depends on the **symmetry of the distribution**:
+  * The **mean is larger** than the median if the distribution is **right-skewed**
+  * The mean and the median are **equal** if the distribution is **symmetric**
+  * The **mean is lower** than the median if the distribution is **left-skewed**
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-26-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Central tendency
+
+#### 2.3. Mean vs. median: robustness
+
+ * The **median** is indeed **less sensitive** than the mean to thick tails and outliers
+ * For this reason we say that the median is a ***robust statistic***
+ 
+--
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt;Let's illustrate that with a small example!&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+--
+
+.pull-left[
+ 
+ * Consider the following variable:
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+ * How would the mean and the median **react** if we were to **add one single observation**?
+
+  - We can plot the value of the additional observation on the `\(x\)` axis and the value of the mean and the median on the `\(y\)` axis
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-28-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 2. Central tendency
+
+#### 2.3. Mean vs median: in R
+
+ * Both statistics have **dedicated R functions**
+ 
+--
+
+
+```r
+variable &lt;- c(1, 2, 4, 8, 12)
+c(mean(variable), median(variable))
+```
+
+```
+## [1] 5.4 4.0
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+ * As always, you should **pay attention to NAs** when using these functions
+
+--
+
+
+```r
+mean(c(1, 2, 3, 4, NA))
+```
+
+```
+## [1] NA
+```
+
+```r
+mean(c(1, 2, 3, 4, NA), na.rm = T)
+```
+
+```
+## [1] 2.5
+```
+
+---
+
+### 2. Central tendency
+
+#### 2.3. Mean vs median: with binary variable
+
+&lt;ul&gt;
+  &lt;li&gt;A &lt;b&gt;binary variable&lt;/b&gt; is a variable that can take only &lt;b&gt;two values&lt;/b&gt; &lt;i&gt;(e.g., male/female, accepted/rejected)&lt;/i&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Any binary variable can be expressed as a sequence of &lt;b&gt;0s and 1s&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * Consider the following binary variable of length 4
+
+--
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+  - The **mean** of a binary variable is equal the the **percentage of 1s**:
+ 
+`$$\frac{0 + 1 + 1 + 1}{4} = \frac{3}{4} = 75\%$$`
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+  - The **median** of a binary variable is equal to the **mode** *(mode = most frequent value of a variable)*
+
+`$$\frac{1 + 1}{2} = 1$$`
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Distributions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+
+]
+
+.pull-right[
+#### 4. Inference
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Distributions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+---
+
+### 3. Spread
+
+#### 3.1. Range, quantiles, and the IQR
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;most intuitive&lt;/b&gt; statistic to describe the spread of a variable is probably&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;The range: the minimum and maximum value it can take&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom: 1.25cm;"&gt;&lt;/p&gt;
+ 
+ * But consider the following two distributions:
+
+&lt;p style = "margin-bottom: 1.25cm;"&gt;&lt;/p&gt;
+
+&lt;style&gt; .left-column {width: 66%;} .right-column {width: 32%;} &lt;/style&gt;
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-32-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+ * In the presence of outliers or very skewed distributions, the &lt;b&gt;full range&lt;/b&gt; of a variable &lt;b&gt;may not be representative&lt;/b&gt; of what we mean by *'spread'*
+ 
+ * That's why we tend to prefer **inter-quantile** ranges 
+ 
+]
+
+---
+
+### 3. Spread
+
+#### 3.1. Range, quantiles, and the IQR
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Quantiles&lt;/b&gt; are observations that &lt;b&gt;divide&lt;/b&gt; the population into &lt;b&gt;groups of equal size&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;median&lt;/b&gt; divides the population into &lt;b&gt;2 groups&lt;/b&gt; of equal size&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Quartiles&lt;/b&gt; divide the population into &lt;b&gt;4 groups&lt;/b&gt; of equal size&lt;/li&gt;
+    &lt;li&gt;There are also &lt;b&gt;terciles&lt;/b&gt;, &lt;b&gt;quintiles&lt;/b&gt;, &lt;b&gt;deciles&lt;/b&gt;, and so on&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom: 1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;One way to &lt;b&gt;compute quartiles&lt;/b&gt;: divide the ordered variable according to the median&lt;/li&gt;
+    &lt;ul&gt;
+      &lt;li&gt;The lower quartile value is the median of the lower half of the data&lt;/li&gt;
+      &lt;li&gt;The upper quartile value is the median of the upper half of the data&lt;/li&gt;
+      &lt;li&gt;&lt;i&gt;If there is an odd number of data points in the original ordered data set, don't include the median in either half&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+.pull-left[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+`$$Q_1 = -2,\:\:Q_2 = 0,\:\:Q_3 = 2$$`
+]
+
+--
+
+.pull-right[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+`$$Q_1 = -1.5,\:\:Q_2 = 0,\:\:Q_3 = 1.5$$`
+]
+
+---
+
+### 3. Spread
+
+#### 3.1. Range, quantiles, and the IQR
+
+ * The **interquartile range** is the difference between the third and the first quartile: `\(\text{IQR} = Q_3 - Q_1\)`
+ 
+--
+ 
+ * Put differently, it corresponds to the **bounds** of the set which contains the **middle half** of the distribution
+ 
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-35-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Spread
+
+#### 3.2. Variance and standard deviation
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;variance&lt;/b&gt; is a way to quantify how the values of a variable tend to &lt;b&gt;deviate&lt;/b&gt; from their &lt;b&gt;mean&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If values tend to be &lt;b&gt;close to the mean&lt;/b&gt;, then the &lt;b&gt;spread is low&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;If values tend to be far &lt;b&gt;from the mean&lt;/b&gt;, then the &lt;b&gt;spread is large&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+.pull-left[
+
+ * Can we just take the **average deviation** from the mean?
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; x &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; mean(x) &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; x - mean(x) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -1.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; -5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+
+&lt;br&gt;
+
+ * By construction it would **always be 0**: values above and under the mean compensate
+ 
+  * But we can use the **absolute value** of each deviation: `\(|x_i-\bar{x}|\)`
+  
+  * Or their **square**: `\((x_i-\bar{x})^2\)`
+  
+]
+
+---
+
+### 3. Spread
+
+#### 3.2. Variance and standard deviation
+
+
+ * This is how the **variance** is computed: by **averaging the squared deviations from the mean**
+ 
+--
+
+`$$\text{Var}(x) = \frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2$$`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * Because the **variance** is a **sum of squares**, it can get **quite big** compared to the other statistics like the mean, the median or the interquartile range.
+  * To express the spread in the **same unit** as the data, we can take the **square root** of the variance, which is called the **standard deviation**    
+  * In a way, *the standard deviation is to the mean what the IQR is to the median*
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+`$$\text{SD}(x) = \sqrt{\text{Var}(x)} = \sqrt{\frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2}$$`
+
+---
+
+### 3. Spread
+
+#### 3.3. Standard deviation vs. interquartile range
+
+
+ * Remember that the median is **less sensitive** than the mean to thick tails and outliers
+ * This is also the case for the **IQR** relative to the **standard deviation**
+ 
+--
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt;Let's go back to our previous example!&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+--
+
+.pull-left[
+ 
+ * Consider the following variable:
+ 
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+ * How would the standard deviation and the IQR **react** if we were to **add one single observation**?
+
+  - We can plot the value of the additional observation on the `\(x\)` axis and the value of the mean and the median on the `\(y\)` axis
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 3. Spread
+
+#### 3.3. Standard deviation vs. interquartile range
+
+ * But like for the median vs. the mean, it does **not** mean that one is **better than the other**
+   * They just **capture different things**
+ 
+--
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-39-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.right-column[
+
+&lt;br&gt;
+
+ * These two distributions
+ 
+   * Have the **same interquartile range**
+   
+   * Have **different standard deviations**
+   
+]
+
+
+---
+
+### 3. Spread
+
+#### 3.3. Standard deviation vs. interquartile range: in R
+
+ * Both statistics have **dedicated R functions**
+ 
+--
+
+
+```r
+variable &lt;- c(0, 1, 3, 4, 6, 7, 8, 10, 11)
+c(sd(variable), IQR(variable))
+```
+
+```
+## [1] 3.844188 5.000000
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+ * You can obtain the **quantiles** of a variable using the `quantile()` function
+
+--
+
+
+```r
+quantile(variable)
+```
+
+```
+##   0%  25%  50%  75% 100% 
+##    0    3    6    8   11
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;center&gt; &amp;#10140; &lt;i&gt;&lt;b&gt; See the help file ?quantile() for more info on quantile computation&lt;/b&gt; &lt;/i&gt;&lt;/center&gt;
+
+---
+
+### Practice
+
+#### &amp;#10140; Consider the following variable
+
+
+```r
+variable &lt;- c(1, 3, 8, 4, 9, 5, 3, 8, 8, 7, 4, 9, 
+              6, 5, 1, 999, 1, 2, 4, 5, 6, 9, 7, NA)
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 1) Copy/paste the line above into an .R script and run it
+
+#### 2) Compute the mean of this distribution
+
+#### 3) Compute the three quartiles of this distribution
+
+#### 4) Compute the interquartile range of this distribution
+
+--
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 5 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+---
+
+### Solution
+
+#### 1) Compute the mean of this distribution
+
+
+```r
+mean(variable, na.rm = T)
+```
+
+```
+## [1] 48.43478
+```
+
+--
+
+#### 2) Compute the three quartiles 
+
+
+```r
+quartiles &lt;- quantile(variable, 1:3/4, na.rm = T, names = F)
+quartiles
+```
+
+```
+## [1] 3.5 5.0 8.0
+```
+
+--
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+#### 3) Compute the inter quartile range
+
+
+```r
+quartiles[3] - quartiles[1]
+```
+
+```
+## [1] 4.5
+```
+
+]
+
+--
+
+
+.pull-right[
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+&lt;center&gt; &amp;#10140; &lt;i&gt;&lt;b&gt;The outlier 999 pulls the mean outside of the IQR! Descriptive statistics is a good tool to make sure the data is clean&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Distributions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+.pull-right[
+#### 4. Inference
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Distributions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+.pull-right[
+#### 4. Inference
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+]
+
+---
+
+### 4. Inference
+
+#### 4.1. Data generating process
+
+ * In **practice**, we manipulate **concrete** variables such as age, sex, earnings, etc.
+  * But on the **theoretical** side, we denote such variables with an **abstract** letter like `\(x\)`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * In Statistics and Econometrics, we indeed use letters like `\(x\)` to denote what we call **random variables**
+  * These variables can take values according to a **data generating process** (DGP)
+  * The data generating process is the *mechanism that causes the data to be the way we observe it*
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * For instance your grades can be seen as a random variable
+  * Which takes given values according to an unknown data generating process
+  * The DGP probably depends on your effort, your background, many environmental factors, ...
+  
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * With descriptive statistics, we actually **infer** properties of the DGP **given the outcomes** we observe
+  * **Like backward engineering**, from the output we try to understand the process
+  * One **crucial implication** is that the mean we compute is just an **estimation** of the parameter of the DGP we're interested in
+
+---
+
+### 4. Inference
+
+#### 4.1. Data generating process
+
+&lt;ul&gt;
+  &lt;li&gt;Consider for instance the &lt;b&gt;outcome of two dice&lt;/b&gt; as a random variable&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Contrarily to the variables we usually study, &lt;b&gt;we know the DGP&lt;/b&gt; of this one&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+ * The DGP causes our random variable to take the following values with the following probabilities:
+
+.pull-left[
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;2 - 1/36 (&amp;#x2680;&amp;#x2680;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;3 - 2/36 (&amp;#x2680;&amp;#x2681; - &amp;#x2681;&amp;#x2680;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;4 - 3/36 (&amp;#x2680;&amp;#x2682; - &amp;#x2682;&amp;#x2680; - &amp;#x2681;&amp;#x2681;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;5 - 4/36 (&amp;#x2681;&amp;#x2682; - &amp;#x2682;&amp;#x2681; - &amp;#x2681;&amp;#x2683; - &amp;#x2683;&amp;#x2681;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;6 - 5/36 (&amp;#x2682;&amp;#x2682; - &amp;#x2681;&amp;#x2683; - &amp;#x2683;&amp;#x2681; - &amp;#x2684;&amp;#x2680; - &amp;#x2680;&amp;#x2684;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;7 - 6/36 (&amp;#x2682;&amp;#x2683; - &amp;#x2683;&amp;#x2682; - &amp;#x2684;&amp;#x2681; - &amp;#x2681;&amp;#x2684; - &amp;#x2680;&amp;#x2685; - &amp;#x2685;&amp;#x2680;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;8 - 5/36 (&amp;#x2683;&amp;#x2683; - &amp;#x2684;&amp;#x2682; - &amp;#x2682;&amp;#x2684; - &amp;#x2685;&amp;#x2681; - &amp;#x2681;&amp;#x2685;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;9 - 4/36 (&amp;#x2683;&amp;#x2684; - &amp;#x2684;&amp;#x2683; - &amp;#x2685;&amp;#x2682; - &amp;#x2682;&amp;#x2685;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;10 - 3/36 (&amp;#x2685;&amp;#x2683; - &amp;#x2683;&amp;#x2685; - &amp;#x2684;&amp;#x2684;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;11 - 2/36 (&amp;#x2685;&amp;#x2684; - &amp;#x2684;&amp;#x2685;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;12 - 1/36 (&amp;#x2685;&amp;#x2685;)  
+
+]
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-46-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+---
+
+### 4. Inference
+
+#### 4.2. Empirical vs. theoretical moments
+
+ * Because we know the data generating process of our random variable, we can compute its **expected value**:
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+`$$\begin{align} \text{E}(x) = \frac{(2\times1) + (3\times2) + (4\times3) + (5\times4) + (6\times5) + (7\times6)}{36} +\\ \frac{(8\times5) + (9\times4) + (10\times3) + (11\times2) + (12\times1)}{36} = \frac{252}{36} = 7\end{align}$$`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is the parameter we are actually interested in&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;expected value&lt;/b&gt; is what we call a &lt;b&gt;theoretical moment&lt;/b&gt; &lt;i&gt;(the first one)&lt;/i&gt;&lt;/li&gt;
+    &lt;li&gt;While the &lt;b&gt;mean&lt;/b&gt; is the corresponding &lt;b&gt;empirical moment&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;How confident&lt;/b&gt; to be in our estimate of the expected value (i.e., &lt;i&gt;the mean&lt;/i&gt;) depends on the &lt;b&gt;sample size&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For a given number of draws the mean won't necessarily be exactly 7&lt;/li&gt;
+    &lt;li&gt;But if we were to do &lt;b&gt;infinitely many draws&lt;/b&gt;, the mean would &lt;b&gt;converge&lt;/b&gt; towards 7 &lt;i&gt;(Law of Large Numbers)&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+---
+
+### 4. Inference
+
+#### 4.2. Empirical vs. theoretical moments
+
+ * Just like the **mean** that we compute empirically is an estimate of the **first moment** of the distribution,
+  * the **variance** that we compute empirically is an estimate of the **second moment** of the distribution
+
+--
+
+.pull-left[
+
+.pull-left[
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;First moment:&lt;/b&gt;  
+
+&lt;p style = "margin-bottom:3.5cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;Second moment:&lt;/b&gt;
+
+]
+
+.pull-right[
+
+&lt;center&gt;&lt;h4&gt;Theoretical moment&lt;/h4&gt;&lt;/center&gt;
+
+`$$\text{E}(x_{\text{discrete}}) = \sum_{i=1}^{k}x_ip_i$$`
+
+`$$\text{E}(x_{\text{continuous}}) = \int_{\text{R}}xf(x)dx$$`
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+`$$\text{Var}(x) = \text{E}\left[(x - \text{E}(x))^2\right] \equiv \sigma^2$$`
+
+]
+
+]
+
+.pull-right[
+
+&lt;center&gt;&lt;h4&gt;Empirical moment&lt;/h4&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.9cm;"&gt;&lt;/p&gt;
+
+`$$\bar{x} = \frac{1}{N}\sum_{i=1}^Nx_i$$`
+
+&lt;p style = "margin-bottom:2.25cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$`
+
+]
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+&lt;ul&gt;
+  &lt;li&gt;Because the mean is an empirical &lt;b&gt;estimation&lt;/b&gt; of the theoretical expected value&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We need a measure of the &lt;b&gt;confidence&lt;/b&gt; we can have in this estimations&lt;/li&gt;
+    &lt;li&gt;This is something we can do as long as our variable is &lt;b&gt;normally distributed&lt;/b&gt; &lt;i&gt;(bell-shaped)&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-47-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+&lt;ul&gt;
+  &lt;li&gt;Indeed, with such distributions we can recover &lt;b&gt;something we know&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.95cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-48-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+&lt;ul&gt;
+  &lt;li&gt;Indeed, with such distributions we can recover &lt;b&gt;something we know&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If we &lt;b&gt;divide&lt;/b&gt; all the values of the variable by its &lt;b&gt;standard deviation&lt;/b&gt;, the &lt;b&gt;variance becomes 1&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-49-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+&lt;ul&gt;
+  &lt;li&gt;Indeed, with such distributions we can recover &lt;b&gt;something we know&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If we &lt;b&gt;divide&lt;/b&gt; all the values of the variable by its &lt;b&gt;standard deviation&lt;/b&gt;, the &lt;b&gt;variance becomes 1&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;If we &lt;b&gt;subtract the mean&lt;/b&gt; from all the values of the variable, the &lt;b&gt;mean becomes 0&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-50-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+&lt;p style = "margin-bottom:-.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul&gt;
+  &lt;li&gt;In mathematical notation, what we just saw writes:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\frac{x - \text{E}(x)}{\text{SD}(x)} \sim \mathcal{N}(0, 1)$$`
+]
+
+--
+
+.pull-right[
+
+&lt;ul&gt;
+  &lt;li&gt;And if we compute means on random draws of \(x\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;These means would behave the same way:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+`$$\frac{\bar{x} - \text{E}(x)}{\text{SD}(x)} \sim \mathcal{N}(0, 1)$$`
+]
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This is actually &lt;b&gt;true with&lt;/b&gt; a theoretical &lt;b&gt;infinite sample&lt;/b&gt; of \(x\) (i.e., the DGP)&lt;/li&gt;
+    &lt;li&gt;But &lt;b&gt;in practice&lt;/b&gt;, we work with &lt;b&gt;finite samples&lt;/b&gt; so things work slightly differently&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;When we have a limited number \(n\) of observations:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We standardize using the &lt;b&gt;standard &lt;i&gt;error&lt;/i&gt;&lt;/b&gt; of the mean \(\text{SE}(x) = \text{SD}(x)/\sqrt{n}\)&lt;/li&gt;
+    &lt;li&gt;And we know that:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+
+`$$\frac{\bar{x} - \text{E}(x)}{\text{SE}(x)} \equiv t \sim t_{n-1}$$`
+    
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;ul&gt;    
+    &lt;li&gt;Where \(t\) reads &lt;i&gt;"t-stat"&lt;/i&gt; and \(t_{n-1}\) denotes a Student's \(t\) distribution with \(n-1\) degrees of freedom&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+&lt;ul&gt;
+  &lt;li&gt;The Student's \(t\) distribution is &lt;b&gt;very similar to the normal&lt;/b&gt; distribution&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It is just &lt;b&gt;a bit flatter&lt;/b&gt; when \(n\) is low&lt;/li&gt;
+    &lt;li&gt;But it &lt;b&gt;converges quickly&lt;/b&gt; to a normal distribution as \(n \rightarrow \infty\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-51-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+&lt;ul&gt;
+  &lt;li&gt;The good news is that:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Because &lt;b&gt;we know&lt;/b&gt; how \(t \equiv \frac{\bar{x} - \text{E}(x)}{\text{SE}(x)}\) is distributed (\(\sim t_{n-1}\))&lt;/li&gt;
+    &lt;li&gt;We also know what are &lt;b&gt;the chances&lt;/b&gt; that \(\frac{\bar{x} - \text{E}(x)}{\text{SE}(x)}\) takes &lt;b&gt;certain values&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+
+&lt;ul&gt;
+  &lt;li&gt;Consider a variable \(x \sim \mathcal{N}(\text{E}(x), \text{SD}(x)^2)\)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We know that with \(n = 100\), \(\frac{\bar{x} - \text{E}(x)}{\text{SD}(x)/\sqrt{n}} \sim t_{99}\)&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;And we know between which values lies a given share of the \(t_{99}\) distribution&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance, 95% of the distribution lie in&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+`$$[-t_{99, 97.5\%};\:t_{99, 97.5\%}]\: \approx\: [-1.98;\: 1.98]$$`
+
+]
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-52-1.png" width="150%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+ * In mathematical notation, what the previous graph shows writes:
+
+--
+ 
+`$$\text{Pr}\left[-t_{99, 97.5\%}\leq\frac{\bar{x} - \text{E}(x)}{\text{SE}(x)}\leq t_{99, 97.5\%}\right] = 95\%$$`
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+ * Rearranging the terms yields:
+
+`$$\text{Pr}\left[\bar{x} - t_{99, 97.5\%}\times \text{SE}(x)\leq \text{E}(x) \leq\bar{x} + t_{99, 97.5\%}\times \text{SE}(x)\right] = 95\%$$`
+
+--
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+ * Thus, we can say that there's 95% chance for `\(\text{E}(x)\)` to be within:
+ 
+`$$\bar{x} \pm t_{99, 97.5\%}\times \text{SE}(x)$$`
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; This is our 95% confidence interval of the mean!&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 4. Inference
+
+#### 4.3. Confidence interval
+
+ * We can apply this calculations **in R** to get a **95% CI of the mean** of the grade distribution
+ 
+
+```r
+grades &lt;- c(20, 20, 17.5, 17.5, 16, 16, 16, 14.5, 14.5, 19.5, 19.5, 18.5, 18.5, 18.5)
+```
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+# Mean, standard deviation, and n
+mean &lt;- mean(grades)
+sd &lt;- sd(grades)
+n &lt;- length(grades)
+```
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+# Standard error
+se &lt;- sd / sqrt(n)
+```
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+# t-stat 
+t &lt;- qt(.975, n - 1) # qt returns t-stat from confidence level and degrees of freedom
+```
+
+&lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+# Confidene interval
+c(mean - t*se, mean + t*se)
+```
+
+```
+## [1] 16.49665 18.71764
+```
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+.pull-left[
+#### 1. Distributions &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Definition
+ * 1.2. Graphical representation
+ * 1.3. Common distributions
+
+#### 2. Central tendency &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Mean
+ * 2.2. Median
+ * 2.3. Mean vs. median
+
+#### 3. Spread &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Range, quantiles, and the IQR
+ * 3.2. Variance and standard deviation
+ * 3.3. Standard deviation vs. IQR
+]
+
+.pull-right[
+#### 4. Inference &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 4.1. Data generating process
+ * 4.2. Empirical vs. theoretical moments
+ * 4.3. Confidence interval
+
+#### 5. Wrap up!
+]
+
+---
+
+### 5. Wrap up!
+
+#### 1. Distributions
+
+  * The **distribution** of a variable documents all its possible values and how frequent they are
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-58-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+ * We can describe a distribution with:
+  
+---
+
+### 5. Wrap up!
+
+#### 1. Distributions
+
+  * The **distribution** of a variable documents all its possible values and how frequent they are
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-59-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+ * We can describe a distribution with:
+  * Its **central tendency**
+
+---
+
+### 5. Wrap up!
+
+#### 1. Distributions
+
+  * The **distribution** of a variable documents all its possible values and how frequent they are
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-60-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+ * We can describe a distribution with:
+  * Its **central tendency**
+  * And its **spread**
+  
+---
+
+### 5. Wrap up!
+
+#### 2. Central tendency
+
+--
+
+.pull-left[
+
+ * The **mean** is the sum of all values divided by the number of observations
+
+`$$\bar{x} = \frac{1}{N}\sum_{i = 1}^Nx_i$$` 
+
+]
+
+--
+
+.pull-right[
+
+ * The **median** is the value that divides the (sorted) distribution into two groups of equal size
+
+`$$\text{Med}(x) = \begin{cases} x[\frac{N+1}{2}] &amp; \text{if } N \text{ is odd}\\
+\frac{x[\frac{N}{2}]+x[\frac{N}{2}+1]}{2} &amp; \text{if } N \text{ is even}
+\end{cases}$$`
+
+]
+
+--
+
+#### 3. Spread
+
+--
+
+.pull-left[
+
+ * The **standard deviation** is square root of the average squared deviation from the mean
+
+`$$\text{SD}(x) = \sqrt{\text{Var}(x)} = \sqrt{\frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2}$$`
+ 
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:-5.5cm;"&gt;&lt;/p&gt;
+
+ * The **interquartile range** is the difference between the maximum and the minimum value from the middle half of the distribution
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+$$\text{IQR} = Q_3 - Q_1 $$
+
+]
+
+---
+
+### 5. Wrap up!
+
+#### 4. Inference
+
+&lt;ul&gt; 
+  &lt;li&gt;In Statistics, we view variables as a given realization of a &lt;b&gt;data generating process&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Hence, the &lt;b&gt;mean&lt;/b&gt; is what we call an &lt;b&gt;empirical moment&lt;/b&gt;, which is an &lt;b&gt;estimation&lt;/b&gt;...&lt;/li&gt;
+    &lt;li&gt;... of the &lt;b&gt;expected value&lt;/b&gt;, the &lt;b&gt;theoretical moment&lt;/b&gt; of the DGP we're interested in&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt; 
+  &lt;li&gt;To know how confident we can be in this estimation, we need to compute a &lt;b&gt;confidence interval&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$[\bar{x} - t_{n-1, \:97.5\%}\times\frac{\text{SD}(x)}{\sqrt{n}}; \:\bar{x} + t_{n-1, \:97.5\%}\times\frac{\text{SD}(x)}{\sqrt{n}}]$$`
+
+--
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It gets &lt;b&gt;larger&lt;/b&gt; as the &lt;b&gt;variance&lt;/b&gt; of the distribution of \(x\) increases&lt;/li&gt;
+    &lt;li&gt;And gets &lt;b&gt;smaller&lt;/b&gt; as the &lt;b&gt;sample size&lt;/b&gt; \(n\) increases&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-61-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
