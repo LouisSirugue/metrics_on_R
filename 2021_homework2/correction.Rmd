@@ -1,0 +1,445 @@
+---
+title: "Homework 2: Introduction to Econometrics"
+author: "Louis Sirugue"
+date: "`r format(Sys.time(), '%m/%Y')`"
+output: 
+  html_document:
+    theme: cosmo
+    code_folding: show
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+---
+
+```{r setup, echo = F, warning = F, message = F}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F, fig.align = 'center') 
+source(paste0(getwd(), "/../source/style.R"))
+```
+
+<br>
+
+This homework covers the material from lectures 7 to 10. I encourage you to start **working on it progressively** as we go through the second part of the course. Homeworks should be done **individually**. You are welcome to help each other by sharing what you understand, but write your homework by yourself, **do not share your code**. Contrarily to the online quizzes, homeworks are meant to be challenging. **Partial answers will be taken into account**, so if you cannot do everything, **write down your thought process**.
+
+The grading system is available [here](https://louissirugue.github.io/data-analysis-course/homework2/grading.html), and the material for this homework is available [here](https://louissirugue.github.io/data-analysis-course/homework2/data.zip). Make sure that your answers are unambiguous and that your code is annotated extensively. You can write either in English or in French. Your homework should be written using **R Markdown**, and it should compile without error. **Regression results should be reported using the `stargazer()` function**. Both your .Rmd and the knitted .html file should be sent to louis.sirugue@psemail.eu no later than the <b>12<sup>th</sup> of December</b>. 
+
+### Part I. Quantifying labor market discrimination
+
+The academic article this homework is about, *'Are Emily and Greg More Employable than Lakisha and Jamal? A Field Experiment on Labor Market Discrimination'*, investigates the presence of race discrimination in the US labor market. To do so, researchers prepared many realistic resumes, and randomly assigned African-American and White-sounding names to these resumes. This procedure ensures that on expectation, resumes associated with African-American and White-sounding names have the same characteristics. Then, they sent these resumes to employers who posted help-wanted ads in Boston and Chicago newspapers, and recorded whether or not each resume got a call back. This procedure, called *correspondence testing*, then allows to detect labor market discrimination by comparing the callback rates of these two groups that are comparable in every respect but their name.  
+
+The dataset from this study gathers information on the 4,870 resumes they sent. It includes detailed characteristics of each resume, characteristics of the job offer it was sent for, and whether or not they were called back for this resume. The dataset is in .dta format, which is the data format of the Stata software. To import such data on R, you need to use the `read_dta()` function from the `haven` package. You will see that the data is labeled, meaning that variable descriptions are available under variable names when you `View()` the data. This will help you understand what the name and values of the variables mean, and recode them for clarity when relevant. For instance, the variable  `race` takes two values, `"b"` and `"w"` that you can recode into `"Black"` and `"White"` for clarity. The variable documenting whether the 'applicant' was called back is `call`, and as indicated by its label, it equals one when the 'applicant' was called back and 0 otherwise.
+
+<p style = "margin-bottom:1cm;"></p>
+
+**1\) Compute and interpret the mean of the `call` variable separately for Blacks and Whites. Is it reasonable to conclude that these two values are different? Motivate your answer.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+First, we should import the data using the `read_dta()` function from the `haven` package. As suggested in the guidelines, we can recode the `race` variable from `"b"` and `"w"` to `"Black"` and `"White"` for clarity. For such data manipulations we should load the `tidyverse` package so that functions from the `dplyr` grammar are accessible.
+
+```{r}
+library("haven")
+library("tidyverse")
+
+data_aer <- read_dta("lakisha_aer.dta") %>%
+  mutate(race = ifelse(race == "b", "Black", "White"))
+```
+
+To compute the mean separately for Blacks and Whites, we can use the functions `group_by()` and `summarise()`. But comparing two mean values is not sufficient to tell whether they are different from each other or not. To be able to conclude something, we need to assess how precisely the mean is estimated. One way to do that is to compute a confidence interval of the mean. The formula for the confidence interval of the mean writes as follows.
+
+$$\overline{X} \pm  t_{97.5\%}\times\frac{SD(X)}{\sqrt{N}}$$
+With $t_{97.5\%}$ computed from a student t distribution with $N-1$ degrees of freedom. We can obtain this value using the `qt()` function.
+
+```{r}
+data_aer %>% 
+  group_by(race) %>% 
+  summarize(
+    N = n(),
+    l_bound = mean(call) - qt(.975, n() - 1) * (sd(call) / sqrt(n())),
+    Mean  = mean(call),
+    u_bound = mean(call) + qt(.975, n() - 1) * (sd(call) / sqrt(n()))) %>%
+  mutate(`95% Conf. Int.` = paste(round(l_bound, 2), 
+                                  round(u_bound, 2), sep = "-")) %>%
+  select(race, N, Mean, `95% Conf. Int.`) %>%
+  kable(., align = 'lccc', caption = "Average callback rates by race")
+```
+
+Resumes associated with an African-American name received callbacks 6% of the time, and resumes associated with White names 10% of the time. The confidence intervals we computed indicate that there are 95% chance for the callback rate of Black-sounding names to be comprised between 5% and 7% and that of White-sounding names between 8% and 11%. Thus, we can reasonably to conclude that these two values are significantly different statistically.  
+
+As some of you did, another way to reach a conclusion is to test whether or not the difference between the two means is significantly different from 0 or not. This is the principle of a t-test, which can be implemented as follows.  
+
+```{r}
+t.test(call ~ race, data_aer)
+```
+
+Because the 95% confidence interval of the difference in means does not comprise 0, we can reasonably conclude at the 95% confidence level that the two means are indeed different.
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+**2\) Investigate whether the callback rate differs between Blacks and Whites using an OLS regression. Write down the equation you estimate and interpret the magnitude and significance of the coefficients from this regression. Do we reach the same conclusion as in the previous question? Motivate your answer.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+To investigate whether the callback rate differs between Blacks and Whites we can regress the `call` variable on the `race` variable. The linear model considered writes as follows.
+
+$$1\{call_i = 1\} = \alpha + \beta \times 1\{race_i = \text{White}\} + \varepsilon_i$$
+
+We can estimate the $\alpha$ and $\beta$ parameters using the `lm()` function.
+
+```{r, results='asis'}
+stargazer(lm(call ~ race, data_aer), dep.var.labels = "Callback")
+```
+
+The fitted values of the model write $\hat{\alpha} + \hat{\beta} \times 1\{race_i = \text{White}\}$. Because the dependent variable is a binary variable, fitted values can be interpreted as the probability that the dependent variable equals 1. For $race_i = \text{Black}$, the fitted value is simply $\hat{\alpha}$ which can be interpreted as the probability to receive a callback for Blacks. It is equivalent to the average value of the dependent variable for Blacks, which is indeed the case when comparing $\hat{\alpha}$ to the results of Question 1. For $race_i = \text{White}$, the fitted value is $\hat{\alpha} + \hat{\beta}$, which can be interpreted as the probability to receive a callback for Whites. Here as well, we can see that it is indeed equal to the average of the `call` variable for Whites. $\hat{\beta}$ is thus the difference between the callback rates for Whites and for Blacks. Formally, results show a 3 percentage-point expected increase in call back rates associated with the fact of having a White-sounding name relative to a Black-sounding name, everything else equal. It is positive and statistically significant at the 1% level, meaning that there is less than 1% chance for this value to be different from 0 just by chance. We thus reach the same conclusion as in Question 1.
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+
+
+**3\) Discuss whether or not we can consider as causal this estimated effect of race on callbacks.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+This experiment can be considered as a Randomized Controlled Trial (RCT) in which what want to know the impact of, here being Black or White, is randomly allocated between the different resumes. It is a way to obtain causality from randomness as on expectation two randomly drawn samples of resumes have the same average characteristics, which solves any potential omitted variable bias. But the omitted variable bias is not the only threat to causality. For instance, as mentioned by the authors in their article:
+
+ * *While the names we have used in this experiment strongly signal racial origin, they may also signal some other personal trait. More specifically, one might be concerned that employers are inferring social background from the personal name. When employers read a name like "Tyrone" or "Latoya," they may assume that the person comes from a disadvantaged background. In the extreme form of this social background interpretation, employers do not care at all about race but are discriminating only against the social background conveyed by the names we have chosen.*
+ 
+ * *Names might also influence our results through familiarity. One could argue that the African-American names used in the experiment simply appear odd to human resource managers and that any odd name is discriminated against.*
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+
+
+
+**4\) Apply the formula of the R<sup>2</sup> from the course to compute the R<sup>2</sup> of the previous regression. Interpret its value.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+The formula of the R<sup>2</sup> writes:
+
+$$\text{R}^2 = 1 - \frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{\sum_{i = 1}^n(y_i-\bar{y})^2}$$
+
+The numerator is the sum of the squared residuals from the model. To compute the residuals, we need to computed the fitted values of the model and to subtract them from the dependent variable : $\hat{\varepsilon_i} = y_i - \hat{y_i}$, with $\hat{y_i} = \hat{\alpha} + \hat{\beta}x_i$.  
+
+The denominator is simply the sum of the squared deviations from the mean of the dependent variable
+
+```{r}
+# Store the coefficients from the regression
+coefs <- summary(lm(call ~ race, data_aer))$coefficients
+
+# Compute the necessary elements for the formula
+data_fit <- data_aer %>%
+  mutate(
+    # Recode the x variable into a dummy variable
+    bin_race = ifelse(race == "White", 1, 0),
+    # Compute the fitted values
+    fit = coefs[1, 1] + bin_race * coefs[2, 1],
+    # Compute the squared residuals
+    sq_resid = (call - fit)^2,
+    # Compute the squared deviations from the mean
+    sq_yi_yhat = (call - mean(call))^2
+  )
+
+# Apply the formula
+1 - sum(data_fit$sq_resid) / sum(data_fit$sq_yi_yhat)
+```
+
+The R<sup>2</sup> can be interpreted as the share of the variance of the dependent variable that is explained by the model. Here, the R<sup>2</sup> indicates that the model explains 0.35% of the variance in callback rates.
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+
+
+
+**5\) Re-estimate the previous regression, but controlling for education. What does it change regarding the causality of the relationship between race and callbacks?**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+The label of the `education` variable indicates that '0 = not reported; 1=HSD; 2=HSG; 3=some col; 4=col +'. We can thus recode this variable for clarity
+
+```{r}
+data_aer <- data_aer %>%
+  mutate(education = case_when(education == 0 ~ "Not reported",
+                               education == 1 ~ "High-school dropout",
+                               education == 2 ~ "High-school graduate",
+                               education == 3 ~ "Some college",
+                               education == 4 ~ "College +"))
+```
+
+This variable is clearly not continuous but *categorical*, so we need to include it in the model as such. A categorical variable with $k$ categories in a regression model is treated as a sum of $k-1$ dummy variables, one category being omitted to be the reference group. To choose the reference group wisely, we can document the number of observations per group.
+
+```{r}
+data_aer %>%
+  group_by(education) %>%
+  summarise(N = n()) %>%
+  kable(., caption = "Number of observations per educational level")
+```
+
+The most represented group is applicants with at least a college degree. We can thus choose this group as the reference category in the regression.
+
+```{r, results = 'asis'}
+stargazer(lm(call ~ race + relevel(as.factor(education), "College +"), data_aer), 
+          dep.var.labels = "Callback")
+```
+
+In this case, controlling for a characteristic of the resume is not supposed to change anything about the causality of the relationship. Indeed, because the allocation of African-American and White sounding names to resumes was randomized, resumes are supposed to have the same characteristics on average, including education. We can check that by computing the share of White-sounding names per educational group to see whether they indeed lie around 50%.
+
+```{r}
+data_aer %>%
+  group_by(education) %>%
+  summarise(`Percentage Whites` = mean(race == "White")) %>%
+  kable(., caption = "Share of White-sounding name per educational group")
+```
+
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+
+
+
+**6\) Using an OLS regression, investigate whether or not the effect of having a high quality resume on callbacks differs between Blacks and Whites. Interpret the coefficients and conclude.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+The quality of resumes is documented by the dummy variable named `h` which equals 1 when the resume is of high quality and 0 otherwise. We can thus estimate the effect of having a high quality resume on callback by regressing the `call` variable on the `h` variable. Then, to estimate how the coefficient associated with `h` varies depending on the value of a third variable, here `race`, we can interact these two variables. It consists in adding `race` and the product of `race` and `h` in the regression as follows.
+ 
+```{r, results = 'asis'}
+stargazer(lm(call ~ h + race + race * h , data_aer), 
+          dep.var.labels = "Callback")
+```
+
+The model estimated above writes
+
+$$\begin{align}1\{call_i = 1\} = \alpha + \beta_1 \times 1\{quality_i = \text{High}\} + \beta_2 \times 1\{race_i = \text{White}\} +\\ \beta_3 \times 1\{quality_i = \text{High}\} \times 1\{race_i = \text{White}\} + \varepsilon_i\end{align}$$
+
+Following the same reasoning as in Question 2, we can retrieve the expected callback rate for each type of resume from the following calculations:
+
+
+```{r, echo = F}
+tibble(` ` = c("Low quality", "High quality"),
+       Black = c("\\(\\hat{\\alpha}\\)", "\\(\\hat{\\alpha} + \\hat{\\beta_1}\\)"),
+       White = c("\\(\\hat{\\alpha} + \\hat{\\beta_2}\\)", "\\(\\hat{\\alpha} + \\hat{\\beta_1} + \\hat{\\beta_2}  + \\hat{\\beta_3}\\)")) %>%
+  kable(., caption = "Average callback rates", align = 'lcc') %>%
+  column_spec(1, bold = T)
+```
+
+The effect of having a high quality resume for Blacks is captured by $\hat{\beta_1} = (\hat{\alpha} + \hat{\beta_1}) - \hat{\alpha}$. The effect of having a high quality resume for Whites is captured by $\hat{\beta_1} + \hat{\beta_3} = (\hat{\alpha} + \hat{\beta_1} + \hat{\beta_2} + \hat{\beta_3}) - (\hat{\alpha} + \hat{\beta_2})$. Thus, the difference in the effect of having a high quality resume between Blacks and Whites is indeed equal to the coefficient from the interaction $\hat{\beta_3} = (\hat{\beta_1} + \hat{\beta_3}) - \hat{\beta_1}$.  
+
+But from the results of the regression, $\hat{\beta_3}$ is not statistically significant, even at the 10% significance level. Thus, there is more than 10% chance for the estimated magnitude to be different from 0 just by chance, and we cannot conclude that the effect of having a high quality resume on callbacks differs between Blacks and Whites.
+
+
+<p style = "margin-bottom:1.5cm;"></p>
+<br><br>
+
+### Part II. Neighborhood characteristics
+
+The dataset also includes variables on the characteristics of the neighborhood of applicants at the zip code level, which is an opportunity to study the phenomenon of redlining. Redlining refers to the systematic denial of various services to residents of specific, often racially associated, neighborhoods or communities. In our setting, redlining could translate into employers tending to call back less often individuals who live in neighborhoods with a higher share of Black residents.
+
+<p style = "margin-bottom:1cm;"></p>
+
+**1\) Regress the `call` variable on the `fracblack` variable to investigate whether there is redlining or not. Search in the dataset to see whether it contains variables that should be included as controls. Include relevant control(s) in the regression (if any) and discuss your choice. Do you find evidence for redlining?**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**`race`**: Ignoring the study design, the first control variable that would spring to mind is probably the `race` variable. Indeed, by construction, applicants from neighborhoods with a high share of Black residents are more likely to be Black themselves, and less likely to be called back not only because of redlining but also because of racial discrimination. Yet, because here White- and Black-sounding names are allocated randomly to resumes, it should not be the case in this setting and controlling for the `race` variable should not change the results.
+
+**`fracblack_empzip`**: Here an important variable to control for is the share of Black individuals in the neighborhood of the employer. Indeed, it is possible that `fracblack_empzip` is both correlated to `fracblack` (because employers whose neighborhood has a high share of Black residents may receive more resumes from similar neighborhood due to geographic proximity and residential segregation) and with  `callback` (because such employers are likely to be less discriminatory and thus to have a higher callback rate through a higher proportion of callbacks for Black-sounding names). In that sense, omitting to control for the share of Black residents in the neighborhood of the employer may inflate the coefficient associated with `fracblack`. Indeed, because `fracblack_empzip` is potentially positively correlated with both `callback` and `fracblack`, its omission would yield an upward bias.
+
+```{r, results = 'asis'}
+stargazer(lm(call ~ fracblack, data_aer),
+          lm(call ~ fracblack + race, data_aer),
+          lm(call ~ fracblack + race + fracblack_empzip, data_aer), 
+          dep.var.labels = "Callback")
+```
+
+
+The results confirm the two hypotheses formulated above: controlling for `race` has no effect on the coefficient of interest due to the randomization of names, and controlling for `fracblack_empzip` decreases the coefficient of interest, to the point that the coefficient turns significant at the 10% significance level. Thus, these results provide support for the hypothesis of redlining even though we cannot reject that there is no effect at the 95% confidence level.
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+
+
+**2\) Use an OLS regression to estimate the relationship between high-school dropouts (as the dependent variable) and average log income level (as the independent variable) at the zip code level. Interpret the coefficient of the average log income variable.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+The data is at the individual (resume) level, but the variables on high-school dropouts and average log-income are the the zip code level. Thus, values of these variables from a given zip code appear as many times as there are individuals from this zip code in the dataset. Running the regression on the dataset at the individual level would thus give more weight to zip code observations that are more represented than others in the dataset. It can be viewed as running a regression that is weighted by the zip code population. Even though there is no zip code identifier in the data, the  fact that `fracdropout` is reported to the eighth digit and `linc` to the sixth digit ensures that every neighborhood has different values of these variables, such that we can aggregated the data at the zipcode level using the `unique()` function.
+ 
+```{r, results = 'asis'}
+stargazer(lm(fracdropout ~ linc, data_aer %>% select(fracdropout, linc) %>% unique()),
+          dep.var.labels = "Fraction of Highschool dropouts")
+```
+
+When one or both of the dependent and the independent variable is expressed in log, the interpretation of the regression coefficient is different from usual:
+
+```{r, echo = F}
+kable(tibble(` ` = c("x", "log(x)"),
+             y = c("\\(\\hat{\\beta}\\) is the unit increase in \\(y\\) due to a 1 unit increase in \\(x\\)",
+                   "\\(\\hat{\\beta}\\div 100\\) is the unit increase in \\(y\\) due to a 1% increase in \\(x\\)"),
+             `log(y)` = c("\\(\\hat{\\beta}\\times 100\\) is the % increase in \\(y\\) due to a 1 unit increase in \\(x\\)",
+                   "\\(\\hat{\\beta}\\) is the % increase in \\(y\\) due to a 1% increase in \\(x\\)")),
+      caption = "Interpretation of the regression coefficient", align = "ccc") %>%
+  column_spec(1, bold = T, extra_css = "vertical-align:middle;") %>%
+  column_spec(c(2, 3), width = "10em")
+```
+ 
+We are in the situation in which the dependent variable is in log and the independent variable is in level: $\hat{\beta}\div 100$ is the unit increase in $y$ due to a 1% increase in $x$. In our case, a 1% increase in the average income of a zip code is associated with a 0.106 percentage-point decrease in the fraction of high-school dropouts, everything else equal.  This effect is statistically significant at the 99% confidence level.
+
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+
+
+
+**3\) Using scatter plots and a `geom_smooth(method = "lm", ...)` geometry, investigate graphically whether the estimated relationship is homogenous across cities. Comment the graph.**
+
+*Hint: Use the facet_wrap() function to put side to side the separate graphs for the two cities.*
+
+<p style = "margin-bottom:.5cm;"></p>
+ 
+```{r}
+data_aer %>% 
+  mutate(city = ifelse(city == "b", "Boston", "Chicago")) %>%
+  select(linc, fracdropout, city) %>% 
+  unique() %>%
+  ggplot(., aes(x = linc, y = fracdropout, color = city)) +
+  geom_point(alpha = .5) + facet_wrap(~city) + 
+  geom_smooth(method = "lm", se = F) +
+  theme(legend.position = "none") +
+  xlab("Average log income") + ylab("Fraction of highschool dropouts")
+```
+
+Graphically we can see that the scatter plot and the associated regression line are very similar for the two cities, indicating that the relationship between average log income and high-school dropouts is indeed homogenous across cities.
+
+
+<p style = "margin-bottom:1.5cm;"></p>
+<br><br>
+
+
+### Part III. Data visualization
+
+**1\) Make the best graph you can using the variables of your choice. The graph should be preceded by a description of the variables used, both in words and using appropriate statistics. The aim of the graph can be to document a relationship that has not been explored in this homework, to investigate the heterogeneity in a relationship that was studied in the homework, etc. The graph should be clear and relevant. The interest of your graph could lie in how efficient it is to convey a story about your data, or in how it helps uncover underlying patterns in your data.**
+
+*If you do not find inspiration with the variables available in the dataset, feel free to do this exercise using variables from another dataset (from the list below or other sources). Using another dataset will not grant extra points, but if it helps you making an interesting graph it can be worth it.*
+
+ * [data.gouv.fr](https://www.data.gouv.fr/)
+ * [data.gov](https://www.data.gov/)
+ * [data.oecd.org](https://data.oecd.org/)
+ * [data.worldbank.org](https://data.worldbank.org/)
+ * [ec.europa.eu](https://ec.europa.eu/eurostat/web/main/data/database) 
+ * [www.bfi.org.uk](https://www.bfi.org.uk/industry-data-insights)
+ * [apps.who.int](https://apps.who.int/gho/data/node.home)
+ * [dataverse.harvard.edu](https://dataverse.harvard.edu/)
+ * [archive.ics.uci.edu](https://archive.ics.uci.edu/ml/datasets.php)
+ * [kaggle.com](https://www.kaggle.com/datasets)
+ * [datahub.io](https://datahub.io/collections)
+ * [wid.world](https://wid.world/data/)
+ * [opportunityinsights.org](https://opportunityinsights.org/data/)
+ * ...
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**Example using the same dataset:**
+
+For the purpose of this exercise, I propose to depict the callback rate separately for each first name to investigate (1) the heterogeneity of the effect, and (2) whether or not the effect is driven by some specific names. To do so, the number of observations per name should be sufficient. 
+
+```{r}
+data_aer %>%
+  group_by(firstname) %>%
+  summarise(`Number of observations` = n()) %>%
+  select(`Number of observations`) %>%
+  summary()
+```
+
+The number of observations per name ranges from 42 to 256. On average a name is allocated to more hundred resumes, and the middle half of the distribution of number of observations per name is comprised between 64 and 204. The number of observations per name is relatively small, but sufficient for the purpose of this exercise.
+
+```{r}
+data_aer <- data_aer %>%
+  mutate(sex = ifelse(sex == "f", "Female", "Male"))
+
+data_aer %>%
+  group_by(race, sex) %>%
+  summarise(`Number of observations` = n()) %>%
+  kable(., caption = "Number of observations by race and sex")
+```
+
+The number of observations is homogenous between Blacks and Whites, but heterogenous between Males and Females.  
+
+The following graph represents the callback rate for each first name. Female names are shown on the left panel and male names are shown on the right panel. On each panel, White-sounding names and Black-sounding names are placed side to side along the x-axis, and are attributed a different color for clarity. To avoid over-plotting, I randomly shift the x coordinate of names by a small amount, but keeping their y coordinate fixed. 
+
+```{r}
+data_aer %>%
+  group_by(sex, race, firstname) %>%
+  summarise(callback = 100 * mean(call)) %>%
+  ggplot(., aes(x = race, color = race, y = callback, label = firstname)) +
+  geom_text(position = position_jitter(width = .25, height = 0, seed = 1),
+            alpha = .5, show.legend = FALSE) + facet_wrap(~ sex) + 
+  scale_y_continuous(name = "Callback rate (%)", limits = c(0, 17)) + 
+  xlab("Race associated with the surname")
+```
+
+The graph reveals that the negative effect of having a Black-sounding names on callbacks holds for both male and female names. Moreover, even though the first names Brad and Jay are associated with particularly high callback rates relatively to other male first names, the effect does not seem to be fully driven by a few outliers.
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**Example using another dataset:**
+
+The package `HSAUR` comes with a data set of **2 variables** on the **47 stars** of the CYGOB1 star cluster in the Cygnus constellation:  
+
+ * Effective temperature: $\text{log}(T_e)$
+ * Light intensity: $\text{log}(L/L_0)$
+
+```{r}
+library(HSAUR)
+data("CYGOB1", package = "HSAUR")
+kable(head(CYGOB1, 5), caption = "5 first observations")
+summary(CYGOB1)
+```
+
+We would like to know the relationship between these two variables
+
+```{r}
+CYGOB1 <- CYGOB1 %>% 
+  rename(Temperature = logst, `Light intensity` = logli)
+
+ggplot(CYGOB1, aes(x = Temperature, y = `Light intensity`)) +
+  geom_point(color = "#014D64", alpha = .5) + 
+  geom_smooth(method = "lm", se = F, color = "#6794A7") 
+```
+Something's wrong: the relationship is negative overall but this seems to be fallaciously driven by four stars at the top left. Indeed, the documentation of the data mentions that there are **two types of stars**:  
+
+ * Stars that lie on the main sequence &#128171;
+ * Giants stars &#127775;  
+
+There's no variable in the data to distinguish between these two groups, but the documentation indicates that Giants are located at the following rows:  
+
+ * The 11<sup>th</sup>;  
+ * The 20<sup>th</sup>;  
+ * The 30<sup>th</sup>;  
+ * The 34<sup>th</sup>. 
+
+Based on these information, a variable indicating the type of star can easily be created as follows, so that we can then distinguish the two types of stars in the plot by attributing them separate colors and regression lines:  
+
+```{r}
+CYGOB1 <- CYGOB1 %>%
+  mutate(Type = ifelse(row_number() %in% c(11, 20, 30, 34), 
+                       "Giant", "Main-sequence"))
+
+ggplot(CYGOB1, aes(x = Temperature, y = `Light intensity`, color = Type)) +
+  geom_point(alpha = .5) + geom_smooth(method = "lm", se = F, show_guide = F)
+```
+
+By naively regressing light intensity on temperature, we would have <b>fallaciously</b> concluded that the two variables have a statistically non-significant <b>negative relationship</b>. But data visualization allowed to notice that there is actually:</i>  
+ 
+ * <b>No relationship for the Giants</b> (very large standard error/coefficient ratio) 
+ * And a highly significant (p-value <0.01) <b>positive relationship for</b> stars that lie on the <b>main sequence</b>
+
+```{r, results = 'asis'}
+stargazer(lm(`Light intensity` ~ Temperature, CYGOB1), 
+          lm(`Light intensity` ~ Temperature, CYGOB1 %>% filter(Type == "Giant")),
+          lm(`Light intensity` ~ Temperature, CYGOB1 %>% filter(Type == "Main-sequence")),
+          column.labels = c("Whole Sample", "Giant", "Main-sequence"),
+          dep.var.labels = "Light intensity", model.numbers = F)
+```
+
+
+<br><br>

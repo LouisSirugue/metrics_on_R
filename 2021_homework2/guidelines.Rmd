@@ -1,0 +1,97 @@
+---
+title: "Homework 2: Introduction to Econometrics"
+author: "Louis Sirugue"
+date: "`r format(Sys.time(), '%m/%Y')`"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+---
+
+```{r setup, echo = F, warning = F, message = F}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F, fig.align = 'center') 
+source(paste0(getwd(), "/../source/style.R"))
+```
+
+<br>
+
+This homework covers the material from lectures 7 to 10. I encourage you to start **working on it progressively** as we go through the second part of the course. Homeworks should be done **individually**. You are welcome to help each other by sharing what you understand, but write your homework by yourself, **do not share your code**. Contrarily to the online quizzes, homeworks are meant to be challenging. **Partial answers will be taken into account**, so if you cannot do everything, **write down your thought process**.
+
+The grading system is available [here](https://louissirugue.github.io/data-analysis-course/homework2/grading.html), and the material for this homework is available [here](https://louissirugue.github.io/data-analysis-course/homework2/data.zip). Make sure that your answers are unambiguous and that your code is annotated extensively. You can write either in English or in French. Your homework should be written using **R Markdown**, and it should compile without error. **Regression results should be reported using the `stargazer()` function**. Both your .Rmd and the knitted .html file should be sent to louis.sirugue@psemail.eu no later than the <b>12<sup>th</sup> of December</b>. 
+
+### Part I. Quantifying labor market discrimination
+
+The academic article this homework is about, *'Are Emily and Greg More Employable than Lakisha and Jamal? A Field Experiment on Labor Market Discrimination'*, investigates the presence of race discrimination in the US labor market. To do so, researchers prepared many realistic resumes, and randomly assigned African-American and White-sounding names to these resumes. This procedure ensures that on expectation, resumes associated with African-American and White-sounding names have the same characteristics. Then, they sent these resumes to employers who posted help-wanted ads in Boston and Chicago newspapers, and recorded whether or not each resume got a call back. This procedure, called *correspondence testing*, then allows to detect labor market discrimination by comparing the callback rates of these two groups that are comparable in every respect but their name.  
+
+The dataset from this study gathers information on the 4,870 resumes they sent. It includes detailed characteristics of each resume, characteristics of the job offer it was sent for, and whether or not they were called back for this resume. The dataset is in .dta format, which is the data format of the Stata software. To import such data on R, you need to use the `read_dta()` function from the `haven` package. You will see that the data is labeled, meaning that variable descriptions are available under variable names when you `View()` the data. This will help you understand what the name and values of the variables mean, and recode them for clarity when relevant. For instance, the variable  `race` takes two values, `"b"` and `"w"` that you can recode into `"Black"` and `"White"` for clarity. The variable documenting whether the 'applicant' was called back is `call`, and as indicated by its label, it equals one when the 'applicant' was called back and 0 otherwise.
+
+<p style = "margin-bottom:1cm;"></p>
+
+**1\) Compute the and interpret the mean of the `call` variable separately for Blacks and Whites. Is it reasonable to conclude that these two values are different? Motivate your answer.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**2\) Investigate whether the callback rate differs between Blacks and Whites using an OLS regression. Write down the equation you estimate and interpret the magnitude and significance of the coefficients from this regression. Do we reach the same conclusion as in the previous question? Motivate your answer.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**3\) Discuss whether or not we can consider as causal this estimated effect of race on callbacks.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**4\) Apply the formula of the R<sup>2</sup> from the course to compute the R<sup>2</sup> of the previous regression. Interpret its value.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**5\) Re-estimate the previous regression, but controlling for education. What does it change regarding the causality of the relationship between race and callbacks?**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**6\) Using an OLS regression, investigate whether or not the effect of having a high quality resume on callbacks differs between Blacks and Whites. Interpret the coefficients and conclude.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+### Part II. Neighborhood characteristics
+
+The dataset also includes variables on the characteristics of the neighborhood of applicants at the zip code level, which is an opportunity to study the phenomenon of redlining. Redlining refers to the systematic denial of various services to residents of specific, often racially associated, neighborhoods or communities. In our setting, redlining could translate into employers tending to call back less often individuals who live in neighborhoods with a higher share of Black residents.
+
+<p style = "margin-bottom:1cm;"></p>
+
+**1\) Regress the `call` variable on the `fracblack` variable to investigate whether there is redlining or not. Search in the dataset to see whether it contains variables that should be included as controls. Include relevant control(s) in the regression (if any) and discuss your choice. Do you find evidence for redlining?**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**2\) Use an OLS regression to estimate the relationship between high-school dropouts (as the dependent variable) and average log income level (as the independent variable) at the zip code level. Interpret the coefficient of the average log income variable.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**3\) Using scatter plots and a `geom_smooth(method = "lm", ...)` geometry, investigate graphically whether the estimated relationship is homogenous across cities. Comment the graph.**
+
+*Hint: Use the facet_wrap() function to put side to side the separate graphs for the two cities.*
+
+<p style = "margin-bottom:.5cm;"></p>
+
+### Part III. Data visualization
+
+**1\) Make the best graph you can using the variables of your choice. The graph should be preceded by a description of the variables used, both in words and using appropriate statistics. The aim of the graph can be to document a relationship that has not been explored in this homework, to investigate the heterogeneity in a relationship that was studied in the homework, etc. The graph should be clear and relevant. The interest of your graph could lie in how efficient it is to convey a story about your data, or in how it helps uncover underlying patterns in your data.**
+
+*If you do not find inspiration with the variables available in the dataset, feel free to do this exercise using variables from another dataset (from the list below or other sources). Using another dataset will not grant extra points, but if it helps you making an interesting graph it can be worth it.*
+
+ * [data.gouv.fr](https://www.data.gouv.fr/)
+ * [data.gov](https://www.data.gov/)
+ * [data.oecd.org](https://data.oecd.org/)
+ * [data.worldbank.org](https://data.worldbank.org/)
+ * [ec.europa.eu](https://ec.europa.eu/eurostat/web/main/data/database) 
+ * [www.bfi.org.uk](https://www.bfi.org.uk/industry-data-insights)
+ * [apps.who.int](https://apps.who.int/gho/data/node.home)
+ * [dataverse.harvard.edu](https://dataverse.harvard.edu/)
+ * [archive.ics.uci.edu](https://archive.ics.uci.edu/ml/datasets.php)
+ * [kaggle.com](https://www.kaggle.com/datasets)
+ * [datahub.io](https://datahub.io/collections)
+ * [wid.world](https://wid.world/data/)
+ * [opportunityinsights.org](https://opportunityinsights.org/data/)
+ * ...
+ 
+<br><br>
