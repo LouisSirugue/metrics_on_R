@@ -1,0 +1,2105 @@
+---
+title: "Multivariate regressions"
+subtitle: "Lecture 9"
+author: "<br>Louis SIRUGUE"
+date: "CPES 2 - Fall 2022"
+output:
+  xaringan::moon_reader: 
+    css: 
+        - xaringan-themer.css
+        - theme.css
+    includes:
+      in_header: header.html
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{css, echo = F, eval = F}
+body{background-color:black;filter:invert(1)}
+```
+
+```{r setup, include = FALSE}
+source(paste0(getwd(), "/../source/style.R"))
+stargazer <- stargazer::stargazer
+theme_minimal <- theme_Rcourse
+options(htmltools.dir.version = F)
+knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", dpi = 300, out.width = "100%")
+set.seed(1)
+```
+
+<style> .left-column {width: 65%;} .right-column {width: 35%;} </style>
+
+### Last time we saw
+
+#### 1. Joint distribution
+
+<center>The <b>joint distribution</b> shows the possible <b>values</b> and associated <b>frequencies</b> for <b>two variables</b> simultaneously</center>
+
+--
+
+.pull-left[
+```{r, echo = F, fig.width = 7, fig.height = 5.5, dpi=300, out.width="100%"}
+hist_data <- read.csv("hist_illustration.csv") %>%
+  mutate(y = runif(1000, 0, 1.45))
+
+hist_data <- hist_data %>%
+  mutate(z = 3*x + rnorm(dim(hist_data)[1], 0, 4))
+
+ggplot(hist_data, aes(x = x, y = z)) + 
+  geom_point(alpha = .15, size = 2, fill = "#6794A7", color = "#014D64", height = .5, width = 0) + 
+  scale_x_continuous(name = "Variable A", limits = c(-1.1775, 10.4925), breaks = seq(0, 10, 2.5)) +
+  scale_y_continuous(name = "Variable B") + 
+  theme_minimal(base_size = 16) 
+```
+]
+
+--
+
+.pull-right[
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+```{r, echo = F, fig.width = 6, fig.height = 1.25, out.width= '100%'}
+library(MASS)
+den3d <- kde2d(hist_data$x, hist_data$z)
+
+library(plotly)
+plot_ly(x=den3d$x, y=den3d$y, z=den3d$z, colorscale ='YlGnBu') %>% add_surface() %>% 
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
+         scene = list(camera = list(eye = list(x = 0, y = -1, z = 0.75),
+                                    center = list(x = 0, y = 0, z = -0.25)),
+                      aspectratio = list(x = .9, y = .8, z = 0.4),
+                      xaxis = list(title = "Variable A"),
+                      yaxis = list(title = "Variable B"),
+                      zaxis = list(title = "Joint density"))) %>% 
+  style(hoverinfo = 'skip')
+```
+]
+
+
+---
+
+### Last time we saw
+
+#### 1. Joint distribution
+
+<center><h4>  &#10140; <i> When describing a joint distribution, we're interested in the relationship between the two variables </i></h4></center>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+<ul>
+  <li>The <b>covariance</b> quantifies the joint deviation of two variables from their respective mean</li>
+  <ul>
+    <li>It can take values from \(-\infty\) to \(\infty\) and depends on the unit of the data</li>
+  </ul>
+</ul>
+ 
+$$ \text{Cov}(x, y) = \frac{1}{N}\sum_{i=1}^{N}(x_i − \bar{x})(y_i − \bar{y})$$
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+
+<ul>
+  <li>The <b>correlation</b> is the covariance of two variables divided by the product of their standard deviation</li>
+  <ul>
+    <li>It can take values from \(-1\) to \(1\) and is independent from the unit of the data</li>
+  </ul>
+</ul>
+ 
+ $$\text{Corr}(x, y) = \frac{\text{Cov}(x, y)}{\text{SD}(x)\times\text{SD}(y)}$$
+ 
+---
+
+### Last time we saw
+
+#### 2. Regression
+
+.pull-left[
+<p style = "margin-bottom:-.75cm;"></p>
+```{r, echo = F, fig.width = 5.5, fig.height = 3.5, out.width = "100%"}
+ggcurve <- read.csv("ggcurve.csv")
+
+ols <- summary(lm(ige ~ gini, ggcurve))$coefficients
+
+attempts <- ggcurve %>%
+  mutate(`Attempt 3` = ols[1, 1] + (gini * ols[2, 1]),
+         `Attempt 2` = (3 * gini) - 1,
+         `Attempt 1` = .45) %>%
+  pivot_longer(c(`Attempt 1`, `Attempt 2`, `Attempt 3`), names_to = "line_id", values_to = "line_value")
+
+test <- attempts %>%
+  mutate(obs = row_number()) %>%
+  pivot_longer(c(ige, line_value), names_to = "dot_id", values_to = "dot")
+
+attempts %>%
+  filter(line_id == "Attempt 3") %>%
+  ggplot(., aes(x = gini, y = ige)) + 
+  geom_point(alpha = .4, color = "#014D64") +
+  geom_line(aes(y = line_value), alpha = .8, color = "#014D64") +
+  geom_line(data = test %>% filter(line_id == "Attempt 3"), 
+  aes(x = gini, y = dot, group = obs), linetype = "dashed", alpha = .7, color = "#014D64") +
+  xlab("x") + ylab("y")
+```
+<p style = "margin-bottom:-1.2cm;"></p>
+```{r, echo = F}
+data <- ggcurve %>%
+  rename(x = gini, y = ige)
+lm(y ~ x, data)
+```
+]
+
+--
+
+.pull-right[
+
+ * This can be expressed with the **regression equation:**
+ 
+$$y_i = \hat{\alpha} + \hat{\beta}x_i + \hat{\varepsilon_i}$$
+
+
+ * Where $\hat{\alpha}$ is the **intercept** and $\hat{\beta}$ the **slope** of the **line** $\hat{y_i} = \hat{\alpha} + \hat{\beta}x_i$, and $\hat{\varepsilon_i}$ the **distances** between the points and the line
+
+<p style = "margin-bottom:1cm;">
+
+$$\hat{\beta} = \frac{\text{Cov}(x_i, y_i)}{\text{Var}(x_i)}$$ 
+
+$$\hat{\alpha} = \bar{y} - \hat{\beta} \times\bar{x}$$
+
+* $\hat{\alpha}$ and $\hat{\beta}$ minimize $\hat{\varepsilon_i}$
+
+]
+
+---
+
+### Last time we saw
+
+#### 3. Binary variables
+
+.pull-left[
+<center>Binary <b>dependent</b> variables</center>
+
+<ul>
+  <li>The <b>fitted values</b> can be viewed as <b>probabilities</b></li>
+  <ul>
+    <li>\(\hat{\beta}\) is the expected increase in the probability that \(y = 1\) for a one unit increase in \(x\)</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;">
+
+```{r, echo = F, fig.width = 7, fig.height = 2.9, out.width = "100%"}
+data_bin <- tibble(x = rnorm(1000, 15, 1), 
+                   noisy_x = x + runif(1000, -1, 1),
+                   y = ifelse(noisy_x > mean(x), 1, 0))
+
+coefs <- summary(lm(y ~ x, data_bin))$coefficients
+
+slope_plot <- ggplot(data_bin, aes(x = x, y = y)) +
+  geom_point(alpha = .1, color = "#014D64") + xlab("Grade") +
+  geom_smooth(method = "lm", se = F, color = "#014D64") +
+  scale_y_continuous(name = "", limits = c(-.2, 1.2), breaks = seq(0, 1, .5)) +
+  scale_x_continuous(name = "Grade", limits = c(12, 18), breaks = 12:18) +
+  geom_segment(x = 12, xend = 15, y = coefs[1, 1] + (15 * coefs[2, 1]), yend = coefs[1, 1] + (15 * coefs[2, 1]), linetype = "dashed") +
+  geom_segment(x = 15, xend = 15, y = 0, yend = coefs[1, 1] + (15 * coefs[2, 1]), linetype = "dashed") +
+  geom_segment(x = 12, xend = 16, y = coefs[1, 1] + (16 * coefs[2, 1]), yend = coefs[1, 1] + (16 * coefs[2, 1]), linetype = "dashed") +
+  geom_segment(x = 16, xend = 16, y = 0, yend = coefs[1, 1] + (16 * coefs[2, 1]), linetype = "dashed") +
+  geom_segment(x = 12, xend = 12, y = coefs[1, 1] + (15 * coefs[2, 1]) + .01, yend = coefs[1, 1] + (16 * coefs[2, 1]) - .01, arrow = arrow(ends = "both", length = unit(.2,"cm"))) +
+  annotate("text", x = 12.3, y = (coefs[1, 1] + (15 * coefs[2, 1]) + coefs[1, 1] + (16 * coefs[2, 1]))/2, label = round(coefs[2, 1], 2))
+
+slope_plot
+```
+
+<p style = "margin-bottom:1cm;">
+
+<ul>
+  <ul>
+    <li>We call that a <b>Linear Probability model</b></li>
+  </ul>
+</ul>
+
+]
+
+--
+
+.pull-right[
+<center>Binary <b>independent</b> variables</center>
+
+<ul>
+  <li>The \(x\) variable should be viewed as a <b>dummy 0/1</b></li>
+  <ul>
+    <li>\(\hat{\beta}\) is the difference between the average \(y\) for the group \(x = 1\) and the group \(x = 0\)</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 6, fig.height = 4, out.width = "90%"}
+data_binx <- tibble(x = rep(c(0, 1), each = 500), 
+                    y = c(rnorm(500, 165, 10), rnorm(500, 175, 10)))
+
+ggplot(data_binx, aes(x = as.factor(x), y = y)) +
+  ylab("Height") +
+  scale_x_discrete(name = "1{Sex[i] = Male}", labels = 0:1) +
+  geom_boxplot(alpha = .1, width = .1, color = alpha("#014D64", .2)) + 
+  geom_point(data = data_binx %>% mutate(x =x +1), aes(x = x, y = y), alpha = .1, color = "#014D64") +
+  geom_smooth(data = data_binx %>% mutate(x =x +1), aes(x = x, y = y), method = "lm", se = F, color = "#014D64")
+```
+]
+
+---
+
+### Warm up practice
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 1) Open the `asec.csv` data containing sex, race, weekly work hours, and annual earnings ($)
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 2) Regress the earnings variable on the sex variable
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 3) Check that the slope coefficient is equal to the difference between male and female average earnings
+
+<p style = "margin-bottom:3cm;"></p>
+
+--
+
+<center><h3><i>You've got 10 minutes!</i></h3></center>
+
+---
+
+### Solution
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 1) Open the `asec.csv` data containing sex, race, weekly work hours, and annual earnings ($)
+
+```{r}
+asec <- read.csv("asec.csv")
+```
+
+--
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 2) Regress the earnings variable on the sex variable
+
+```{r}
+lm(Earnings ~ Sex, asec)
+```
+
+---
+
+### Solution
+
+#### 3) Check that the slope coefficient is equal to the difference between male and female average earnings
+
+--
+
+```{r, eval = F}
+asec %>% 
+  
+  # Group the data by sex
+  group_by(Sex) %>%
+  
+  # Summarise mean earnings -> 2x2 dataset
+  summarise(Mean = mean(Earnings)) %>%
+  
+  # Put means in columns instead of rows -> 1x2 dataset
+  pivot_wider(names_from = Sex, values_from = Mean) %>%
+  
+  # Compute the difference in means
+  mutate(Difference = Male - Female)
+```
+
+--
+
+```{r, echo = F}
+asec %>% 
+  
+  # Group the data by sex
+  group_by(Sex) %>%
+  
+  # Summarise mean earnings -> 2x2 dataset
+  summarise(Mean = mean(Earnings)) %>%
+  
+  # Put means in columns instead of rows -> 1x2 dataset
+  pivot_wider(names_from = Sex, values_from = Mean) %>%
+  
+  # Compute the difference in means
+  mutate(Difference = Male - Female)
+```
+
+---
+
+
+<h3>Today: Multivariate regressions!</h3>
+
+<p style = "margin-bottom:1.75cm;">
+
+#### 1. Adding variables
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Continuous variables
+ * 1.2. Discrete variables
+ 
+#### 2. Control variables
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Motivation
+ * 2.2. Discrete controls
+ * 2.3. Continuous controls
+
+#### 3. Interactions
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Motivation
+ * 3.2. Discrete interactions
+ * 3.3. Continuous interactions
+
+#### 4. Wrap up!
+
+---
+
+<h3>Today: Multivariate regressions!</h3>
+
+<p style = "margin-bottom:1.75cm;">
+
+#### 1. Adding variables
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Continuous variables
+ * 1.2. Discrete variables
+ 
+---
+
+### 1. Adding variables
+
+#### 1.1. Continuous variables
+
+.pull-left[
+
+ * So far we focused on two-variable relationships
+
+```{r, echo = F, fig.width = 6, fig.height = 4.5, out.width = "100%"}
+ggplot(ggcurve , aes(x = gini, y = ige, label = country)) +
+  geom_point(alpha = .8, color = "#014D64", size = 3) + 
+  geom_segment(aes(x = min(ggcurve$gini), xend = max(ggcurve$gini), 
+                   y = ols[1, 1] + (min(ggcurve$gini) * ols[2, 1]), 
+                   yend = ols[1, 1] + (max(ggcurve$gini) * ols[2, 1])),
+               color = "#014D64") 
+```
+
+]
+
+--
+
+.pull-right[
+
+ * What about three variable? *(pivot the plot)*
+
+
+```{r, echo = F, fig.width = 6, fig.height = 1.25, out.width= '100%'}
+library(plotly)
+
+ggcurve <- ggcurve %>%
+  mutate(third_variable = (4 * gini)  + rnorm(nrow(.), 0, 1))
+
+plot_ly(ggcurve, x = ~gini, y = ~third_variable, z = ~ige) %>% 
+  add_markers(opacity = .8) %>%
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
+         aspectratio = list(x = 2, y = 1, z = .5),
+         scene = list(xaxis = list(title = 'Gini'),
+                      yaxis = list(title = 'Third variable'),
+                      zaxis = list(title = 'IGE'),
+                      camera = list(eye = list(x = 0, y = -2, z = 0)))) %>% 
+  style(hoverinfo = 'skip')
+```
+
+]
+ 
+---
+
+### 1. Adding variables
+
+#### 1.1. Continuous variables
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+.pull-left[
+```{r, echo = F, fig.width = 6, fig.height = 1.25, out.width= '100%'}
+library(reshape2)
+
+petal_lm <- lm(ige ~ gini + third_variable, ggcurve)
+graph_reso <- 0.05
+
+#Setup Axis
+axis_x <- seq(min(ggcurve$gini), max(ggcurve$gini), by = graph_reso)
+axis_y <- seq(min(ggcurve$third_variable), max(ggcurve$third_variable), by = graph_reso)
+
+#Sample points
+petal_lm_surface <- expand.grid(gini = axis_x, third_variable = axis_y, KEEP.OUT.ATTRS = F)
+petal_lm_surface$ige <- predict.lm(petal_lm, newdata = petal_lm_surface)
+petal_lm_surface <- acast(petal_lm_surface, third_variable ~ gini, value.var = "ige") #y ~ x
+
+plot_ly(ggcurve, x = ~gini, y = ~third_variable, z = ~ige) %>% 
+  add_markers(opacity = .8) %>%
+  add_trace(z = petal_lm_surface,
+            x = axis_x,
+            y = axis_y,
+            type = "surface", 
+            colorscale ='YlGnBu',
+            opacity = .8) %>% 
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
+         aspectratio = list(x = 2, y = 1, z = .5),
+         scene = list(xaxis = list(title = 'Gini'),
+                      yaxis = list(title = 'Third variable'),
+                      zaxis = list(title = 'IGE'),
+                      camera = list(eye = list(x = -.75, 
+                                               y = -2, 
+                                               z = .75)))) %>% 
+  style(hoverinfo = 'skip')
+```
+]
+
+.pull-right[
+
+<ul>
+  <li>In this case we must fit a <b>plane</b></li>
+  <ul>
+    <li>It is characterized by <b>3 parameters</b></li>
+    <li>And can be expressed as:</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+ 
+$$y_i = \hat{\alpha} + \hat{\beta_1}x_{1,i} + \hat{\beta_2}x_{2,i} + \hat{\varepsilon_i}$$
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>\(\hat{\alpha}\) is still the <b>intercept</b></li>
+  <ul>
+    <li>The value of \(\hat{y}\) (height) when \(x_1 = x_2= 0\)</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>And now there are <b>2 slopes</b></li>
+  <ul>
+    <li>\(\hat{\beta_1}\) along the \(x_1\) axis and \(\hat{\beta_2}\) along the \(x_2\) axis</li>
+  </ul>
+ </ul>
+ 
+]
+ 
+---
+
+### 1. Adding variables
+
+#### 1.1. Continuous variables
+
+<ul>
+  <li>The <b>same</b> applies with <b>more than 2</b> independent variables</li>
+  <ul>
+    <li>We would fit a <b>hyperplane</b> with as many dimension as \(x\) variables</li>
+    <li>We would obtain one intercept and one slope per \(x\) variables</li>
+  </ul>
+</ul>
+
+--
+
+$$y_i = \hat{\alpha} + \hat{\beta_1}x_{1, i} + \hat{\beta_2}x_{2, i} +...+ \hat{\beta_k}x_{k, i}+\hat{\varepsilon_i}$$
+
+--
+
+<ul>
+  <li>We can estimate the parameters of these hyperplanes in <b>lm()</b></li>
+  <ul>
+    <li><b>Additional variables</b> must be introduced after a <b>+ sign</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+lm(ige ~ gini + third_variable, ggcurve)
+```
+
+--
+
+```{r, echo = F}
+lm(ige ~ gini + third_variable, ggcurve)
+```
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
+<ul>
+  <li><b>So far</b> we've been working with <b>binary</b> categorical variables:</li>
+  <ul>
+    <li>Accepted vs. Rejected, Male vs. Female</li>
+    <li>But what about discrete variables with <b>more than two categories?</b></li>
+  </ul>
+</ul>
+  
+--
+
+.pull-left[
+
+ * Take for instance the <b>race variable:</b>
+ 
+```{r}
+asec %>% 
+  group_by(Race) %>% 
+  tally()
+```
+
+]
+
+--
+
+.pull-right[
+<p style = "margin-bottom:3.5cm;"></p>
+
+<center><b><i>How can we use this variable</i></b></center> 
+<center><b><i>as an independent variable</i></b></center> 
+<center><b><i>in our regression framework?</i></b></center>
+
+]
+
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
+<ul>
+  <li>Remember how we converted our <b>2-category</b> variable into <b>1 dummy</b> variable</li>
+  <ul>
+    <li>We can convert an <b>n-category</b> variable into <b>n-1 dummy</b> variables</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+ 
+--
+
+.pull-left[
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, echo = F}
+dummy_conversion <- tibble(Sex = rep(c("Female", "Male"), each = 3),
+       Male = rep(c(0, 1), each = 3),
+       ` ` = rep("    ", 6), 
+       Race = rep(c("White", "Black", "Other"), each = 2), 
+       Black = c(0, 0, 1, 1, 0, 0),
+       Other = c(0, 0, 0, 0, 1, 1))
+
+kable(dummy_conversion, caption = " ") %>%
+  column_spec(3, width = "3em")
+```
+]
+
+--
+
+.pull-right[
+
+<p style = "margin-bottom:-.25cm;"></p>
+
+***&#10140; But why do we omit one category every time?***
+
+<ul>
+  <li>Because it would be redundant</li>
+  <li>We only need 2 dummies for 3 groups:</li>
+  <ul>
+    <li><b>White:</b> Black = <b>0</b> & Other = <b>0</b></li>
+    <li><b>Black:</b> Black = <b>1</b> & Other = <b>0</b></li>
+    <li><b>Other:</b> Black = <b>0</b> & Other = <b>1</b></li>
+  </ul>
+</ul>
+
+<ul>
+  </li>\(\hat{\alpha}\) is the expected \(\hat{y}\) when \(x_k=0 \:\forall k\)</li>
+  <ul>
+    <li>Thus is does the job for the omitted groups!</li>
+    <li>This group is called the <b>reference group</b></li>
+    <li>\(\hat{\beta_k}\) are interpreted <b>relative</b> to that group</li>
+  </ul>
+</ul>
+
+]
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
+<p style = "margin-bottom:1cm;"></p>
+
+.pull-left[
+<center><b>2-category variable</b></center>
+
+<p style = "margin-bottom:2cm;"></p>
+
+```{r, echo = F, fig.width = 6, fig.height = 4, out.width = "90%"}
+ggplot(data_binx, aes(x = as.factor(x), y = y)) +
+  ylab("Height") +
+  scale_x_discrete(name = "1{Sex[i] = Male}", labels = 0:1) +
+  geom_boxplot(alpha = .1, width = .1, color = alpha("#014D64", .2)) + 
+  geom_point(data = data_binx %>% mutate(x =x +1), aes(x = x, y = y), alpha = .1, color = "#014D64") +
+  geom_smooth(data = data_binx %>% mutate(x =x +1), aes(x = x, y = y), method = "lm", se = F, color = "#014D64")
+```
+
+]
+
+.pull-right[
+
+<center><b>3-category variable</b></center>
+
+
+```{r, echo = F, fig.width = 6, fig.height = 1.25, out.width= '100%'}
+asec <- asec %>%
+  mutate(Black = as.numeric(Race == "Black"),
+         Other = as.numeric(Race == "Other"),
+         `Log Earnings` = log(Earnings))
+
+petal_lm <- lm(`Log Earnings` ~ Black + Other, asec)
+graph_reso <- 0.05
+
+#Setup Axis
+axis_x <- seq(min(asec$Black), max(asec$Black), by = graph_reso)
+axis_y <- seq(min(asec$Other), max(asec$Other), by = graph_reso)
+
+#Sample points
+petal_lm_surface <- expand.grid(Black = axis_x, Other = axis_y, KEEP.OUT.ATTRS = F)
+petal_lm_surface$`Log Earnings` <- predict.lm(petal_lm, newdata = petal_lm_surface)
+petal_lm_surface <- acast(petal_lm_surface, Other ~ Black, value.var = "Log Earnings") #y ~ x
+
+plot_ly(asec, x = ~Black, y = ~Other, z = ~`Log Earnings`) %>% 
+  add_markers(opacity = .005) %>%
+  add_trace(z = petal_lm_surface,
+            x = axis_x,
+            y = axis_y,
+            type = "surface", 
+            colorscale ='YlGnBu',
+            opacity = .8) %>% 
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
+         aspectratio = list(x = 2, y = 1, z = .5),
+         scene = list(xaxis = list(title = 'Black'),
+                      yaxis = list(title = 'Other'),
+                      zaxis = list(title = 'Log Earnings'),
+                      camera = list(eye = list(x = -.75, 
+                                               y = -2, 
+                                               z = .75)))) %>% 
+  style(hoverinfo = 'skip')
+```
+
+]
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
+ * This <b>plane</b> can be expressed as:
+ 
+$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1} 1\{\text{Race}_i = \text{Other}\} + \hat{\beta_2} 1\{\text{Race}_i = \text{White}\}  + \hat{\varepsilon_i}$$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>And the <b>average</b> incomes for each group equal:</li>
+  <ul>
+    <li><b>Black: \(\hat{\alpha} + 0\hat{\beta_1} + 0\hat{\beta_2} = \hat{\alpha}\)</b></li>
+    <li><b>Other: \(\hat{\alpha} + 1\hat{\beta_1} + 0\hat{\beta_2} = \hat{\alpha} + \hat{\beta_1}\)</b></li>
+    <li><b>White: \(\hat{\alpha} + 0\hat{\beta_1} + 1\hat{\beta_2} = \hat{\alpha} + \hat{\beta_2}\)</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:-.25cm;"></p>
+
+--
+
+.pull-left[
+```{r, echo = F}
+lm(Earnings ~ Race, asec)
+```
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r, echo = F}
+asec %>% group_by(Race) %>%
+  summarise(`Mean earnings` = mean(Earnings)) %>%
+  kable(., caption = "Average by group")
+```
+]
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
+<ul>
+  <li>By <b>default</b>, lm() sorts categories by <b>alphabetical</b> order</li>
+  <ul>
+    <li>So every coefficient should be <b>interpreted relative</b> to the group which is first alphabetically</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>But usually this is <b>not</b> the most <b>intuitive</b></li>
+  <ul>
+    <li>You may want everything to be relative to the <b>majority group</b></li>
+    <li>Or to any group that has reasons to be the <b>reference</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>The <b>relevel()</b> function allows you to <b>change the reference</b> category</li>
+  <ul>
+    <li>But it works <b>only on factor</b> variables</li>
+  </ul>
+</ul>
+
+--
+
+.pull-left[
+```{r, results = "hide"}
+asec <- asec %>% 
+  mutate(Race_fct = relevel(as.factor(Race), 
+                            "White"))
+
+lm(Earnings ~ Race_fct, asec)
+```
+]
+
+.pull-right[
+<p style = "margin-bottom:-.5cm;"></p>
+```{r, echo = F}
+lm(Earnings ~ Race_fct, asec)
+```
+]
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
+ * What you can also do is <b>create the dummies yourself:</b>
+ 
+```{r}
+asec <- asec %>%
+  mutate(Black = as.numeric(Race == "Black"),
+         Other = as.numeric(Race == "Other"))
+```
+
+--
+
+```{r}
+lm(Earnings ~ Black + Other, asec)
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><i>&#10140; This might be the <b>safest</b> option</i></center>
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
+
+ * But a <b>categorical</b> variable must <b>not</b> be introduced <b>as numeric</b> in lm()
+
+```{r}
+asec <- asec %>%
+  mutate(num_cat = case_when(Race == "White" ~ 0,
+                             Race == "Black" ~ 1,
+                             Race == "Other" ~ 3))
+```
+
+```{r}
+lm(Earnings ~ num_cat, asec)
+```
+
+--
+
+<center><i>&#10140; lm() used our <b>categorical</b> variable as a <b>continuous</b> variable</i></center>
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
+ * Use the <b>factor</b> class
+ 
+```{r}
+asec <- asec %>%
+  mutate(fac_cat = as.factor(num_cat))
+```   
+
+--
+
+```{r}
+lm(Earnings ~ fac_cat, asec)
+```
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<center><i>&#10140; <b>Converting</b> all your <b>categorical</b> variables into <b>factors</b> is also a <b>safe</b> option</i></center>
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:1.75cm;">
+
+#### 1. Adding variables &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Continuous variables
+ * 1.2. Discrete variables
+ 
+#### 2. Control variables
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Motivation
+ * 2.2. Discrete controls
+ * 2.3. Continuous controls
+
+#### 3. Interactions
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Motivation
+ * 3.2. Discrete interactions
+ * 3.3. Continuous interactions
+
+#### 4. Wrap up!
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:1.75cm;">
+
+#### 1. Adding variables &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Continuous variables
+ * 1.2. Discrete variables
+ 
+#### 2. Control variables
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Motivation
+ * 2.2. Discrete controls
+ * 2.3. Continuous controls
+
+---
+
+### 2. Control variables
+
+#### 2.1. Motivation
+
+<ul>
+  <li>But <b>why</b> would we include <b>additional variables</b> in our regressions?</li>
+  <ul>
+    <li>The main reason is to <b>control</b> for potential <b>confounders</b></li>
+  </ul>
+</ul>
+
+--
+
+<ul>
+  <li>Consider estimating the <b>relationship</b> between <b>income</b> and exposure air <b>pollution</b> in the Paris region</li>
+</ul>
+
+$$\text{Pollution}_i = \hat{\alpha_1} + \hat{\beta_1} \text{Income}_i + \hat{\varepsilon_i}$$
+
+--
+
+<ul>
+  <li>You would probably expect that \(\hat{\beta_1} < 0\)</li>
+  <ul>
+    <li>Meaning that <b>higher income</b> earners live in <b>less polluted</b> areas</li>
+    <li>But the closer from <b>Paris</b> the higher the <b>rents</b> and the <b>ring-road</b></li>
+    <li>This phenomenon might counteract this effect and pull \(\hat{\beta_1}\) towards 0</li>
+  </ul>
+</ul>
+
+--
+
+<ul>
+  <li>But how to <b>remove</b> the <b>impact</b> that <b>distance</b> from Paris has on the relationship?</li>
+  <ul>
+    <li><b>Including it</b> in the regression would make the corresponding coefficient <b>absorb the confounding effect</b></li>
+    <li>In that case we would call distance a <b><i>control</i> variable</b></li>
+  </ul>
+</ul>
+
+
+$$\text{Pollution}_i = \hat{\alpha_2} + \hat{\beta_2} \text{Income}_i + \hat{\beta_3} \text{Distance}_i + \hat{\epsilon_i}$$
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+<ul>
+  <li>The most <b>common control</b> variable is probably <b>sex/gender</b></li>
+  <ul>
+    <li>It may play a role in the <b>relationship</b> between <b>earnings</b> and <b>hours worked</b> for instance</li>
+    <li>The fact that <b>women</b> work <b>part time</b> more often and <b>earn less</b> contribute to the relationship</li>
+    <li>Just like distance did in the previous example</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+--
+
+```{r, echo = F, fig.width = 7, fig.height = 3.457, out.width = "55%"}
+discrete <- tibble(Hours = c(rnorm(500, 35, 5), rnorm(500, 30, 5)),
+                   Sex = rep(c("Male", "Female"), each = 500),
+                   Earnings = 12.5 * Hours + ifelse(Sex == "Male", rnorm(500, 1200, 100), rnorm(500, 1000, 100)))
+
+coefs <- summary(lm(Earnings ~ Hours, discrete))$coefficients
+
+ggplot(discrete, aes(x = Hours, y = Earnings)) + 
+  geom_point(alpha = .4, color = "#014D64") +
+  geom_segment(aes(x = min(discrete$Hours), 
+                   xend = max(discrete$Hours), 
+                   y = coefs[1, 1] + min(discrete$Hours) * coefs[2, 1], 
+                   yend = coefs[1, 1] + max(discrete$Hours) * coefs[2, 1]),
+               size = 1, color = "#6794A7") +
+  scale_y_continuous(limits = c(950, 2050))
+```
+
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+<ul>
+  <li>The most <b>common control</b> variable is probably <b>sex/gender</b></li>
+  <ul>
+    <li>It may play a role in the <b>relationship</b> between <b>earnings</b> and <b>hours worked</b> for instance</li>
+    <li>The fact that <b>women</b> work <b>part time</b> more often and <b>earn less</b> contribute to the relationship</li>
+    <li>Just like distance did in the previous example</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "55%"}
+ggplot(discrete, aes(x = Hours, y = Earnings, color = Sex)) + 
+  geom_point(alpha = .4) +
+  geom_segment(aes(x = min(discrete$Hours), 
+                   xend = max(discrete$Hours), 
+                   y = coefs[1, 1] + min(discrete$Hours) * coefs[2, 1], 
+                   yend = coefs[1, 1] + max(discrete$Hours) * coefs[2, 1]),
+               size = 1, color = "#6794A7") +
+  scale_y_continuous(limits = c(950, 2050))
+```
+
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+<ul>
+  <li>The most <b>common control</b> variable is probably <b>sex/gender</b></li>
+  <ul>
+    <li>It may play a role in the <b>relationship</b> between <b>earnings</b> and <b>hours worked</b> for instance</li>
+    <li>The fact that <b>women</b> work <b>part time</b> more often and <b>earn less</b> contribute to the relationship</li>
+    <li>Just like distance did in the previous example</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "55%"}
+ggplot(discrete %>% filter(Sex == "Female"), aes(x = Hours, y = Earnings, color = Sex)) + 
+  geom_point(alpha = .4) +
+  geom_segment(aes(x = min(discrete$Hours), 
+                   xend = max(discrete$Hours), 
+                   y = coefs[1, 1] + min(discrete$Hours) * coefs[2, 1], 
+                   yend = coefs[1, 1] + max(discrete$Hours) * coefs[2, 1]),
+               size = 1, color = "#6794A7") +
+  scale_y_continuous(limits = c(950, 2050))
+```
+
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+<ul>
+  <li>The most <b>common control</b> variable is probably <b>sex/gender</b></li>
+  <ul>
+    <li>It may play a role in the <b>relationship</b> between <b>earnings</b> and <b>hours worked</b> for instance</li>
+    <li>The fact that <b>women</b> work <b>part time</b> more often and <b>earn less</b> contribute to the relationship</li>
+    <li>Just like distance did in the previous example</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "55%"}
+ggplot(discrete %>% filter(Sex == "Male"), aes(x = Hours, y = Earnings, color = Sex)) + 
+  geom_point(alpha = .4) +
+  geom_segment(aes(x = min(discrete$Hours), 
+                   xend = max(discrete$Hours), 
+                   y = coefs[1, 1] + min(discrete$Hours) * coefs[2, 1], 
+                   yend = coefs[1, 1] + max(discrete$Hours) * coefs[2, 1]),
+               size = 1, color = "#6794A7") +
+  scale_color_manual(values = "#00A2D9") +
+  scale_y_continuous(limits = c(950, 2050))
+```
+
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+&#10140; The <b>relationship</b> is indeed <b>inflated</b> by the sex variable
+
+.pull-left[
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Because being a <b>male</b> is positively <b>correlated</b> with <b>both \(x\) and \(y\)</b></li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li><b>Controlling</b> for sex would <b>solve that problem</b> by absorbing this effect</li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Controlling for a <b>discrete</b> variable amounts to allow <b>one intercept per category</b></li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Giving <b>two parallel fitted lines</b> which are the intersections of the plane and the scatterplots</li>
+</ul>
+
+]
+
+.pull-right[
+
+<p style = "margin-bottom:-2cm;"></p>
+```{r, echo = F, fig.width = 7, fig.height = 1.5, out.width= '100%', fig.align="left"}
+discrete <- discrete %>%
+  mutate(Male = as.numeric(Sex == "Male"),
+         color = ifelse(Male, "#6794A7", "#00A2D9"))
+
+
+petal_lm <- lm(Earnings ~ Hours + Male, discrete)
+graph_reso <- 0.05
+
+#Setup Axis
+axis_x <- seq(min(discrete$Hours), max(discrete$Hours), by = graph_reso)
+axis_y <- seq(min(discrete$Male), max(discrete$Male), by = graph_reso)
+
+#Sample points
+petal_lm_surface <- expand.grid(Hours = axis_x, Male = axis_y, KEEP.OUT.ATTRS = F)
+petal_lm_surface$Earnings <- predict.lm(petal_lm, newdata = petal_lm_surface)
+petal_lm_surface <- acast(petal_lm_surface, Male ~ Hours, value.var = "Earnings") #y ~ x
+
+plot_ly(discrete, x = ~Hours, y = ~Male, z = ~Earnings) %>% 
+  add_markers(size = 5, opacity = .2, color = ~color, colors = c("#6794A7", "#00A2D9"), showlegend=F) %>%
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
+         aspectratio = list(x = 2, y = 1, z = .5),
+         scene = list(xaxis = list(title = 'Hours'),
+                      yaxis = list(title = 'Male'),
+                      zaxis = list(title = 'Earnings'),
+                      camera = list(eye = list(x = 0, y = -2, z = 0)))) %>% 
+  style(hoverinfo = 'skip')
+```
+
+]
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+&#10140; The <b>relationship</b> is indeed <b>inflated</b> by the sex variable
+
+.pull-left[
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Because being a <b>male</b> is positively <b>correlated</b> with <b>both \(x\) and \(y\)</b></li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li><b>Controlling</b> for sex would <b>solve that problem</b> by absorbing this effect</li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Controlling for a <b>discrete</b> variable amounts to allow <b>one intercept per category</b></li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Giving <b>two parallel fitted lines</b> which are the intersections of the plane and the scatterplots</li>
+</ul>
+
+]
+
+.pull-right[
+
+<p style = "margin-bottom:-2cm;"></p>
+
+```{r, echo = F, fig.width = 6, fig.height = 1.5, out.width= '100%'}
+plot_ly(discrete, x = ~Hours, y = ~Male, z = ~Earnings) %>% 
+  add_markers(size = 5, opacity = .2, color = ~color, colors = c("#6794A7", "#00A2D9"), showlegend=F) %>%
+  add_trace(z = petal_lm_surface,
+            x = axis_x,
+            y = axis_y,
+            type = "surface", 
+            colorscale ='YlGnBu',
+            opacity = .4) %>% 
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
+         aspectratio = list(x = 2, y = 1, z = .5),
+         scene = list(xaxis = list(title = 'Hours'),
+                      yaxis = list(title = 'Male'),
+                      zaxis = list(title = 'Earnings'),
+                      camera = list(eye = list(x = 0, y = -2, z = 0)))) %>% 
+  style(hoverinfo = 'skip')
+```
+]
+
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1}\text{Hours}_i  + \hat{\beta_2}1\{\text{Sex}_i = \text{Male}\} + \hat{\varepsilon_i}$$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, echo = F}
+lm(Earnings ~ Hours + Sex, discrete)$coefficients
+```
+
+--
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+.left-column[
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "85%", fig.align="left"}
+coefs_s <- summary(lm(Earnings ~ Hours + Sex, discrete))$coefficients
+
+ggplot(discrete, aes(x = Hours, y = Earnings, color = Sex)) + 
+  geom_point(alpha = .4) +
+  geom_segment(aes(x = min(discrete$Hours), 
+                   xend = max(discrete$Hours), 
+                   y = coefs[1, 1] + min(discrete$Hours) * coefs[2, 1], 
+                   yend = coefs[1, 1] + max(discrete$Hours) * coefs[2, 1]),
+               size = 1, color = "#6794A7", linetype = "dashed") +
+  geom_segment(aes(x = min(Hours), 
+                   xend = max(Hours), 
+                   y = coefs_s[1, 1] + min(Hours) * coefs_s[2, 1], 
+                   yend = coefs_s[1, 1]  + max(Hours) * coefs_s[2, 1]),
+               size = 1, color = "#014D64", alpha = .4)+
+  geom_segment(aes(x = min(Hours), 
+                   xend = max(Hours), 
+                   y = coefs_s[1, 1]  + coefs_s[3, 1] + min(Hours) * coefs_s[2, 1], 
+                   yend = coefs_s[1, 1]  + coefs_s[3, 1]  + max(Hours) * coefs_s[2, 1]),
+               size = 1, color = "#00A2D9", alpha = .4)+
+  scale_y_continuous(limits = c(950, 2050))
+```
+]
+
+.right-column[
+
+<p style = "margin-bottom:1cm;"></p>
+<center><b>Graphical counterpart</b></center>
+<p style = "margin-bottom:1cm;"></p>
+
+$\hat{\alpha}$: Intercept of the reference group  
+
+$\hat{\beta_1}$: Common slope  
+
+$\hat{\beta_2}$: Gap between the two lines  
+
+$\hat{\alpha} +\hat{\beta_2}$: Intercept of the other group  
+]
+
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+<ul>
+  <li>We can <b>obtain</b> this common <b>slope</b> by:</li>
+  <ol>
+    <li><b>Demeaning</b> earnings and hours by group</li>
+    <li><b>Regressing</b> the demeaned earnings on the hours</li>
+  </ol>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "60%"}
+#######################################
+# AJOUTER UN MARQUEUR POUR LA MOYENNE #
+#######################################
+
+# Animation
+##################
+library(gganimate)
+coefs <- summary(lm(Earnings ~ Hours + Sex, discrete))$coefficients
+anim_discrete <- discrete %>%
+  mutate(time = 0,
+         coef_1 = coefs[1, 1],
+         coef_2 = coefs[2, 1],
+         coef_3 = coefs[3, 1])
+
+for (i in 1:100) {
+  
+  temp_discrete <- discrete %>%
+  group_by(Sex) %>%
+  mutate(Hours = ifelse(Sex == "Male", Hours - (i/100) * mean(Hours), Hours))
+         #Earnings = Earnings - (i/100) * mean(Earnings))
+  
+  coefs <- summary(lm(Earnings ~ Hours + Sex, temp_discrete))$coefficients
+  
+  anim_discrete <- anim_discrete %>%
+    bind_rows(temp_discrete %>%
+  mutate(time = i,
+         coef_1 = coefs[1, 1],
+         coef_2 = coefs[2, 1],
+         coef_3 = coefs[3, 1]))
+} 
+
+discrete2 <- discrete %>%
+  group_by(Sex) %>%
+  mutate(Hours = ifelse(Sex == "Male", Hours - mean(Hours), Hours))
+
+for (j in 1:100) {
+  
+  temp_discrete <- discrete2 %>%
+  group_by(Sex) %>%
+  mutate(Earnings = ifelse(Sex == "Male", Earnings - (j/100) * mean(Earnings), Earnings))
+  
+  coefs <- summary(lm(Earnings ~ Hours + Sex, temp_discrete))$coefficients
+  
+  anim_discrete <- anim_discrete %>%
+    bind_rows(temp_discrete %>%
+  mutate(time = j + 100,
+         coef_1 = coefs[1, 1],
+         coef_2 = coefs[2, 1],
+         coef_3 = coefs[3, 1]))
+} 
+
+discrete3 <- discrete2 %>%
+  group_by(Sex) %>%
+  mutate(Earnings = ifelse(Sex == "Male", Earnings - mean(Earnings), Earnings))
+
+for (j in 1:100) {
+  
+  temp_discrete <- discrete3 %>%
+  group_by(Sex) %>%
+  mutate(Hours = ifelse(Sex == "Female", Hours - (j/100) * mean(Hours), Hours))
+  
+  coefs <- summary(lm(Earnings ~ Hours + Sex, temp_discrete))$coefficients
+  
+  anim_discrete <- anim_discrete %>%
+    bind_rows(temp_discrete %>%
+  mutate(time = j + 200,
+         coef_1 = coefs[1, 1],
+         coef_2 = coefs[2, 1],
+         coef_3 = coefs[3, 1]))
+} 
+
+discrete4 <- discrete3 %>%
+  group_by(Sex) %>%
+  mutate(Hours = ifelse(Sex == "Female", Hours - mean(Hours), Hours))
+
+for (j in 1:100) {
+  
+  temp_discrete <- discrete4 %>%
+  group_by(Sex) %>%
+  mutate(Earnings = ifelse(Sex == "Female", Earnings - (j/100) * mean(Earnings), Earnings))
+  
+  coefs <- summary(lm(Earnings ~ Hours + Sex, temp_discrete))$coefficients
+  
+  anim_discrete <- anim_discrete %>%
+    bind_rows(temp_discrete %>%
+  mutate(time = j + 300,
+         coef_1 = coefs[1, 1],
+         coef_2 = coefs[2, 1],
+         coef_3 = coefs[3, 1]))
+} 
+
+
+limits <- discrete %>%
+  group_by(Sex) %>%
+  summarise(earn = min(Earnings) - mean(Earnings),
+            hours = min(Hours) - mean(Hours)) %>%
+  ungroup() %>%
+  summarise(earn = min(earn), hours = min(hours))
+
+data_segment_female <- anim_discrete %>%
+  filter(Sex == "Female") %>%
+  group_by(time) %>%
+  summarise(minhours = min(Hours),
+            maxhours = max(Hours),
+            y = mean(coef_1) + minhours * mean(coef_2),
+            yend = mean(coef_1)  + maxhours *  mean(coef_2))
+
+data_segment_male <- anim_discrete %>%
+  filter(Sex == "Male") %>%
+  group_by(time) %>%
+  summarise(minhours = min(Hours),
+            maxhours = max(Hours),
+            y = mean(coef_1)  +  mean(coef_3) + (minhours *  mean(coef_2)), 
+            yend = mean(coef_1)  +  mean(coef_3)  + (maxhours *  mean(coef_2)))
+
+
+test <- ggplot(anim_discrete, aes(x = Hours, y = Earnings, color = Sex)) + 
+  # 0xy
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  # Data
+  geom_point(alpha = .1) +
+  geom_segment(data = data_segment_female,
+               aes(x = minhours,xend = maxhours, y = y, yend = yend),
+               size = 1, color = "#6794A7", alpha = .1)+
+  geom_segment(data = data_segment_male,
+               aes(x = minhours, xend = maxhours, y = y, yend = yend),
+               size = 1, color = "#00A2D9", alpha = .1) + 
+  # Scales
+  scale_y_continuous(limits = c(limits$earn, 2050)) +
+  scale_x_continuous(limits = c(limits$hours, max(discrete$Hours))) +
+  transition_time(time) +
+  # Animation
+  ease_aes("linear") + 
+  shadow_wake(1/100, size = 1, alpha = TRUE, wrap = FALSE, #exclude_layer = c(2, 3),
+              falloff = 'sine-in', exclude_phase = 'enter')
+
+animation <- animate(test, nframes = 400, fps = 30, end_pause = 30, height = 800, width = 1400, res = 200)
+animation
+```
+
+---
+
+### 2. Control variables
+
+#### 2.2. Discrete
+
+<ul>
+  <li>Note that once we <b>control</b> for third variable</li>
+  <ol>
+    <li>As we move along the x axis, this <b>third variable remains constant</b></li>
+    <li>Here, as the number of <b>hours increases</b> the probability to be a <b>male does not</b> increase anymore</li>
+  </ol>
+</ul>
+
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "60%"}
+temp_dat <- discrete %>%
+  group_by(Sex) %>%
+  mutate(Earnings = Earnings - mean(Earnings),
+         Hours = Hours - mean(Hours))
+
+coefs_s <- summary(lm(Earnings ~ Hours + Sex, temp_dat))$coefficients
+
+ggplot(temp_dat, aes(x = Hours, y = Earnings, color = Sex)) + 
+  geom_point(alpha = .4) +
+  geom_segment(aes(x = min(Hours), 
+                   xend = max(Hours), 
+                   y = coefs_s[1, 1] + min(Hours) * coefs_s[2, 1], 
+                   yend = coefs_s[1, 1]  + max(Hours) * coefs_s[2, 1]),
+               size = 1, color = "#014D64", alpha = .4)+
+  geom_segment(aes(x = min(Hours), 
+                   xend = max(Hours), 
+                   y = coefs_s[1, 1]  + coefs_s[3, 1] + min(Hours) * coefs_s[2, 1], 
+                   yend = coefs_s[1, 1]  + coefs_s[3, 1]  + max(Hours) * coefs_s[2, 1]),
+               size = 1, color = "#00A2D9", alpha = .4) +
+  geom_vline(xintercept = 0, linetype = "dashed", alpha = .4) +
+  geom_hline(yintercept = 0, linetype = "dashed", alpha = .4)
+```
+
+
+---
+
+### 2. Control variables
+
+#### 2.3. Continuous
+
+<ul>
+  <li>The <b>same</b> idea apply when we control for <b>continuous</b> variables</li>
+  <ul>
+    <li>Including it in the regression allows to <b>account for another dimension</b></li>
+    <li>Such that when \(x\) moves this variable <b>remains constant</b></li>
+    <li>This <b>nets out</b> the relationship of \(x\) and \(y\) from the potential <b>confounding effect</b> of this variable</li>
+    <li>This is why we call it <b>controlling for something</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:-.55cm;"></p>
+
+--
+
+```{r, echo = F, fig.width = 6, fig.height = 1.15, out.width= '100%'}
+petal_lm <- lm(ige ~ gini + third_variable, ggcurve)
+graph_reso <- 0.05
+
+#Setup Axis
+axis_x <- seq(min(ggcurve$gini), max(ggcurve$gini), by = graph_reso)
+axis_y <- seq(min(ggcurve$third_variable), max(ggcurve$third_variable), by = graph_reso)
+
+#Sample points
+petal_lm_surface <- expand.grid(gini = axis_x, third_variable = axis_y, KEEP.OUT.ATTRS = F)
+petal_lm_surface$ige <- predict.lm(petal_lm, newdata = petal_lm_surface)
+petal_lm_surface <- acast(petal_lm_surface, third_variable ~ gini, value.var = "ige") #y ~ x
+
+plot_ly(ggcurve, x = ~gini, y = ~third_variable, z = ~ige) %>% 
+  add_markers(opacity = .8) %>%
+  add_trace(z = petal_lm_surface,
+            x = axis_x,
+            y = axis_y,
+            type = "surface", 
+            colorscale ='YlGnBu',
+            opacity = .8) %>% 
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
+         aspectratio = list(x = 2, y = 1, z = .5),
+         scene = list(xaxis = list(title = 'Gini'),
+                      yaxis = list(title = 'Third variable'),
+                      zaxis = list(title = 'IGE'),
+                      camera = list(eye = list(x = -.75, 
+                                               y = -1.25, 
+                                               z = 0)))) %>% 
+  style(hoverinfo = 'skip')
+```
+
+---
+
+### Practice
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 1) Using the `asec` data, regress (yearly) earnings on (weekly) hours worked
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 2) Regress earnings on hours worked controlling for sex
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 3) Interpret the difference between the results from 1) and 2)
+
+--
+
+<p style = "margin-bottom:3cm;"></p>
+
+<center><h3><i>You've got 5 minutes!</i></h3></center>
+
+---
+
+### Solution
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 1) Using the `asec` data, regress (yearly) earnings on (weekly) hours worked
+
+```{r}
+lm(Earnings ~ Hours, asec)$coefficients
+```
+
+--
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 2) Regress earnings on hours worked controlling for sex
+
+```{r}
+lm(Earnings ~ Hours + Sex, asec)$coefficients
+```
+
+---
+
+### Solution
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 3) Interpret the difference between the results from 1) and 2)
+
+.pull-left[
+<ul><li>The <b>slope</b> is still positive <b>less steep</b></li></ul>
+
+<ul><ul><li>In the <b>first regression</b> as the number of <b>hours increases</b> the probability to be a <b>male does increase</b> as well</li></ul></ul>
+
+<ul><ul><li>Because <b>males</b> tend to <b>earn more</b> this <b>contributes</b> to the positive <b>relationship</b> between Hours and Earnings</li></ul></ul>
+
+<ul><ul><li>In the <b>second regression</b>, <b>controlling</b> for sex allows to maintain the probability to be a <b>male constant</b> along the hour axis to <b>remove this effect</b></li></ul></ul>
+
+]
+
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:1.75cm;">
+
+#### 1. Adding variables &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Continuous variables
+ * 1.2. Discrete variables
+ 
+#### 2. Control variables &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Motivation
+ * 2.2. Discrete controls
+ * 2.3. Continuous controls
+
+#### 3. Interactions
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Motivation
+ * 3.2. Discrete interactions
+ * 3.3. Continuous interactions
+
+#### 4. Wrap up!
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:1.75cm;">
+
+#### 1. Adding variables &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Continuous variables
+ * 1.2. Discrete variables
+ 
+#### 2. Control variables &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Motivation
+ * 2.2. Discrete controls
+ * 2.3. Continuous controls
+
+#### 3. Interactions
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Motivation
+ * 3.2. Discrete interactions
+ * 3.3. Continuous interactions
+
+---
+
+### 3. Interactions
+
+#### 3.1. Motivation
+
+<ul>
+  <li>Now we know how to <b>remove</b> the <b>confounding effect</b> of a third variable by <b>controlling</b> for it</li>
+  <ul>
+    <li>But what if the main <b>relationship varies</b> depending on the value of the <b>third variable?</b></li>
+  </ul>
+</ul>
+
+ * Let's get back to the previous example
+
+$$\text{Pollution}_i = \hat{\alpha} + \hat{\beta_1} \text{Income}_i + \hat{\beta_2} \text{Distance}_i + \hat{\epsilon_i}$$
+
+--
+
+<ul>
+  <li>The <b>equation imposes</b> that the <b>effect</b> of income on pollution is <b>constant:</b>  \(\hat{\beta_2}\)</li>
+  <ul>
+    <li>But what if the relationship was actually not the same close to Paris than further away?</li>
+    <li>Maybe that the closer from Paris the larger the effect (higher segregation, ...)</li>
+  </ul>
+</ul>
+
+--
+
+<ul>
+  <li>But how to <b>capture how the relationship</b> between income and pollution varies</b> with distance?</li>
+  <ul>
+    <li>We should allow for it in the equation!</li>
+    <li>By <b>adding a term</b> that depends both on income and distance</li>
+    <li>What we use is their <b>product</b>, and we call that an <b>interaction</b></li>
+  </ul>
+</ul>
+
+$$\text{Pollution}_i = \hat{\alpha_2} + \hat{\beta_3} \text{Income}_i + \hat{\beta_4} \text{Distance}_i+ \hat{\beta_5} (\text{Distance}_i\times\text{Income}_i) + \hat{\epsilon_i}$$
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<ul>
+  <li>Take for instance the following <b>relationship</b> between <b>household income</b> and the <b>number of children</b></li>
+</ul>
+
+<p style = "margin-bottom:3.30cm;"></p>
+
+```{r, echo = F, fig.width = 7, fig.height = 3.457, out.width = "60%"}
+edu <- read.csv("household_data.csv")
+
+coefs <- summary(lm(Children ~ Income, edu))$coefficients
+
+ggplot(edu, aes(x = Income, y = Children)) +
+  geom_point(alpha = .6, color = "#014D64", size = 3) +
+  geom_segment(aes(x = min(edu$Income), 
+                   xend = max(edu$Income), 
+                   y = coefs[1, 1] + min(edu$Income) * coefs[2, 1], 
+                   yend = coefs[1, 1] + max(edu$Income) * coefs[2, 1]),
+               size = 1, color = "#6794A7")
+```
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<ul>
+  <li>Take for instance the following <b>relationship</b> between <b>household income</b> and the <b>number of children</b></li>
+  <ul>
+    <li>The level of <b>education</b> seems to <b>play a role</b> in the relationship</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "60%"}
+ggplot(edu, aes(x = Income, y = Children, color = Education, shape = Education)) +
+  geom_point(alpha = .6, size = 3) +
+  geom_segment(aes(x = min(edu$Income), 
+                   xend = max(edu$Income), 
+                   y = coefs[1, 1] + min(edu$Income) * coefs[2, 1], 
+                   yend = coefs[1, 1] + max(edu$Income) * coefs[2, 1]),
+               size = 1, color = "#6794A7")
+```
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<ul>
+  <li>Take for instance the following <b>relationship</b> between <b>household income</b> and the <b>number of children</b></li>
+  <ul>
+    <li>The level of <b>education</b> seems to <b>play a role</b> in the relationship</li>
+    <li>But simply <b>controlling</b> for education does <b>not</b> seem <b>sufficient</b></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "60%"}
+################################################################################
+# FAIRE MEME ANIMATION QUE LA PRECEDENTE MAIS A LA FIN FADE DEUX GROUPES SUR   #
+# TROIS POUR LES METTRE EN EVIDENCE LES UNS APRES LES AUTRES                   #
+################################################################################
+
+coefs_edu <- summary(lm(Children ~ Income + Education, edu))$coefficients
+
+limitedu <- edu %>%
+  group_by(Education) %>%
+  summarise(min = min(Income),
+            max = max(Income)) %>%
+  mutate(ymin = case_when(Education == "< Highschool" ~ coefs_edu[1, 1] + (min * coefs_edu[2, 1]),
+                          Education == "Highschool" ~ coefs_edu[1, 1] + coefs_edu[4, 1] + (min * coefs_edu[2, 1]),
+                          Education == "College" ~ coefs_edu[1, 1] + coefs_edu[3, 1] + (min * coefs_edu[2, 1])),
+         ymax = case_when(Education == "< Highschool" ~ coefs_edu[1, 1] + (max * coefs_edu[2, 1]),
+                          Education == "Highschool" ~ coefs_edu[1, 1] + coefs_edu[4, 1] + (max * coefs_edu[2, 1]),
+                          Education == "College" ~ coefs_edu[1, 1] + coefs_edu[3, 1] + (max * coefs_edu[2, 1])))
+
+ggplot(edu, aes(x = Income, y = Children, color = Education, shape = Education)) +
+  geom_point(alpha = .6, size = 3) +
+  geom_segment(data = limitedu, 
+               aes(x = min, 
+                   xend = max, 
+                   y = ymin, 
+                   yend = ymax,
+                   color = Education), size = 1, show.legend = F)
+```
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<ul>
+  <li>This is because the <b>relationship</b> between income and children <b>varies with education</b></li>
+  <ul>
+    <li><b>Interacting</b> income with education allows to <b>account for that</b></li>
+    <li>Like <b>controlling</b> allows for <b>different intercepts</b>, <b>interacting</b> allows for <b>different slopes</b></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "60%"}
+ggplot(edu, aes(x = Income, y = Children, color = Education, shape = Education)) +
+  geom_point(alpha = .6, size = 3) +
+  geom_smooth(method = "lm", formula = y ~ x, se = F, show.legend = F)
+```
+
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<center><i>&#10140; It is clearly <b>equivalent to regressing</b> children on income separately <b>per education group</b></i></center>
+
+<p style = "margin-bottom:2cm;"></p>
+
+$$\begin{align}
+\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_2}\text{(<Highschool)}_i + \hat{\beta_3}\text{Highschool}_i+ \hat{\beta_4}\text{College}_i+& \small{\text{Allow for} \neq \text{slopes}} \\ 
+& \text{Children}_i\times\left[\hat{\beta_5}\text{(<Highschool)}_i + \hat{\beta_6}\text{Highschool}_i+ \hat{\beta_7}\text{College}_i\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<center><i>&#10140; It is clearly <b>equivalent to regressing</b> children on income separately <b>per education group</b></i></center>
+
+<p style = "margin-bottom:2cm;"></p>
+
+$$\begin{align}
+\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_2}\underbrace{\text{(<Highschool)}_i}_{1} + \hat{\beta_3}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_4}\underbrace{\text{College}_i}_{0}+& \small{\text{Allow for} \neq \text{slopes}} \\ 
+& \text{Children}_i\times\left[\hat{\beta_5}\underbrace{\text{(<Highschool)}_i}_{1} + \hat{\beta_6}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_7}\underbrace{\text{College}_i}_{0}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+
+<p style = "margin-bottom:2cm;"></p>
+
+<ul style = "list-style: none; margin-left: 5cm;">
+  <li><b>< Highschool:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_2}) + (\hat{\beta_1} + \hat{\beta_5})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+</ul>
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<center><i>&#10140; It is clearly <b>equivalent to regressing</b> children on income separately <b>per education group</b></i></center>
+
+<p style = "margin-bottom:2cm;"></p>
+
+$$\begin{align}
+\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_2}\underbrace{\text{(<Highschool)}_i}_{0} + \hat{\beta_3}\underbrace{\text{Highschool}_i}_{1}+ \hat{\beta_4}\underbrace{\text{College}_i}_{0}+& \small{\text{Allow for} \neq \text{slopes}} \\ 
+& \text{Children}_i\times\left[\hat{\beta_5}\underbrace{\text{(<Highschool)}_i}_{0} + \hat{\beta_6}\underbrace{\text{Highschool}_i}_{1}+ \hat{\beta_7}\underbrace{\text{College}_i}_{0}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+
+<p style = "margin-bottom:2cm;"></p>
+
+<ul style = "list-style: none; margin-left: 5cm;">
+  <li><b>Highschool:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_3}) + (\hat{\beta_1} + \hat{\beta_6})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+</ul>
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<center><i>&#10140; It is clearly <b>equivalent to regressing</b> children on income separately <b>per education group</b></i></center>
+
+<p style = "margin-bottom:2cm;"></p>
+
+$$\begin{align}
+\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_2}\underbrace{\text{(<Highschool)}_i}_{0} + \hat{\beta_3}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_4}\underbrace{\text{College}_i}_{1}+& \small{\text{Allow for} \neq \text{slopes}} \\ 
+& \text{Children}_i\times\left[\hat{\beta_5}\underbrace{\text{(<Highschool)}_i}_{0} + \hat{\beta_6}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_7}\underbrace{\text{College}_i}_{1}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+
+<p style = "margin-bottom:2cm;"></p>
+
+<ul style = "list-style: none; margin-left: 5cm;">
+  <li><b>College:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_4}) + (\hat{\beta_1} + \hat{\beta_7})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+</ul>
+
+---
+
+### 3. Interactions
+
+#### 3.2. Discrete
+
+<center><i>&#10140; It is clearly <b>equivalent to regressing</b> children on income separately <b>per education group</b></i></center>
+
+<p style = "margin-bottom:2cm;"></p>
+
+$$\begin{align}
+\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_2}\text{(<Highschool)}_i + \hat{\beta_3}\text{Highschool}_i+ \hat{\beta_4}\text{College}_i+& \small{\text{Allow for} \neq \text{slopes}} \\ 
+& \text{Children}_i\times\left[\hat{\beta_5}\text{(<Highschool)}_i + \hat{\beta_6}\text{Highschool}_i+ \hat{\beta_7}\text{College}_i\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+
+<p style = "margin-bottom:2cm;"></p>
+
+<ul style = "list-style: none; margin-left: 5cm;">
+  <li><b>< Highschool:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_2}) + (\hat{\beta_1} + \hat{\beta_5})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+  <li><b>Highschool:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_3}) + (\hat{\beta_1} + \hat{\beta_6})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+  <li><b>College:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_4}) + (\hat{\beta_1} + \hat{\beta_7})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+</ul>
+
+
+---
+
+### 3. Interactions
+
+#### 3.3. Continuous
+
+<ul>
+  <li>The <b>same principle</b> applies to <b>continuous variables:</b></li>
+</ul>
+
+$$\text{Pollution}_i = \hat{\alpha} + \hat{\beta_1} \text{Income}_i + \hat{\beta_2} \text{Distance}_i+ \hat{\beta_3} (\text{Distance}_i\times\text{Income}_i) + \hat{\epsilon_i}$$
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+<ul>
+  <li>What is the <b>effect of</b> 1-unit increase in <b>income here?</b></li>
+</ul>
+
+--
+
+$$\hat{\beta_1} + \hat{\beta_3}\text{Distance}_i$$
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>The <b>coefficient</b> associated with the <b>interaction</b>, \(\hat{\beta_3}\), indicates:</li>
+  <ul>
+    <li>By how the <b>effect</b> of a one unit increase in <b>income</b> on pollution <b>varies with distance</b></li>
+    <li>When <b>distance = 0</b> the effect of income is \(\hat{\beta_1}\)</li>
+    <li>For every <b>additional unit</b> of distance, the effect of income on pollution <b>increases by \(\hat{\beta_3}\)</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<center><i>&#10140; Don't omit to include your interaction variable as a control in the regression</i></center>
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:1.75cm;">
+
+#### 1. Adding variables &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 1.1. Continuous variables
+ * 1.2. Discrete variables
+ 
+#### 2. Control variables &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 2.1. Motivation
+ * 2.2. Discrete controls
+ * 2.3. Continuous controls
+
+#### 3. Interactions &#10004;
+<p style = "margin-bottom:-.5cm;">
+ * 3.1. Motivation
+ * 3.2. Discrete interactions
+ * 3.3. Continuous interactions
+
+#### 4. Wrap up!
+
+---
+
+### 4. Wrap up!
+
+#### 1. Multivariate regressions
+
+<ul>
+  <li><b>Adding</b> a second independent <b>variable</b> in the regression amounts to <b>fitting a plane</b> instead of a line</li>
+  <ul>
+    <li>Adding a third variable would fit an hyperplane of dimension 3 and so on</li>
+  </ul>
+</ul>
+
+--
+
+.pull-left[
+
+<center><b>Adding a continuous variable</b></center>
+
+```{r, echo = F, fig.width = 6, fig.height = 1.25, out.width= '100%'}
+petal_lm <- lm(ige ~ gini + third_variable, ggcurve)
+graph_reso <- 0.05
+
+#Setup Axis
+axis_x <- seq(min(ggcurve$gini), max(ggcurve$gini), by = graph_reso)
+axis_y <- seq(min(ggcurve$third_variable), max(ggcurve$third_variable), by = graph_reso)
+
+#Sample points
+petal_lm_surface <- expand.grid(gini = axis_x, third_variable = axis_y, KEEP.OUT.ATTRS = F)
+petal_lm_surface$ige <- predict.lm(petal_lm, newdata = petal_lm_surface)
+petal_lm_surface <- acast(petal_lm_surface, third_variable ~ gini, value.var = "ige") #y ~ x
+
+plot_ly(ggcurve, x = ~gini, y = ~third_variable, z = ~ige) %>% 
+  add_markers(opacity = .8) %>%
+  add_trace(z = petal_lm_surface,
+            x = axis_x,
+            y = axis_y,
+            type = "surface", 
+            colorscale ='YlGnBu',
+            opacity = .8) %>% 
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB", xaxis = list(zeroline = F),
+    yaxis = list(zeroline = F),
+         aspectratio = list(x = 2, y = 1, z = .5),
+         scene = list(xaxis = list(title = 'Gini'),
+                      yaxis = list(title = 'Third variable'),
+                      zaxis = list(title = 'IGE'),
+                      camera = list(eye = list(x = -.75, 
+                                               y = -2, 
+                                               z = .75)))) %>% 
+  style(hoverinfo = 'skip')
+```
+]
+
+.pull-right[
+
+<center><b>Adding a discrete variable</b></center>
+
+```{r, echo = F, fig.width = 6, fig.height = 1.25, out.width= '100%'}
+petal_lm <- lm(`Log Earnings` ~ Black + Other, asec)
+graph_reso <- 0.05
+
+#Setup Axis
+axis_x <- seq(min(asec$Black), max(asec$Black), by = graph_reso)
+axis_y <- seq(min(asec$Other), max(asec$Other), by = graph_reso)
+
+#Sample points
+petal_lm_surface <- expand.grid(Black = axis_x, Other = axis_y, KEEP.OUT.ATTRS = F)
+petal_lm_surface$`Log Earnings` <- predict.lm(petal_lm, newdata = petal_lm_surface)
+petal_lm_surface <- acast(petal_lm_surface, Other ~ Black, value.var = "Log Earnings") #y ~ x
+
+plot_ly(asec, x = ~Black, y = ~Other, z = ~`Log Earnings`) %>% 
+  add_markers(opacity = .005) %>%
+  add_trace(z = petal_lm_surface,
+            x = axis_x,
+            y = axis_y,
+            type = "surface", 
+            colorscale ='YlGnBu',
+            opacity = .8) %>% 
+  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
+         aspectratio = list(x = 2, y = 1, z = .5),
+         scene = list(xaxis = list(title = 'Black'),
+                      yaxis = list(title = 'Other'),
+                      zaxis = list(title = 'Log Earnings'),
+                      camera = list(eye = list(x = -.75, 
+                                               y = -2, 
+                                               z = .75)))) %>% 
+  style(hoverinfo = 'skip')
+```
+
+]
+
+---
+
+### 4. Wrap up!
+
+#### 2. Control variables
+
+<ul>
+  <li>Adding a third variable \(z\) <b>removes</b> its potential <b>confounding effect</b> from the relationship between \(x\) and \(y\)</li>
+  <ul>
+    <li>As we move along the \(x\) axis, the <b>third variable remains constant</b></li>
+  </ul>
+</ul>
+
+--
+
+$$\hat{y_i} = \hat{\alpha} + \hat{\beta_1} x + \hat{\beta_2} z + \hat{\varepsilon_i}$$
+
+--
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "55%"}
+animation
+```
+
+---
+
+### 4. Wrap up!
+
+#### 3. Interactions
+
+<ul>
+  <li>Adding an <b>interaction</b> term with \(z\) allows to see <b>how the effect</b> of \(x\) on \(y\) <b>varies</b> with \(z\)</li>
+  <ul>
+    <li>If \(z\) is <b>discrete</b>, it amounts to <b>regressing</b> \(y\) on \(x\) <b>separately</b> for each \(z\) group</li>
+  </ul>
+</ul>
+
+--
+
+$$\hat{y_i} = \hat{\alpha} + \hat{\beta_1} x + \hat{\beta_2} z + \hat{\beta_3}(x \times z)+ \hat{\varepsilon_i}$$
+
+--
+
+```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "55%"}
+ggplot(edu, aes(x = Income, y = Children, color = Education, shape = Education)) +
+  geom_point(alpha = .6, size = 3) +
+  geom_smooth(method = "lm", formula = y ~ x, se = F, show.legend = F)
+```
+
+
