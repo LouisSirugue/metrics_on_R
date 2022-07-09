@@ -1,0 +1,98 @@
+---
+title: "Homework 1: Introduction to R programming"
+author: "Louis Sirugue"
+date: "`r format(Sys.time(), '%m/%Y')`"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+---
+
+```{r setup, echo = F, warning=F, message = F}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F, fig.align='center') 
+source(paste0(getwd(), "/../source/style.R"))
+```
+
+<br>
+
+This homework covers the material from the first 5 lectures. I encourage you start **working on it progressively** as we go through the course. Homeworks should be done **individually**. You are welcome to help each other by sharing what you understand, but write your homework by yourself, **do not share your code**. Contrarily to the online quizzes, this homework is meant to be challenging. **Partial answers will be taken into account**, so if you cannot do everything, **write down your thought process**.
+
+The grading system is available [here](https://louissirugue.github.io/data-analysis-course/homework1/grading.html), and the material for this homework is available [here](https://louissirugue.github.io/data-analysis-course/homework1/data.zip) Make sure that your answers are unambiguous and that your code is annotated extensively. You can write either in English or in French.
+
+### I. Describe an earnings distribution
+
+The dataset for this first part contains the sex and annual earnings of 64,336 individuals. This data was extracted from the 2020 Annual Social and Economic (ASEC) Supplement to the US Current Population Survey (CPS), conducted by the Bureau of the Census for the Bureau of Labor Statistics. Only the sex and salary of working individuals with positive earnings are kept in this extract. The full dataset is available [here](https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html) and the full documentation [here](https://www2.census.gov/programs-surveys/cps/techdocs/cpsmar20.pdf).  
+
+<p style = "margin-bottom:1cm;"></p>
+
+**1\) Read the file asec_2020.csv and store it in tibble format.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**2\) Print the first 10 rows of the dataset. The output should document the class of each variable. How do you interpret the class associated with each of these two variables?**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**3\) Use the summary() function to describe *only* the earnings variable. Write a small description of the earnings distribution based on the output.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**4\) Compute the same statistics separately for males and females using the summarise() function of the dplyr grammar. Is the range (max-min) an adequate statistic to compare these two distributions?**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**5\) Superimpose the earnings distribution of males and females with different fill colors on a graph and modify the x-axis labels to express earnings in thousands of dollars. Does it look like a common distribution?**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+### II. Visualize intergenerational persistence
+
+Intergenerational persistence refers to the association between individuals' socio-economic status across generations. A higher intergenerational persistence (or low intergenerational mobility) in income means that children are very likely to reach an income level that is similar to that of their parents. Conversely, a low intergenerational persistence means that their is no strong association between the income of parents an that their children will earn as adults.  
+
+The academic article this second part is about, *'Where is the Land of Opportunity? The Geography of Intergenerational Mobility in the United States'*, documents the characteristics of intergenerational persistence/mobility in the United States. This section focuses on a specific set of statistics gathered in *transition matrices*. For every quantile of the parent income distribution (it can be quintiles, deciles, centiles, ...), the transition matrix documents share of children falling in each quantile of their income distribution. Consider for instance the following tercile by tercile transition matrix.
+
+```{r, echo = F}
+kable(data = tibble(` ` = c("Child T1", "Child T2", "Child T3"),
+                    `Parent T1` = c("49.4%", "32.4%", "18.2%"),
+                    `Parent T2` = c("30.3%", "36.7%", "33.0%"),
+                    `Parent T3` = c("20.3%", "30.9%", "48.8%")),
+      caption = "3x3 Transition matrix", align = "c") %>%
+  column_spec(1, bold = T)
+```
+
+It reads as follows. 48.8% of children born to parents in the third tercile of the income distribution also belong to the third tercile of their income distribution once adults. In other words, conditional on being born to parents in the third tercile, a child as 48.8% chances to be in the third tercile as well once adult. Note that if child income was completely disconnected from parent income, this probability would be of one third. 
+
+The dataset for this exercise is a 100 $\times$ 100 transition matrix estimated on US data for children born in 1980-82 birth cohorts. The data and the article attached to this homework are publicly available at [opportunityinsights.org](https://opportunityinsights.org/). One subtlety with this transition matrix is about the 6.1% zero-income earners in the children income distribution. Because they all do earn the same income, it does not make sense to allocate them in different quantiles. Thus, 'centile' 1 corresponds to 0.3% of negative child income, and centile 4 corresponds to the mass of children earning zero income. Consequently, the seventh bin of the child income distribution is not a full percentile group but contains (0.07 $-$ 0.061 $-$ 0.003) $=$ 0.6% of the children). Percentiles 8 to 100 of the child income distribution are regular percentiles. There is not issue of weakly negative income for the parent income distribution.
+
+<p style = "margin-bottom:1cm;"></p>
+
+**1\) Use the package readxl to read the sheet 'Online Data Table 1' in the file transition_matrix.xls. Omit the first 9 rows of the sheet and make sure that the first row is not used for variable names. Rename the first column 'child_quantile'.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**2) How would you compute the expected rank for children born to parents in a given quantile? In other words, how can you get the average quantile for children whose parents belong to the n<sup>th</sup> quantile? Consider quantile as a continuous variable for this question onward.**
+
+*Hint: Keep in mind that the first column lists the quantiles of the child income distribution. Every other column corresponds to a quantile of the parent income distribution, and values in these columns indicate the share of children born to parents in this quantile who attain each quantile of the child income distribution.*
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**3\) Compute and plot the expected centile of children for each parent centile. Comment the graph.**
+
+*Hint: Start by creating a new dataset in long format. You can check that your results are correct by comparing the graph you obtain with Figure II.A. in the article attached to this homework.*
+
+<p style = "margin-bottom:.5cm;"></p>
+
+
+**4\) Write a function that allows to reduce the 100 $\times$ 100 matrix into an q $\times$ q matrix. It should take two arguments: output_format and q. When output_format = "wide" the function should return the reduced matrix in wide format, as the original data. Otherwise it should be returned in long format. The q argument should control the number of quantiles of the reduced matrix.**
+
+*Hint: Start from the data in long format that you should have computed in the previous question. Note that the ntile function is not appropriate to aggregate quantiles in that case given the allocation of negative- and zero-income earners. If your function works fine, setting output_format to "wide" and q to 5 should output the same numbers as in Table II in the article attached to this homework.*
+
+<p style = "margin-bottom:.5cm;"></p>
+
+**5\) Plot the 10 $\times$ 10 transition matrix generated by this function with the geom_tile geometry. Use a continuous color palette from the viridis package. Comment the plot.**
+
+<p style = "margin-bottom:.5cm;"></p>
+
+<br><br>

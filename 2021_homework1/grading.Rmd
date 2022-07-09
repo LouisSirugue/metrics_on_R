@@ -1,0 +1,33 @@
+---
+title: "Homework 1: Grading System"
+author: "Louis Sirugue"
+date: "`r format(Sys.time(), '%m/%Y')`"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+---
+
+<br>
+
+```{r setup, include = F}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+lapply(c("tidyverse", "kableExtra"), library, character.only = T)
+```
+
+```{r table_notes}
+kable(tibble(question = c(rep(paste("Question", 1:5), 2), "Code chunk annotation", 
+                          "Use of inline code", "Redaction quality", "Overall presentation"),
+             grade = c(rep(paste0("/", c(1, 1, 2, 2, 2)), 2), rep("/1", 4))),
+      col.names = NULL,
+      align = c("lc")) %>%
+  kable_styling(bootstrap_options = c("condensed"), full_width = F) %>%
+  column_spec(1, width_min = "20em") %>%
+  pack_rows("Part I: Describe an earnings distribution (8 points)", 1, 5) %>%
+  pack_rows("Part II: Visualize intergenerational persistence (8 points)", 6, 10) %>%
+  pack_rows("Presentation of the document (4 points)", 11, 14)
+```
+
+<br><br>
