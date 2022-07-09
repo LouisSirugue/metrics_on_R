@@ -1,0 +1,123 @@
+---
+title: |
+       | Data Analysis: An Introduction to 
+       | Econometrics and R Programming
+author: "PSL - CPES 2"
+date: "2021/2022"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(kableExtra)
+```
+
+### I. Course description
+
+<indent></indent>The objective of this course is to provide you with the necessary statistical and data visualization tools to perform well-structured and meaningful data analyses for your own research projects. By the end of this course you should be able to produce relevant statistics and compelling graphics to include in your future reports, presentations, or research projects. To this end, this course combines notions of R programming, basic statistics, and introductory econometrics.  
+
+During the first semester, the emphasis will successively be put on R programming, data analysis, and data visualization, but these three dimensions are particularly intricate and bridges will be built across these notions all along the course. The second semester will be dedicated to a group project in which you will have to apply the tools presented in class to your own research question in order to produce an original data analysis. You will also learn how to make your final project look like [this document](https://louissirugue.github.io/data-analysis-course/project/example.html) so that it can easily be valuated on an online CV or as a writing sample, and demonstrate your soon-acquired programming and data analysis skills.
+
+### II. Practical matters
+
+<indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in programming or statistics. Lectures will take place at Campus Jourdan - Room 6, every Tuesday from 15:45 to 17:45. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
+
+Make sure to download and install both R and R studio before the first lecture.  
+
+ * [Download R](https://cran.r-project.org/)
+ * [Download R studio](https://www.rstudio.com/products/rstudio/download/#download)
+
+### III. Grading system
+
+#### First semester
+
+<indent></indent>The grading of the first semester will be based on weekly short online quizzes (25% of the grade) and 2 homeworks (30% of the grade for the first homework, and 45% of the grade for the second homework). Online quizzes consist in a set of 3 to 5 shorts questions related to the content of the previous class. You will have the possibility to retry the quiz as many times as you want before submitting, so it should be relatively easy to get full points on this part. But the quiz of a given lecture will be closed at the beginning of the following lecture. There will two homeworks corresponding to the first two parts of the course: Introduction to R Programming, and Introduction to Econometrics. Homeworks will be given in advance so that you can work on it progressively as we go through the course. Homeworks consist in course questions and coding exercises.  
+
+#### Second semester
+
+<indent></indent>The second semester grade will be entirely based on a group project that you will carry out all along the semester. As the first three lectures of the second semester will be refreshers on the notions seen during the first semester, you will have some time to come up with your own research question and to find relevant data to test your hypotheses empirically (you will be guided on where and how to look for data). Then, in each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc.  until your final presentation.  [Here](https://louissirugue.github.io/data-analysis-course/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the [homepage](https://louissirugue.github.io/data-analysis-course/home.html). You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
+
+### IV. Schedule
+
+```{r s1, echo = FALSE}
+s1 <- data.frame(a = c(paste("Lecture", 1:15)),
+                 b = c("Introduction to the R programming language",
+                       "Basic data manipulation",
+                       "Descriptive statistics",
+                       "Data visualization",
+                       "R markdown, LaTeX, and Github",
+                       "Correction of Homework 1",
+                       "Ordinary least squares - I",
+                       "Ordinary least squares - II",
+                       "Causality and randomness",
+                       "Applications in academic research",
+                       "How (not) to lie with graphics",
+                       "Text data and sentiment analysis",
+                       "Correction of Homework 2",
+                       "Maps and geolocalized data", 
+                       "Interactive data visualization"),
+                 c = c("07/09/21", "14/09/21", "21/09/21", "28/09/21",
+                       "05/10/21", "12/10/21", "19/10/21", "09/11/21",
+                       "16/11/21", "23/11/21", "30/11/21", "07/12/21", 
+                       "14/12/21", "04/01/22", "11/01/22"))
+
+kable(s1, col.names = NULL)  %>%
+  add_header_above(c("Semester 1" = 3)) %>%
+  row_spec(0, font_size = 20) %>%
+  kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+  pack_rows("Part 1: Introduction to R programming", 1, 6) %>%
+  pack_rows("Part 2: Introduction to Econometrics", 7, 13) %>%
+  pack_rows("Part 3: Data visualization", 14, 15) 
+```
+
+***
+
+<vspace></vspace>
+
+```{r s2, echo = FALSE}
+s2 <- data.frame(a = c(paste("Lecture", 1:15)),
+                 b = c("How to conduct a research project",
+                       "Refresher: R Programming",
+                       "Refresher: Econometrics",
+                       "Presentation of your research question and dataset",
+                       "Follow-up: Data cleaning",
+                       "Follow-up: Descriptive statistics",
+                       "Follow-up: Visualizing the data",
+                       "Follow-up: Regression analysis I",
+                       "Follow-up: Regression analysis II",
+                       "Follow-up: Causality assessment",
+                       "Follow-up: Robustness",
+                       "Follow-up: Heterogeneity",
+                       "Follow-up: Tidy your html report for Github",
+                       "Follow-up: Last tips", 
+                       "Final presentation"),
+                 c = c(rep("Date", 15)))
+
+kable(s2, col.names = NULL)  %>%
+  add_header_above(c("Semester 2" = 3)) %>%
+  row_spec(0, font_size = 20) %>%
+  kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+  pack_rows("Part 1: Guidelines and refreshers", 1, 3) %>%
+  pack_rows("Part 2: Research project", 4, 15)
+```
+
+***
+
+### V. References
+
+This course is inspired by:
+
+ * [Introduction to R](https://introtor-pse.appspot.com/), <i>by H. Bull and P. Charousset.</i> Paris School of Economics (2020)
+ * [Advanced Mircoeconometrics](https://enseignements.ehess.fr/2020-2021/ue/798), <i>by D. Margolis and F. Libois.</i> Paris School of Economics (2020)
+ * [How to Lie with Graphics](http://data.visualisation.free.fr/Papers/Part1-HowToLie.pdf), <i>by C. Bontemps.</i> Toulouse School of Economics (2020)
+ * [Introduction to Econometrics with R](https://scpoecon.github.io/ScPoEconometrics/), <i>by F. Oswald, V. Viers, P. Villedieu, and G. Kenedi.</i> SciencesPo Dep. of Economics (2020)
+ * Introduction to Causal Inference, <i>by L. Zabrocki.</i> Paris Sciences et Lettres - CPES (2020)
+ * Geolocalized Datasets and Applications for Economics, <i>by F. Libois and E. Madinier.</i> Paris School of Economics (2020)
+ * Countless posts on [stackoverflow](https://stackoverflow.com/) and [R-bloggers](https://www.r-bloggers.com/)
+ 
+<br>

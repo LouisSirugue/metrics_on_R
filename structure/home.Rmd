@@ -1,0 +1,359 @@
+---
+title: 'Introduction to Econometrics<br> & <img src = "rstudio_logo.png" width = "40"> Programming'
+author: "PSL - CPES 2"
+date: "Louis Sirugue"
+output: 
+  html_document:
+    theme: cosmo
+    css: ../source/style.css
+    includes:
+      in_header: ../source/header.html
+editor_options: 
+  chunk_output_type: console
+---
+
+```{css, echo = F, eval = F}
+body{background-color:black;filter:invert(1)}
+```
+
+```{r, echo = F}
+dark <- ""
+#dark <- "_dark"
+```
+
+
+```{r setup, include = F}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+lapply(c("tidyverse", "kableExtra"), library, character.only = T)
+root <- "https://louissirugue.github.io/metrics_on_R/"
+
+```
+
+<p style = "margin-bottom:1.75cm;">
+
+### {.tabset}
+
+#### Material
+
+<h3> I. Fall semester </h3>
+
+```{r}
+s1 <- data.frame(a = c(" ", 
+                       paste("Lecture", 1:15)),
+                 
+                 b = c(" ",
+                       paste("Introduction to", "R"),
+                       "Descriptive statistics",
+                       "Basic data manipulation",
+                       "Data visualization",
+                       paste("R", "Markdown & \\(\\LaTeX\\)"),
+                       "Text data & sentiment analysis",
+                       "Homework correction",
+                       
+                       "Univariate regressions",
+                       "Multivariate regressions",
+                       
+                       "Inference",
+                       "Causality",
+                       "Interpretation",
+                       "Applications in academic research",
+                       
+                       "Maps and geolocalized data", 
+                       "Final Exam"),
+                 
+                 c = c("Slides", 
+                       paste0("[html](", root, "lecture1/slides", dark, ".html) - [pdf](", root, "lecture1/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture2/slides", dark, ".html) - [pdf](", root, "lecture2/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture3/slides", dark, ".html) - [pdf](", root, "lecture3/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture4/slides", dark, ".html) - [pdf](", root, "lecture4/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture5/slides", dark, ".html) - [pdf](", root, "lecture5/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture6/slides", dark, ".html) - [pdf](", root, "lecture6/slides", dark, ".pdf)"),
+                       "html - pdf",
+                       paste0("[html](", root, "lecture8/slides", dark, ".html) - [pdf](", root, "lecture7/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture9/slides", dark, ".html) - [pdf](", root, "lecture8/slides", dark, ".pdf)"),
+                       "html - pdf",
+                       "html - pdf",
+                       "html - pdf",
+                       "html - pdf",
+                       "html - pdf",
+                       "html - pdf"),
+                 
+                 
+                 d = c("Quizzes", 
+                       "[Quiz 1](https://sirugue.shinyapps.io/quiz1/)",
+                       "Quiz 2",
+                       "Quiz 3",
+                       " ", " ", 
+                       " ", " ", 
+                       "Quiz 4", 
+                       "Quiz 5", 
+                       "Quiz 6",
+                       " ", " ", 
+                       " ", " ", 
+                       " "),
+                 
+                 e = c("Data", 
+                       " ", 
+                       " ", 
+                       paste0("[data](", root, "lecture3/data.zip)"),
+                       paste0("[data](", root, "lecture4/data.zip)"),
+                       " ",
+                       paste0("[data](", root, "lecture6/data.zip)"),
+                       " ",
+                       paste0("[data](", root, "lecture8/data.zip)"),
+                       paste0("[data](", root, "lecture9/data.zip)"),
+                       " ",
+                       " ",
+                       " ",
+                       " ",
+                       " ",
+                       " "))
+
+kable(s1, col.names = NULL, align = "llcccc") %>%
+  row_spec(1, font_size = 17)  %>%
+  column_spec(1, width = "8em", width_min = "6em") %>%
+  column_spec(2, width = "20em", width_min = "14em") %>%
+  column_spec(3, width = "7em") %>%
+  column_spec(4, width = "5em") %>%
+  column_spec(5, width = "5em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover")) %>%
+  pack_rows("Part 1: Introduction to R programming", 2, 8) %>%
+  pack_rows("\nPart 2: Introduction to Econometrics", 9, 16) 
+```
+
+<h3> II. Spring semester </h3>
+
+```{r}
+s2 <- data.frame(a = c(" ", paste("Lecture", 16:18)),
+                 b = c(" ", "How to conduct a research project", "Refresher: R Programming", 
+                       "Refresher: Econometrics"),
+                 c = c("Slides", 
+                       "html - pdf",
+                       "html - pdf",
+                       "html - pdf"),
+                 d = c("Data",
+                       "data",
+                       "data",
+                       "data"))
+
+kable(s2, col.names = NULL, align = "llccc") %>%
+  row_spec(1, font_size = 17) %>%
+  column_spec(1, width = "8em", width_min = "6em") %>%
+  column_spec(2, width = "20em", width_min = "14em") %>%
+  column_spec(3, width = "12em") %>%
+  column_spec(4, width = "5em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover")) %>% pack_rows("Guidelines and refreshers", 2, 4) 
+```
+
+<h3> III. Exams </h3>
+
+```{r}
+ex <- data.frame(a = c(" ", 
+                       "Homework", "Final exam", 
+                       "Research project"),
+                 
+                 b = c("Guidelines", 
+                       "html - pdf","html - pdf",
+                       paste0("[html](", root, "project/example.html) - pdf")),
+                       
+                 c = c("Grading",
+                       "html - pdf","html- pdf",
+                       paste0("[html](", root, "project/grading.html) - pdf")),
+                 d = c("Data", 
+                       "data",  "data", 
+                       paste0("[data](", root, "project/data.zip)")))
+                 
+kable(ex, col.names = NULL, align = "lccc")  %>%
+  #add_header_above(c("Semester 1" = 3)) %>%
+  row_spec(1, font_size = 16) %>%
+  column_spec(1, width = "28em", width_min = "20em") %>%
+  column_spec(2, width = "7em") %>%
+  column_spec(3, width = "5em") %>%
+  column_spec(4, width = "5em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover")) %>% 
+  pack_rows("Semester 1", 2, 3) %>% pack_rows("\nSemester 2", 4, 4) 
+```
+
+<br><br><br><br>
+
+#### Contents
+
+<br><br>
+
+ADD HYPERLINKS + FONT LEVEL <=> HIERARCHY + CHANGE BULLET IF NOT COLLAPSIBLE
+
+```{r, include = F}
+toc <- read.csv("toc.csv", sep = ";")
+
+htmlcode <- ""
+for (i in unique(toc$Course)) {
+  
+  htmlcode <- paste0(htmlcode, '<details open style = "margin-left:1cm;"><summary>', i, '</summary>')
+  
+  sect <- unique(toc %>% filter(Course == i) %>% select(Section) %>% deframe)
+  if (sect != "") {
+    for (j in sect) {
+      htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary>', j, '</summary>')
+      
+      sub <- toc %>% filter(Course == i & Section == j) %>% select(Subsection) %>% deframe
+      if (sub != "") {
+        for (k in sub) {
+          htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary>', k, '</summary></details>')
+        }
+      }
+    
+      htmlcode <- paste0(htmlcode, '</details>') 
+    }
+  }
+  htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>') 
+}
+
+writeLines(htmlcode, "toc.html")
+```
+
+
+````{=html}
+```{r, echo=FALSE, results='asis'}
+xfun::file_string('toc.html')
+```
+````
+
+<br><br><br><br>
+
+#### Syllabus
+
+UPDATE SYLLABUS
+
+<h3> I. Course description </h3>
+
+<blockquote><i><p style = "margin-left:1cm"></p>The objective of this course is to provide you with the necessary statistical and data visualization tools to perform well-structured and meaningful data analyses for your own research projects. By the end of this course you should be able to produce relevant statistics and compelling graphics to include in your future reports, presentations, or research projects. To this end, this course combines notions of R programming, basic Statistics, and introductory Econometrics.</i></blockquote>
+
+During the first semester, the emphasis will successively be put on R Programming and Econometrics, but all along the course bridges will be built between these two dimensions of data analysis. The second semester will be dedicated to a group project in which you will have to apply the tools presented in class to your own research question in order to produce an original data analysis. You will also learn how to make your final project look like [this document](https://louissirugue.github.io/metrics_on_R/project/example.html) so that it can easily be valuated on an online CV or as a writing sample, and demonstrate your soon-acquired programming and data analysis skills.
+
+<h3> II. Practical matters </h3>
+
+<indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in programming or Statistics. Lectures will take place at Campus Jourdan - Room *TBA*, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
+
+Make sure to download and install both R and R studio before the first lecture.  
+
+ * [Download R](https://cran.r-project.org/)
+ * [Download R studio](https://www.rstudio.com/products/rstudio/download/#download)
+
+<h3> III. Grading system </h3>
+
+<h4> First semester </h4>
+
+<indent></indent>The grading of the first semester will be based on weekly short online quizzes (x6 - 25% of the grade), one homeworks (30% of the grade), and one final exam (45% of the grade). Online quizzes consist in a set of 3 to 5 shorts questions related to the content of the previous class. You will have the possibility to retry the quiz as many times as you want before submitting, so it should be relatively easy to get full points on this part. But the quiz of a given lecture will be closed at the beginning of the following lecture. There will two homeworks corresponding to the first two parts of the course: Introduction to R Programming, and Introduction to Econometrics. Homeworks will be given in advance so that you can work on it progressively as we go through the course. Homeworks consist in course questions and coding exercises.  
+
+<h4> Second semester </h4>
+
+<indent></indent>The second semester grade will be entirely based on a group project that you will carry out all along the semester. As the first three lectures of the second semester will be refreshers on the notions seen during the first semester, you will have some time to come up with your own research question and to find relevant data to test your hypotheses empirically (you will be guided on where and how to look for data). Then, in each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc.  until your final presentation.  [Here](https://louissirugue.github.io/data-analysis-course/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the [homepage](https://louissirugue.github.io/data-analysis-course/home.html). You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
+
+<h3> IV. Schedule </h3>
+
+```{r s1, echo = FALSE}
+s1 <- data.frame(a = c(paste("Lecture", 1:15)),
+                 b = c("Introduction to the R programming language",
+                       "Basic data manipulation",
+                       "Descriptive statistics",
+                       "Data visualization",
+                       "R markdown, LaTeX, and Github",
+                       "Correction of Homework 1",
+                       "Ordinary least squares - I",
+                       "Ordinary least squares - II",
+                       "Causality and randomness",
+                       "Applications in academic research",
+                       "How (not) to lie with graphics",
+                       "Text data and sentiment analysis",
+                       "Correction of Homework 2",
+                       "Maps and geolocalized data", 
+                       "Interactive data visualization"),
+                 c = c("07/09/21", "14/09/21", "21/09/21", "28/09/21",
+                       "05/10/21", "12/10/21", "19/10/21", "09/11/21",
+                       "16/11/21", "23/11/21", "30/11/21", "07/12/21", 
+                       "14/12/21", "04/01/22", "11/01/22"))
+
+kable(s1, col.names = NULL)  %>%
+  add_header_above(c("Semester 1" = 3)) %>%
+  row_spec(0, font_size = 20) %>%
+  kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+  pack_rows("Part 1: Introduction to R programming", 1, 6) %>%
+  pack_rows("Part 2: Introduction to Econometrics", 7, 13) %>%
+  pack_rows("Part 3: Data visualization", 14, 15) 
+```
+
+***
+
+<vspace></vspace>
+
+```{r s2, echo = FALSE}
+s2 <- data.frame(a = c(paste("Lecture", 1:15)),
+                 b = c("How to conduct a research project",
+                       "Refresher: R Programming",
+                       "Refresher: Econometrics",
+                       "Presentation of your research question and dataset",
+                       "Follow-up: Data cleaning",
+                       "Follow-up: Descriptive statistics",
+                       "Follow-up: Visualizing the data",
+                       "Follow-up: Regression analysis I",
+                       "Follow-up: Regression analysis II",
+                       "Follow-up: Causality assessment",
+                       "Follow-up: Robustness",
+                       "Follow-up: Heterogeneity",
+                       "Follow-up: Tidy your html report for Github",
+                       "Follow-up: Last tips", 
+                       "Final presentation"),
+                 c = c(rep("Date", 15)))
+
+kable(s2, col.names = NULL)  %>%
+  add_header_above(c("Semester 2" = 3)) %>%
+  row_spec(0, font_size = 20) %>%
+  kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+  pack_rows("Part 1: Guidelines and refreshers", 1, 3) %>%
+  pack_rows("Part 2: Research project", 4, 15)
+```
+
+***
+
+<h3> V. References </h3>
+
+This course is inspired by:
+
+ * [Introduction to R](https://introtor-pse.appspot.com/), <i>by H. Bull and P. Charousset.</i> Paris School of Economics (2020)
+ * [Advanced Mircoeconometrics](https://enseignements.ehess.fr/2020-2021/ue/798), <i>by D. Margolis and F. Libois.</i> Paris School of Economics (2020)
+ * [How to Lie with Graphics](http://data.visualisation.free.fr/Papers/Part1-HowToLie.pdf), <i>by C. Bontemps.</i> Toulouse School of Economics (2020)
+ * [Introduction to Econometrics with R](https://scpoecon.github.io/ScPoEconometrics/), <i>by F. Oswald, V. Viers, P. Villedieu, and G. Kenedi.</i> SciencesPo Dep. of Economics (2020)
+ * Introduction to Causal Inference, <i>by L. Zabrocki.</i> Paris Sciences et Lettres - CPES (2020)
+ * Geolocalized Datasets and Applications for Economics, <i>by F. Libois and E. Madinier.</i> Paris School of Economics (2020)
+ * Countless posts on [stackoverflow](https://stackoverflow.com/) and [R-bloggers](https://www.r-bloggers.com/)
+ 
+<br><br><br><br>
+
+#### Archives
+
+ADD SHINY IN 2021 AND ALLOW FOR DARKMODE
+<br>
+
+```{r}
+archives <- data.frame(a = c(" ", 
+                       "Homework 1 - Introduction to R programming", 
+                       "Homework 2 - Data analysis"),
+                 b = c("Guidelines", 
+                       paste0("[html](", root, "2021_homework1/guidelines.html)"),
+                       paste0("[html](", root, "2021_homework2/guidelines.html)")),
+                 c = c("Grading",
+                       paste0("[html](", root, "2021_homework1/grading.html)"),
+                       paste0("[html](", root, "2021_homework2/grading.html)")),
+                 d = c("Data", 
+                       paste0("[data](", root, "2021_homework1/data.zip)"),
+                       paste0("[data](", root, "2021_homework2/data.zip)")))
+                 
+kable(archives, col.names = NULL, align = "lccc")  %>%
+  row_spec(1, font_size = 16) %>%
+  kable_styling(bootstrap_options = c("condensed", "hover")) %>%
+  pack_rows("2021", 2, 3)
+```
+
+<p style = "margin-bottom:30cm;">
+
+<br><br><br><br>

@@ -1,0 +1,88 @@
+Course;Section;Subsection
+I. Introduction to R;Presentation of the course;
+I. Introduction to R;1. Getting started;1.1. About R
+I. Introduction to R;1. Getting started;1.2. The R Studio environment
+I. Introduction to R;2. Classes of R objects;2.1. Numeric values
+I. Introduction to R;2. Classes of R objects;2.2. Character values
+I. Introduction to R;2. Classes of R objects;2.3. Logical values
+I. Introduction to R;2. Classes of R objects;2.4. Manipulate classes
+I. Introduction to R;3. Vectors;3.1. Definition
+I. Introduction to R;3. Vectors;3.2. Operations with vectors
+I. Introduction to R;3. Vectors;3.3. Useful functions
+I. Introduction to R;3. Vectors;3.4. Classes of vectors
+I. Introduction to R;4. Functions and packages;4.1. Functions
+I. Introduction to R;4. Functions and packages;4.2. Packages
+I. Introduction to R;5. A few words on learning R;
+I. Introduction to R;6. Wrap up!;
+II. Descriptive statistics;1. Distributions;1.1. Definition
+II. Descriptive statistics;1. Distributions;1.2. Graphical representation
+II. Descriptive statistics;1. Distributions;1.3. Common distributions
+II. Descriptive statistics;2. Central tendency;2.1. Mean
+II. Descriptive statistics;2. Central tendency;2.2. Median
+II. Descriptive statistics;2. Central tendency;2.3. Mean vs. median
+II. Descriptive statistics;3. Spread;3.1. Range, quantiles, and the IQR
+II. Descriptive statistics;3. Spread;3.2. Variance and standard deviation
+II. Descriptive statistics;3. Spread;3.3. Standard deviation vs. IQR
+II. Descriptive statistics;4. Inference;4.1. Data generating process
+II. Descriptive statistics;4. Inference;4.2. Empirical vs. theoretical moments
+II. Descriptive statistics;4. Inference;4.3. Confidence interval
+II. Descriptive statistics;5. Wrap up!;
+III. Basic data manipulation;1. Datasets;1.1. What is a dataset
+III. Basic data manipulation;1. Datasets;1.2. Import and eyeball data
+III. Basic data manipulation;1. Datasets;1.3. Subset data
+III. Basic data manipulation;2. The dplyr grammar;2.1. Basic functions
+III. Basic data manipulation;2. The dplyr grammar;2.2. Group by and summarise
+III. Basic data manipulation;2. The dplyr grammar;2.3. Merge and append data
+III. Basic data manipulation;2. The dplyr grammar;2.4. Reshape data
+III. Basic data manipulation;3. Wrap up!;
+IV. Data visualization;1. The ggplot() function;1.1. Basic structure
+IV. Data visualization;1. The ggplot() function;1.2. Axes
+IV. Data visualization;1. The ggplot() function;1.3. Theme
+IV. Data visualization;1. The ggplot() function;1.4. Annotation
+IV. Data visualization;2. Adding dimensions;2.1. More axes
+IV. Data visualization;2. Adding dimensions;2.2. More facets
+IV. Data visualization;2. Adding dimensions;2.3. More labels
+IV. Data visualization;3. Types of geometry;3.1. Points and lines
+IV. Data visualization;3. Types of geometry;3.2. Barplots and histograms
+IV. Data visualization;3. Types of geometry;3.3. Densities and boxplots
+IV. Data visualization;4. How (not) to lie with graphics;4.1. Cumulative representations
+IV. Data visualization;4. How (not) to lie with graphics;4.2. Axis manipulations
+IV. Data visualization;4. How (not) to lie with graphics;4.3. Interpolation
+IV. Data visualization;5. Wrap up!;
+V. R Markdown & LaTeX;1. Basic principles;1.1. What is R Markdown?
+V. R Markdown & LaTeX;1. Basic principles;1.2. YAML header
+V. R Markdown & LaTeX;1. Basic principles;1.3. Code chunks
+V. R Markdown & LaTeX;1. Basic principles;1.4. Text formatting
+V. R Markdown & LaTeX;1. Basic principles;1.5. Run and knit your code
+V. R Markdown & LaTeX;2. Useful features;2.1. Inline code
+V. R Markdown & LaTeX;2. Useful features;2.2. Tables
+V. R Markdown & LaTeX;2. Useful features;2.3. Preset themes
+V. R Markdown & LaTeX;3. LaTeX for equations;3.1. What is LaTeX?
+V. R Markdown & LaTeX;3. LaTeX for equations;3.2. LaTeX syntax
+V. R Markdown & LaTeX;3. LaTeX for equations;3.3. Large equations
+V. R Markdown & LaTeX;4. Wrap up!;
+V. R Markdown & LaTeX;5. Guidelines for the homework;
+VI. Text data & sentiment analysis;1. Cleaning text data;1.1. Exploring the data
+VI. Text data & sentiment analysis;1. Cleaning text data;1.2. Regular expressions
+VI. Text data & sentiment analysis;1. Cleaning text data;1.3. Tokenization
+VI. Text data & sentiment analysis;2. Sentiment analysis;2.1. Stopwords
+VI. Text data & sentiment analysis;2. Sentiment analysis;2.2. Sentiments
+VI. Text data & sentiment analysis;2. Sentiment analysis;2.3. Analysis
+VII. Homework correction;;
+VIII. Univariate regressions;1. Joint distributions;1.1. Definition
+VIII. Univariate regressions;1. Joint distributions;1.2. Covariance
+VIII. Univariate regressions;1. Joint distributions;1.3. Correlation
+VIII. Univariate regressions;2. Univariate regressions;2.1. Introduction to regressions
+VIII. Univariate regressions;2. Univariate regressions;2.2. Coefficients estimation
+VIII. Univariate regressions;3. Binary variables;3.1. Binary dependent variables
+VIII. Univariate regressions;3. Binary variables;3.2. Binary independent variables
+VIII. Univariate regressions;4. Wrap up!;
+IX. Multivariate regressions;1. Adding variables;1.1. Continuous variables
+IX. Multivariate regressions;1. Adding variables;1.2. Discrete variables
+IX. Multivariate regressions;2. Control variables;2.1. Motivation
+IX. Multivariate regressions;2. Control variables;2.2. Discrete controls
+IX. Multivariate regressions;2. Control variables;2.3. Continuous controls
+IX. Multivariate regressions;3. Interactions;3.1. Motivation
+IX. Multivariate regressions;3. Interactions;3.2. Discrete interactions
+IX. Multivariate regressions;3. Interactions;3.3. Continuous interactions
+IX. Multivariate regressions;4. Wrap up!;
