@@ -1,0 +1,21 @@
+:root {
+  --background-color: #DFE6EB;
+  --code-highlight-color: rgba(255,255,0,0.5);
+  --header-font-family: 'Noto Sans'; 
+  --header-color: #014D64;
+  --text-color: #014D64;
+}
+
+h1, h2, h3 {
+  font-family: var(--header-font-family);
+  font-weight: 150;
+  color: var(--header-color);
+}
+
+/* Code chunks styling */
+/***********************/
+.hljs-github .hljs {color: #014D64; background: #EFF3F5;}
+.hljs-github .hljs-string{color: #2780E3;}
+.hljs-github .hljs-number{color: #6794A7;}
+.hljs-github .hljs-keyword{color: #6794A7;}
+.hljs-github .hljs-literal{color: #6794A7;}
