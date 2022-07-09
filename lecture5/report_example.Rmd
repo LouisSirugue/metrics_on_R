@@ -1,0 +1,18 @@
+---
+title: "Report example"
+author: "Louis Sirugue"
+date: "26/09/2021"
+output: html_document
+---
+
+## Overview of the data
+
+```{r cars}
+# Omit if distance >= 100
+cars <- cars[cars$dist < 100, ]
+names(cars)
+dim(cars)
+c(mean(cars$speed), mean(cars$dist))
+```
+
+The dataset we consider contains two variables, speed and distance, and has `r dim(cars)[1]` observations. The average speed value is `r mean(cars$speed)` and the average distance value is `r mean(cars$dist)`.

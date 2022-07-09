@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>R Markdown &amp; LaTeX</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/jquery/jquery.min.js"></script>
+    <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="libs/datatables-binding/datatables.js"></script>
+    <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+    <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk/js/crosstalk.min.js"></script>
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# R Markdown &amp; LaTeX
+## Lecture 5
+### <br>Louis SIRUGUE
+### CPES 2 - Fall 2022
+
+---
+
+
+&lt;style type="text/css"&gt;
+body{background-color:black;filter:invert(1)}
+&lt;/style&gt;
+
+
+
+### Last time we saw
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+&lt;center&gt;&lt;h4&gt; The 3 core components of the ggplot() function &lt;/h4&gt;&lt;/center&gt;
+
+--
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Component &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Contribution &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Implementation &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Data &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Underlying values &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; ggplot(data, | data %&amp;gt;% ggplot(., &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mapping &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Axis assignment &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; aes(x = V1, y = V2, ...)) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Geometry &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Type of plot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; + geom_point() + geom_line() + ... &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+--
+
+ * Any **other element** should be added with a **`+` sign**
+
+--
+
+
+```r
+ggplot(data, aes(x = V1, y = V2)) + 
+  geom_point() + geom_line() +
+  anything_else()
+```
+
+---
+
+### Last time we saw
+
+.pull-left[
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;center&gt;&lt;h4&gt; Main customization tools &lt;/h4&gt;&lt;/center&gt;
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Item to customize &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Main functions &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Axes &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; scale_[x/y]_[continuous/discrete] &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Baseline theme &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; theme_[void/minimal/.../dark]() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Annotations &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; geom_[[h/v]line/text](), annotate() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Theme &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; theme(axis.[line/ticks].[x/y] = ..., &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;h4&gt; Main types of geometry &lt;/h4&gt;&lt;/center&gt;
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Geometry &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Function &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bar plot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_bar() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Histogram &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_histogram() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Area &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_area() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Line &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_line() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Density &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_density() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Boxplot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_boxplot() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Violin &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_violin() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Scatter plot &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; geom_point() &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### Last time we saw
+
+.pull-left[
+
+&lt;center&gt;&lt;h4&gt; Main types of aesthetics &lt;/h4&gt;&lt;/center&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Argument &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; alpha &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; opacity from 0 to 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; color &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; color of the geometry &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; fill &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; fill color of the geometry &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; size &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; size of the geometry &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; shape &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; shape for geometries like points &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; linetype &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; solid, dashed, dotted, etc. &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:3.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If specified &lt;b&gt;in the geometry&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It will apply uniformly to every &lt;b&gt;all the geometry&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If assigned to a variable &lt;b&gt;in aes&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;it will &lt;b&gt;vary with the variable&lt;/b&gt; according to a scale documented in legend&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+&lt;br&gt;
+
+--
+
+
+```r
+ggplot(data, aes(x = V1, y = V2, size = V3)) + 
+  geom_point(color = "steelblue", alpha = .6)
+```
+
+---
+
+&lt;h3&gt;Today we learn how use R Markdown!&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+--
+
+.pull-left[
+#### 1. Basic principles
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+
+#### 2. Useful features
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Inline code
+ * 2.2. Tables
+ * 2.3. Preset themes 
+]
+
+.pull-right[
+#### 3. LaTeX for equations
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. What is LaTeX?
+ * 3.2. LaTeX syntax
+ * 3.3. Large equations
+ 
+#### 4. Wrap up!
+ 
+#### 5. Guidelines for the homework
+]
+
+---
+
+&lt;h3&gt;Today we learn how use R Markdown!&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. Basic principles
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+]
+
+---
+
+### 1. Basic principles
+
+#### 1.1. What is R Markdown?
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;R Markdown&lt;/b&gt; is a type of document in which you can both &lt;b&gt;write/run R code&lt;/b&gt; and &lt;b&gt;edit text&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Here are some examples of R Markdown reports&lt;/li&gt;
+  &lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/archives/2021/homework1/correction.html"&gt;Last year homework&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/project/example"&gt;Example of research project&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/covariance_vs_correlation_with_code.html"&gt;Supplementary material&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/home.html"&gt;Course webpage and material&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;It is structured around &lt;b&gt;3 types of content&lt;/b&gt;:&lt;/li&gt;
+  &lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Code chunks&lt;/b&gt; to run and render the output&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Editable text&lt;/b&gt; to display&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;YAML metadata&lt;/b&gt; for the R Markdown build process&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+ &lt;center&gt;&lt;h4&gt;&lt;i&gt;&amp;#10140; Let's go through them by creating our first R Markdown!&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 1. Basic principles
+
+#### 1.1. What is R Markdown?
+
+&lt;center&gt;&amp;#10140; Click on &lt;b&gt;File &gt; New File &gt; Rmarkdown&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+--
+
+.pull-left[
+&lt;img src = "new_markdown.png" width = "450"/&gt;
+]
+
+--
+
+.pull-right[
+&lt;p style = "margin-bottom:2.5cm;"&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Fill up the information and select &lt;b&gt;HTML&lt;/b&gt;&lt;/li&gt;
+  &lt;li style = "margin-top:7cm;"&gt;Click on &lt;b&gt;OK&lt;/b&gt;&lt;/li&gt;
+&lt;/ol&gt;
+]
+
+---
+
+### 1. Basic principles
+
+#### 1.1. What is R Markdown?
+
+ * It creates a **template** containing the **3 types of content**:
+ 
+--
+
+.left-column[
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+&lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;YAML header &amp;#10140;&lt;/b&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+&lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Code chunks &amp;#10140;&lt;/b&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+&lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Text &amp;#10140;&lt;/b&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+&lt;center&gt;&lt;i&gt;Let's go through them one by one!&lt;/i&gt;&lt;/center&gt;
+
+]
+
+.right-column[
+&lt;center&gt;&lt;img src = "template.png" width = "650"/&gt;&lt;/center&gt;
+]
+
+---
+
+### 1. Basic principles
+
+#### 1.2. YAML header
+
+ * The **YAML header** contains general information related to the **file configuration**:
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;
+
+--
+
+&lt;ul&gt;
+&lt;ul&gt;
+&lt;li&gt;Title/subtitle (in quotes)&lt;/li&gt;
+&lt;li&gt;Author (in quotes)&lt;/li&gt;
+&lt;li&gt;Date (in quotes)&lt;/li&gt;
+&lt;li&gt;Output type (html_document/pdf_document)&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+* It should be specified at the **very beginning** of the document and surrounded by **three dashes** like so:
+
+
+```r
+---
+title: "My First Markdown Report"
+author: "Louis Sirugue"
+date: "24/09/2021"
+output: html_document
+---
+```
+
+---
+
+### 1. Basic principles
+
+#### 1.3. Code chunks
+
+ * **Code chunks are blocks of R code** that can be run when working on and rendering the .Rmd file
+ 
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+ * You can insert a code chunk using `Ctrl + Alt + i` or by typing the **backticks chunk delimiters** as follows
+ 
+````markdown
+```{r}
+1+1
+```
+````
+
+&lt;p style = "margin-bottom:.5cm;"&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;When &lt;b&gt;rendering&lt;/b&gt; the document, R will &lt;b&gt;execute&lt;/b&gt; the code&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Both the &lt;b&gt;code&lt;/b&gt; and the &lt;b&gt;output&lt;/b&gt; will appear in the document like so:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+1+1
+```
+
+```
+## [1] 2
+```
+
+---
+
+### 1. Basic principles
+
+#### 1.3. Code chunks
+
+ * The **content** to be **displayed** from the code chunk can be specified in **chunk options**
+  * For instance, to display only the output and not the code chunk, you can set `echo` to `FALSE`
+
+--
+
+````markdown
+```{r, echo = F}
+1+1
+```
+````
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * And the output will only be
+ 
+
+```
+## [1] 2
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * Instead of 
+ 
+
+```r
+1+1
+```
+
+```
+## [1] 2
+```
+
+---
+
+### 1. Basic principles
+
+#### 1.3. Code chunks
+
+&lt;center&gt;&lt;h4&gt; Chunk options to know &lt;/h4&gt;&lt;/center&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;text-align: center;"&gt; Option &lt;/th&gt;
+   &lt;th style="text-align:center;text-align: center;"&gt; Default &lt;/th&gt;
+   &lt;th style="text-align:left;text-align: center;"&gt; Effect &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; eval &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Whether to evaluate the code and include its results &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; echo &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Whether to display code along with its results &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; warning &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Whether to display warnings &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; error &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Whether to display errors &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; message &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Whether to display messages &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; results &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 'markup' &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 'hide' to hide the output &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; fig.width &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width in inches for plots created in chunk &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; fig.height &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Height in inches for plots created in chunk &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### 1. Basic principles
+
+#### 1.4. Text formatting
+
+&lt;ul&gt;
+  &lt;li&gt;R Markdown is not only about rendering code but also about &lt;b&gt;writing&lt;/b&gt; actual &lt;b&gt;text&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You can write &lt;b&gt;paragraphs&lt;/b&gt; as you would normally do on a typical report&lt;/li&gt;
+    &lt;li&gt;And R Markdown provides convenient ways to &lt;b&gt;format&lt;/b&gt; your text&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Basic formatting includes:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Italics&lt;/li&gt;
+    &lt;li&gt;Bold&lt;/li&gt;
+    &lt;li&gt;hyperlinks&lt;/li&gt;
+    &lt;li&gt;headers&lt;/li&gt;
+    &lt;li&gt;block quote&lt;/li&gt;
+    &lt;li&gt;un/ordered lists&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Unlike most text editing software, in R Markdown &lt;b&gt;text formatting&lt;/b&gt; isn't about clicking on dedicated buttons&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It &lt;b&gt;relies on symbols&lt;/b&gt; that should be written along with the text&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Basic principles
+
+#### 1.4. Text formatting
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+`Plain text  ⠀`  
+`End a line with two spaces for line break`
+
+`*italics*`
+
+`**bold**`
+
+`# Header 1`
+
+`## Header 2`
+
+...
+
+
+`###### Header 6`
+
+`[link](https://www.rstudio.com)`
+
+]
+
+.pull-right[
+&lt;center&gt; &lt;h4&gt; Output &lt;/h4&gt; &lt;/center&gt;
+
+Plain text  
+End a line with two spaces for line break
+
+*italics*
+
+**bold**
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+# Header 1
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+## Header 2
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+...
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+###### Header 6
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+[link](https://www.rstudio.com)
+
+]
+
+---
+
+### 1. Basic principles
+
+#### 1.4. Text formatting
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+`&gt; block quote`
+
+Horizontal rule:
+
+`***`
+
+`* unordered list`  
+`* item 2`  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;`+ sub-item 1`  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;`+ sub-item 2`  
+
+
+`1. ordered list`  
+`2. item 2`  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;`+ sub-item 1`  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;`+ sub-item 2`  
+
+]
+
+.pull-right[
+&lt;center&gt; &lt;h4&gt; Output &lt;/h4&gt; &lt;/center&gt;
+
+&gt; block quote
+
+Horizontal rule:
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+***
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+* unordered list
+* item 2
+ + sub-item 1
+ + sub-item 2
+ 
+1. ordered list
+2. item 2
+ + sub-item 1
+ + sub-item 2
+ 
+]
+
+---
+
+### 1. Basic principles
+
+#### 1.5. Run and knit your code
+
+&lt;ul&gt;
+  &lt;li&gt;To &lt;b&gt;execute&lt;/b&gt; the content of a &lt;b&gt;code&lt;/b&gt; chunk in R Markdown&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Click on the &lt;b&gt;green play button&lt;/b&gt; at the top right of the chunk &lt;img src = "current_chunk.png" width = "20"/&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+.pull-left[
+
+  &lt;ul&gt;
+    &lt;li&gt;You can also:&lt;/li&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;Run all chunks above&lt;/b&gt; the current chunk &lt;img src = "all_chunks_above.png" width = "20"/&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Run all chunks&lt;/b&gt; from the Run drop down menu at the top right (or Ctrl+Alt+R)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/ul&gt;
+  
+  &lt;center&gt;&lt;img src = "run_all.png" width = "185"/&gt;&lt;/center&gt;
+  
+]
+
+--
+
+.pull-left[
+
+  &lt;ul&gt;
+    &lt;li&gt;To choose where the &lt;b&gt;output&lt;/b&gt; must be &lt;b&gt;displayed&lt;/b&gt;, click on the &lt;i&gt;"Options"&lt;/i&gt; button&lt;/li&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;b&gt;Chunk output inline:&lt;/b&gt; output displayed right&lt;/li&gt;
+    &lt;/ul&gt;                             
+  &lt;/ul&gt;
+  
+  &lt;p style = "margin-left:7.72cm; margin-top:-.55cm;"&gt;below the chunk in the&lt;/p&gt;
+  &lt;p style = "margin-left:7.72cm; margin-top:-.55cm; margin-bottom:-.55cm;"&gt;&lt;b&gt;source panel&lt;/b&gt;&lt;/p&gt;
+  
+  &lt;ul&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Chunk output in console:&lt;/b&gt; output displayed&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+  
+  &lt;p style = "margin-left:8.88cm; margin-top:-.55cm;"&gt;in &lt;b&gt;console panel&lt;/b&gt;&lt;/p&gt;
+  
+  &lt;center&gt;&lt;img src = "inline.png" width = "200"/&gt;&lt;/center&gt;
+  
+]
+  
+---
+
+### 1. Basic principles
+
+#### 1.5. Run and knit your code
+
+ * To **render** an R Markdown file, click on the **knit button** &lt;img src = "knit.png" width = "35"/&gt;
+ 
+--
+
+&lt;center&gt;&lt;img src = "comparison_1.png" width = "900"/&gt;&lt;/center&gt;
+
+---
+
+### 1. Basic principles
+
+#### 1.5. Run and knit your code
+
+ * To **render** an R Markdown file, click on the **knit button** &lt;img src = "knit.png" width = "35"/&gt;
+
+&lt;center&gt;&lt;img src = "comparison_2.png" width = "900"/&gt;&lt;/center&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. Basic principles &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+
+#### 2. Useful features
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Inline code
+ * 2.2. Tables
+ * 2.3. Preset themes 
+]
+
+.pull-right[
+#### 3. LaTeX for equations
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. What is LaTeX?
+ * 3.2. LaTeX syntax
+ * 3.3. Large equations
+ 
+#### 4. Wrap up!
+ 
+#### 5. Guidelines for the homework
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. Basic principles &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+
+#### 2. Useful features
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Inline code
+ * 2.2. Tables
+ * 2.3. Preset themes 
+]
+
+---
+
+### 2. Useful features
+
+#### 2.1. Inline code
+
+ * A big advantage of R Markdown is that you can &lt;b&gt;automate&lt;/b&gt; your &lt;b&gt;reports&lt;/b&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;center&gt;&lt;h4&gt;Why is it useful?&lt;/h4&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You might figure out quite late in the process that you need to &lt;b&gt;make a change&lt;/b&gt; at the beginning of the analysis&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A change that potentially &lt;b&gt;impacts everything&lt;/b&gt; that comes after in the report&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Imagine that you forgot to filter an irrelevant group of observations at the beginning&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If you simply filter your data at the beginning in a code chunk&lt;/li&gt;
+    &lt;li&gt;All your tables and figures will &lt;b&gt;update automatically&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But what if you wrote some of your results &lt;b&gt;within paragraphs?&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;In a usual text formatting software you would have to update everything manually&lt;/li&gt;
+    &lt;li&gt;But here you can also make it &lt;b&gt;update automatically!&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Useful features
+
+#### 2.1. Inline code
+ 
+ * Consider the following report :
+
+&lt;center&gt;&lt;img src = "report_example_1.png" width = "740"/&gt;&lt;/center&gt;
+
+---
+
+### 2. Useful features
+
+#### 2.1. Inline code
+
+ * Imagine that there is a problem with the observation for which `dist &gt; 100` and that you should discard it
+
+&lt;center&gt;&lt;img src = "report_example_2.png" width = "740"/&gt;&lt;/center&gt;
+
+---
+
+### 2. Useful features
+
+#### 2.1. Inline code
+
+&lt;ul&gt;
+  &lt;li&gt;All the results were updated automatically but not the text&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;That's where &lt;b&gt;inline code&lt;/b&gt; comes in!&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+ 
+&amp;#10140; **Inline code** allows to include the output of some **R code within text areas** of your report
+
+&lt;p style = "margin-bottom:.75cm;"&gt;
+
+--
+
+ * R code outside code chunks should be included between backticks:
+  * Surrounding code with **backticks** in a text area will **change** the **format** to that of the code chunk
+  * **Adding** the **`r`** letter right after the first backtick will **show** the **output** of the code instead of the code
+
+
+--
+
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+
+```r
+`paste("a", "b", sep = "-")`
+```
+
+
+```r
+`r paste("a", "b", sep = "-")`
+```
+
+]
+
+.pull-right[
+&lt;center&gt; &lt;h4&gt; Output &lt;/h4&gt; &lt;/center&gt;
+
+`paste("a", "b", sep = "-")`
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+a-b
+ 
+]
+
+
+---
+
+### 2. Useful features
+
+#### 2.1. Inline code
+
+ * With inline code, **paragraphs** also do **update automatically**:
+
+&lt;center&gt;&lt;img src = "report_example_3.png" width = "700"/&gt;&lt;/center&gt;
+
+
+---
+
+### 2. Useful features
+
+#### 2.2. Tables
+
+ * Displaying a table as a raw output can be unpleasant to read
+ 
+--
+
+
+```r
+head(mtcars)
+```
+
+```
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+ * The `kable()` function from the `knitr` package allows to display tables in a nice way
+ 
+
+```r
+library("knitr")
+```
+
+---
+
+### 2. Useful features
+
+#### 2.2. Tables
+
+ * You just need to put the table you want to display inside the `kable()` function
+
+
+```r
+kable(head(mtcars), caption = "First rows of the dataset")
+```
+
+--
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;First rows of the dataset&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mpg &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cyl &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; disp &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; hp &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; drat &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; wt &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; qsec &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; vs &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; am &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; gear &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; carb &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mazda RX4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 110 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.62 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.46 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mazda RX4 Wag &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 110 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.88 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Datsun 710 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 108 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Hornet 4 Drive &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 258 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 110 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.08 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Hornet Sportabout &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 360 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 175 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Valiant &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 225 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 105 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.76 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.46 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### 2. Useful features
+
+#### 2.2. Tables
+
+ * For **big tables**, one solution is the `datatable()` function from the `DT` package
+ 
+--
+  
+ * As with `kable()`, you just need to put the table you want to display inside the `datatable()` function
+ 
+
+```r
+install.packages("DT") # if not already installed
+library("DT")
+datatable(mtcars)
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The output will be an &lt;b&gt;interactive table&lt;/b&gt; which allows to:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Navigate in the table by displaying a limited number of rows at a time&lt;/li&gt;
+    &lt;li&gt;Choose the number of rows to display&lt;/li&gt;
+    &lt;li&gt;Search for a given element in the table&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+ * You can select the default number of rows to display as follows
+
+
+```r
+datatable(mtcars, options = list(pageLength = 5))
+```
+
+---
+
+### 2. Useful features
+
+#### 2.2. Tables
+
+<div id="htmlwidget-b457639599d236874ee5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b457639599d236874ee5">{"x":{"filter":"none","data":[["Mazda RX4","Mazda RX4 Wag","Datsun 710","Hornet 4 Drive","Hornet Sportabout","Valiant","Duster 360","Merc 240D","Merc 230","Merc 280","Merc 280C","Merc 450SE","Merc 450SL","Merc 450SLC","Cadillac Fleetwood","Lincoln Continental","Chrysler Imperial","Fiat 128","Honda Civic","Toyota Corolla","Toyota Corona","Dodge Challenger","AMC Javelin","Camaro Z28","Pontiac Firebird","Fiat X1-9","Porsche 914-2","Lotus Europa","Ford Pantera L","Ferrari Dino","Maserati Bora","Volvo 142E"],[21,21,22.8,21.4,18.7,18.1,14.3,24.4,22.8,19.2,17.8,16.4,17.3,15.2,10.4,10.4,14.7,32.4,30.4,33.9,21.5,15.5,15.2,13.3,19.2,27.3,26,30.4,15.8,19.7,15,21.4],[6,6,4,6,8,6,8,4,4,6,6,8,8,8,8,8,8,4,4,4,4,8,8,8,8,4,4,4,8,6,8,4],[160,160,108,258,360,225,360,146.7,140.8,167.6,167.6,275.8,275.8,275.8,472,460,440,78.7,75.7,71.1,120.1,318,304,350,400,79,120.3,95.1,351,145,301,121],[110,110,93,110,175,105,245,62,95,123,123,180,180,180,205,215,230,66,52,65,97,150,150,245,175,66,91,113,264,175,335,109],[3.9,3.9,3.85,3.08,3.15,2.76,3.21,3.69,3.92,3.92,3.92,3.07,3.07,3.07,2.93,3,3.23,4.08,4.93,4.22,3.7,2.76,3.15,3.73,3.08,4.08,4.43,3.77,4.22,3.62,3.54,4.11],[2.62,2.875,2.32,3.215,3.44,3.46,3.57,3.19,3.15,3.44,3.44,4.07,3.73,3.78,5.25,5.424,5.345,2.2,1.615,1.835,2.465,3.52,3.435,3.84,3.845,1.935,2.14,1.513,3.17,2.77,3.57,2.78],[16.46,17.02,18.61,19.44,17.02,20.22,15.84,20,22.9,18.3,18.9,17.4,17.6,18,17.98,17.82,17.42,19.47,18.52,19.9,20.01,16.87,17.3,15.41,17.05,18.9,16.7,16.9,14.5,15.5,14.6,18.6],[0,0,1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,1,0,0,0,1],[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1],[4,4,4,3,3,3,3,4,4,4,4,3,3,3,3,3,3,4,4,4,3,3,3,3,3,4,5,5,5,5,5,4],[4,4,1,1,2,1,4,2,2,4,4,3,3,3,4,4,4,1,2,1,1,2,2,4,2,1,2,2,4,6,8,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>mpg<\/th>\n      <th>cyl<\/th>\n      <th>disp<\/th>\n      <th>hp<\/th>\n      <th>drat<\/th>\n      <th>wt<\/th>\n      <th>qsec<\/th>\n      <th>vs<\/th>\n      <th>am<\/th>\n      <th>gear<\/th>\n      <th>carb<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; Try to search for &lt;b&gt;"Toyota"&lt;/b&gt; for instance&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 2. Useful features
+
+#### 2.3. Preset themes
+
+
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;default theme&lt;/b&gt; of R Markdown might seem &lt;b&gt;a bit dull&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The look of your reports can easily be &lt;b&gt;enhanced&lt;/b&gt; using a variety of &lt;b&gt;preset&lt;/b&gt; themes&lt;/li&gt;
+    &lt;li&gt;The preset theme to use should be specified in the &lt;b&gt;YAML header&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Add a theme argument to the html_document format specified as output&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+ 
+
+```r
+---
+title: "My First Markdown Report"
+author: "Louis Sirugue"
+date: "24/09/2021"
+output: 
+  html_document:
+    theme: cosmo
+---
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;When using themes from downloaded packages, how to set the theme can be slightly different&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Check the online documentation&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Useful features
+
+#### 2.3. Preset themes
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+.pull-left[
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;cosmo&lt;/h4&gt;
+&lt;img src = "default_cosmo.png" width = "550"/&gt;&lt;/center&gt;
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;cerulean&lt;/h4&gt;
+&lt;img src = "default_cerulean.png" width = "550"/&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Useful features
+
+#### 2.3. Preset themes
+
+&lt;p style = "margin-bottom:-1cm;"&gt;
+
+.pull-left[
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;cayman (from prettydoc)&lt;/h4&gt;
+&lt;img src = "prettydoc_cayman.png" width = "375"/&gt;&lt;/center&gt;
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;tactile (from prettydoc)&lt;/h4&gt;
+&lt;img src = "prettydoc_tactile.png" width = "360"/&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Useful features
+
+#### 2.3. Preset themes
+
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;leonids (from prettydoc)&lt;/h4&gt;
+&lt;img src = "prettydoc_leonids.png" width = "725"/&gt;&lt;/center&gt;
+
+---
+
+### 2. Useful features
+
+#### 2.3. Preset themes
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+.pull-left[
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;downcute (from rmdformats)&lt;/h4&gt;
+&lt;img src = "rmdformats_downcute.png" width = "550"/&gt;&lt;/center&gt;
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;h4 style = "margin-bottom:.5cm;"&gt;downcute chaos (from rmdformats)&lt;/h4&gt;
+&lt;img src = "rmdformats_downcute_chaos.png" width = "550"/&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Useful features
+
+#### 2.3. Preset themes
+
+
+.pull-left[
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;readthedown (from rmdformats)&lt;/h4&gt;
+&lt;img src = "rmdformats_readthedown.png" width = "550"/&gt;&lt;/center&gt;
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;robobook (from rmdformats)&lt;/h4&gt;
+&lt;img src = "rmdformats_robobook.png" width = "550"/&gt;&lt;/center&gt;
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. Basic principles &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+
+#### 2. Useful features &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Inline code
+ * 2.2. Tables
+ * 2.3. Preset themes 
+]
+
+.pull-right[
+#### 3. LaTeX for equations
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. What is LaTeX?
+ * 3.2. LaTeX syntax
+ * 3.3. Large equations
+ 
+#### 4. Wrap up!
+ 
+#### 5. Guidelines for the homework
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. Basic principles &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+
+#### 2. Useful features &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Inline code
+ * 2.2. Tables
+ * 2.3. Preset themes 
+]
+
+.pull-right[
+#### 3. LaTeX for equations
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. What is LaTeX?
+ * 3.2. LaTeX syntax
+ * 3.3. Large equations
+]
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.1. What is LaTeX?
+
+ * `\(\LaTeX\)` is a document preparation system
+
+&lt;p style = "margin-bottom:.95cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But LaTeX is not a &lt;i&gt;"what you see is what you get"&lt;/i&gt; system&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;In Microsoft Word or Google doc, you work directly on the "output document"&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;LateX&lt;/b&gt; works more like R Markdown: &lt;b&gt;Edit&lt;/b&gt; your text &lt;b&gt;in a script using commands and symbols&lt;/b&gt;&lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-left:11.25cm; margin-top:-.55cm;"&gt;&lt;b&gt;Compile&lt;/b&gt; the script to &lt;b&gt;get the output&lt;/b&gt;&lt;/p&gt;
+
+
+
+&lt;p style = "margin-bottom:.95cm;"&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;LaTeX is the &lt;b&gt;preferred&lt;/b&gt; typesetting system for most &lt;b&gt;academic&lt;/b&gt; fields mainly because:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Many things can be &lt;b&gt;automated&lt;/b&gt; in LaTeX&lt;/li&gt;
+    &lt;li&gt;It has a good way to typeset &lt;b&gt;mathematical formulas&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.95cm;"&gt;
+
+--
+
+ * We're not gonna learn how to make `\(\LaTeX\)` documents, but just how to make equations 
+ 
+`$$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$`
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.1. What is LaTeX?
+
+ * To include a **LaTeX equation** in R Markdown, you simply have to surround it with the **`$` sign**:
+ 
+--
+ 
+ &lt;p style = "margin-bottom:-.5cm;"&gt;
+ 
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+`1 + 1`
+
+`$1 + 1$`
+
+]
+
+.pull-right[
+&lt;h4&gt; Output &lt;/h4&gt;
+
+1 + 1
+
+`\(1 + 1\)`
+
+]
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+ * LaTeX is a convenient way to display **mathematical symbols** and to **structure equations**
+  * The **syntax** is mainly based on **backslashes \ and braces {}**
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+&lt;center&gt;&lt;h4 style = "margin-bottom:.25cm;"&gt; Example: &lt;/h4&gt;&lt;/center&gt; 
+&lt;p style = "margin-bottom:.25cm;"&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What you type in the text area: `$x \neq \frac{\alpha \times \beta}{2}$`  
+&lt;/p&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What is rendered when knitting the document: `\(x \neq \frac{\alpha \times \beta}{2}\)`
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.2. LaTeX syntax
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; **Common greek letters** 
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;
+ 
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+`$\alpha$`  
+`$\beta$`  
+`$\gamma$` `$\Gamma$`  
+`$\delta$` `$\Delta$`  
+`$\epsilon$` `$\varepsilon$`  
+`$\lambda` `\Lambda$`  
+`$\phi$` `$\Phi$`  
+`$\pi$` `$\Pi$`  
+`$\psi$` `$\Psi$`  
+`$\theta$` `$\Theta$`  
+`$\sigma$` `$\Sigma$`  
+...
+
+]
+
+.pull-right[
+&lt;center&gt; &lt;h4&gt; Output &lt;/h4&gt; &lt;/center&gt;
+
+`\(\alpha\)`  
+`\(\beta\)`  
+`\(\gamma\)` `\(\Gamma\)`  
+`\(\delta\)` `\(\Delta\)`  
+`\(\epsilon\)` `\(\varepsilon\)`  
+`\(\lambda\)` `\(\Lambda\)`  
+`\(\phi\)` `\(\Phi\)`  
+`\(\pi\)` `\(\Pi\)`  
+`\(\psi\)` `\(\Psi\)`  
+`\(\theta\)` `\(\Theta\)`  
+`\(\sigma\)` `\(\Sigma\)`  
+...
+
+]
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.2. LaTeX syntax
+ 
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; **Common symbols** 
+ 
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+`$+ - \pm$`  
+`$\times \div$`  
+`$= \neq \equiv \approx$`  
+`$&gt; &lt; \geq \leq \lessgt$`  
+`$\rightarrow \leftarrow \Leftrightarrow$`  
+`$\in \notin$`  
+`$\forall \exists \nexists$`  
+`$\infty$`  
+`$\sum \prod \int$`  
+...
+
+]
+
+.pull-right[
+&lt;center&gt; &lt;h4&gt; Output &lt;/h4&gt; &lt;/center&gt;
+
+`\(+\)` `\(-\)` `\(\pm\)`  
+`\(\times\)` `\(\div\)`  
+`\(=\)` `\(\neq\)` `\(\equiv\)` `\(\approx\)`  
+`\(&gt;\)` `\(&lt;\)` `\(\geq\)` `\(\leq\)` `\(\lessgtr\)`  
+`\(\rightarrow\)` `\(\leftarrow\)` `\(\Leftrightarrow\)`  
+`\(\in\)` `\(\notin\)`  
+`\(\forall\)` `\(\exists\)` `\(\nexists\)`  
+`\(\infty\)`  
+`\(\sum\)` `\(\prod\)` `\(\int\)`  
+...
+
+]
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.2. LaTeX syntax
+ 
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; **Exponents and accentuation**
+ 
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+`$x^a$`  
+`$x_b$`  
+`$x^a_b$`  
+`$x^{a, i}_{b, j}$`  
+&lt;p style = "margin-bottom:.25cm;"&gt;  
+`$\hat{\beta} \widehat{\beta_{i,j}}$`  
+`$\tilde{\beta} \widetilde{\beta_{i,j}}$`  
+`$\overline{x} \underline{x}$`  
+`$\overrightarrow{x} \underleftarrow{x}$`  
+...
+
+]
+
+.pull-right[
+&lt;center&gt; &lt;h4&gt; Output &lt;/h4&gt; &lt;/center&gt;
+
+`\(x^a\)`  
+`\(x_b\)`  
+`\(x^a_b\)`  
+`\(x^{a, i}_{b, j}\)`  
+`\(\hat{\beta}\)` `\(\widehat{\beta_{i,j}}\)`  
+`\(\tilde{\beta}\)` `\(\widetilde{\beta_{i,j}}\)`  
+`\(\overline{x}\)` `\(\underline{x}\)`  
+`\(\overrightarrow{x}\)` `\(\underleftarrow{x}\)`  
+...
+
+]
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.2. LaTeX syntax
+ 
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; **Math constructs and variable sized symbols**
+ 
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+`$\frac{a \times b}{c}$`  
+`$\sqrt{x} \sqrt[n]{x}$`  
+`$\sum_{i = 1}^N$`  
+`$\prod_{i = 1}^N$`  
+`$\int_a^b$`  
+&lt;p style = "margin-bottom:.5cm;"&gt;  
+`$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$`  
+...
+
+]
+
+.pull-right[
+&lt;center&gt; &lt;h4&gt; Output &lt;/h4&gt; &lt;/center&gt;
+
+`\(\frac{a \times b}{c}\)`  
+`\(\sqrt{x}\)` `\(\sqrt[n]{x}\)`  
+`\(\sum_{i = 1}^N\)`  
+`\(\prod_{i = 1}^N\)`  
+`\(\int_a^b\)`  
+
+`\(\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i\)`  
+...
+
+]
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.3. Large equations
+
+&lt;ul&gt;
+  &lt;li&gt;Surrounding a LaTeX input with &lt;b&gt;one $&lt;/b&gt; on each side is suitable for &lt;b&gt;inline equation&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt; 
+
+&lt;ul&gt;
+  &lt;li&gt;You can also surround a LaTeX input with &lt;b&gt;two $&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It puts the equation at the &lt;b&gt;center of a new line&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;And gives &lt;b&gt;more vertical space&lt;/b&gt; to the equation&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt; 
+ 
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt; 
+
+&lt;ul&gt;
+  &lt;li&gt;To surround a LaTeX input with two $ is usually good for:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Large equations&lt;/li&gt;
+    &lt;li&gt;Equations that should be emphasized&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt; 
+
+--
+
+&lt;p style = "margin-bottom:-.25cm;"&gt; 
+
+.pull-left[
+
+&lt;h4 style = "margin-bottom:-.5cm;"&gt;The mean formula with one `$` on each side&lt;/h4&gt;  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; For inline equations  
+ 
+`\(\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i\)` 
+
+]
+
+.pull-right[
+
+&lt;h4 style = "margin-bottom:-.5cm;"&gt;The mean formula with two `$` on each side&lt;/h4&gt;  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; For large/emphasized equations  
+ 
+`$$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$` 
+
+]
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.3. Large equations
+
+&lt;ul&gt;
+  &lt;li&gt;Sometimes you do not want to &lt;b&gt;consecutive lines&lt;/b&gt; of equations to be centered&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You may want to &lt;b&gt;align&lt;/b&gt; them based on &lt;b&gt;common part&lt;/b&gt; within the equations&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * This should be done in an **`aligned` environment** (`$\begin{aligned}...\end{aligned}$`)
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;  
+
+&lt;ul&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Place the &lt;b&gt;"&amp;"&lt;/b&gt; symbol where the equations should be aligned&lt;/li&gt;
+    &lt;li&gt;And break a line using &lt;b&gt;"\\"&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+--
+
+
+```r
+$$
+\begin{aligned}
+x &amp; = (a + b) \times c \\
+  &amp; = (a \times c) + (b \times c)
+\end{aligned}
+$$
+```
+
+`$$\begin{aligned}
+x &amp; = (a + b) \times c \\
+  &amp; = (a \times c) + (b \times c)
+\end{aligned}$$`
+
+---
+
+### 3. LaTeX for equations
+
+#### 3.3. Large equations
+ 
+ * The same principle applies within **`cases` environment**
+
+--
+
+
+```r
+$$\text{Med}(x) = \begin{cases} 
+  x[\frac{N+1}{2}]                          &amp; \text{if } N \text{ is odd}\\
+  \frac{x[\frac{N}{2}]+x[\frac{N}{2}+1]}{2} &amp; \text{if } N \text{ is even}
+\end{cases}$$
+```
+
+`$$\text{Med}(x) = \begin{cases} 
+  x[\frac{N+1}{2}]                          &amp; \text{if } N \text{ is odd}\\
+  \frac{x[\frac{N}{2}]+x[\frac{N}{2}+1]}{2} &amp; \text{if } N \text{ is even}
+\end{cases}$$`
+
+--
+
+ * Note that the **`text` function** allows to write text without it being interpreted as mathematical letters:
+
+&lt;p style = "margin-bottom:-.5cm;"&gt; 
+
+--
+
+.pull-left[
+
+```r
+$$Mean(x)=\frac{1}{N}\sum_{i=1}^N x_i$$
+```
+`$$Mean(x)=\frac{1}{N}\sum_{i=1}^N x_i$$`
+]
+
+.pull-right[
+
+```r
+$$\text{Mean}(x)=\frac{1}{N}\sum_{i=1}^N x_i$$
+```
+`$$\text{Mean}(x)=\frac{1}{N}\sum_{i=1}^N x_i$$`
+]
+
+---
+
+### Practice
+
+.left-column[
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&lt;i&gt;Reproduce the following html output using R markdown&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 15 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+]
+
+.right-column[
+&lt;p style = "margin-bottom:-3.5cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;img src = "practice.png" width = "555"/&gt;&lt;/center&gt;
+]
+
+---
+
+### Solution
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+````markdown
+---
+title: "Lecture 5 - Practice"
+author: "Your name"
+date: "03/10/2022"
+output: 
+  html_document:
+    theme: cosmo
+---
+
+### 1. Setup
+
+The packages needed in an Rmd must *always* be loaded in a code chunk at the beginning of the file.
+
+̀ ̀ ̀ {r, message = F, warning = F}
+library(tidyverse)
+̀ ̀ ̀
+
+However, the command `install.packages()` must **not** be written in an R markdown.  
+It should be run only once in the console.
+````
+
+---
+
+### Solution
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+````markdown
+
+### 2. Computations
+
+The `rnorm(n, mean, sd)` command allows to generate n observations drawn from a normal distribution
+with a given mean and standard deviation.
+
+̀ ̀ ̀ {r}
+x &lt;- rnorm(1000, 0, 1)
+̀ ̀ ̀
+
+We can compute the mean $\overline{x}$ of this variable:
+
+$$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
+
+̀ ̀ ̀ {r}
+mean(x)
+̀ ̀ ̀
+
+Here is the result, written in **inline code** such that it updates automatically: ̀ r mean(x)̀ 
+   ⠀
+````
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. Basic principles &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+
+#### 2. Useful features &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Inline code
+ * 2.2. Tables
+ * 2.3. Preset themes 
+]
+
+.pull-right[
+#### 3. LaTeX for equations &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. What is LaTeX?
+ * 3.2. LaTeX syntax
+ * 3.3. Large equations
+ 
+#### 4. Wrap up!
+ 
+#### 5. Guidelines for the homework
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. Basic principles &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+
+#### 2. Useful features &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Inline code
+ * 2.2. Tables
+ * 2.3. Preset themes 
+]
+
+.pull-right[
+#### 3. LaTeX for equations &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. What is LaTeX?
+ * 3.2. LaTeX syntax
+ * 3.3. Large equations
+ 
+#### 4. Wrap up!
+]
+
+---
+
+### 4. Wrap up!
+
+#### 1. Three types of contents
+
+.left-column[
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+&lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;YAML header &amp;#10140;&lt;/b&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+&lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Code chunks &amp;#10140;&lt;/b&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+&lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Text &amp;#10140;&lt;/b&gt;
+]
+
+.right-column[
+&lt;img src = "report_example_3.png" width = "700"/&gt;
+]
+
+---
+
+### 4. Wrap up!
+
+#### 2. Useful features
+
+&amp;#10140; **Inline code** allows to include the output of some **R code within text areas** of your report
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+
+--
+
+.pull-left[
+&lt;center&gt; &lt;h4&gt; Syntax &lt;/h4&gt; &lt;/center&gt;
+
+
+```r
+`paste("a", "b", sep = "-")`
+```
+
+
+```r
+`r paste("a", "b", sep = "-")`
+```
+
+]
+
+.pull-right[
+&lt;center&gt; &lt;h4&gt; Output &lt;/h4&gt; &lt;/center&gt;
+
+`paste("a", "b", sep = "-")`
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+a-b
+ 
+]
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+--
+
+&amp;#10140; **`kable()`** for clean **html tables** and **`datatable()`** to navigate in **large tables**
+ 
+
+```r
+kable(results_table)
+datatable(results_table)
+```
+
+---
+
+### 4. Wrap up!
+
+#### 3. LaTeX for equations
+
+ * `\(\LaTeX\)` is a convenient way to display **mathematical** symbols and to structure **equations**
+  * The **syntax** is mainly based on **backslashes \ and braces {}**
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What you **type** in the text area: `$x \neq \frac{\alpha \times \beta}{2}$`  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What is **rendered** when knitting the document: `\(x \neq \frac{\alpha \times \beta}{2}\)`
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;
+
+&lt;center&gt;To &lt;b&gt;include&lt;/b&gt; a &lt;b&gt;LaTeX equation&lt;/b&gt; in R Markdown, you simply have to surround it with the &lt;b&gt;$ sign&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:0cm;"&gt;
+
+.pull-left[
+
+&lt;h4 style = "margin-bottom:0cm;"&gt;The mean formula with one `$` on each side&lt;/h4&gt;  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; For inline equations  
+ 
+`\(\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i\)` 
+
+]
+
+.pull-right[
+
+&lt;h4 style = "margin-bottom:0cm;"&gt;The mean formula with two `$` on each side&lt;/h4&gt;  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; For large/emphasized equations  
+ 
+`$$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$` 
+
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+.pull-left[
+#### 1. Basic principles &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. What is R Markdown?
+ * 1.2. YAML header
+ * 1.3. Code chunks
+ * 1.4. Text formatting
+ * 1.5. Run and knit your code
+
+#### 2. Useful features &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Inline code
+ * 2.2. Tables
+ * 2.3. Preset themes 
+]
+
+.pull-right[
+#### 3. LaTeX for equations &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. What is LaTeX?
+ * 3.2. LaTeX syntax
+ * 3.3. Large equations
+ 
+#### 4. Wrap up! &amp;#10004;
+ 
+#### 5. Guidelines for the homework 
+]
+
+---
+
+### 5. Guidelines for the homework
+
+&lt;ul&gt;
+  &lt;li&gt;The homework should be done with R Markdown&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Both the .Rmd and the corresponding .html should be sent&lt;/li&gt;
+    &lt;li&gt;Deadline: October 10&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;You are expected to use (when relevant) the features covered today. It will be taken into account in the grading (see the &lt;b&gt;indicative&lt;/b&gt; grading system &lt;a href="https://louissirugue.github.io/data-analysis-course/homework1/grading.html"&gt;here&lt;/a&gt;)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Inline code&lt;/li&gt;
+    &lt;li&gt;kable&lt;/li&gt;
+    &lt;li&gt;LaTeX equations&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Your Markdown report should run without error&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If you use absolute paths that I need to change, define it once at the very beginning and use paste0()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+path &lt;- "C:/Users/name/Desktop/homework/"
+data1 &lt;- read.csv(paste0(path, "file1.csv"))
+
+...
+
+data2 &lt;- read.csv(paste0(path, "file2.csv"))
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

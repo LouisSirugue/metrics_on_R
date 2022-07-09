@@ -1,0 +1,37 @@
+---
+title: "Lecture 5 - Practice"
+author: "Your name"
+date: "03/10/2022"
+output: 
+  html_document:
+    theme: cosmo
+---
+
+### 1. Setup
+
+The packages needed in an Rmd must *always* be loaded in a code chunk at the beginning of the file.
+
+```{r, message = F, warning = F}
+library(tidyverse)
+```
+
+However, the command `install.packages()` must **not** be written in an R markdown.  
+It should be run only once in the console.
+
+### 2. Computations
+
+The `rnorm(n, mean, sd)` command allows to generate n observations drawn from a normal distribution with a given mean and standard deviation.
+
+```{r}
+x <- rnorm(1000, 0, 1)
+```
+
+We can compute the mean $\overline{x}$ of this variable:
+
+$$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
+
+```{r}
+mean(x)
+```
+
+Here is the result, written in **inline code** such that it updates automatically: `r mean(x)`  
