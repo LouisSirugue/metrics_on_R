@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Causality and randomness</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Causality and randomness
+## Lecture 9
+### <br>Louis SIRUGUE
+### 11/2021
+
+---
+
+
+
+
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 35%;} &lt;/style&gt;
+
+### Last time we saw
+
+--
+
+
+#### 1) An OLS regression with a binary dependant variable is called a *linear probability model*
+
+`$$1\{y_i = \text{Accepted}\} = \hat{\alpha} + \hat{\beta} \times \text{Grade}_i + \hat{\varepsilon_i}$$`
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-1-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.right-column[
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * `\(\hat{\beta}\)` indicates by how much the probability that `\(y\)` equals 1 would increase on expectation for a 1 point increase in `\(x\)`
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * But linear probability models can lead to probabilities that are lower than 0 and greater than 1
+ 
+]
+
+---
+
+### Last time we saw
+
+#### 2) An OLS regression with a binary independent variable:
+
+`$$\text{Height}_i = \hat{\alpha} + \hat{\beta} \times 1\{x_i = \text{Male}\} + \hat{\varepsilon_i}$$`
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-2-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.right-column[
+
+&lt;p style = "margin-bottom:2cm;"&gt;
+
+ * `\(\hat{\alpha}\)` indicates the average value of `\(y\)` when `\(x\)` is equal to 0, i.e., for the reference category
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * `\(\hat{\beta}\)` indicates the difference between the average value of `\(y\)` for the two groups
+ 
+]
+
+---
+
+### Last time we saw
+
+#### 3) An OLS regression with an independant variable with more than 2 categories
+
+`$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1} 1\{\text{Race}_i = \text{Black}\} + \hat{\beta_2} 1\{\text{Race}_i = \text{Asian}\} + \hat{\beta_3} 1\{\text{Race}_i = \text{Other}\} + \hat{\varepsilon_i}$$`
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+  * It should be specified as a sum of binary variables, omitting the category we want as a reference
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+
+
+```r
+summary(lm(Earnings ~ relevel(as.factor(Race), "White"), asec_2020))$coefficients[, c(1, 2, 4)]
+```
+
+```
+##                                         Estimate Std. Error     Pr(&gt;|t|)
+## (Intercept)                             62880.49   344.0464 0.000000e+00
+## relevel(as.factor(Race), "White")Asian  15110.29  1199.9326 2.559272e-36
+## relevel(as.factor(Race), "White")Black -12302.99   996.8981 5.947231e-35
+## relevel(as.factor(Race), "White")Other -13401.79  1609.0045 8.294160e-17
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;&lt;ul&gt;
+&lt;li&gt;\(\hat{\alpha}\) is the average earnings for the reference category &lt;/li&gt;
+&lt;li&gt;Coefficients are &lt;i&gt;relative&lt;/i&gt; to the reference category&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+---
+
+### Last time we saw
+
+#### 4) Interactions allow to estimate how the coefficient of a given variable varies depending on the value of a third variable
+
+`$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1}\text{Hours}_i  + \hat{\beta_2}1\{\text{Sex}_i = \text{Male}\} + \hat{\beta_3}\text{Hours}_i \times 1\{\text{Sex}_i = \text{Male}\} + \hat{\varepsilon_i}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;It captures the difference between males and females in their expected returns to working an additional hour 
+  per week&lt;/b&gt; &lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With \(\hat{\beta_3} &gt; 0\): working an additional hour matters more if you are a male&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Or equivalently, by how much the effect of being a male varies for an additional hour of work per week&lt;/b&gt; &lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With \(\hat{\beta_3} &gt; 0\): being a male matters more if you work an additional hour&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Note that the expected returns to working an additional hour per week is:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;\(\hat{\beta_1}\) for females&lt;/li&gt;
+    &lt;li&gt;\(\hat{\beta_1} + \hat{\beta_3}\) for males&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### Last time we saw
+
+#### 5) Non-linearities
+
+.pull-left[
+
+ * Log vs. level
+ 
+ &lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Interpretation of the regression coefficient&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; log(y) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;font-weight: bold;"&gt; x &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em; "&gt; \(\hat{\beta}\) is the unit increase in \(y\) due
+ to a 1 unit increase in \(x\) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em; "&gt; \(\hat{\beta}\times 100\) is the % increase in \(y\) due
+ to a 1 unit increase in \(x\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;font-weight: bold;"&gt; log(x) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em; "&gt; \(\hat{\beta}\div 100\) is the unit increase in \(y\) due
+ to a 1% increase in \(x\) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em; "&gt; \(\hat{\beta}\) is the % increase in \(y\) due
+ to a 1% increase in \(x\) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+--
+
+.pull-right[
+
+ * Polynomials
+ 
+`$$\text{Wage}_i = -2644 +  192 \times \text{Age}_i -2 \times\text{Age}_i^2 + \hat{\varepsilon}_i$$`
+
+ &lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### Today: Causality and randomness
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Causality
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Omitted variable bias
+ * 1.2. Selection bias and counterfactual
+
+#### 2. Randomness
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Data Generating Process &amp; Random variables
+ * 2.2. Theoretical vs. empirical moments
+ * 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+#### 3. Causality from randomness
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Randomized Controlled Trials
+ * 3.2. Types of randomization
+ * 3.3. Multiple testing
+
+#### 4. Wrap up!
+
+---
+
+### Today: Causality and randomness
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Causality
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Omitted variable bias
+ * 1.2. Selection bias and counterfactual
+
+---
+
+### 1. Causality
+
+#### 1.1. Omitted variable bias
+
+* Consider the following regression
+  
+`$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta}1\{\text{Sex}_i = \text{Male}\} + \hat{\varepsilon_i}$$`
+    
+--
+    
+
+```r
+summary(lm(Earnings ~ Sex, asec_2020))$coefficients
+```
+
+```
+##             Estimate Std. Error   t value      Pr(&gt;|t|)
+## (Intercept) 50915.03   436.8459 116.55148  0.000000e+00
+## SexMale     21612.33   606.3649  35.64245 1.519977e-275
+```
+  
+--
+    
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+  
+  * Taking `\(\hat{\beta}\)` at face value, the *'expected returns'* to being a male amount to $21,612.33 in annual earnings
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;What do you think about this estimation? &lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Can we say that the estimated effect is causal?&lt;/li&gt;
+    &lt;li&gt;What could bias our estimation?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+    
+---
+
+### 1. Causality
+
+#### 1.1. Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;The relationship could be impacted by many variables&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance, inflated by the fact that males tend to both be better paid and work part-time less often&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+    
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The variable for hours of work here acts as a &lt;b&gt;confounding factor&lt;/b&gt; because it is correlated to both \(x\) and \(y\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We need to put it as a control variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+    
+--
+    
+`$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1}1\{\text{Sex}_i = \text{Male}\} + \hat{\beta_2}\text{Hours}_i  + \hat{\varepsilon_i}$$`
+    
+--
+    
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+    
+
+```r
+summary(lm(Earnings ~ Sex + Hours, asec_2020))$coefficients
+```
+
+```
+##               Estimate Std. Error   t value      Pr(&gt;|t|)
+## (Intercept) -22296.150 1138.83531 -19.57803  4.216399e-85
+## SexMale      13794.385  595.79894  23.15275 4.157614e-118
+## Hours         1953.829   28.23501  69.19880  0.000000e+00
+```
+  
+---
+    
+### 1. Causality
+
+#### 1.1. Omitted variable bias
+    
+&lt;ul&gt;
+  &lt;li&gt;The coefficient of the variable Sex drops from 21,612.33 in the univariate regression to 13,794.39 when including sex in the regression&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Why?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+    
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+    
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Part of the estimated effect of sex on earnings was due to the fact that men tend to work more hours per week&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This effect is now captured by the coefficient associated to the variable for hours of work&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+    
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+    
+--
+    
+&lt;ul&gt;
+  &lt;li&gt;There are plenty of omitted factors that could influence our estimates&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;How would the coefficients change if we were to control for having an executive position?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt; &amp;#10140; We cannot consider this effect as causal! &lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+    
+---
+    
+### 1. Causality
+
+#### 1.1. Omitted variable bias
+
+ * When interpreting coefficients, you should be unambiguous about what the estimation actually means
+ 
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Here we would say that &lt;i&gt;''controlling for the number of hours worked per week, being a male relative to a female is associated with a $13,794.39 increase in annual earnings on average, &lt;b&gt;everything else equal&lt;/b&gt;''&lt;/i&gt;.&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Everything else equal (or &lt;i&gt;ceteris paribus&lt;/i&gt;), means that the coefficient we estimate should be interpreted as the effect of \(x\) on \(y\) if everything else would remain constant when varying \(x\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Being a male relative to a female is also likely to be associated with an increase in the probability to have an executive position&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But having an executive position would also increase the expected annual earnings&lt;/li&gt;
+    &lt;li&gt;So when we say &lt;i&gt;ceteris paribus&lt;/i&gt;, we say that the effect we estimate is attributable to the Sex variable &lt;i&gt;assuming that when the Sex variable changes other factors remain constant&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+ 
+&lt;ul&gt;
+  &lt;li&gt;We know this assumption is not correct &amp;#10140; we should mention it not because we believe it is the case but to be clear about what the coefficient means&lt;/li&gt;
+&lt;/ul&gt;
+
+---
+    
+### 1. Causality
+
+#### 1.2. Selection bias and counterfactual
+
+&lt;ul&gt;
+  &lt;li&gt;Omitted variable bias is a common problem&lt;/i&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But estimations can be biased for many other reasons&lt;/i&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+ * Remember the example about candidates to a position from last time:
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+* We estimated that having a 1 unit increase in Grade (/20) would increase the probability to be accepted by about a third on expectation, *ceteris paribus*
+
+&lt;ul&gt;
+  &lt;li&gt;What do you think about this effect?&lt;/i&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Look at the support of the \(x\) variable&lt;/i&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+]
+
+---
+    
+### 1. Causality
+
+#### 1.2. Selection bias and counterfactual
+
+&lt;ul&gt;
+  &lt;li&gt;The fact that grades range from 12 to 18 hints at a selection problem:&lt;/i&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Individuals with very low grade won't apply to the position because they know they will be rejected&lt;/i&gt;
+    &lt;li&gt;Individuals with very high grade won't apply to the position because they apply to better positions&lt;/i&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.right-column[
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Had these individuals applied, the estimated effect would be lower&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Here the estimated coefficient is specific to a sample which is not representative of the whole population&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Issue of &lt;b&gt;external validity&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The interpretation only holds in our specific setting, we cannot extrapolate&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+] 
+
+---
+    
+### 1. Causality
+
+#### 1.2. Selection bias and counterfactual
+
+  * Such selection problems are very common threats to causality
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;What is the impact of going to a better neighborhood on your children outcomes?&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Those who move may be different from those who stay: &lt;b&gt;self-selection issue&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Here it is not that the sample is not representative of the population, but that &lt;b&gt;the outcomes of those who stayed are different from the outcomes those who moved would have had, if they had stayed&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This related to the notion of &lt;b&gt;counterfactual&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If those who moved were comparable to those who stayed, it would be valid to use the outcome of those who stayed as the counterfactual outcome of those who moved, i.e., the outcome they would have if they had stayed&lt;/li&gt;
+    &lt;li&gt;But because of selection we do not have a credible counterfactual&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The notion of counterfactual is key to answer many questions&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;What is the impact of an immigrant inflow on the labor market outcomes of locals?&lt;/li&gt;
+    &lt;li&gt;We need to know how the labor market outcomes of locals would have evolved absent the immigrant inflow but we do not observe this situation&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Causality &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Omitted variable bias
+ * 1.2. Selection bias and counterfactual
+
+#### 2. Randomness
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Data Generating Process &amp; Random variables
+ * 2.2. Theoretical vs. empirical moments
+ * 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+#### 3. Causality from randomness
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Randomized Controlled Trials
+ * 3.2. Types of randomization
+ * 3.3. Multiple testing
+
+#### 4. Wrap up!
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Causality &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Omitted variable bias
+ * 1.2. Selection bias and counterfactual
+
+#### 2. Randomness
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Data Generating Process &amp; Random variables
+ * 2.2. Theoretical vs. empirical moments
+ * 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+---
+
+### 2. Randomness
+
+#### 2.1. Data Generating Process &amp; Random variables
+
+ * So far in practice we have used many variables such as age, sex, earnings, etc.
+  * But when we were working on theory we referred to these variable `\(x\)` and `\(y\)`
+
+--
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+ * In Statistics and Econometrics these `\(x\)` and `\(y\)` we manipulate are called random variables
+  * These variables can take values according to a data generating process (DGP)
+  * The data generating process is the mechanism that causes the data to be the way we observe it
+
+--
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+ * For instance your grades can be seen as a random variable
+  * Which takes given values according to an unknown data generating process
+  * The DGP probably depends on how much effort you exert, on your background, on many environmental factors, ...
+
+---
+
+### 2. Randomness
+
+#### 2.1. Data Generating Process &amp; Random variables
+
+&lt;ul&gt;
+  &lt;li&gt;Consider for instance the outcome of two dice as a random variable&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Contrarily to the variables we usually study, we know the DGP of this one&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+ * The DGP causes our random variable to take the following values with the following probabilities:
+
+.pull-left[
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;2 - 1/36 (&amp;#x2680;&amp;#x2680;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;3 - 2/36 (&amp;#x2680;&amp;#x2681; - &amp;#x2681;&amp;#x2680;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;4 - 3/36 (&amp;#x2680;&amp;#x2682; - &amp;#x2682;&amp;#x2680; - &amp;#x2681;&amp;#x2681;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;5 - 4/36 (&amp;#x2681;&amp;#x2682; - &amp;#x2682;&amp;#x2681; - &amp;#x2681;&amp;#x2683; - &amp;#x2683;&amp;#x2681;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;6 - 5/36 (&amp;#x2682;&amp;#x2682; - &amp;#x2681;&amp;#x2683; - &amp;#x2683;&amp;#x2681; - &amp;#x2684;&amp;#x2680; - &amp;#x2680;&amp;#x2684;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;7 - 6/36 (&amp;#x2682;&amp;#x2683; - &amp;#x2683;&amp;#x2682; - &amp;#x2684;&amp;#x2681; - &amp;#x2681;&amp;#x2684; - &amp;#x2680;&amp;#x2685; - &amp;#x2685;&amp;#x2680;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;8 - 5/36 (&amp;#x2683;&amp;#x2683; - &amp;#x2684;&amp;#x2682; - &amp;#x2682;&amp;#x2684; - &amp;#x2685;&amp;#x2681; - &amp;#x2681;&amp;#x2685;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;9 - 4/36 (&amp;#x2683;&amp;#x2684; - &amp;#x2684;&amp;#x2683; - &amp;#x2685;&amp;#x2682; - &amp;#x2682;&amp;#x2685;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;10 - 3/36 (&amp;#x2685;&amp;#x2683; - &amp;#x2683;&amp;#x2685; - &amp;#x2684;&amp;#x2684;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;11 - 2/36 (&amp;#x2685;&amp;#x2684; - &amp;#x2684;&amp;#x2685;)  
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;12 - 1/36 (&amp;#x2685;&amp;#x2685;)  
+
+]
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+---
+
+### 2. Randomness
+
+#### 2.2. Theoretical vs. empirical moments
+
+ * Because we know the data generating process of our random variable, we can compute its expected value:
+ 
+`$$\begin{align} \text{E}\left[X\right] = \frac{(2\times1) + (3\times2) + (4\times3) + (5\times4) + (6\times5) + (7\times6)}{36} +\\ \frac{(8\times5) + (9\times4) + (10\times3) + (11\times2) + (12\times1)}{36} = \frac{252}{36} = 7\end{align}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Note that we talk about &lt;b&gt;expected value&lt;/b&gt; for the &lt;b&gt;theoretical moment&lt;/b&gt; of the distribution, while we talk about the &lt;b&gt;mean value&lt;/b&gt; for its &lt;b&gt;empirical counterpart&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For a given number of draws the mean won't necessarily be exactly 7&lt;/li&gt;
+    &lt;li&gt;But if we were to do infinitely many draws, the mean would converge towards 7&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt;Let's try it out!&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 2. Randomness
+
+#### 2.2. Theoretical vs. empirical moments
+
+&lt;ul&gt;
+  &lt;li&gt;We can simulate the data generating process by:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Storing every possible outcome in a vector&lt;/li&gt;
+    &lt;li&gt;Randomly picking outcomes from this vector with the function sample()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+outcomes &lt;- c(2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 
+              6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 
+              9, 9, 9, 9, 10, 10, 10, 11, 11, 12)
+
+sample(outcomes, 10, replace = T)
+```
+
+```
+##  [1]  8  8  6  4  8  9  4 10  8  3
+```
+
+--
+
+ * The `replace` argument of the sample() function allows to indicate whether we want each randomly drawn value to be *'replaced'* before the next draw or removed from the vector 
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt;Let's have a look at the distribution of outcomes for different numbers of draws&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 2. Randomness
+
+#### 2.2. Theoretical vs. empirical moments
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The larger the number of draws the closer the mean to the expected value (here 5.2, 7.06, and 6.95)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If we were to roll two dice infinitely many times the mean would converge towards its expected value&lt;/li&gt;
+    &lt;li&gt;This is what we call the &lt;i&gt;Law of Large Numbers&lt;/i&gt; (LLN)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Randomness
+
+#### 2.2. Theoretical vs. empirical moments
+
+&lt;ul&gt;
+  &lt;li&gt;In this respect, we can view the mean as an estimation of the expected value&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So just like we computed a standard error to get a sense of how far \(\hat{\beta}\) is likely to be from the true \(\beta\)...&lt;/li&gt;
+    &lt;li&gt;... we can compute a standard error to get a sense of how far \(\overline{X}\) is likely to be from \(\text{E}\left[X\right]\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+* The formula of the standard error writes:
+
+`$$SE(\overline{X}) = \frac{SD(X)}{\sqrt{N}}$$`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+* And the reasoning for the 95% confidence interval is the same as with `\(\hat{\beta}\)`
+
+`$$\text{Pr}\left[\overline{X} - t_{97.5\%}\times\text{se}(\overline{X})\leq \text{E}\left[X\right] \leq\overline{X} + t_{97.5\%}\times\text{se}(\overline{X})\right] = 95\%$$`
+
+--
+
+&lt;ul&gt;&lt;ul&gt;
+&lt;li&gt;With \(t_{97.5\%}\) computed from a student t distribution with N-1 degrees of freedom&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+ 
+---
+
+### 2. Randomness
+
+#### 2.2. Theoretical vs. empirical moments
+
+ * Just like the mean that we compute empirically is an estimate of the first moment of the distribution,
+  * the variance that we compute empirically is an estimate of the second moment of the distribution
+
+--
+
+.pull-left[
+
+.pull-left[
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;First moment:&lt;/b&gt;  
+
+&lt;p style = "margin-bottom:3.5cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;Second moment:&lt;/b&gt;
+
+]
+
+.pull-right[
+
+&lt;center&gt;&lt;h4&gt;Theoretical moment&lt;/h4&gt;&lt;/center&gt;
+
+`$$\text{E}(X_{\text{discrete}}) = \sum_{i=1}^{k}x_ip_i$$`
+
+`$$\text{E}(X_{\text{continuous}}) = \int_{\text{R}}xf(x)dx$$`
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+`$$\text{Var}(X) = \text{E}\left[(X - \text{E}(X))^2\right] \equiv \sigma^2$$`
+
+]
+
+]
+
+.pull-right[
+
+&lt;center&gt;&lt;h4&gt;Empirical moment&lt;/h4&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.9cm;"&gt;&lt;/p&gt;
+
+`$$\overline{X} = \frac{1}{N}\sum_{i=1}^Nx_i$$`
+
+&lt;p style = "margin-bottom:2.25cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$`
+
+]
+
+---
+
+### 2. Randomness
+
+#### 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+&lt;ul&gt;
+  &lt;li&gt;The distinction we made between \(\beta\) and \(\hat{\beta}\) is of the same nature&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Let's illustrate that with a little simulation exercise&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The function mvrnorm from the MASS package generates two normally distributed random variables&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;According to: their &lt;b&gt;covariance&lt;/b&gt; and respective &lt;b&gt;expected value&lt;/b&gt; and &lt;b&gt;variance&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+`data &lt;- mvrnorm(n = #observations, mu = c(E[X1], E[X2]), Sigma = covariance matrix)`
+
+.pull-left[
+
+ * The covariance matrix should be of the form
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Variance-covariance matrix&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X1 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X2 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;font-weight: bold;"&gt; X1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Var(X1) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Cov(X1, X2) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;font-weight: bold;"&gt; X2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Cov(X2, X1) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Var(X2) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+--
+
+.pull-right[
+
+ * For instance, with `\(\text{Var}(X_1) = 1\)`, `\(\text{Var}(X_2) = 2\)`, and `\(\text{Cov}(X_1, X_2) = .5\)`:
+ 
+
+```r
+matrix(c(1, .5, .5, 2), nrow = 2)
+```
+
+```
+##      [,1] [,2]
+## [1,]  1.0  0.5
+## [2,]  0.5  2.0
+```
+
+]
+
+---
+
+### Practice
+
+**1) Use the `mvrnorm` function from the `MASS` package to generate two variables `\(X\)` and `\(Y\)` with:**
+ * `\(N = 1000\)`
+ * `\(\text{E}\left[X\right] = 5\)`
+ * `\(\text{E}\left[Y\right] = 30\)`
+ * `\(\text{Var}(X) = 2\)`
+ * `\(\text{Var}(Y) = 10\)`
+ * `\(\text{Cov}(X, Y) = 4\)`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+**2) Compute the empirical counterpart of the first and second moments of the joint distribution**
+
+--
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 5 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+---
+
+### Solution
+
+ * Generate the joint distribution
+
+
+```r
+library(MASS)
+data &lt;- mvrnorm(1000, c(5, 30), matrix(c(2, 4, 4, 10), 2))
+x &lt;- data[, 1]
+y &lt;- data[, 2]
+```
+
+--
+
+ * First empirical moment
+ 
+
+```r
+c(mean(x), mean(y))
+```
+
+```
+## [1]  4.995905 29.959186
+```
+
+--
+
+ * Second empirical moment
+
+
+```r
+matrix(c(var(x), cov(x, y), cov(y, x), var(y)), 2)
+```
+
+```
+##          [,1]     [,2]
+## [1,] 1.987344 3.862527
+## [2,] 3.862527 9.582982
+```
+
+---
+
+### 2. Randomness
+
+#### 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+ * Because we know the joint DGP of `\(X\)` and `\(Y\)`, we do know the actual values of `\(\alpha\)` and `\(\beta\)` from the regression
+ 
+`$$y_i = \alpha + \beta x_i + \varepsilon_i$$`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+`$$\beta = \frac{\text{Cov}(X, Y)}{\text{Var}(X)} = \frac{4}{2} = 2$$`
+
+`$$\alpha = \text{E}\left[Y\right] - \beta\times\text{E}\left[X\right] = 30 - 2\times5 = 20$$`
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+ * And the coefficients `\(\hat{\alpha}\)` and `\(\hat{\beta}\)` we can compute using observed data are estimates of these true parameters
+ 
+
+```r
+summary(lm(y ~ x))$coefficients
+```
+
+```
+##              Estimate Std. Error   t value Pr(&gt;|t|)
+## (Intercept) 20.249336 0.16793377 120.57929        0
+## x            1.943562 0.03235219  60.07514        0
+```
+
+---
+
+### 2. Randomness
+
+#### 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+ * The higher the number of observations, the closer `\(\hat{\beta}\)` from `\(\beta\)` on expectation:
+ 
+
+```r
+beta_hat &lt;- function(n){
+  data &lt;- mvrnorm(n, c(5, 30), matrix(c(2, 4, 4, 10), 2))
+  x &lt;- data[, 1]
+  y &lt;- data[, 2]
+  return(summary(lm(y ~ x))$coefficients[2, 1])
+}
+c(beta_hat(10), beta_hat(1000), beta_hat(100000))
+```
+
+--
+
+
+```
+## [1] 2.524306 2.034427 1.997814
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is what we call &lt;i&gt;consistency&lt;/i&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With this DGP the OLS estimator is consistent&lt;/li&gt;
+    &lt;li&gt;But this is not always the case&lt;/li&gt;
+    &lt;li&gt;You'll see the conditions for that next year&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Randomness
+
+#### 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+&lt;ul&gt;
+  &lt;li&gt;Keep in mind that consistency, unbiasedness, and precision, are very distinct concepts&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Consider these 4 cases where we compare the distribution of estimations \(\hat{\beta}\) from 1,000 randomly drawn samples to the true \(\beta\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.left-column[
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+
+&lt;ul&gt;
+  &lt;li&gt;An estimator is &lt;b&gt;unbiased&lt;/b&gt; if on expectation it gives the true value we want to estimate&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An estimator is &lt;b&gt;precise&lt;/b&gt; if the estimations it provides are close to each other (low variance)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An estimator is &lt;b&gt;consistent&lt;/b&gt; if the larger the sample size the higher the probability that we obtain the true value we want to estimate&lt;/li&gt;
+&lt;/ul&gt;
+
+  
+]
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Causality &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Omitted variable bias
+ * 1.2. Selection bias and counterfactual
+
+#### 2. Randomness &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Data Generating Process &amp; Random variables
+ * 2.2. Theoretical vs. empirical moments
+ * 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+#### 3. Causality from randomness
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Randomized Controlled Trials
+ * 3.2. Types of randomization
+ * 3.3. Multiple testing
+
+#### 4. Wrap up!
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Causality &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Omitted variable bias
+ * 1.2. Selection bias and counterfactual
+
+#### 2. Randomness &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Data Generating Process &amp; Random variables
+ * 2.2. Theoretical vs. empirical moments
+ * 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+#### 3. Causality from randomness
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Randomized Controlled Trials
+ * 3.2. Types of randomization
+ * 3.3. Multiple testing
+
+---
+
+### 3. Causality from randomness
+
+#### 3.1. Randomized Controlled Trials
+
+&lt;ul&gt;
+  &lt;li&gt;A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is randomly allocated in the population&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It is a way to obtain causality from randomness&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+Take for instance the `asec_2020.csv` dataset we've been working with:
+
+
+```r
+asec_2020 %&gt;% group_by(n()) %&gt;%
+  summarise(`Mean Earnings` = mean(Earnings),
+         `% Female` = 100 * mean(Sex == "Female"),
+         `% Black` = 100 * mean(Race == "Black"),
+         `% Asian` = 100 * mean(Race == "Asian"),
+         `% Other` = 100 * mean(Race == "Other"),
+         `Mean Hours` = mean(Hours))
+```
+
+```
+## # A tibble: 1 x 7
+##   `n()` `Mean Earnings` `% Female` `% Black` `% Asian` `% Other` `Mean Hours`
+##   &lt;int&gt;           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 64336          62132.       48.1      10.6      7.04      3.76         39.5
+```
+
+
+---
+
+### 3. Causality from randomness
+
+#### 3.1. Randomized Controlled Trials
+
+ * Let's compare the average characteristics for two randomly selected groups:
+ 
+--
+
+
+```r
+asec_2020 %&gt;%
+  mutate(Group = ifelse(rnorm(n(), 0, 1) &gt; 0, 1, 0)) %&gt;%
+  group_by(Group) %&gt;%
+  summarise(`Mean Earnings` = mean(Earnings),
+            `% Female` = 100 * mean(Sex == "Female"),
+            `% Black` = 100 * mean(Race == "Black"),
+            `% Asian` = 100 * mean(Race == "Asian"),
+            `% Other` = 100 * mean(Race == "Other"),
+            `Mean Hours` = mean(Hours))
+```
+
+```
+## # A tibble: 2 x 7
+##   Group `Mean Earnings` `% Female` `% Black` `% Asian` `% Other` `Mean Hours`
+##   &lt;dbl&gt;           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1     0          61836.       48.3      10.7      6.97      3.78         39.6
+## 2     1          62429.       47.9      10.6      7.11      3.75         39.5
+```
+
+---
+
+### 3. Causality from randomness
+
+#### 3.1. Randomized Controlled Trials
+
+&lt;ul&gt;
+  &lt;li&gt;Their average characteristics are very close!&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;On expectation their average characteristics are the same&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;And just as the two randomly selected populations are comparable in terms of their observable characteristics&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;On expectation they are also &lt;b&gt;comparable&lt;/b&gt; in terms of their &lt;b&gt;unobservable characteristics!&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Randomization, if properly conducted, thus solves the problem of omitted variable bias&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt;If we assign a treatment to Group 1, Group 2 would then be a valid counterfactual to estimate a causal effect!&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But RCTs are not immune to every problem:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If individuals self-select in participating to the experiment their would be a selection bias&lt;/li&gt;
+    &lt;li&gt;Even without self-selection, if the population among which treatment is randomized is not representative there is a problem of external validity&lt;/li&gt;
+    &lt;li&gt;For the RCT to work, individuals should comply with the treatment allocation&lt;/li&gt;
+    &lt;li&gt;The sample must be sufficiently large for the average characteristics across groups to be close enough to their expected value&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 3. Causality from randomness
+
+#### 3.2. Types of randomization
+
+ * To some extent their are ways to deal with these problems 
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;For instance if we want to ensure that a characteristic is well balanced among the two groups, we can &lt;b&gt;randomize within categories of this variable&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Instead of giving the treatment randomly and hoping that we will obtain the same % of females in both groups&lt;/li&gt;
+    &lt;li&gt;We assign the treatment randomly among females and among males separately&lt;/li&gt;
+    &lt;li&gt;This is called &lt;b&gt;randomizing by block&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;i&gt;Note that this only works with observable characteristics!&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+asec_2020 %&gt;%
+  group_by(Sex) %&gt;% # Randomize treatment by sex
+  mutate(Group = ifelse(rnorm(n(), 0, 1) &gt; 0, 1, 0)) %&gt;%
+  ungroup() %&gt;% group_by(Group) %&gt;%
+  summarise(...)
+```
+
+---
+
+### 3. Causality from randomness
+
+#### 3.2. Types of randomization
+
+&lt;ul&gt;
+  &lt;li&gt;Now imagine that you want to estimate the impact of calory intake at the 10am break on pupils grades&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You regularly give a snack to a sample of randomly selected children and a few months later you test whether there is a significant difference between their grades and that of untreated children&lt;/li&gt;
+    &lt;li&gt;Do you expect the estimated effect to reflect the actual impact you aim to measure?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;What if some children shared their snack with untreated children?&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;These &lt;i&gt;treated children&lt;/i&gt; would have &lt;i&gt;less calories&lt;/i&gt; and then possibly lower grades than under full compliance&lt;/li&gt;
+    &lt;li&gt;And their &lt;i&gt;untreated&lt;/i&gt; friends would have &lt;i&gt;more calories&lt;/i&gt; than expected and then possibly higher grades&lt;/li&gt;
+    &lt;li&gt;Thus, this &lt;b&gt;&lt;i&gt;spillover effect&lt;/i&gt;&lt;/b&gt; would tend to fallaciously shrink the observed effect of the treatment&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.left-column[
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One solution to that problem is to &lt;b&gt;randomize by cluster&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Instead of considering the treatment to be at the child level&lt;/li&gt;
+    &lt;li&gt;Consider that the treatment is a the school level&lt;/li&gt;
+    &lt;li&gt;A treated unit is a school where some/all children are treated&lt;/li&gt;
+    &lt;li&gt;An untreated school is a school where no child is treated&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+--
+
+.right-column[
+&lt;center&gt;&lt;i&gt;Beware that in terms of inference, computing standard errors the usual way while the treatment is at a broader observational level than the outcome would give fallaciously low standard errors, which would need to be corrected&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 3. Causality from randomness
+
+#### 3.3. Multiple testing
+
+&lt;ul&gt;
+  &lt;li&gt;Another inference issue that RCTs can be subject to is multiple testing&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If you conduct a well-designed RCT you might be tempted to exploit the causal framework to test a myriad of effects&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;You randomize your treatment and you compare the averages of many outcomes between treated and untreated individuals&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You would be tempted to conclude that there is a significant effect for every variable whose corresponding p-value is lower that .05&lt;/li&gt;
+    &lt;li&gt;But you cannot do that!&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The probability to have a p-value lower than .05 just by chance for one test is indeed 5%&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But if you do multiple tests in a row, the probability to have a p-value lower than .05 among these multiple tests is greater than 5%&lt;/li&gt;
+    &lt;li&gt;The greater the number of tests you perform, the higher the probability to get a significant result just by chance&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;center&gt;&lt;h4&gt;This is what we call &lt;i&gt;multiple testing&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 3. Causality from randomness
+
+#### 3.3. Multiple testing
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-26-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### 3. Causality from randomness
+
+#### 3.3. Multiple testing
+
+ * There are many ways to correct for multiple testing
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The simplest one is called the &lt;b&gt;Bonferroni&lt;/b&gt; correction&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It consists in &lt;b&gt;multiplying the p-value by the number of tests&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But it also leads to a large &lt;b&gt;loss of power&lt;/b&gt; (the probability to find an effect when there is indeed an effect decreases a lot)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;There are more sophisticated ways to deal with the problem, which can be categorized into two approaches&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Family Wise Error Rate&lt;/b&gt;: Control the probability that there is at least one true assumption rejected&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;False Discovery Rate&lt;/b&gt;: Control the share of true assumptions among rejected assumptions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; We won't cover these methods in this course but keep the multiple testing issue in mind when you encounter a long series of statistical tests&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### Overview
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;
+
+#### 1. Causality &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 1.1. Omitted variable bias
+ * 1.2. Selection bias and counterfactual
+
+#### 2. Randomness &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 2.1. Data Generating Process &amp; Random variables
+ * 2.2. Theoretical vs. empirical moments
+ * 2.3. `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+#### 3. Causality from randomness &amp;#10004;
+&lt;p style = "margin-bottom:-.5cm;"&gt;
+ * 3.1. Randomized Controlled Trials
+ * 3.2. Types of randomization
+ * 3.3. Multiple testing
+
+#### 4. Wrap up!
+
+---
+
+### 4. Wrap up!
+
+#### Causality 
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+1) Omitted variable bias
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Regressing Earnings on Sex = Male without controls yields \(\hat{\beta} = 21612.33\)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But controlling for weekly hours we obtain \(\hat{\beta} = 13794.39\)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&amp;#10140; Variables that are correlated to both `\(x\)` and `\(y\)` should be controlled for  
+
+&amp;#10140; And the coefficients must unambiguously be interpreted &lt;i&gt;ceteris paribus&lt;/i&gt;
+
+]
+
+--
+
+.pull-left[
+
+2) Selection bias
+
+&lt;p style = "margin-bottom:-.35cm;"&gt;&lt;/p&gt;
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-27-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;p style = "margin-bottom:-.35cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;&lt;ul&gt;
+  &lt;li&gt;Self-selection selection into the population studied causes problems of &lt;b&gt;external validity&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;Self-selection into the treatment variable causes problems of &lt;b&gt;counterfactual validity&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/ul&gt;
+
+]
+
+---
+
+### 4. Wrap up!
+
+#### Theoretical vs. empirical moments
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+.pull-left[
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;First moment:&lt;/b&gt;  
+
+&lt;p style = "margin-bottom:3.5cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;Second moment:&lt;/b&gt;
+
+]
+
+.pull-right[
+
+&lt;center&gt;&lt;h4&gt;Theoretical moment&lt;/h4&gt;&lt;/center&gt;
+
+`$$\text{E}(X_{\text{discrete}}) = \sum_{i=1}^{k}x_ip_i$$`
+
+`$$\text{E}(X_{\text{continuous}}) = \int_{\text{R}}xf(x)dx$$`
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+`$$\text{Var}(X) = \text{E}\left[(X - \text{E}(X))^2\right] \equiv \sigma^2$$`
+
+]
+
+]
+
+.pull-right[
+
+&lt;center&gt;&lt;h4&gt;Empirical moment&lt;/h4&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.9cm;"&gt;&lt;/p&gt;
+
+`$$\overline{X} = \frac{1}{N}\sum_{i=1}^Nx_i$$`
+
+&lt;p style = "margin-bottom:2.25cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$`
+
+]
+
+---
+
+### 4. Wrap up!
+
+#### `\(\beta\)` vs. `\(\hat{\beta}\)`
+
+&lt;ul&gt;
+  &lt;li&gt;Keep in mind that consistency, unbiasedness, and precision, are very distinct concepts&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Consider these 4 cases where we compare the distribution of estimations \(\hat{\beta}\) from 1,000 randomly drawn samples to the true \(\beta\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.left-column[
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-28-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+
+&lt;ul&gt;
+  &lt;li&gt;An estimator is &lt;b&gt;unbiased&lt;/b&gt; if on expectation it gives the true value we want to estimate&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An estimator is &lt;b&gt;precise&lt;/b&gt; if the estimations it provides are close to each other (low variance)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An estimator is &lt;b&gt;consistent&lt;/b&gt; if the larger the sample size the higher the probability that we obtain the true value we want to estimate&lt;/li&gt;
+&lt;/ul&gt;
+
+  
+]
+
+
+---
+
+### 4. Wrap up!
+
+#### Randomized controlled trials 
+
+&lt;ul&gt;
+  &lt;li&gt;A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is randomly allocated in the population&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It is a way to obtain causality from randomness as on expectation two randomly drawn population have the same average observable and unobservable characteristics, which solves the omitted variable bias&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.pull-left[
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But RCTs are not immune to every problem:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Self-selection issues can arise&lt;/li&gt;
+    &lt;li&gt;The population should be representative for external validity&lt;/li&gt;
+    &lt;li&gt;Individuals should comply with the treatment allocation&lt;/li&gt;
+    &lt;li&gt;The sample must be sufficiently large&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;ul&gt;
+  &lt;li&gt;There are different types of randomization to help dealing with such problems&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Randomization by block for small samples:&lt;/b&gt; Randomly assign the treatment within groups of individuals whose characteristic should be balanced&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Randomization by cluster for spillovers:&lt;/b&gt; If spillovers may occur within given units, consider these units as the observational level for the treatment allocation&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
