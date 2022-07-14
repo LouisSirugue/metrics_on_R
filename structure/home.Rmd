@@ -24,21 +24,19 @@ root <- "https://louissirugue.github.io/metrics_on_R/"
 
 ```{css, echo = F, eval = !dark_theme}
 .share-box {
-  top:10%;
-  right:10%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background: #DFE6EB;
-  border-radius: 100px;
+  border-radius: 80px;
   text-align:left;
-  padding:30px;
-  box-shadow: 5px 5px 7px #c7c4c4, 
-              -5px -5px 7px #E7EDF0;
+  padding:24px;
+  box-shadow: 4px 4px 6px #c7c4c4, 
+              -4px -4px 6px #E7EDF0;
 }
 
 .share-box:active {
-  box-shadow: inset 5px 5px 7px #c7c4c4, 
-              inset -5px -5px 7px #E7EDF0
+  box-shadow: inset 4px 4px 6px #c7c4c4, 
+              inset -4px -4px 6px #E7EDF0
 }
 ```
 
@@ -46,21 +44,19 @@ root <- "https://louissirugue.github.io/metrics_on_R/"
 body{background-color:#201914;filter:invert(1)}
 
 .share-box {
-  top:10%;
-  right:10%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background: #DFE6EB;
-  border-radius: 100px;
+  border-radius: 80px;
   text-align:left;
-  padding:30px;
-  box-shadow: 5px 5px 7px #F3F5F7, 
-              -5px -5px 7px #D8DEE3;
+  padding:24px;
+  box-shadow: 4px 4px 6px #F3F5F7, 
+              -4px -4px 6px #D8DEE3;
 }
 
 .share-box:active {
-  box-shadow: inset 5px 5px 7px #F3F5F7, 
-              inset -5px -5px 7px #D8DEE3
+  box-shadow: inset 4px 4px 6px #F3F5F7, 
+              inset -4px -4px 6px #D8DEE3
 }
 ```
 
@@ -71,7 +67,7 @@ astre <- ifelse(dark_theme, "sun", "moon")
 
 ````{=html}
 ```{r, echo=FALSE, results='asis'}
-writeLines(paste0('<div class = "share-box" style ="margin-top:-5cm;margin-left:22cm;"><a href = "https://louissirugue.github.io/metrics_on_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.64cm;margin-top:-.64cm;width:50px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
+writeLines(paste0('<div class = "share-box" style ="margin-top:-13em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/metrics_on_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
 xfun::file_string('astre.html')
 ```
 ````
@@ -158,12 +154,12 @@ s1 <- data.frame(a = c(" ",
 
 kable(s1, col.names = NULL, align = "llcccc") %>%
   row_spec(1, font_size = 17)  %>%
-  column_spec(1, width = "8em", width_min = "6em") %>%
-  column_spec(2, width = "20em", width_min = "14em") %>%
-  column_spec(3, width = "7em") %>%
-  column_spec(4, width = "5em") %>%
-  column_spec(5, width = "5em") %>%
-  kable_styling(bootstrap_options = c("condensed", "hover")) %>%
+  column_spec(1, width_max = "8em", width = "8em", width_min = "6em") %>%
+  column_spec(2, width_max = "16em", width = "16em", width_min = "14em") %>%
+  column_spec(3, width_max = "5em", width = "5em", width_min = "5em") %>%
+  column_spec(4, width_max = "5em", width = "5em", width_min = "4em") %>%
+  column_spec(5, width_max = "5em", width = "5em", width_min = "3em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>%
   pack_rows("Part 1: Introduction to R programming", 2, 8) %>%
   pack_rows("\nPart 2: Introduction to Econometrics", 9, 16) 
 ```
@@ -185,11 +181,12 @@ s2 <- data.frame(a = c(" ", paste("Lecture", 16:18)),
 
 kable(s2, col.names = NULL, align = "llccc") %>%
   row_spec(1, font_size = 17) %>%
-  column_spec(1, width = "8em", width_min = "6em") %>%
-  column_spec(2, width = "20em", width_min = "14em") %>%
-  column_spec(3, width = "12em") %>%
-  column_spec(4, width = "5em") %>%
-  kable_styling(bootstrap_options = c("condensed", "hover")) %>% pack_rows("Guidelines and refreshers", 2, 4) 
+  column_spec(1, width_max = "8em", width = "8em", width_min = "6em") %>%
+  column_spec(2, width_max = "21em", width = "21em", width_min = "21em") %>%
+  column_spec(3, width_max = "5em", width = "5em", width_min = "5em") %>%
+  column_spec(4, width_max = "5em", width = "5em", width_min = "4em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
+  pack_rows("Guidelines and refreshers", 2, 4) 
 ```
 
 <h3> III. Exams </h3>
@@ -213,11 +210,11 @@ ex <- data.frame(a = c(" ",
 kable(ex, col.names = NULL, align = "lccc")  %>%
   #add_header_above(c("Semester 1" = 3)) %>%
   row_spec(1, font_size = 16) %>%
-  column_spec(1, width = "28em", width_min = "20em") %>%
-  column_spec(2, width = "7em") %>%
-  column_spec(3, width = "5em") %>%
-  column_spec(4, width = "5em") %>%
-  kable_styling(bootstrap_options = c("condensed", "hover")) %>% 
+  column_spec(1, width_max = "21em", width = "21em", width_min = "21em") %>%
+  column_spec(2, width_max = "7em", width = "7em", width_min = "7em") %>%
+  column_spec(3, width_max = "7em", width = "7em", width_min = "7em") %>%
+  column_spec(4, width_max = "5em", width = "5em", width_min = "5em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
   pack_rows("Semester 1", 2, 3) %>% pack_rows("\nSemester 2", 4, 4) 
 ```
 
@@ -227,32 +224,42 @@ kable(ex, col.names = NULL, align = "lccc")  %>%
 
 <br><br>
 
-ADD HYPERLINKS + FONT LEVEL <=> HIERARCHY + CHANGE BULLET IF NOT COLLAPSIBLE
-
 ```{r, include = F}
 toc <- read.csv("toc.csv", sep = ";")
 
 htmlcode <- ""
 for (i in unique(toc$Course)) {
-  
-  htmlcode <- paste0(htmlcode, '<details open style = "margin-left:1cm;"><summary>', i, '</summary>')
-  
   sect <- unique(toc %>% filter(Course == i) %>% select(Section) %>% deframe)
+  
+  # If more than level 1
   if (sect != "") {
-    for (j in sect) {
-      htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary>', j, '</summary>')
-      
-      sub <- toc %>% filter(Course == i & Section == j) %>% select(Subsection) %>% deframe
-      if (sub != "") {
-        for (k in sub) {
-          htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary>', k, '</summary></details>')
-        }
-      }
     
-      htmlcode <- paste0(htmlcode, '</details>') 
+    htmlcode <- paste0(htmlcode, '<details open style = "margin-left:1cm;"><summary>', i, '</summary>')
+    for (j in sect) {
+      sub <- toc %>% filter(Course == i & Section == j) %>% select(Subsection) %>% deframe
+      
+      # If more than level 2
+      if (sub != "") {
+        
+        htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary>', j, '</summary>')
+        for (k in sub) {
+          htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.6cm;margin-bottom:0cm;"><li>', k, '</li></ul>')
+        }
+        htmlcode <- paste0(htmlcode, '</details>') 
+        
+        # If only level 2
+      } else {
+        htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;margin-bottom:0cm;"><li>', j, '</li></ul>')
+      }
     }
+    
+    htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>') 
+    # If only level 1
+  } else{
+    htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li>', i, 
+                       '</li></ul><p style = "margin-bottom:.75cm;"></p>')
   }
-  htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>') 
+  
 }
 
 writeLines(htmlcode, "toc.html")
@@ -269,95 +276,220 @@ xfun::file_string('toc.html')
 
 #### Syllabus
 
-UPDATE SYLLABUS
-
 <h3> I. Course description </h3>
 
-<blockquote><i><p style = "margin-left:1cm"></p>The objective of this course is to provide you with the necessary statistical and data visualization tools to perform well-structured and meaningful data analyses for your own research projects. By the end of this course you should be able to produce relevant statistics and compelling graphics to include in your future reports, presentations, or research projects. To this end, this course combines notions of R programming, basic Statistics, and introductory Econometrics.</i></blockquote>
+<blockquote style =  "font-size: 12.5pt !important;"><i><p style = "margin-left:1cm;"></p>The objective of this course is to provide you with the necessary statistical and data visualization tools to perform well-structured and meaningful data analyses for your own research projects. By the end of this course you should be able to produce relevant statistics and compelling graphics to include in your future reports, presentations, or research projects. To this end, this course combines notions of R programming, basic Statistics, and introductory Econometrics.</i></blockquote>
 
-During the first semester, the emphasis will successively be put on R Programming and Econometrics, but all along the course bridges will be built between these two dimensions of data analysis. The second semester will be dedicated to a group project in which you will have to apply the tools presented in class to your own research question in order to produce an original data analysis. You will also learn how to make your final project look like [this document](https://louissirugue.github.io/metrics_on_R/project/example.html) so that it can easily be valuated on an online CV or as a writing sample, and demonstrate your soon-acquired programming and data analysis skills.
+During the first semester, the emphasis will successively be put on R Programming and Econometrics. Still, all along the course bridges will be built between these two dimensions of data analysis. The second semester will be dedicated to a research project. You will have to carry out an original data analysis by applying the tools covered in class during the first semester to your own research question. For your soon-acquired programming and data analysis skills to be easily valuated on an online CV or as a writing sample, you will learn how to make your final project look like [this document](https://louissirugue.github.io/metrics_on_R/project/example.html).
 
 <h3> II. Practical matters </h3>
 
-<indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in programming or Statistics. Lectures will take place at Campus Jourdan - Room *TBA*, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
+<indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in R programming or Statistics. Lectures will take place at Campus Jourdan - Room *TBA*, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
 
-Make sure to download and install both R and R studio before the first lecture.  
+Please make sure to download and install both R and R studio before the first lecture and to bring your laptop with you at each class.  
 
  * [Download R](https://cran.r-project.org/)
  * [Download R studio](https://www.rstudio.com/products/rstudio/download/#download)
 
+Don't hesitate to send me an email if you're already facing issues at that stage.
+
 <h3> III. Grading system </h3>
 
-<h4> First semester </h4>
+<h4> a) First semester </h4>
 
-<indent></indent>The grading of the first semester will be based on weekly short online quizzes (x6 - 25% of the grade), one homeworks (30% of the grade), and one final exam (45% of the grade). Online quizzes consist in a set of 3 to 5 shorts questions related to the content of the previous class. You will have the possibility to retry the quiz as many times as you want before submitting, so it should be relatively easy to get full points on this part. But the quiz of a given lecture will be closed at the beginning of the following lecture. There will two homeworks corresponding to the first two parts of the course: Introduction to R Programming, and Introduction to Econometrics. Homeworks will be given in advance so that you can work on it progressively as we go through the course. Homeworks consist in course questions and coding exercises.  
+The grading of the first semester will be based on:  
 
-<h4> Second semester </h4>
+  * Six weekly online quizzes - 25%
+  * One homework - 30%
+  * One final exam - 45%   
 
-<indent></indent>The second semester grade will be entirely based on a group project that you will carry out all along the semester. As the first three lectures of the second semester will be refreshers on the notions seen during the first semester, you will have some time to come up with your own research question and to find relevant data to test your hypotheses empirically (you will be guided on where and how to look for data). Then, in each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc.  until your final presentation.  [Here](https://louissirugue.github.io/data-analysis-course/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the [homepage](https://louissirugue.github.io/data-analysis-course/home.html). You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
+<p style = "margin-bottom:.75cm;"></p>
+
+Online **quizzes** consist in sets of 3 to 5 short questions related to the content of the previous class. Links to the quizzes are available in the *Material* section of the course webpage. You will be able to log in to each quiz using the verification code I sent you via email. You will have the possibility to retry the quiz as many times as you want before submitting. But the quiz of a given lecture will be open from the end of that lecture and closed at the beginning of the following one. When you're done with a quiz you can click on *download results* and send the downloaded file to me by email. This is to keep track of your answers in case of disagreement about the grading.   
+
+<p style = "margin-bottom:.75cm;"></p>
+
+The **homework** is a set of exercises related to the first five lectures of the course. It can be done alone or by pairs, and must be handed over via email by the end of the sixth week (16<sup>th</sup> of October 23:59). Late submissions will be penalized by half a point for each 30min beyond the deadline. It is already available on the *Material* section of the course webpage, so I strongly encourage you to work on it progressively as we go the trough the course. The precise grading system of the homework is also available on the *Material* section of the course webpage already. You are very welcome to help each other, but you must write your answers yourselves. Copy-pasting is not permitted.  
+
+<p style = "margin-bottom:.75cm;"></p>
+
+The **final exam** will be a paper exam in classroom. You are allowed to bring a cheatsheet with you to the exam as long as it is handwritten and standing on a single A4 (21cm x 29.7cm) page, i.e., *recto* only. Cheatsheets that do not comply with these rules will be confiscated. Beyond that, standard examination rules apply. 
+
+<p style = "margin-bottom:.75cm;"></p>
+
+<h4> b) Second semester </h4>
+
+The grading of the second semester grade will be entirely based on your research project that you will carry out all along the semester. Research projects must be done by groups of two, so both members of a pair will have the same grade. You will be evaluated three times, at three different stages of the research process:
+
+  * Presentation of research idea - 25%
+  * Midterm report - 30%
+  * Final project/presentation - 45%  
+  
+<p style = "margin-bottom:.75cm;"></p>
+
+As the first three lectures of the second semester will be refreshers on the notions seen during the first semester, you will have some time to come up with your own research question and to find relevant data to test your hypotheses empirically (you will be guided on where and how to look for data). Then, in each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc.  until your final presentation.  [Here](https://louissirugue.github.io/data-analysis-course/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the [homepage](https://louissirugue.github.io/data-analysis-course/home.html). You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
 
 <h3> IV. Schedule </h3>
 
-```{r s1, echo = FALSE}
-s1 <- data.frame(a = c(paste("Lecture", 1:15)),
-                 b = c("Introduction to the R programming language",
-                       "Basic data manipulation",
-                       "Descriptive statistics",
-                       "Data visualization",
-                       "R markdown, LaTeX, and Github",
-                       "Correction of Homework 1",
-                       "Ordinary least squares - I",
-                       "Ordinary least squares - II",
-                       "Causality and randomness",
-                       "Applications in academic research",
-                       "How (not) to lie with graphics",
-                       "Text data and sentiment analysis",
-                       "Correction of Homework 2",
-                       "Maps and geolocalized data", 
-                       "Interactive data visualization"),
-                 c = c("07/09/21", "14/09/21", "21/09/21", "28/09/21",
-                       "05/10/21", "12/10/21", "19/10/21", "09/11/21",
-                       "16/11/21", "23/11/21", "30/11/21", "07/12/21", 
-                       "14/12/21", "04/01/22", "11/01/22"))
+<p style = "margin-bottom:.75cm;"></p>
 
-kable(s1, col.names = NULL)  %>%
-  add_header_above(c("Semester 1" = 3)) %>%
-  row_spec(0, font_size = 20) %>%
-  kable_styling(bootstrap_options = c("hover", "condensed")) %>%
-  pack_rows("Part 1: Introduction to R programming", 1, 6) %>%
-  pack_rows("Part 2: Introduction to Econometrics", 7, 13) %>%
-  pack_rows("Part 3: Data visualization", 14, 15) 
+<center><span style = "font-size:15pt;"><b>Fall semester</b></span></center>  
+
+<p style = "margin-bottom:.75cm;"></p>
+
+<span style = "color:#014D64;"><u>Standard lectures:</u></span>  
+
+During these lectures we will cover the material core material of the course.  
+
+<span style = "color:#6794A7;"><u>Buffer lectures:</u></span>   
+
+These lectures are slightly more advanced, but their content will not be needed for the exams. There are two buffer lectures, each placed before an exam to give you time to prepare for the exam.  
+
+<span style = "color:#00A2D9;"><u>Exams:</u></span>  
+
+The homework is due by the 16<sup>th</sup> of October 23:59, and will be corrected in class during the 7<sup>th</sup> lecture.  
+The final exam will take place during the very last lecture.  
+The six online quizzes will take place during the first three weeks of each part of the course. The corresponding lectures are marked with a <span style = "color:#00A2D9;">*</span> symbol.
+
+```{r, echo = F}
+tibble(a = c("")) %>%
+  kable(col.names = NULL) %>%
+  kable_styling(bootstrap_options ="condensed") %>%
+  row_spec(1, extra_css = "border-bottom: dashed 1px #014D64 !important;")
 ```
 
-***
+Horizontal dashed lines represent break periods. They all last 1 week except the 2-week-long Christmas break.
 
-<vspace></vspace>
+<p style = "margin-bottom:.75cm;"></p>
+
+```{r s1, echo = FALSE}
+s1 <- data.frame(c = c("05/09/22", 
+                       "12/09/22", 
+                       "19/09/22", 
+                       "26/09/22",
+                       "03/10/22", 
+                       "10/10/22", 
+                       "17/10/22", 
+                       "31/10/22", 
+                       "07/11/22",
+                       "14/11/22", 
+                       "28/11/22", 
+                       "05/12/22", 
+                       "12/12/22", 
+                       "02/01/23", 
+                       "16/01/23"),
+                 
+                 a = c(paste("Lecture", 1:3, '<span style = "color:#00A2D9;">*</span>'), 
+                       paste("Lecture", 4:7),
+                       paste("Lecture", 8:10, '<span style = "color:#00A2D9;">*</span>'), 
+                       paste("Lecture", 11:13), 
+                       "Lecture 14",  "Lecture 15"),
+                 
+                 b = c("Introduction to R",
+                       "Descriptive statistics",
+                       "Basic data manipulation",
+                       "Data visualization",
+                       "R markdown & \\(\\LaTeX\\)",
+                       "Text data & sentiment analysis",
+                       "Homework correction",
+                       "Univariate regressions",
+                       "Multivariate regressions",
+                       "Inference",
+                       "Causality",
+                       "Interpretation",
+                       "Applications in academic research",
+                       "Maps and geolocalized data", 
+                       "Final exam"))
+
+kable(s1, col.names = NULL, escape= F)  %>%
+  kable_styling(bootstrap_options = c("hover", "condensed"), full_width = F) %>%
+  #add_header_above(c("Semester 1" = 3)) %>%
+  #row_spec(0, font_size = 20) %>%
+  pack_rows("Part 1: Introduction to R programming", 1, 7) %>%
+  pack_rows("Part 2: Introduction to Econometrics", 8, 15) %>%
+  
+  column_spec(1, width = "12em", width_min = "8em", width_max = "12em") %>%
+  column_spec(2, width = "12em", width_min = "8em", width_max = "12em") %>%
+  column_spec(3, width = "24em", width_min = "15em", width_max = "24em") %>%
+  
+  row_spec(c(7, 10, 13, 14), extra_css = "border-bottom: dashed 1px #014D64 !important;") %>%
+  row_spec(c(1:5, 8:13), color = "#014D64") %>%
+  row_spec(c(6, 14), color = "#6794A7") %>%
+  row_spec(c(7, 15), color = "#00A2D9") # %>%  row_spec(c(8, 12, 16, 18), color = "#86D7F2")
+```
+
+<p style = "margin-bottom:2cm;"></p>
+
+<center><span style = "font-size:15pt;"><b>Spring semester</b></span></center>  
+
+<p style = "margin-bottom:.75cm;"></p>
+
+<span style = "color:#6794A7;"><u>Guidelines and refreshers:</u></span>  
+
+The first lecture will cover in detail how to conduct your research project, and the next two lectures will go back on the most important notions seen during the first semester. These are meant to give you time to form groups of 2 and to find your research question and your dataset. You will be guided on where and how to look for data, and both the data and the research question can be taken from an existing academic article. 
+
+<span style = "color:#014D64;"><u>Follow-ups:</u></span>   
+
+Follow-up sessions are meetings during which you will be given feedback on what you've done and indications on what to do next. The precise format of the follow-ups may vary between TAs. Between each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc., until your final presentation. [Here](https://louissirugue.github.io/data-analysis-course/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the *Material* section of the homepage. You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
+
+<span style = "color:#00A2D9;"><u>Exams:</u></span>  
+
+The 4<sup>th</sup> lecture will be dedicated to the presentation of your research questions and datasets.  
+A midterm report must be handed out by email to your TA after the 9<sup>the</sup> lecture. Lecture 10 will be devoted to giving you feedback about it.  
+The last lecture will be dedicated to your final presentations.  
+More detailed guidelines are provided above and in the first set of slides *"How to conduct a research project".*
+
+```{r, echo = F}
+tibble(a = c("")) %>%
+  kable(col.names = NULL) %>%
+  kable_styling(bootstrap_options ="condensed") %>%
+  row_spec(1, extra_css = "border-bottom: dashed 1px #014D64 !important;")
+```
+
+Horizontal dashed lines represent break periods.
+
+<p style = "margin-bottom:.75cm;"></p>
+
+<p style = "margin-bottom:.75cm;"></p>
 
 ```{r s2, echo = FALSE}
-s2 <- data.frame(a = c(paste("Lecture", 1:15)),
-                 b = c("How to conduct a research project",
+s2 <- data.frame(a = c(" ", paste("Lecture", 1:15)),
+                 c = c("Group 1",
+                       rep("TBA", 15)),
+                 d = c("Group 2",
+                       rep("TBA", 15)),
+                 b = c(" ", "How to conduct a research project",
                        "Refresher: R Programming",
                        "Refresher: Econometrics",
                        "Presentation of your research question and dataset",
-                       "Follow-up: Data cleaning",
+                       "Follow-up: Data cleaning I",
+                       "Follow-up: Data cleaning II",
                        "Follow-up: Descriptive statistics",
                        "Follow-up: Visualizing the data",
-                       "Follow-up: Regression analysis I",
-                       "Follow-up: Regression analysis II",
+                       "Follow-up: Regression analysis",
+                       "Follow-up: Midterm report feedback",
                        "Follow-up: Causality assessment",
                        "Follow-up: Robustness",
                        "Follow-up: Heterogeneity",
-                       "Follow-up: Tidy your html report for Github",
-                       "Follow-up: Last tips", 
-                       "Final presentation"),
-                 c = c(rep("Date", 15)))
+                       "Follow-up: Last tips",
+                       "Final presentation"))
 
-kable(s2, col.names = NULL)  %>%
-  add_header_above(c("Semester 2" = 3)) %>%
-  row_spec(0, font_size = 20) %>%
-  kable_styling(bootstrap_options = c("hover", "condensed")) %>%
-  pack_rows("Part 1: Guidelines and refreshers", 1, 3) %>%
-  pack_rows("Part 2: Research project", 4, 15)
+kable(s2, col.names = NULL, align = "lccl")  %>%
+  #add_header_above(c("Semester 2" = 3)) %>%
+  #row_spec(0, font_size = 20) %>%
+  kable_styling(bootstrap_options = c("hover", "condensed"), full_width = F) %>%
+  row_spec(1, font_size = 17)  %>%
+  pack_rows("Part 1: Guidelines and refreshers", 2, 4) %>%
+  pack_rows("Part 2: Research project", 5, 16) %>%
+  
+  column_spec(1, width = "7em", width_min = "7em", width_max = "7em") %>%
+  column_spec(2, width = "5em", width_min = "4em", width_max = "4em") %>%
+  column_spec(3, width = "5em", width_min = "4em", width_max = "4em") %>%
+  column_spec(4, width = "20em", width_min = "14em", width_max = "20em") %>%
+  
+  row_spec(c(6:10, 12:15), color = "#014D64") %>%
+  row_spec(2:4, color = "#6794A7") %>%
+  row_spec(c(5, 11, 16), color = "#00A2D9")
 ```
 
 ***
@@ -378,7 +510,6 @@ This course is inspired by:
 
 #### Archives
 
-ADD SHINY IN 2021 AND ALLOW FOR DARKMODE
 <br>
 
 ```{r}

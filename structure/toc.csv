@@ -35,10 +35,10 @@ III. Basic data manipulation;2. The dplyr grammar;2.2. Group by and summarise
 III. Basic data manipulation;2. The dplyr grammar;2.3. Merge and append data
 III. Basic data manipulation;2. The dplyr grammar;2.4. Reshape data
 III. Basic data manipulation;3. Wrap up!;
-IV. Data visualization;1. The ggplot() function;1.1. Basic structure
-IV. Data visualization;1. The ggplot() function;1.2. Axes
-IV. Data visualization;1. The ggplot() function;1.3. Theme
-IV. Data visualization;1. The ggplot() function;1.4. Annotation
+IV. Data visualization;1. The ggplot() function;1.1. Basic structure
+IV. Data visualization;1. The ggplot() function;1.2. Axes
+IV. Data visualization;1. The ggplot() function;1.3. Theme
+IV. Data visualization;1. The ggplot() function;1.4. Annotation
 IV. Data visualization;2. Adding dimensions;2.1. More axes
 IV. Data visualization;2. Adding dimensions;2.2. More facets
 IV. Data visualization;2. Adding dimensions;2.3. More labels
