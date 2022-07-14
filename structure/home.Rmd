@@ -12,24 +12,71 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
-body{background-color:black;filter:invert(1)}
-```
-
 ```{r, echo = F}
-dark <- ""
-#dark <- "_dark"
+dark_theme <- F
 ```
-
 
 ```{r setup, include = F}
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
 lapply(c("tidyverse", "kableExtra"), library, character.only = T)
 root <- "https://louissirugue.github.io/metrics_on_R/"
-
 ```
 
-<p style = "margin-bottom:1.75cm;">
+```{css, echo = F, eval = !dark_theme}
+.share-box {
+  top:10%;
+  right:10%;
+  width: 50px;
+  height: 50px;
+  background: #DFE6EB;
+  border-radius: 100px;
+  text-align:left;
+  padding:30px;
+  box-shadow: 5px 5px 7px #c7c4c4, 
+              -5px -5px 7px #E7EDF0;
+}
+
+.share-box:active {
+  box-shadow: inset 5px 5px 7px #c7c4c4, 
+              inset -5px -5px 7px #E7EDF0
+}
+```
+
+```{css, echo = F, eval = dark_theme}
+body{background-color:#201914;filter:invert(1)}
+
+.share-box {
+  top:10%;
+  right:10%;
+  width: 50px;
+  height: 50px;
+  background: #DFE6EB;
+  border-radius: 100px;
+  text-align:left;
+  padding:30px;
+  box-shadow: 5px 5px 7px #F3F5F7, 
+              -5px -5px 7px #D8DEE3;
+}
+
+.share-box:active {
+  box-shadow: inset 5px 5px 7px #F3F5F7, 
+              inset -5px -5px 7px #D8DEE3
+}
+```
+
+```{r, echo = F}
+dark <- ifelse(dark_theme, "_dark", "")
+astre <- ifelse(dark_theme, "sun", "moon")
+```
+
+````{=html}
+```{r, echo=FALSE, results='asis'}
+writeLines(paste0('<div class = "share-box" style ="margin-top:-5cm;margin-left:22cm;"><a href = "https://louissirugue.github.io/metrics_on_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.64cm;margin-top:-.64cm;width:50px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
+xfun::file_string('astre.html')
+```
+````
+
+<p style = "margin-bottom:5cm;">
 
 ### {.tabset}
 
