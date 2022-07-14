@@ -17,12 +17,13 @@ h4.date{font-size: 20px; text-align: center;}
 
 /* Body styling */
 /****************/
+
 p{font-size: 13pt;}
 html{font-family: 'Noto Sans', sans-serif;}
 code{font-family: 'Source Code Pro', sans-serif; font-size: 11pt;}
-body{text-align: justify; background-color: #DFE6EB; font-family: 'Noto Sans', sans-serif;}
+body{text-align: justify; background-color: #DFE6EB; font-family: 'Noto Sans', sans-serif; min-width: 55em;}
 h3{margin-bottom:.5cm; margin-top:1.25cm; font-size: 30px; color: #014D64;}
-h4{margin-bottom:.4cm; margin-top:.5cm; font-size: 20px}
+h4{margin-bottom:.4cm; margin-top:.5cm; font-size: 25px; color: #014D64;}
 
 /* Tables styling */
 /******************/
@@ -41,17 +42,16 @@ span.hljs-keyword{color: #6794A7;}
 span.hljs-literal{color: #6794A7;}
 
 /* Navbar styling */
-/***************/
+/******************/
 .nav-tabs > li {float: none; display:inline-block; zoom:1;}
 .nav-tabs {text-align: center; border-color: #EBF0F3; font-size: 18px; }
 ul.nav li a {color: #014D64}
 ul.nav li a:hover {background-color: #EBF0F3; color: #014D64; border-color: #EBF0F3;}
 ul.nav li.active a {color: #014D64 !important; border-color: #EBF0F3 !important; background-color: #EBF0F3 !important;}
 ul.nav li.active a:hover {color: #014D64; background-color: #EBF0F3; border-color: #EBF0F3;}
-
-/* Blockquote styling */
+/* Navbar styling */
 /******************/
-blockquote {border-left: solid 5px #EBF0F3;padding-left: 1em;}
+blockquote {border-left: solid 5px #EBF0F3; padding-left: 1em;}
 
 /* Custom html tags for convenience */
 /************************************/
