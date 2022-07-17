@@ -780,7 +780,7 @@ ggplot(tibble(`Value of the additional observation` = rep(-50:50, 2),
 
 ### 2. Central tendency
 
-#### 2.3. Mean vs median: in R
+#### 2.3. Mean vs. median: in R
 
  * Both statistics have **dedicated R functions**
  
@@ -808,7 +808,7 @@ mean(c(1, 2, 3, 4, NA), na.rm = T)
 
 ### 2. Central tendency
 
-#### 2.3. Mean vs median: with binary variable
+#### 2.3. Mean vs. median: with binary variable
 
 <ul>
   <li>A <b>binary variable</b> is a variable that can take only <b>two values</b> <i>(e.g., male/female, accepted/rejected)</i></li>
