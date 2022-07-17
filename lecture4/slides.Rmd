@@ -137,7 +137,7 @@ kable(tibble(Function = c("mutate()", "select()", "filter()",
 
 ### 1. The `ggplot()` function
 
-#### 1.1. Basic structure 
+#### 1.1. Basic structure
 
 <ul>
   <li><b>ggplot()</b> is the function that we're gonna use for all our plots</li>
@@ -426,7 +426,7 @@ ggplot(test_data, aes(x = V1, y = V2)) +
 
 ---
 
-### 1. The `ggplot` function
+### 1. The `ggplot()` function
 
 #### 1.4. Annotation
 
@@ -470,7 +470,7 @@ ggplot(test_data, aes(x = V1, y = V2)) +
 
 ---
 
-### 1. The `ggplot` function
+### 1. The `ggplot()` function
 
 #### 1.4. Annotation: Adding lines
 
@@ -505,7 +505,7 @@ ggplot(test_data, aes(x = V1, y = V2)) +
 
 ---
 
-### 1. The `ggplot` function
+### 1. The `ggplot()` function
 
 #### 1.4. Annotation: Adding text
 
@@ -521,7 +521,7 @@ ggplot(test_data, aes(x = V1, y = V2)) +
 
 ---
 
-### 1. The `ggplot` function
+### 1. The `ggplot()` function
 
 #### Combining everything
 
@@ -583,7 +583,7 @@ ggplot(test_data, aes(x = V1, y = V2)) +
 
 ---
 
-### 1. The `ggplot` function
+### 1. The `ggplot()` function
 
 #### Combining everything
 
@@ -1833,7 +1833,7 @@ ggplot(temp_data, aes(x = x, y = y)) +
 
 ### 4. How (not) to lie with graphics
 
-#### 4.2. Interpolation
+#### 4.3. Interpolation
 
  * Here is the **previous graph** on the tax increase using a **line geometry**
  
@@ -1864,7 +1864,7 @@ ggplot(tibble(x = c("Now", "Jan 1, 2013"),
 
 ### 4. How (not) to lie with graphics
 
-#### 4.2. Interpolation
+#### 4.3. Interpolation
 
 <ul>
   <li>This figure also has <b>finitely many</b> values but feels more natural</li>
@@ -1883,7 +1883,7 @@ ggplot(temp_data, aes(x = x, y = y)) +
 
 ### 4. How (not) to lie with graphics
 
-#### 4.2. Interpolation
+#### 4.3. Interpolation
 
 <ul>
   <li>There is no rule either on when <b>lines</b> should be used or not</li>
