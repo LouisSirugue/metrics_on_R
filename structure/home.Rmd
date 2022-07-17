@@ -225,42 +225,158 @@ kable(ex, col.names = NULL, align = "lccc")  %>%
 <br><br>
 
 ```{r, include = F}
-toc <- read.csv("toc.csv", sep = ";")
+roman <- c("I.", "II.", "III.", "IV.", "V.", "VI.", "VII.", "VIII.", "IX.")
+           #"X.", "XI.", "XII.", "XIII.", "XIV.")
+
+slides <- tibble(x = NA_character_, type = NA_character_, 
+                 link = NA_character_, bullet = NA_character_,
+                 last = NA_character_, n = NA) %>% na.omit()
+
+for (i in 1:length(roman)) {
+  
+  if (i == 7) {
+    slides <- slides %>%
+      bind_rows(tibble(x = "VII. Homework correction", 
+                       type = "title", 
+                       link = NA_character_, 
+                       bullet = "item",
+                       last = "title",
+                       n = NA))
+  } 
+  
+  else {
+    
+    lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
+    
+    if (i == 5) {
+      fourticks <- lecture %>%
+        mutate(row = row_number()) %>%
+        filter(grepl("^````", x)) %>%
+        mutate(x = rep(1:(nrow(.)/2), each = 2),
+               group = ifelse(row_number() %% 2, "start", "stop")) %>%
+        pivot_wider(names_from = "group", values_from = "row")
+      
+      for (j in 1:nrow(fourticks)) {
+        lecture <- lecture %>%
+          filter(!row_number() %in% fourticks$start[j]:fourticks$stop[j])
+      }
+    }    
+    
+    slides <- slides %>%
+      bind_rows(tibble(x = paste(roman[i], gsub('title: \"|\"', "", lecture$x[2])),
+                       type = "title",
+                       link = paste0(root, "lecture", i, "/slides.html#1"),
+                       bullet = "detail",
+                       last = "",
+                       n = NA)) %>%
+      bind_rows(lecture %>%
+                  mutate(type = case_when(grepl("^-", x) ~ "Dashed",
+                                          grepl("^### [0-9]. ", x) ~ "Section",
+                                          grepl("^#### [0-9].[0-9]. ", x) ~ "Subsection"),
+                         x = gsub(":.*$", "", x)) %>%
+                  na.omit() %>%
+                  group_by(x) %>%
+                  filter(type == "Dashed" | row_number() == 1) %>%
+                  ungroup() %>%
+                  group_by(type == "Dashed") %>%
+                  mutate(toc_element = ifelse(type != "Dashed", row_number(), NA)) %>%
+                  ungroup() %>%
+                  mutate(slide = row_number() - toc_element,
+                         x = sub("#* ", "", x)) %>%
+                  na.omit() %>%
+                  select(x, type, slide) %>%
+                  mutate(section = substr(x, 1, 1)) %>%
+                  group_by(section) %>%
+                  mutate(n = n(),
+                         last = ifelse(row_number() == n(), "Section", "")) %>%
+                  ungroup() %>%
+                  mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
+                         link = paste0(root, "lecture", i, "/slides", 
+                                       ifelse(dark_theme, "_dark", ""), ".html#", slide),
+                         last = ifelse(row_number() == n(), "title", last)) %>%
+                  select(x, type, link, bullet, last, n))
+  }
+}
+slides <- slides %>% mutate(x = gsub("`", "", x))
 
 htmlcode <- ""
-for (i in unique(toc$Course)) {
-  sect <- unique(toc %>% filter(Course == i) %>% select(Section) %>% deframe)
+for (i in 1:nrow(slides)) {
   
-  # If more than level 1
-  if (sect != "") {
-    
-    htmlcode <- paste0(htmlcode, '<details open style = "margin-left:1cm;"><summary>', i, '</summary>')
-    for (j in sect) {
-      sub <- toc %>% filter(Course == i & Section == j) %>% select(Subsection) %>% deframe
-      
-      # If more than level 2
-      if (sub != "") {
-        
-        htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary>', j, '</summary>')
-        for (k in sub) {
-          htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.6cm;margin-bottom:0cm;"><li>', k, '</li></ul>')
-        }
-        htmlcode <- paste0(htmlcode, '</details>') 
-        
-        # If only level 2
-      } else {
-        htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;margin-bottom:0cm;"><li>', j, '</li></ul>')
-      }
+  # Open level 1
+  if (slides$type[i] == "title") {
+    if (slides$bullet[i] == "detail") {
+      htmlcode <- paste0(htmlcode, '<details open style = "margin-left:1cm;"><summary><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></summary>')
     }
-    
-    htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>') 
-    # If only level 1
-  } else{
-    htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li>', i, 
-                       '</li></ul><p style = "margin-bottom:.75cm;"></p>')
+    if (slides$bullet[i] == "item") {
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li>', slides$x[i], '</li></ul><p style = "margin-bottom:.75cm;"></p>')
+    }
   }
   
+  # Open level 2
+  
+  if (slides$type[i] == "Section") {
+    if (slides$bullet[i] == "detail") {
+      htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></summary>')
+    }
+    if (slides$bullet[i] == "item") {
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;margin-bottom:0cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></li></ul>')
+    }
+  }
+  
+  # Level 3
+  if (slides$type[i] == "Subsection") {
+    htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.6cm;margin-bottom:0cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></li></ul>')
+  }
+  
+  # Close level 2
+  if (slides$last[i] == "Section" & slides$n[i] > 1) {
+    htmlcode <- paste0(htmlcode, '</details>')
+    }
+  
+  # Close level 1
+  if (slides$last[i] == "title") {htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>')}
 }
+
+#toc <- read.csv("toc.csv", sep = ";")
+#
+#htmlcode <- ""
+#for (i in unique(toc$Course)) {
+#  sect <- unique(toc %>% filter(Course == i) %>% select(Section) %>% deframe)
+#  
+#  # If more than level 1
+#  if (sect != "") {
+#    
+#    htmlcode <- paste0(htmlcode, '<details open style = "margin-left:1cm;"><summary>', i, '</summary>')
+#    for (j in sect) {
+#      sub <- toc %>% filter(Course == i & Section == j) %>% select(Subsection) %>% deframe
+#      
+#      # If more than level 2
+#      if (sub != "") {
+#        
+#        htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary>', j, '</summary>')
+#        for (k in sub) {
+#          htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.6cm;margin-bottom:0cm;"><li>', k, '</li></ul>')
+#        }
+#        htmlcode <- paste0(htmlcode, '</details>') 
+#        
+#        # If only level 2
+#      } else {
+#        htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;margin-bottom:0cm;"><li>', j, '</li></ul>')
+#      }
+#    }
+#    
+#    htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>') 
+#    # If only level 1
+#  } else{
+#    htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li>', i, 
+#                       '</li></ul><p style = "margin-bottom:.75cm;"></p>')
+#  }
+#  
+#}
 
 writeLines(htmlcode, "toc.html")
 ```
