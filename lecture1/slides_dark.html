@@ -6,6 +6,8 @@
     <meta name="author" content=" Louis SIRUGUE" />
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
     <link rel="shortcut icon" href="star.png" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -22,35 +24,51 @@ class: center, middle, inverse, title-slide
 ---
 
 
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 31%;} &lt;/style&gt;
+
 &lt;style type="text/css"&gt;
 body{background-color:black;filter:invert(1)}
 &lt;/style&gt;
 
 
 
-
-### Welcome to the course!
-
---
-
-&lt;p style = "margin-bottom:-.75cm;"&gt;&lt;/p&gt;
-
-.pull-left[
-
-#### About me:
+### Welcome to the course
 
 &lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
 
+--
+
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;About me&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
 &lt;ul&gt;
-  &lt;li style = "margin-bottom:.75cm;"&gt;PhD student at the Paris School of Economics&lt;/li&gt;
+  &lt;li&gt;PhD student at the Paris School of Economics&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
   &lt;li&gt;I work primarily on:&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;Intergenerational (income) mobility&lt;/li&gt; 
+    &lt;li&gt;Intergenerational (income) mobility&lt;/li&gt;
     &lt;li&gt;Residential segregation&lt;/li&gt;
-    &lt;li style = "margin-bottom:.75cm;"&gt;Discrimination&lt;/li&gt;
+    &lt;li&gt;Discrimination&lt;/li&gt;
   &lt;/ul&gt;
-  &lt;li style = "margin-bottom:.75cm;"&gt;I do empirical research, so I use Econometrics and (R) programming on a daily basis&lt;/li&gt;
-  &lt;li&gt;You can reach me at &lt;a href="mailto:louis.sirugue@psemail"&gt;louis.sirugue@psemail&lt;/a&gt; for any question or comment about the course&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I do empirical research, so I use Econometrics and (R) programming on a daily basis&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can reach me at &lt;a href="mailto:louis.sirugue@psemail.eu"&gt;louis.sirugue@psemail.eu&lt;/a&gt; for any question or comment about the course&lt;/li&gt;
 &lt;/ul&gt;
 ]
 
@@ -58,7 +76,7 @@ body{background-color:black;filter:invert(1)}
 
 .pull-right[
 
-#### About the course:
+&lt;center&gt;&lt;b&gt;About the course&lt;/b&gt;&lt;/center&gt;
 
 &lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
 
@@ -67,19 +85,25 @@ body{background-color:black;filter:invert(1)}
   &lt;ul&gt;
     &lt;li style = "margin-bottom:.3cm;"&gt;Give you the necessary statistical and data visualization tools to perform data analyses&lt;/li&gt;
   &lt;/ul&gt;
+&lt;/ul&gt;
 
+&lt;ul&gt;
   &lt;li&gt;&lt;b&gt;Prerequisites:&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
     &lt;li style = "margin-bottom:.3cm;"&gt;None (middle-school maths level)&lt;/li&gt;
   &lt;/ul&gt;
+&lt;/ul&gt;
 
+&lt;ul&gt;
   &lt;li&gt;&lt;b&gt;What you'll learn:&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;Find and manipulate data&lt;/li&gt;
     &lt;li&gt;Summarize data with relevant statistics and compelling graphics&lt;/li&gt;
     &lt;li style = "margin-bottom:.3cm;"&gt;Carry out an empirical research project&lt;/li&gt;
   &lt;/ul&gt;
+&lt;/ul&gt;
 
+&lt;ul&gt;
   &lt;li&gt;&lt;b&gt;Thus, this course is a mix of:&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;Programming on R&lt;/li&gt;
@@ -89,51 +113,621 @@ body{background-color:black;filter:invert(1)}
 &lt;/ul&gt;
 ]
 
+---
+
+### First semester
+
+#### Course format
+
+&lt;ul&gt;
+  &lt;li&gt;The course is divided into &lt;b&gt;2 parts&lt;/b&gt; that are &lt;b&gt;structured&lt;/b&gt; the same way:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+.pull-left[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part I: Introduction to R programming&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 1 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Introduction to R &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 2 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Descriptive statistics &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 3 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Basic data manipulation &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 4 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Data visualization &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 5 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; R Markdown &amp;amp; LaTeX &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 6 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Text data &amp;amp; sentiment analysis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 7 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Homework correction &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-1.6cm;"&gt;&lt;/p&gt;
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part II: Introduction to Econometrics&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 8 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Univariate regressions &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 9 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Multivariate regressions &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 10 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Inference &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 11 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Causality &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 12 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Interpretation &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 13 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Applications in academic research &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 14 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Maps and geolocalized data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 15 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Final Exam &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
 
 ---
 
 ### First semester
 
-#### Course format:
+#### Course format
 
-&lt;p style = "margin-bottom:-.25cm;"&gt;
-
-&lt;p style = "margin-left:.5cm;"&gt; &amp;#10140; 15 formal lectures divided into 3 parts:&lt;/p&gt;
-&lt;p style = "margin-bottom:-.25cm;"&gt;
-
---
-
-&lt;ol style = "padding-left:4em"&gt;
-  &lt;li&gt;Introduction to R Programming &lt;/li&gt;
-  &lt;li&gt;Data analysis&lt;/li&gt;
-  &lt;li&gt;Data visualization&lt;/li&gt;
-&lt;/ol&gt;
+&lt;ul&gt;
+  &lt;li&gt;The course is divided into &lt;b&gt;2 parts&lt;/b&gt; that are &lt;b&gt;structured&lt;/b&gt; the same way:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;3 core &lt;b&gt;lectures with&lt;/b&gt; weekly online &lt;b&gt;quizzes&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
  
---
+.pull-left[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part I: Introduction to R programming&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 1 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Introduction to R* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 2 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Descriptive statistics* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 3 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Basic data manipulation* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 4 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Data visualization &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 5 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; R Markdown &amp;amp; LaTeX &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 6 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Text data &amp;amp; sentiment analysis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 7 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Homework correction &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
 
-&lt;p style = "margin-bottom:1cm;"&gt;
+.pull-right[
+&lt;p style = "margin-bottom:-1.6cm;"&gt;&lt;/p&gt;
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part II: Introduction to Econometrics&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 8 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Univariate regressions* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 9 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Multivariate regressions* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 10 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Inference* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 11 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Causality &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 12 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Interpretation &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 13 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Applications in academic research &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 14 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Maps and geolocalized data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 15 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Final Exam &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### First semester
+
+#### Course format
+
+&lt;ul&gt;
+  &lt;li&gt;The course is divided into &lt;b&gt;2 parts&lt;/b&gt; that are &lt;b&gt;structured&lt;/b&gt; the same way:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;3 core &lt;b&gt;lectures with&lt;/b&gt; weekly online &lt;b&gt;quizzes&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;2-3 core &lt;b&gt;lectures without quizzes&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+.pull-left[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part I: Introduction to R programming&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 1 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Introduction to R* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 2 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Descriptive statistics* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 3 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Basic data manipulation* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 4 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Data visualization &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 5 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; R Markdown &amp;amp; LaTeX &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 6 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Text data &amp;amp; sentiment analysis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 7 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Homework correction &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-1.6cm;"&gt;&lt;/p&gt;
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part II: Introduction to Econometrics&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 8 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Univariate regressions* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 9 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Multivariate regressions* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 10 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Inference* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 11 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Causality &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 12 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Interpretation &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 13 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Applications in academic research &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 14 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Maps and geolocalized data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 15 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Final Exam &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### First semester
+
+#### Course format
+
+&lt;ul&gt;
+  &lt;li&gt;The course is divided into &lt;b&gt;2 parts&lt;/b&gt; that are &lt;b&gt;structured&lt;/b&gt; the same way:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;3 core &lt;b&gt;lectures with&lt;/b&gt; weekly online &lt;b&gt;quizzes&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;2-3 core &lt;b&gt;lectures without quizzes&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;1 buffer &lt;b&gt;lecture&lt;/b&gt; that will &lt;b&gt;not&lt;/b&gt; be &lt;b&gt;in the exams&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+.pull-left[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part I: Introduction to R programming&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 1 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Introduction to R* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 2 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Descriptive statistics* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 3 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Basic data manipulation* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 4 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Data visualization &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 5 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; R Markdown &amp;amp; LaTeX &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 6 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Text data &amp;amp; sentiment analysis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 7 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Homework correction &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-1.6cm;"&gt;&lt;/p&gt;
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part II: Introduction to Econometrics&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 8 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Univariate regressions* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 9 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Multivariate regressions* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 10 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Inference* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 11 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Causality &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 12 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Interpretation &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 13 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Applications in academic research &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 14 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Maps and geolocalized data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Lecture 15 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #DFE6EB !important;background-color: #DFE6EB !important;"&gt; Final Exam &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### First semester
+
+#### Course format
+
+&lt;ul&gt;
+  &lt;li&gt;The course is divided into &lt;b&gt;2 parts&lt;/b&gt; that are &lt;b&gt;structured&lt;/b&gt; the same way:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;3 core &lt;b&gt;lectures with&lt;/b&gt; weekly online &lt;b&gt;quizzes&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;2-3 core &lt;b&gt;lectures without quizzes&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;1 buffer &lt;b&gt;lecture&lt;/b&gt; that will &lt;b&gt;not&lt;/b&gt; be &lt;b&gt;in the exams&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;1 &lt;b&gt;exam&lt;/b&gt; (homework/final exam)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+.pull-left[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part I: Introduction to R programming&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 1 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Introduction to R* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 2 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Descriptive statistics* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 3 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Basic data manipulation* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 4 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Data visualization &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 5 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; R Markdown &amp;amp; LaTeX &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 6 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Text data &amp;amp; sentiment analysis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Lecture 7 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Homework correction &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-1.6cm;"&gt;&lt;/p&gt;
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Part II: Introduction to Econometrics&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 8 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Univariate regressions* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 9 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Multivariate regressions* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 10 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Inference* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 11 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Causality &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 12 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Interpretation &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 13 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Applications in academic research &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 14 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Maps and geolocalized data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Lecture 15 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Final Exam &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### First semester
 
 #### Grading:
 
-&lt;p style = "margin-bottom:-.25cm;"&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Weekly short online quizzes (25% of the grade) &lt;/li&gt;
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:3cm;"&gt;
+  &lt;li&gt;The exam &lt;b&gt;coefficients&lt;/b&gt; are:&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;5 shorts questions related to the content of the previous class &lt;/li&gt;
-    &lt;li&gt;The quiz opens at the end of the lecture and closes at the beginning of the following one&lt;/li&gt;
-    &lt;li&gt;Possibility to retry the quiz as many times as you want before submitting&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-2.5cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;ul style = "margin-bottom:-.75cm;"&gt;
+]
+
+---
+
+### First semester
+
+#### Grading:
+
+
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:3cm;"&gt;
+  &lt;li&gt;The exam &lt;b&gt;coefficients&lt;/b&gt; are:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Online quizzes: 25%&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-2.5cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;ul style = "margin-bottom:-.75cm;"&gt;
+]
+
+---
+
+### First semester
+
+#### Grading:
+
+
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:3cm;"&gt;
+  &lt;li&gt;The exam &lt;b&gt;coefficients&lt;/b&gt; are:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Online quizzes: 25%&lt;/li&gt;
+    &lt;li&gt;Homework: 30%&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-2.5cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;ul style = "margin-bottom:-.75cm;"&gt;
+]
+
+---
+
+### First semester
+
+#### Grading:
+
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:3cm;"&gt;
+  &lt;li&gt;The exam &lt;b&gt;coefficients&lt;/b&gt; are:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Online quizzes: 25%&lt;/li&gt;
+    &lt;li&gt;Homework: 30%&lt;/li&gt;
+    &lt;li&gt;Final exam: 45%&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-2.5cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;ul style = "margin-bottom:-.75cm;"&gt;
+]
+
+--
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Online quizzes:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Available in the &lt;i&gt;Material&lt;/i&gt; section of the course webpage&lt;/li&gt;
+    &lt;li&gt;Log in using the verification code I sent you via email&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;3-5 shorts questions&lt;/b&gt; on to the content of the previous class &lt;/li&gt;
+    &lt;li&gt;Quizzes open at the end of the lecture and &lt;b&gt;close at the beginning of the next one&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;You can retry the quiz as many times as you want before submitting&lt;/li&gt;
+    &lt;li&gt;To submit click on &lt;i&gt;download results&lt;/i&gt; and &lt;b&gt;send the downloaded file&lt;/b&gt; to me by email&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt; 
 
+---
+
+### First semester
+
+#### Grading:
+
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Homework:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Set of exercises&lt;/b&gt; related to the first five lectures of the course&lt;/li&gt;
+    &lt;li&gt;It can be done &lt;b&gt;alone or by pairs&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Must be handed over via email by the end of the sixth week &lt;b&gt;(16th of October 23:59)&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Late submissions will be penalized&lt;/b&gt; by half a point for each 30min beyond the deadline&lt;/li&gt;
+    &lt;li&gt;I encourage you to &lt;b&gt;work on it progressively&lt;/b&gt; as we go the trough the course&lt;/li&gt;
+    &lt;li&gt;You can help each other but write your answers yourselves &lt;b&gt;(no copy-pasting)&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
 --
 
-&lt;p style = "margin-bottom:.15cm;"&gt;
-  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
 &lt;ul&gt;
-  &lt;li&gt;Homeworks (3, one for each part, 25% of the grade each)&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Final exam:&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;Homeworks are already available &lt;a href="https://louissirugue.github.io/data-analysis-course/home.html"&gt;here&lt;/a&gt;, work on it progressively as we go through the course &lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Paper exam in classroom&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;You can &lt;b&gt;bring a cheatsheet&lt;/b&gt; with you as long as:&lt;/li&gt;
+    &lt;ul&gt;
+      &lt;li&gt;It is &lt;b&gt;handwritten&lt;/b&gt; on paper&lt;/li&gt;
+      &lt;li&gt;It stands on a single A4 (21cm x 29.7cm) page, i.e., &lt;b&gt;recto only&lt;/b&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;li&gt;Cheatsheets that do not comply with these rules will be confiscated&lt;/li&gt;
+    &lt;li&gt;Beyond that, standard examination rules apply&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -141,80 +735,431 @@ body{background-color:black;filter:invert(1)}
 
 ### Second semester
 
-#### Course format:
-
-&lt;p style = "margin-bottom:-.25cm;"&gt;
+#### Course format
 
 &lt;ul&gt;
-  &lt;li style = "margin-bottom:.25cm;"&gt;Apart from 2 refreshers at the beginning, the whole semester will be dedicated to you research projects &lt;/li&gt;
-  &lt;li style = "margin-bottom:.25cm;"&gt;At each session a T.A. will guide you through the research process &lt;/li&gt;
+  &lt;li&gt;The &lt;b&gt;second semester&lt;/b&gt; will be all about carrying out your &lt;b&gt;own research project:&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;From framing a relevant question and finding appropriate data &lt;/li&gt;
-    &lt;li&gt;To the final details of your data analysis&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
   &lt;/ul&gt;
-&lt;/ul&gt; 
-
-&lt;p style = "margin-bottom:1cm;"&gt;
-
---
-
-#### Grading:
-&lt;ul&gt;
-  &lt;li style = "margin-bottom:.25cm;"&gt;Basically the whole grade will be based on your research project &lt;/li&gt;
-  &lt;li style = "margin-bottom:.25cm;"&gt;The detailed (indicative) grading scheme is available &lt;a href="https://louissirugue.github.io/data-analysis-course/project/grading.html"&gt;here&lt;/a&gt;. &lt;/li&gt;
-&lt;/ul&gt; 
-
---
-
-&lt;p style = "margin-bottom:1.75cm;"&gt;
-
-&lt;center&gt;&lt;h3 style = "font-size: 20pt;"&gt;&lt;i&gt; &amp;#10140; Visit the &lt;a href="https://louissirugue.github.io/data-analysis-course/home.html"&gt;course webpage&lt;/a&gt; for more detail, everything's there!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+&lt;/ul&gt;
 
 ---
 
-&lt;h3&gt;Let's delve into it!&lt;/h3&gt;
+### Second semester
 
+#### Course format
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;second semester&lt;/b&gt; will be all about carrying out your &lt;b&gt;own research project:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Guidelines and refreshers&lt;/b&gt; will give you time find data and a research question&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
 .pull-left[
-#### 1. Getting started
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 1 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; How to conduct a research project &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 2 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Refresher: R Programming &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 3 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Refresher: Econometrics &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
-#### 2. Classes of R objects
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
 ]
 
 .pull-right[
-#### 4. Functions and packages
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Functions
- * 4.2. Packages
 
-#### 5. A few words on learning R
+]
 
-#### 6. Wrap up!
+---
+
+### Second semester
+
+#### Course format
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;second semester&lt;/b&gt; will be all about carrying out your &lt;b&gt;own research project:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Guidelines and refreshers&lt;/b&gt; will give you time find data and a research question&lt;/li&gt;
+    &lt;li&gt;The rest of the semester will be made of &lt;b&gt;follow-up sessions&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+.pull-left[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 1 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; How to conduct a research project &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 2 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Refresher: R Programming &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 3 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Refresher: Econometrics &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 4 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Presentation of question and data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 5 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Data cleaning I &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 6 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Data cleaning II &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 7 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Descriptive statistics &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 8 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Visualizing the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 9 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Regression analysis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 10 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Midterm report feedback &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 11 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Causality assessment &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 12 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Robustness &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 13 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Heterogeneity &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 14 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Last tips &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 15 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Final presentation &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### Second semester
+
+#### Course format
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;second semester&lt;/b&gt; will be all about carrying out your &lt;b&gt;own research project:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Guidelines and refreshers&lt;/b&gt; will give you time find data and a research question&lt;/li&gt;
+    &lt;li&gt;The rest of the semester will be made of &lt;b&gt;follow-up sessions&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Exams&lt;/b&gt; will take place at &lt;b&gt;3 stages&lt;/b&gt; of the research process&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+.pull-left[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 1 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; How to conduct a research project &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 2 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Refresher: R Programming &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Lecture 3 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #6794A7 !important;background-color: #DFE6EB !important;"&gt; Refresher: Econometrics &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Lecture 4 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Presentation of question and data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 5 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Data cleaning I &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 6 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Data cleaning II &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 7 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Descriptive statistics &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 8 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Visualizing the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 9 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Regression analysis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Lecture 10 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Follow-up: Midterm report feedback &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 11 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Causality assessment &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 12 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Robustness &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 13 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Heterogeneity &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Lecture 14 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #DFE6EB !important;"&gt; Follow-up: Last tips &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Lecture 15 &lt;/td&gt;
+   &lt;td style="text-align:left;color: #00A2D9 !important;background-color: #DFE6EB !important;"&gt; Final presentation &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### Second semester
+
+#### Grading:
+
+
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;"&gt;
+  &lt;li&gt;The exam &lt;b&gt;coefficients&lt;/b&gt; are:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-2.5cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+---
+
+### Second semester
+
+#### Grading:
+
+
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;"&gt;
+  &lt;li&gt;The exam &lt;b&gt;coefficients&lt;/b&gt; are:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Presentation of research idea: 25%&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-2.5cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+---
+
+### Second semester
+
+#### Grading:
+
+
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;"&gt;
+  &lt;li&gt;The exam &lt;b&gt;coefficients&lt;/b&gt; are:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Presentation of research idea: 25%&lt;/li&gt;
+    &lt;li&gt;Midterm report: 30%&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-2.5cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+---
+
+### Second semester
+
+#### Grading:
+
+
+.pull-left[
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;"&gt;
+  &lt;li&gt;The exam &lt;b&gt;coefficients&lt;/b&gt; are:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Presentation of research idea: 25%&lt;/li&gt;
+    &lt;li&gt;Midterm report: 30%&lt;/li&gt;
+    &lt;li&gt;Final project/presentation: 45%&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;p style = "margin-bottom:-2.5cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;ul style = "margin-bottom:-.75cm;"&gt;
+]
+
+--
+
+.pull-left[
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Additional information:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Research projects must be done &lt;b&gt;by pairs&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;It can be written in &lt;b&gt;French or in English&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Follow-ups are &lt;b&gt;group meetings&lt;/b&gt; with a T.A.&lt;/li&gt;
+    &lt;li&gt;Find an &lt;b&gt;example&lt;/b&gt; of what is expected &lt;a href = "https://louissirugue.github.io/metrics_on_R/project/example.html"&gt;here&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;We'll come back to that in due time (January)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt; 
+]
+
+--
+
+.pull-right[
+&lt;p style = "margin-bottom:-3.5cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;&lt;i&gt;&amp;#10140; Check out the &lt;a href = "https://louissirugue.github.io/metrics_on_R/home.html"&gt;course webpage&lt;/a&gt; for&lt;br&gt;more details, all the information is there!&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+]
+    
+---
+
+&lt;h3&gt;Let's delve into it!&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;3. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
 ]
 
 ---
 
 &lt;h3&gt;Let's delve into it!&lt;/h3&gt;
 
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
 .pull-left[
-#### 1. Getting started
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 ]
 
 ---
@@ -224,6 +1169,10 @@ body{background-color:black;filter:invert(1)}
 #### 1.1. About R
 
  * R is a **programming language** and free software environment for **statistical computing and graphics**
+ 
+&lt;img style = "margin-left:16cm;margin-top:2.5cm;" src = "rstudio_logo.png" width = "300"/&gt;
+
+&lt;p style = "margin-bottom:-11cm;"&gt;&lt;/p&gt;
 
 --
 
@@ -247,7 +1196,7 @@ body{background-color:black;filter:invert(1)}
    &lt;ul&gt;
      &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/project/example.html"&gt;Reports&lt;/a&gt;&lt;/li&gt;
      &lt;li&gt;&lt;a href="https://www.r-graph-gallery.com/bubble_chart_interactive_ggplotly.html"&gt;Nice plots&lt;/a&gt;&lt;/li&gt;
-     &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/home.html"&gt;All the material of this course&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://louissirugue.github.io/metrics_on_R/home.html"&gt;All the material of this course&lt;/a&gt;&lt;/li&gt;
      &lt;li&gt;&lt;a href="https://pubs.aeaweb.org/doi/pdfplus/10.1257/app.20200447"&gt;Academic research&lt;/a&gt;&lt;/li&gt;
      &lt;li&gt;&lt;a href="https://www.kaggle.com/xavierconort"&gt;Win kaggle competitions&lt;/a&gt;&lt;/li&gt;
      &lt;li&gt;&lt;a href="https://vac-lshtm.shinyapps.io/ncov_tracker/?_ga=2.29922175.1739025613.1656421238-871875772.1628005923"&gt;Interactive data visualization&lt;/a&gt;&lt;/li&gt;
@@ -259,24 +1208,31 @@ body{background-color:black;filter:invert(1)}
 
 ### 1. Getting started
 
-#### 1.2. The R studio environment
+#### 1.2. The R Studio IDE
 
 &lt;center&gt;
 &lt;img src = "rstudio.png" width = "770"/&gt;
 &lt;/center&gt;
-
+ 
 ---
 
 ### 1. Getting started
 
-#### 1.2. The R studio environment
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "console.png" width = "300"/&gt;
+&lt;/center&gt;
 
 &amp;#10140; &lt;b&gt;The Console panel&lt;/b&gt;
 
-&lt;p style = "margin-bottom:-.3cm;"&gt;
-
- * This is where you **communicate with R**. You can write instructions after the `&gt;`, press enter and R will **execute**  
-    - Try with `1+1`:
+&lt;ul&gt;
+  &lt;li&gt;This is where you &lt;b&gt;communicate with R&lt;/b&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You can write instructions after the &lt;b&gt;&gt;&lt;/b&gt;, &lt;b&gt;press enter&lt;/b&gt; and R will &lt;b&gt;execute&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Try with &lt;b&gt;1+1:&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
 --
 
@@ -288,18 +1244,27 @@ body{background-color:black;filter:invert(1)}
 ```
 ## [1] 2
 ```
+ 
+---
 
---
+### 1. Getting started
 
-&lt;p style = "margin-bottom:1cm;"&gt;
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "source.png" width = "300"/&gt;
+&lt;/center&gt;
 
 &amp;#10140; &lt;b&gt;The Source panel&lt;/b&gt;
 
-&lt;p style = "margin-bottom:-.3cm;"&gt;
-
-* This is where you **write and save your code** (File &gt; New File &gt; R Script) 
- * Separate different commands with a line break 
- * The `#` symbol allows to annotate the code, everything after `#` will be ignored by R until the next line break
+&lt;ul&gt;
+  &lt;li&gt;This is where you &lt;b&gt;write and save your code&lt;/b&gt; (File &gt; New File &gt; R Script)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Separate&lt;/b&gt; different commands with a &lt;b&gt;line break&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;#&lt;/b&gt; symbol allows to &lt;b&gt;comment&lt;/b&gt; your code&lt;/li&gt;
+    &lt;li&gt;Everything after &lt;b&gt;#&lt;/b&gt; will be &lt;b&gt;ignored&lt;/b&gt; by R until the next line break&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
 --
 
@@ -308,36 +1273,57 @@ body{background-color:black;filter:invert(1)}
 1+1 # Do not put 2+2 on the same line, press enter to go to next line 
 2+2
 ```
-
+ 
 ---
 
 ### 1. Getting started
 
-#### 1.2. The R studio environment
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "source.png" width = "300"/&gt;
+&lt;/center&gt;
 
 &amp;#10140; &lt;b&gt;The Source panel&lt;/b&gt;
 
-&lt;p style = "margin-bottom:-.3cm;"&gt;
+&lt;ul&gt;
+  &lt;li&gt;To send the command from the source panel to the console panel:&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;b&gt;Highlight&lt;/b&gt; the lines you want to execute&lt;/li&gt;
+    &lt;li&gt;Press &lt;b&gt;ctrl + enter&lt;/b&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
 
- * To send the command from the source panel to the console panel:
-   1. Highlight the lines you want to execute 
-   2. Press `crtl` + `enter`
- * If you do not highlight anything the line of code where your cursor stands will be executed
- * Check the console to see the output of your code
- 
 --
 
-&lt;p style = "margin-bottom:1cm;"&gt;
+&lt;ul&gt;&lt;li&gt;If you do not highlight anything the line of code where your cursor stands will be executed&lt;/li&gt;&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;&lt;li&gt;Check the console to see the output of your code&lt;/li&gt;&lt;/ul&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "environment.png" width = "300"/&gt;
+&lt;/center&gt;
 
 &amp;#10140; &lt;b&gt;The Environment panel&lt;/b&gt;
 
-&lt;p style = "margin-bottom:-.3cm;"&gt;
-
- * Data analysis requires manipulating datasets, vectors, functions, etc. 
-    * These **elements are stored in the environment** panel.
- * For instance we can assign a value to an object using `&lt;-`
+&lt;ul&gt;
+  &lt;li&gt;Data analysis requires manipulating datasets, vectors, functions, etc.&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;These &lt;b&gt;elements are stored in the environment&lt;/b&gt; panel&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
 --
+
+ * For instance we can assign a value to an object using `&lt;-`
 
 
 ```r
@@ -346,19 +1332,23 @@ x &lt;- 1
 
 --
 
-&lt;center&gt;&lt;i&gt; &amp;#10140; You now have an object called 'x' in your environment, which takes the value 1&lt;/i&gt;&lt;/center&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt; &amp;#10140; You now have an object called 'x' in your environment, which takes the value 1&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
 
 ---
 
 ### 1. Getting started
 
-#### 1.2. The R studio environment
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "environment.png" width = "300"/&gt;
+&lt;/center&gt;
 
 &amp;#10140; &lt;b&gt;The Environment panel&lt;/b&gt;
 
- * Now that the object `x` is stored in your environment, you can use it:
+.pull-left[
 
---
+ * Now that the object `x` is stored in your environment, you can use it:
 
 
 ```r
@@ -369,21 +1359,17 @@ x + 1
 ## [1] 2
 ```
 
+]
+
 --
 
-&lt;p style = "margin-bottom:1cm;"&gt;
+.pull-right[
 
  * You can also modify that object at any point:
 
 
 ```r
-x &lt;- x + 1 # What's gonna be the value of x?
-```
-
---
-
-
-```r
+x &lt;- x + 1
 x
 ```
 
@@ -391,1729 +1377,1796 @@ x
 ## [1] 2
 ```
 
+]
 
 ---
 
 ### 1. Getting started
 
-&lt;style&gt; .left-column {width: 60%;} .right-column {width: 36%;} &lt;/style&gt;
+#### 1.2. The R Studio IDE
 
-&lt;p style = "margin-bottom:-.7cm;"&gt;
-
-.left-column[
-
-#### 1.2. The R studio environment
-
-&lt;p style = "margin-bottom:2cm;"&gt;
+&lt;center&gt;
+&lt;img src = "plot.png" width = "300"/&gt;
+&lt;/center&gt;
 
 &amp;#10140; &lt;b&gt;The Files/Plots/... panel&lt;/b&gt;
 
-&lt;p style = "margin-bottom:.5cm;"&gt;
-
  * In this panel we'll mainly be interested in the following 4 tabs
-   * **Files:** Shows your working directory
-   * **Plots:** Where R returns plots
-   * **Packages:** A library of tools that we can load if needed
-   * **Help:** Where to look for documentation on R functions
-
-&lt;p style = "margin-bottom:1cm;"&gt;
-
- * Enter `?getwd()` in the console to see what a **help file** looks like
-   * It **describes** what the command does
-   * It **explains** the different parameters of the command
-   * It **gives examples** of how to use the command
-]
 
 --
-
-.right-column[
-
-&lt;img src = "help_file.png" width = "370"/&gt;
-
-]
+&lt;ul style = "margin-top:1em;"&gt;&lt;li&gt;&lt;b&gt;Files:&lt;/b&gt; Shows your working directory&lt;/li&gt;&lt;/ul&gt;
+--
+&lt;ul style = "margin-top:1em;"&gt;&lt;li&gt;&lt;b&gt;Plots:&lt;/b&gt; Where R returns plots&lt;/li&gt;&lt;/ul&gt;
+--
+&lt;ul style = "margin-top:1em;"&gt;&lt;li&gt;&lt;b&gt;Packages:&lt;/b&gt; A library of tools that we can load if needed&lt;/li&gt;&lt;/ul&gt;
+--
+&lt;ul style = "margin-top:1em;"&gt;&lt;li&gt;&lt;b&gt;Help:&lt;/b&gt; Where to look for documentation on R functions&lt;/li&gt;&lt;/ul&gt;
 
 ---
 
-&lt;h3&gt;Overview&lt;/h3&gt;
+### 1. Getting started
 
+#### 1.2. The R Studio IDE
 
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
+&lt;center&gt;
+&lt;img src = "plot.png" width = "300"/&gt;
+&lt;/center&gt;   
 
-#### 2. Classes of R objects
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
+&amp;#10140; &lt;b&gt;The Files/Plots/... panel&lt;/b&gt;
 
-#### 3. Vectors
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning R
-
-#### 6. Wrap up!
-]
-
----
-
-&lt;h3&gt;Overview&lt;/h3&gt;
-
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-]
-
----
-
-### 2. Classes of R objects
-
-&lt;p style = "margin-bottom:1.5cm;"&gt;
-
-&lt;center&gt;&lt;b&gt;&amp;#10140; There are 3 main classes of R objects&lt;/b&gt;&lt;/center&gt;
-
---
-
-.pull-left[
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-&lt;ul style = "margin-left:1cm;"&gt;
-  &lt;li&gt;&lt;b&gt;Numeric values:&lt;/b&gt;&lt;/li&gt;
-  &lt;ul&gt;
-    &lt;li&gt;42&lt;/li&gt;
-    &lt;li&gt;-10^3&lt;/li&gt;
-    &lt;li&gt;2.6879098767&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/ul&gt;
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-&lt;ul style = "margin-left:1cm;"&gt;
-  &lt;li&gt;&lt;b&gt;Character values:&lt;/b&gt;&lt;/li&gt;
-  &lt;ul&gt;
-    &lt;li&gt;A&lt;/li&gt;
-    &lt;li&gt;Hello world&lt;/li&gt;
-    &lt;li&gt;PM2.5&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/ul&gt;
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-&lt;ul style = "margin-left:1cm;"&gt;
-  &lt;li&gt;&lt;b&gt;Logical values:&lt;/b&gt;&lt;/li&gt;
-  &lt;ul&gt;
-    &lt;li&gt;TRUE (&lt;i&gt;or equivalently&lt;/i&gt; T)&lt;/li&gt;
-    &lt;li&gt;FALSE (&lt;i&gt;or equivalently&lt;/i&gt; F)&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/ul&gt;
-
-]
-
---
-
-.pull-right[
-
-&lt;p style = "margin-bottom:2.5cm;"&gt;
-
-The class of an object is a &lt;b&gt;key attribute&lt;/b&gt;:
-
-&lt;ul style = "margin-left:-2.5cm;"&gt;
-  &lt;li&gt;Different types of operations are available for different classes of object&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ul style = "margin-left:-2.5cm;"&gt;
-  &lt;li&gt;Objects of different classes may react differently to a same operation&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ul style = "margin-left:-2.5cm;"&gt;
-  &lt;li&gt;Class mistakes is a common source of programming errors&lt;/li&gt;
-&lt;/ul&gt;
-
-]
-
----
-
-### 2. Classes of R objects
-
-#### 2.1. Numeric values
-
-&lt;center&gt;&lt;b&gt;Basic operations with numeric values:&lt;/b&gt;&lt;/center&gt;
-
---
-
-.pull-left[
+ *  Enter `?getwd()` in the console to see what a **help file** looks like
  
+---
 
-```r
-2 + 3 # Addition
-```
+### 1. Getting started
 
-```
-## [1] 5
-```
+#### 1.2. The R Studio IDE
 
+&lt;img style = "margin-left:5cm;" src = "plot.png" width = "300"/&gt;
 
-```r
-2 - 3 # Subtraction
-```
+&amp;#10140; &lt;b&gt;The Files/Plots/... panel&lt;/b&gt;
 
-```
-## [1] -1
-```
+ *  Enter `?getwd()` in the console to see what a **help file** looks like
 
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It &lt;b&gt;describes&lt;/b&gt; what the command does&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It &lt;b&gt;explains&lt;/b&gt; the different parameters of the command&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It &lt;b&gt;gives examples&lt;/b&gt; of how to use the command&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
 
-```r
-2 * 3 # Multiplication
-```
+&lt;img style = "margin-top:-12.75cm;margin-left:18.5cm;" src = "help_file.png" width = "370"/&gt;
 
-```
-## [1] 6
-```
+---
 
+class: inverse, hide-logo
 
-```r
-2 / 3 # Division
-```
+### Practice
 
-```
-## [1] 0.6666667
-```
+#### 1) Open a new R script (`Ctrl + Shift + N`) and write a code to create these objects:
 
+&lt;table&gt;
+&lt;caption&gt;Objects to create&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Object name: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; a &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; b &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; c &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #014D64 !important;"&gt; Assigned value: &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+#### 2) Run this code and create a new object named `result` that takes the value `\(\frac{b\times c}{a} + (b-a)^c\)`
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Basic operations in R&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Operation: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Addition &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Subtraction &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Multiplication &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Division &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Exponentiation &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Parentheses &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #014D64 !important;"&gt; Symbol in R: &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; + &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; - &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; * &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; / &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; ^ &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; () &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+#### 3) Print `result` in your console and save your script somewhere in your computer (`Ctrl+S`)
+
+--
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 3 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+<div class="countdown" id="timer_67f6700d" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+#### 1) Open a new R script (`Ctrl + Shift + N`) and write a code to create these objects:
+
+.pull-left[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Objects to create&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Object name: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; a &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; b &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; c &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: #014D64 !important;"&gt; Assigned value: &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 ]
 
 --
 
 .pull-right[
 
-
 ```r
-2 ^ 2 # Exponent
+a &lt;- 2
+b &lt;- 4
+c &lt;- 5
 ```
-
-```
-## [1] 4
-```
+]
 
 
-```r
-4 ^ (1/2) # Root
-```
+--
 
-```
-## [1] 2
-```
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
 
-&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+#### 2) Run this code and create a new object named `result` that takes the value `\(\frac{b\times c}{a} + (b-a)^c\)`
 
- * Store the result of a computation in an object:
+--
 
 
 ```r
-result &lt;-((2 + 2)^(2 / (2 * 2))) - 2
+result &lt;- b*c/a + (b-a)^c
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+#### 3) Print `result` in your console and save your script somewhere in your computer (`Ctrl + S`)
+
+--
+
+
+```r
 result
 ```
 
 ```
-## [1] 0
-```
-
-]
-
----
-
-### 2. Classes of R objects
-
-#### 2.2. Character values
-
-&lt;center&gt;&lt;b&gt;Character values need to be surrounded by quotation marks (' or ")&lt;/b&gt;&lt;/center&gt;
-
---
-
-
-```r
-language &lt;- "R"
-language
-```
-
-```
-## [1] "R"
-```
-
---
-
-&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
-
-&lt;center&gt;&lt;b&gt;Without quotation marks, R will think that you refer to an object&lt;/b&gt;&lt;/center&gt;
-
-
-```r
-R
-```
-
-```
-## Error in eval(expr, envir, enclos): objet 'R' introuvable
-```
-
---
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-&lt;center&gt;&lt;b&gt;Characters are not necessarily letters&lt;/b&gt;&lt;/center&gt;
-
-
-```r
-character_string &lt;- "R'{ç^*µ,,,_hi3"
+## [1] 42
 ```
 
 ---
 
-### 2. Classes of R objects
+### 1. Getting started
 
-#### 2.2. Character values
+#### 1.3. Import and eyeball data
 
-&lt;center&gt;&lt;b&gt;Useful functions with characters&lt;/b&gt;&lt;/center&gt;
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-.pull-left[
-
-&lt;center&gt;&lt;b&gt;Combining strings&lt;/b&gt;&lt;/center&gt;
-
-
-```r
-paste("Hello", "world") 
-```
-
-```
-## [1] "Hello world"
-```
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-
-```r
-paste("a", "b", "c", sep = "-") 
-```
-
-```
-## [1] "a-b-c"
-```
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-
-```r
-paste0("a", "b", "c") 
-```
-
-```
-## [1] "abc"
-```
-
-]
+ * We now know how to &lt;b&gt;use R&lt;/b&gt; as a calculator, but our goal is &lt;b&gt;to analyze data!&lt;/b&gt;
 
 --
 
-.pull-right[
+&lt;center&gt;&lt;i&gt;&amp;#10140; Take for instance the statistics from the last season of Ligue 1 available at &lt;a href = "https://fbref.com/en/comps/13/schedule/Ligue-1-Scores-and-Fixtures"&gt;fbref.com&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;
 
-&lt;center&gt;&lt;b&gt;Splitting strings&lt;/b&gt;&lt;/center&gt;
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
 
-
-```r
-substr("abcdefghijklmnopqrstuvwxyz", 3, 5)
-```
-
-```
-## [1] "cde"
-```
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-
-```r
-nchar("Hello world")
-```
-
-```
-## [1] 11
-```
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-
-```r
-substr("Hello world", 5, nchar("Hello world"))
-```
-
-```
-## [1] "o world"
-```
-
-]
+&lt;center&gt;
+&lt;img src = "fbref_2022.png" width = "825"/&gt;
+&lt;/center&gt;
 
 ---
 
-### 2. Classes of R objects
+### 1. Getting started
 
-#### 2.3. Logical values
-
-.pull-left[
-
-A logical value/**Boolean**, is a value that can be either:
- 
-&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
- 
-&lt;ul&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;TRUE&lt;/b&gt; (can be abbreviated as &lt;b&gt;T&lt;/b&gt;)&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
-
-
-```r
-T
-```
-
-```
-## [1] TRUE
-```
-
-&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
-
-&lt;ul&gt;&lt;ul&gt;&lt;li&gt;or &lt;b&gt;FALSE&lt;/b&gt; (can be abbreviated as &lt;b&gt;F&lt;/b&gt;)&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
-
-
-```r
-F
-```
-
-```
-## [1] FALSE
-```
-
-]
- 
---
-
-.pull-right[
- 
-
-```r
-2 + 2 == 4 # Equality
-```
-
-```
-## [1] TRUE
-```
-
-&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
-
-
-```r
-2 + 2 != 4 # Inequality
-```
-
-```
-## [1] FALSE
-```
-
-&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
-
-
-```r
-1 &gt; 2 # Strictly lower/greater
-```
-
-```
-## [1] FALSE
-```
-
-&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
-
-
-```r
-2 &lt;= 2 # Weakly lower/greater
-```
-
-```
-## [1] TRUE
-```
-
-]
-
----
-
-### 2. Classes of R objects
-
-#### 2.3. Logical values
-
-
-.pull-left[
-
-&lt;center&gt;&lt;b&gt;And (&amp;) / or (|)&lt;/b&gt;&lt;/center&gt;
- 
-
-```r
-(1 == 1) &amp; (1 == 2) #AND
-```
-
-```
-## [1] FALSE
-```
-
-
-```r
-(1 == 1) | (1 == 2) #OR
-```
-
-```
-## [1] TRUE
-```
-
-
-```r
-1 == 1 | (2 == 2 &amp; 1 == 2) #Parentheses matter
-```
-
-```
-## [1] TRUE
-```
-
-
-```r
-(1 == 1 | 2 == 2) &amp; 1 == 2 #Parentheses matter
-```
-
-```
-## [1] FALSE
-```
-
-]
-
---
-
-.pull-right[
-
-&lt;center&gt;&lt;b&gt;Opposite (!)&lt;/b&gt;&lt;/center&gt;
- 
-
-```r
-is.numeric(1)
-```
-
-```
-## [1] TRUE
-```
-
-
-```r
-!is.numeric(1)
-```
-
-```
-## [1] FALSE
-```
-
-
-```r
-3 &lt; 2
-```
-
-```
-## [1] FALSE
-```
-
-
-```r
-!3 &lt; 2
-```
-
-```
-## [1] TRUE
-```
-
-]
-
----
-
-### 2. Classes of R objects
-
-#### 2.4. Manipulate classes
-
---
+#### 1.3. Import and eyeball data
 
 &lt;ul&gt;
-  &lt;li&gt;It is important to &lt;b&gt;keep in mind the class&lt;/b&gt; of the object you are working with because they work differently&lt;/li&gt;
+  &lt;li&gt;You can &lt;b&gt;download&lt;/b&gt; this dataset &lt;a href = "https://louissirugue.github.io/metrics_on_R/lecture1/data.zip"&gt;here&lt;/a&gt; or from the course webpage&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;For instance, you can add two numeric values together but not two characters&lt;/li&gt;
+    &lt;li&gt;Note that the extension of the file is &lt;b&gt;.csv&lt;/b&gt; (for &lt;i&gt;&lt;b&gt;C&lt;/b&gt;omma &lt;b&gt;S&lt;/b&gt;eparated &lt;b&gt;V&lt;/b&gt;alues&lt;/i&gt;)&lt;/li&gt;
+    &lt;li&gt;Let's have a look at &lt;b&gt;first 5 lines&lt;/b&gt; of the raw csv file&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+ 
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+```text
+Wk,Day,Date,Time,Home,xG,Score,xG,Away,Attendance,Venue,Referee,Match Report,Notes
+1,Fri,2021-08-06,21:00,Monaco,2.0,1–1,0.3,Nantes,7500,Stade Louis II.,Antony Gautier,Match Report,
+1,Sat,2021-08-07,17:00,Lyon,1.4,1–1,0.8,Brest,29018,Groupama Stadium,Mikael Lesage,Match Report,
+1,Sat,2021-08-07,21:00,Troyes,0.8,1–2,1.2,Paris S-G,15248,Stade de l'Aube,Amaury Delerue,Match Report,
+1,Sun,2021-08-08,13:00,Rennes,0.6,1–1,2.0,Lens,22567,Roazhon Park,Bastien Dechepy,Match Report,
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;.csv format&lt;/b&gt; is very common and has a very &lt;b&gt;codified structure&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can see that &lt;b&gt;each line&lt;/b&gt; corresponds to &lt;b&gt;a row&lt;/b&gt; (the first row generally contains column names)&lt;/li&gt;
+    &lt;li&gt;And for each row the &lt;b&gt;values&lt;/b&gt; of each column are &lt;b&gt;separated by commas&lt;/b&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
 --
 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&lt;i&gt;&amp;#10140; But how to get it in our R studio environment?&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+.pull-left[
 &lt;ul&gt;
-  &lt;li&gt;You can &lt;b&gt;find the class&lt;/b&gt; of an object by hovering your mouse over its name in the environment panel, or using the &lt;b&gt;class()&lt;/b&gt; function:&lt;/li&gt;
+  &lt;li&gt;To &lt;b&gt;import&lt;/b&gt; stuff in R we use &lt;b&gt;&lt;i&gt;read&lt;/i&gt; functions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;They take the &lt;b&gt;file directory&lt;/b&gt; as an &lt;b&gt;input&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;And give the &lt;b&gt;file content&lt;/b&gt; as an &lt;b&gt;output&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+
+```r
+function(input)
+```
+
+```
+## [1] "output"
+```
+]
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The read function dedicated to .csv files is &lt;b&gt;read.csv()&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+fb &lt;- read.csv("C:\User\Documents\ligue1.csv")
+```
+
+--
+
+
+```
+## Error: '\U' used without hex digits in character string starting ""C:\U"
+```
+
+&lt;center&gt;Oops, slashes must be the other way around!&lt;/center&gt;
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv")
+```
+
+--
+
+
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; Let's &lt;b&gt;inspect&lt;/b&gt; this new object to check that it worked&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+ * The first thing we can do is to use `head()` to print the **top rows**
+ 
+
+```r
+head(fb, 4)
+```
+--
+
+```
+##   Wk Day       Date  Time   Home  xG Score xG.1      Away Attendance
+## 1  1 Fri 2021-08-06 21:00 Monaco 2.0   1-1  0.3    Nantes       7500
+## 2  1 Sat 2021-08-07 17:00   Lyon 1.4   1-1  0.8     Brest      29018
+## 3  1 Sat 2021-08-07 21:00 Troyes 0.8   1-2  1.2 Paris S-G      15248
+## 4  1 Sun 2021-08-08 13:00 Rennes 0.6   1-1  2.0      Lens      22567
+##              Venue         Referee Match.Report Notes
+## 1  Stade Louis II.  Antony Gautier Match Report    NA
+## 2 Groupama Stadium   Mikael Lesage Match Report    NA
+## 3  Stade de l'Aube  Amaury Delerue Match Report    NA
+## 4     Roazhon Park Bastien Dechepy Match Report    NA
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * `tail()` would print the **bottom rows**
+
+ * We can also run **`View(`**`fb`**`)`** *(a new tab will pop-up in your Source panel)*
+ 
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+&lt;center&gt;
+&lt;img src = "view_fb.png" width = "1100"/&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;Seems like it worked!&lt;/b&gt;
+&lt;/center&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+&lt;center&gt;
+&lt;img src = "view_fb_kinda.png" width = "1100"/&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;... or kind of worked?&lt;/b&gt;
+&lt;/center&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;That kind of &lt;b&gt;weird characters&lt;/b&gt; kicks in when there is an &lt;b&gt;encoding issue&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Thankfully, &lt;b&gt;read.csv()&lt;/b&gt; can take many &lt;b&gt;other inputs&lt;/b&gt;, including encoding!&lt;/li&gt;
+    &lt;li&gt;Usually the UTF-8 encoding is the solution to French characters&lt;/li&gt;
+  &lt;/ul&gt;
 &lt;/ul&gt;
 
 --
 
 
 ```r
-class(2)
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;When you will be facing &lt;b&gt;similar issues&lt;/b&gt;, check out the arguments of read.csv() using &lt;b&gt;?read.csv&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;center&gt;
+&lt;img src = "csv_help.png" width = "800"/&gt;
+&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;From the &lt;b&gt;documentation&lt;/b&gt; you can see that functions have &lt;b&gt;many arguments&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some &lt;b&gt;without default&lt;/b&gt; values: You need to specify the argument for the function to work&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;with default&lt;/b&gt; values: If you don't specify these arguments, defaults will be used&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+--
+
+ * You don't need to write the argument names only for those written in the &lt;b&gt;correct order&lt;/b&gt;
+
+
+
+.left-column[
+.pull-left[
+
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+```r
+read.csv(file = "dt.csv")
+```
+
+
+```r
+read.csv("dt.csv")
+```
+
+]
+.pull-right[
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:.5cm"&gt;&lt;/p&gt;
+
+`$$\underset{\Longleftrightarrow}{?}$$`
+
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;From the &lt;b&gt;documentation&lt;/b&gt; you can see that functions have &lt;b&gt;many arguments&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some &lt;b&gt;without default&lt;/b&gt; values: You need to specify the argument for the function to work&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;with default&lt;/b&gt; values: If you don't specify these arguments, defaults will be used&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the &lt;b&gt;correct order&lt;/b&gt;
+
+.left-column[
+.pull-left[
+
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+```r
+read.csv(file = "dt.csv")
+```
+
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:.5cm"&gt;&lt;/p&gt;
+
+`$$\underset{\Longleftrightarrow}{?}$$`
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;From the &lt;b&gt;documentation&lt;/b&gt; you can see that functions have &lt;b&gt;many arguments&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some &lt;b&gt;without default&lt;/b&gt; values: You need to specify the argument for the function to work&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;with default&lt;/b&gt; values: If you don't specify these arguments, defaults will be used&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the &lt;b&gt;correct order&lt;/b&gt;
+
+.left-column[
+.pull-left[
+
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+```r
+read.csv(file = "dt.csv")
+```
+
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\Longleftrightarrow$$`
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\not\not\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:.5cm"&gt;&lt;/p&gt;
+
+`$$\underset{\Longleftrightarrow}{?}$$`
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", ",")
+```
+
+
+```r
+read.csv("dt.csv", TRUE, ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;From the &lt;b&gt;documentation&lt;/b&gt; you can see that functions have &lt;b&gt;many arguments&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some &lt;b&gt;without default&lt;/b&gt; values: You need to specify the argument for the function to work&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;with default&lt;/b&gt; values: If you don't specify these arguments, defaults will be used&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the &lt;b&gt;correct order&lt;/b&gt;
+
+.left-column[
+.pull-left[
+
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+```r
+read.csv(file = "dt.csv")
+```
+
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\Longleftrightarrow$$`
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\not\not\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\Longleftrightarrow$$`
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", ",")
+```
+
+
+```r
+read.csv("dt.csv", TRUE, ",")
+```
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;3. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * Now that we imported the data properly, we can check out its **`str()`ucture** in more details
+
+
+```r
+str(fb)
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * *Don't be scared of the output!*
+
+
+```r
+str(fb)
+```
+
+```
+## 'data.frame':	380 obs. of  14 variables:
+##  $ Wk          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         : chr  "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        : chr  "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        : chr  "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        : chr  "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          : num  2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       : chr  "1-1" "1-1" "1-2" "1-1" ...
+##  $ xG.1        : num  0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        : chr  "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  : int  7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       : chr  "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     : chr  "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report: chr  "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       : logi  NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * `str()` says that `fb` is a `data.frame`, and gives its numbers of **observations** (rows) and **variables** (columns)
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * It also gives the **variables names**
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          
+##  $ Day         
+##  $ Date        
+##  $ Time        
+##  $ Home        
+##  $ xG          
+##  $ Score       
+##  $ xG.1        
+##  $ Away        
+##  $ Attendance  
+##  $ Venue       
+##  $ Referee     
+##  $ Match.Report
+##  $ Notes       
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * The **first values** of each variable
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          :      1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         :      "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        :      "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        :      "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        :      "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          :      2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       :      "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        :      0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        :      "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  :      7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       :      "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     :      "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report:      "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       :       NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * As well as the **class** of each variable
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         : chr  "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        : chr  "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        : chr  "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        : chr  "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          : num  2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       : chr  "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        : num  0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        : chr  "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  : int  7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       : chr  "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     : chr  "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report: chr  "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       : logi  NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * But what does the **class** correspond to?
+ 
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  ?
+##  $ Day         : chr  ?
+##  $ Date        : chr  ?
+##  $ Time        : chr  ?
+##  $ Home        : chr  ?
+##  $ xG          : num  ?
+##  $ Score       : chr  ?
+##  $ xG.1        : num  ?
+##  $ Away        : chr  ?
+##  $ Attendance  : int  ?
+##  $ Venue       : chr  ?
+##  $ Referee     : chr  ?
+##  $ Match.Report: chr  ?
+##  $ Notes       : logi  ?
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+These are simply numbers:
+
+
+```r
+class(3)
 ```
 
 ```
 ## [1] "numeric"
 ```
 
---
+
+```r
+class(-1.6180339)
+```
+
+```
+## [1] "numeric"
+```
+
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+Numeric variable classes include:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;int&lt;/b&gt; for round numbers&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;dbl&lt;/b&gt; for 2-decimal numbers&lt;/li&gt;
+&lt;/ul&gt;
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+These are simply numbers:
 
 
 ```r
-class("a")
+class(3)
+```
+
+```
+## [1] "numeric"
+```
+
+
+```r
+class(-1.6180339)
+```
+
+```
+## [1] "numeric"
+```
+
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+Numeric variable classes include:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;int&lt;/b&gt; for round numbers&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;dbl&lt;/b&gt; for 2-decimal numbers&lt;/li&gt;
+&lt;/ul&gt;
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+They must be surrounded by `"`:
+
+
+```r
+class("Roazhon Park")
 ```
 
 ```
 ## [1] "character"
 ```
 
---
-
 
 ```r
-class(FALSE)
+class("35")
 ```
 
 ```
-## [1] "logical"
+## [1] "character"
 ```
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
 
----
-
-### 2. Classes of R objects
-
-#### 2.4. Manipulate classes
-
-&lt;ul&gt;&lt;li&gt;You can &lt;b&gt;change the class&lt;/b&gt; of an object using functions of the form &lt;b&gt;as.[character/numeric/logical]()&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
-
---
-
-&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
-
-&lt;center&gt;&lt;b&gt;Class conversion table:&lt;/b&gt;&lt;/center&gt;
-
-&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
-&lt;caption&gt;&lt;/caption&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; as.numeric() &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; as.character() &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; as.logical() &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; &lt;b&gt;numeric&lt;/b&gt; &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; Converts numeric values &lt;br&gt; into strings of numbers &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; Returns TRUE if != 0 &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns FALSE if 0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; &lt;b&gt;character&lt;/b&gt; &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; Converts strings of numbers &lt;br&gt; into numeric values &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns NA if characters in the string &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; Returns TRUE if "T" or"TRUE" &lt;br&gt; Returns FALSE if "F" or "FALSE" &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns NA otherwise &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; &lt;b&gt;logical&lt;/b&gt; &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; Returns 1 if TRUE  &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns 0 if FALSE &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; Returns "TRUE" if TRUE &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns "FALSE" if FALSE &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+We also call these values:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;NA&lt;/b&gt; stands for &lt;i&gt;'Not Available'&lt;/i&gt;, it corresponds to a &lt;b&gt;missing value&lt;/b&gt;&lt;/li&gt;
-  &lt;ul&gt;
-    &lt;li&gt;&lt;b&gt;Beware of NAs&lt;/b&gt;, it is a common source of programming errors (more on that next week)&lt;/li&gt;
-  &lt;/ul&gt;
+  &lt;li&gt;Character strings&lt;/li&gt;
+  &lt;li&gt;Or just strings&lt;/li&gt;
 &lt;/ul&gt;
 
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+]
+
 ---
 
-### 2. Classes of R objects
+### 2. Anatomy of a `data.frame`
 
-#### 2.4. Manipulate classes
+#### 2.2. Classes
 
-&lt;center&gt;&lt;b&gt;Some examples&lt;/b&gt;&lt;/center&gt;
-
---
-
+.left-column[
 .pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+These are simply numbers:
 
 
 ```r
-as.numeric("2022")
-```
-
-```
-## [1] 2022
-```
-
-
-```r
-as.numeric("2022-2023")
-```
-
-```
-## [1] NA
-```
-
-
-```r
-as.numeric(T)
-```
-
-```
-## [1] 1
-```
-
-
-```r
-as.numeric(FALSE)
-```
-
-```
-## [1] 0
-```
-
-]
-
---
-
-.pull-right[
-
-
-```r
-as.character(2022)
-```
-
-```
-## [1] "2022"
-```
-
-
-```r
-as.logical(0)
-```
-
-```
-## [1] FALSE
-```
-
-
-```r
-as.logical(1)
-```
-
-```
-## [1] TRUE
-```
-
-
-```r
-as.logical(-.75)
-```
-
-```
-## [1] TRUE
-```
-
-]
-
----
-
-&lt;h3&gt;Overview&lt;/h3&gt;
-
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning
-
-#### 6. Wrap up!
-]
-
----
-
-&lt;h3&gt;Overview&lt;/h3&gt;
-
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
- 
-#### 3. Vectors
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
----
-
-### 3. Vectors
-
-#### 3.1. Definition
-
-&lt;ul&gt;
-  &lt;li&gt;In R, a vector is a &lt;b&gt;sequence of objects that have the same class&lt;/b&gt;&lt;/li&gt;
-  &lt;ul&gt;
-    &lt;li&gt;To create a vector you should list its elements separated by commas inside &lt;b&gt;c()&lt;/b&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/ul&gt;
-
---
-
-
-```r
-months &lt;- c("January", "February", "March", "April", "May", "June", "July", 
-            "August", "September", "October", "November", "December")
-```
-
---
-
- * Vectors are &lt;b&gt;ordered&lt;/b&gt;, you can recover elements of a vector using their position in the sequence using `[]`
-
---
-
-
-```r
-months[3]
-```
-
-```
-## [1] "March"
-```
-
---
-
- * Conversely, the function `match()` allows you to recover the position of specific elements in a vector:
-
---
-
-
-```r
-match(c("August", "December"), months)
-```
-
-```
-## [1]  8 12
-```
-
----
-
-### 3. Vectors
-
-#### 3.2. Operations with vectors
-
- * Numeric operations apply to every element of the vector:
-
-
-```r
-4 + c(10, 20, 30)
-```
-
-```
-## [1] 14 24 34
-```
-
---
-
-
-```r
-c(1, 2, 3) * 4
-```
-
-```
-## [1]  4  8 12
-```
-
---
-
-
-```r
-4 ^ c(1, 2, 3)
-```
-
-```
-## [1]  4 16 64
-```
-
---
-
-
-```r
-c(1, 2, 3) ^ 4
-```
-
-```
-## [1]  1 16 81
-```
-
----
-
-### 3. Vectors
-
-#### 3.3. Useful functions
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
- * The `length()` function for the &lt;b&gt;number of elements&lt;/b&gt; in a vector
-
---
-
-
-```r
-length(months)
-```
-
-```
-## [1] 12
-```
-
---
-
-&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
-
- * The `rep()` function for &lt;b&gt;repeating a vector&lt;/b&gt;
-
---
-
-.pull-left[
-
-&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Vector-wise:&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
-
-
-```r
-rep(c(1, 2, 3), 2)
-```
-
-```
-## [1] 1 2 3 1 2 3
-```
-
-]
-
---
-
-.pull-right[
-&lt;ul&gt;&lt;ul&gt;&lt;li&gt;Or element-wise:&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
-
-
-```r
-rep(c(1, 2, 3), each = 2)
-```
-
-```
-## [1] 1 1 2 2 3 3
-```
-]
-
----
-
-### 3. Vectors
-
-#### 3.3. Useful functions
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
- * The `seq()` function for &lt;b&gt;sequences&lt;/b&gt;
-
---
-
-
-```r
-seq(0, 100, 10)
-```
-
-```
-##  [1]   0  10  20  30  40  50  60  70  80  90 100
-```
---
-
-```r
-seq(2, 3, .2)
-```
-
-```
-## [1] 2.0 2.2 2.4 2.6 2.8 3.0
-```
-
---
-
-&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
-
- * Sequences of &lt;b&gt;consecutive integers&lt;/b&gt; can be easily produced using `:`
- 
-
-```r
-1:10
-```
-
-```
-##  [1]  1  2  3  4  5  6  7  8  9 10
-```
-
----
-
-### 3. Vectors
-
-#### 3.3. Useful functions
-
- * The `paste()` function also applies to all the elements of the vector
-
---
-
-
-```r
-paste0("A", 1:5) 
-```
-
-```
-## [1] "A1" "A2" "A3" "A4" "A5"
-```
-
---
-
-&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
-
- * And can merge the elements of a vector with the `collapse` argument
-
---
-
-
-```r
-sentence &lt;- c("Lorem", "ipsum", "dolor", "sit", "amet")
-sentence
-```
-
-```
-## [1] "Lorem" "ipsum" "dolor" "sit"   "amet"
-```
-
-```r
-paste0(sentence, collapse = " ")
-```
-
-```
-## [1] "Lorem ipsum dolor sit amet"
-```
-
----
-
-### 3. Vectors
-
-#### 3.4. Classes of vectors
-
- * As the elements of a vector should be of the same class, the class of a vector is always that of its elements:
-
-
-```r
-class(c(1, 2, 3))
+class(3)
 ```
 
 ```
 ## [1] "numeric"
 ```
 
-&lt;p style = "margin-bottom:1.25cm;"&gt;
+
+```r
+class(-1.6180339)
+```
+
+```
+## [1] "numeric"
+```
+
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+Numeric variable classes include:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;int&lt;/b&gt; for round numbers&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;dbl&lt;/b&gt; for 2-decimal numbers&lt;/li&gt;
+&lt;/ul&gt;
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+They must be surrounded by `"`:
+
+
+```r
+class("Roazhon Park")
+```
+
+```
+## [1] "character"
+```
+
+
+```r
+class("35")
+```
+
+```
+## [1] "character"
+```
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+We also call these values:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Character strings&lt;/li&gt;
+  &lt;li&gt;Or just strings&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+Something either `TRUE` of `FALSE`:
+
+
+```r
+3 &gt;= 4
+```
+
+```
+## [1] FALSE
+```
+
+
+```r
+class(T)
+```
+
+```
+## [1] "logical"
+```
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+Most common logical operators:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;== &gt; &lt; &lt;= &gt;=&lt;/li&gt;
+  &lt;li&gt;&amp; (and) | (or) ! (opposite)&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+&lt;center&gt;&lt;b&gt;Guess the output!&lt;/b&gt;&lt;/center&gt;
+ 
+
+```r
+as.numeric("2022")
+```
+--
+
+```
+## [1] 2022
+```
+--
+
+&lt;p style="margin-bottom:.75cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;What about this one?&lt;/b&gt;&lt;/center&gt;
+
+```r
+as.character(2022-2023)
+```
+--
+
+```
+## [1] "-1"
+```
+--
+
+&lt;p style="margin-bottom:.75cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;A final one:&lt;/b&gt;&lt;/center&gt;
+
+```r
+as.character(2022&gt;2023)
+```
+--
+
+```
+## [1] "FALSE"
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * To know everything:
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Class conversion table:&lt;/b&gt;&lt;/center&gt;
+
+
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; numeric &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; character &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; logical &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;as.numeric()&lt;/b&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Converts strings of numbers &lt;br&gt; into numeric values &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns NA if characters in the string &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns 1 if TRUE  &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns 0 if FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;as.character()&lt;/b&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Converts numeric values &lt;br&gt; into strings of numbers &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns "TRUE" if TRUE &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns "FALSE" if FALSE &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;as.logical&lt;/b&gt;() &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns TRUE if != 0 &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns FALSE if 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns TRUE if "T" or"TRUE" &lt;br&gt; Returns FALSE if "F" or "FALSE" &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns NA otherwise &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;NA&lt;/b&gt; stands for &lt;i&gt;'Not Available'&lt;/i&gt;, it corresponds to a &lt;b&gt;missing value&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * Great! But there is one last mystery...
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         : chr  "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        : chr  "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        : chr  "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        : chr  "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          : num  2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       : chr  "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        : num  0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        : chr  "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  : int  7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       : chr  "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     : chr  "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report: chr  "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       : logi  NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * Are these dollar signs here for a reason?
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          
+##  $ Day         
+##  $ Date        
+##  $ Time        
+##  $ Home        
+##  $ xG          
+##  $ Score       
+##  $ xG.1        
+##  $ Away        
+##  $ Attendance  
+##  $ Venue       
+##  $ Referee     
+##  $ Match.Report
+##  $ Notes       
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.3. Vectors
+
+ * It's actually just a reference to the fact that &lt;b&gt;`$`&lt;/b&gt; allows to &lt;b&gt;extract a variable&lt;/b&gt; from a dataset
 
 --
 
+
+
+
+```r
+fb$Wk
+```
+
+```
+##   [1]  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  3
+##  [30]  4  4  4  4  4  4  4  4  4  4  5  5  5  5  5  5  5  5  5  5  6  6  6  6  6  6  6  6  6
+##  [59]  6  7  7  7  7  7  7  7  7  7  7  8  8  8  8  8  8  8  8  8  8  9  9  9  9  9  9  9  9
+##  [88]  9  9 10 10 10 10 10 10 10 10 10 10 11 11 11 11 11 11 11 11 11 11  3 12 12 12 12 12 12
+## [117] 12 12 12 12 13 13 13 13 13 13 13 13 13 13 14 14 14 14 14 14 14 14 14 15 15 15 15 15 15
+## [146] 15 15 15 15 16 16 16 16 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 18 18 18 18 18
+## [175] 18 18 18 18 18 19 19 19 19 19 19 19 19 19 20 20 20 20 20 20 20 21 21 21 21 21 21 21 21
+## [204] 21 21 19 20 20 22 22 22 22 22 22 22 22 22 22 20 14 23 23 23 23 23 23 23 23 23 23 24 24
+## [233] 24 24 24 24 24 24 24 24 25 25 25 25 25 25 25 25 25 25 26 26 26 26 26 26 26 26 26 26 27
+## [262] 27 27 27 27 27 27 27 27 27 28 28 28 28 28 28 28 28 28 28 29 29 29 29 29 29 29 29 29 29
+## [291] 30 30 30 30 30 30 30 30 30 30 31 31 31 31 31 31 31 31 31 31 32 32 32 32 32 32 32 32 32
+## [320] 32 33 33 33 33 33 33 33 33 33 33 34 34 34 34 34 34 34 34 34 34 35 35 35 35 35 35 35 35
+## [349] 35 35 36 36 36 36 36 36 36 36 36 36 37 37 37 37 37 37 37 37 37 37 38 38 38 38 38 38 38
+## [378] 38 38 38
+```
+
+
+ 
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.3. Vectors
+
 &lt;ul&gt;
-  &lt;li&gt;But there is &lt;b&gt;another class&lt;/b&gt; you should know for vectors: the &lt;b&gt;factor&lt;/b&gt; class&lt;/li&gt;
+  &lt;li&gt;We call these objects &lt;b&gt;vectors&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;It's made for vectors with numeric values that can't be interpreted but simply indicate a &lt;b&gt;group/category&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Vectors are basically &lt;b&gt;sequences of values that have the same class&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;R won't let you create a vector containing elements of different classes&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+--
+
+ * We make our own vectors using the **`c()`oncatenate** function
+ 
+--
+
+
+```r
+c("Hello world", 35, FALSE)
+```
+
+```
+## [1] "Hello world" "35"          "FALSE"
+```
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
 
 --
 
 &lt;ul&gt;
-  &lt;li&gt;Consider for instance the following age vectors:&lt;/li&gt;
-  &lt;ol&gt;
-    &lt;li&gt;Vector age1 indicates the actual age of an individual, it should be of class numeric&lt;/li&gt;
-    &lt;li&gt;Vector age2 indicates an age group (1 = 1 to 10, 2 = 10 to 20, ...) it should be of class factor&lt;/li&gt;
-  &lt;/ol&gt;
+  &lt;li&gt;The fact that vectors are homogeneous in class allows that &lt;b&gt;operations apply to all their elements&lt;/b&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p style = "margin-bottom:1cm;"&gt;
+--
 
-***&amp;#10140; In vector age2, numbers don't mean anything, they're just group indicators and R should interpret it as such***
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+
+.pull-left[
+
+```r
+c(1, 2, 3) / 3
+```
+
+```
+## [1] 0.3333333 0.6666667 1.0000000
+```
+]
+
+--
+
+.pull-right[
+
+```r
+3 / c(1, 2, 3)
+```
+
+```
+## [1] 3.0 1.5 1.0
+```
+]
 
 ---
 
-### 3. Vectors
+### 2. Anatomy of a `data.frame`
 
-#### 3.4. Classes of vectors
+#### 2.4. Subsetting
 
- * R understands that multiplying the values of a factor by 2 makes no sense
- 
---
- 
-
-```r
-as.factor(c(1, 2, 2)) * 2
-```
-
-```
-## [1] NA NA NA
-```
+&lt;ul&gt;
+  &lt;li&gt;But &lt;b&gt;$&lt;/b&gt; is not the only way to &lt;b&gt;extract&lt;/b&gt; a variable from a dataset&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You can also make use of the &lt;b&gt;[ ]&lt;/b&gt; subsetting operator&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
 --
 
-&lt;p style = "margin-bottom:.75cm;"&gt;
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
- * R converts a factor to the numeric format by attributing a number from 1 to `\(n\)` to each category
- 
-
-```r
-as.numeric(as.factor(c(46, 44, 46, 45)))
-```
-
-```
-## [1] 3 1 3 2
-```
+$$\text{data}[\text{row}, \:\:\text{columns}] $$
 
 --
 
-&lt;p style = "margin-bottom:.75cm;"&gt;
+&lt;ul&gt;
+  &lt;li&gt;Inside the &lt;b&gt;brackets&lt;/b&gt;, indicate what you want to &lt;b&gt;keep using:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Indices:&lt;/b&gt; e.g., the third column has index 3&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Logical:&lt;/b&gt; A vector of TRUE and FALSE&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Names:&lt;/b&gt; They must be in quotation marks&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
- * To have a numeric vector with the values of a factor, you should thus go through the character class
+&lt;p style = "margin-bottom:0cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+
+ * Example:
+
+
+```r
+fb[1, c("Venue", "Attendance")]
+```
+
+```
+##             Venue Attendance
+## 1 Stade Louis II.       7500
+```
+]
+
+--
+
+.pull-right[
+
+ * Brackets also work for vectors:
  
 
 ```r
-as.numeric(as.character(as.factor(c(46, 44, 46, 45))))
+vec &lt;- c(3, 2, 1)
+vec[c(T, F, T)]
 ```
 
 ```
-## [1] 46 44 46 45
+## [1] 3 1
 ```
+]
 
 ---
+
+class: inverse, hide-logo
 
 ### Practice
 
-#### &amp;#10140; You have the social security number of 4 individuals
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
+
+#### 1) Download and import the dataset if you haven't already
+
+--
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+#### 2) Combine the use of `[ ]` and `nrow()` to obtain the last value of the `Wk` variable
+
+--
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+#### 3) Subset the home team, the score, and the away team for matches that occured during the last week
+
+--
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 6 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+<div class="countdown" id="timer_12808409" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
+
+#### 1) Download and import the dataset if you haven't already
+
+--
 
 
 ```r
-ssn &lt;- c("1970248765890", "2891135987473", "17875109483", "29931298043")
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+--
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+#### 2) Combine the use of `[ ]` and `nrow()` to obtain the last value of the `Wk` variable
+
+--
+
+
+```r
+last_week &lt;- fb[nrow(fb), "Wk"]
+last_week
+```
+
+```
+## [1] 38
+```
+
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 3) Subset the home team, the score, and the away team for matches that occured during the last week
+
+--
+
+
+```r
+fb[Wk == last_week, c("Home", "Score", "Away")]
+```
+
+```
+## Error in `[.data.frame`(fb, Wk == last_week, c("Home", "Score", "Away")): object 'Wk' not found
+```
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+
+&lt;ul&gt;
+  &lt;li&gt;Oops! Seems like &lt;b&gt;R couldn't find&lt;/b&gt; the Wk variable&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;R was looking for Wk &lt;b&gt;in our environment&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But there is no Wk there&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We must &lt;b&gt;refer to fb&lt;/b&gt; which is in our environment&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Then we can &lt;b&gt;access Wk using the $&lt;/b&gt; symbol&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+
+```r
+fb[fb$Wk == 38, c("Home", "Score", "Away")]
+```
+
+]
+
+--
+
+.pull-right[
+
+```
+##              Home Score          Away
+## 371         Lille   2-2        Rennes
+## 372         Brest   2-4      Bordeaux
+## 373        Nantes   1-1 Saint-Étienne
+## 374 Clermont Foot   1-2          Lyon
+## 375        Angers   2-0   Montpellier
+## 376       Lorient   1-1        Troyes
+## 377     Paris S-G   5-0          Metz
+## 378         Reims   2-3          Nice
+## 379     Marseille   4-0    Strasbourg
+## 380          Lens   2-2        Monaco
+```
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;3. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+### 3. Wrap up!
+
+#### 1. Import data
+
+
+```r
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
 ```
 
 --
 
 &lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
 
-`$$\text{How SSNs are constructed:}\hspace{2em}\underbrace{1}_{\text{Sex}}\underbrace{97}_{\substack{\text{Year} \\ \text{of birth}}}\underbrace{02}_{\substack{\text{Month} \\ \text{of birth}}}\underbrace{48}_{\substack{\text{Department} \\ \text{of birth}}}\underbrace{765}_{\substack{\text{Municipality} \\ \text{INSEE code}}}\underbrace{890}_{\substack{\text{Registration} \\ \text{number}}}$$`
-
---
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-#### Task: Use R programming to compute the age of these 4 individuals
-
-&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
-
---
-
-&lt;ol&gt;
-  &lt;li&gt;Copy/paste the line above into an .R script and run it&lt;/li&gt;
-  &lt;li&gt;Extract the second to third characters from the SSNs&lt;/li&gt;
-  &lt;li&gt;Convert these values to the numeric class&lt;/li&gt;
-  &lt;li&gt;Add 1900 to these number to obtain the year of birth&lt;/li&gt;
-  &lt;li&gt;Substract these number from 2022 to get the age&lt;/li&gt;
-&lt;/ol&gt;
-
---
-
-&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
-
----
-
-### Solution
-
-#### 1) Copy/paste the line above into an .R script and run it
+#### 2. Class
 
 
 ```r
-ssn &lt;- c("1970248765890", "2891135987473", "17875109483", "29931298043")
+is.numeric("1.6180339") # What would be the output?
 ```
 
 --
 
-#### 2) Extract the second to third characters from the SSNs
-
-
-```r
-birth_year &lt;- substr(ssn, 2, 3)
-```
-
---
-
-#### 3) Convert these values to the numeric class
-
-
-```r
-birth_year &lt;- as.numeric(birth_year)
-```
-
---
-
-#### 4) Add 1900 to these numbers and substract from 2022 to get the age
-
-
-```r
-age &lt;- 2022 - (birth_year + 1900)
-age
-```
-
-```
-## [1] 25 33 44 23
-```
-
---
-
-#### 5) 
-
-
-```r
-age &lt;- 2022 - birth_year
-age
-```
-
-```
-## [1] 1925 1933 1944 1923
-```
----
-
-&lt;h3&gt;Overview&lt;/h3&gt;
-
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning
-
-#### 6. Wrap up!
-]
-
----
-
-&lt;h3&gt;Overview&lt;/h3&gt;
-
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
- 
-#### 3. Vectors &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-] 
-
-.pull-right[
-#### 4. Functions and packages
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Functions
- * 4.2. Packages
-]
-
----
-
-### 4. Functions and packages
-
-#### 4.1. Functions
-
- * &lt;b&gt;Functions&lt;/b&gt;, like `paste()`, `match()`, `sep()`, etc., are &lt;b&gt;sequences of operations&lt;/b&gt; condensed into one command.  
- * Functions take &lt;b&gt;arguments as inputs&lt;/b&gt;, specified in the parentheses and separated by commas, and &lt;b&gt;return an output&lt;/b&gt; given these arguments.  
-
---
-
-&lt;p style = "margin-bottom:1cm;"&gt;
-
-Consider the following example: 
-
-
-```r
-paste("Hello", "world")
-```
-
-```
-## [1] "Hello world"
-```
-
-&lt;p style = "margin-bottom:1cm;"&gt;
-
---
-
- * Here the **function** `paste()`:
-   * Takes `"Hello"` and `"world"` as **inputs** 
-   * Produces `"Hello world"` as an **output**  
-
---
-
-&lt;p style = "margin-bottom:1cm;"&gt;
-
-&lt;center&gt;&lt;h4&gt;&lt;i&gt; &amp;#10140; Let's make our own function! &lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
-
----
-
-### 4. Functions and packages
-
-#### 4.1. Functions
-
- * Imagine you have the following grade distribution
-
-
-```r
-grades &lt;- c(8, 10, 12, 13, 15, 15, 16, 17.5, 18, 19.5, 20)
-```
-
---
-
- * You want to add two points to everybody but grades should not be higher than 20
-
-
-```r
-grades &lt;- grades + 2 # add 2 each element of the vector
-grades # Some grades are greater than 20
-```
-
-```
-##  [1] 10.0 12.0 14.0 15.0 17.0 17.0 18.0 19.5 20.0 21.5 22.0
-```
-
-```r
-grades &gt; 20 # Their location in the vector can be found with a logical statement...
-```
-
-```
-##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-```
-
-```r
-grades[grades &gt; 20] &lt;- 20 # ... so we can easily replace their values
-```
-
----
-
-### 4. Functions and packages
-
-#### 4.1. Functions
-
- * If you need to do such computations frequently, it is handy to make a function so that it boils down to a single line of code
-
---
-
-
-```r
-shift_grades &lt;- function(grades, shift) {
-  grades &lt;- grades + shift # Shift grades
-  grades[grades &gt; 20] &lt;- 20 # Cap to 20
-  return(grades) # Return output
-}
-```
---
-
-```r
-shift_grades(grades = c(0, 10, 20), shift = 5)
-```
-
-```
-## [1]  5 15 20
-```
---
-
-```r
-shift_grades(grades = 10:20, shift = 3)
-```
-
-```
-##  [1] 13 14 15 16 17 18 19 20 20 20 20
-```
-
-
----
-
-### 4. Functions and packages
-
-#### 4.2. Packages
-
-It is often the case that user-created functions can be very useful to many other users. That's what packages are about. **Packages are bundles of functions** that R users put to the disposal of other R users. Packages are centralized on the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/). **To download a CRAN package** you can simply use **`install.packages()`**. Next time we will use functions from the `tidyverse` package. Let's install it already.
-
---
-
-
-```r
-install.packages("tidyverse") # Requires and internet connection
-```
-
---
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
- * The `tidyverse` package is now installed on your computer and you won't have to do it again. But to be able to use `tidyverse` functions the **package should also be loaded** in our R session with the function `library()`.
-
---
-
-
-```r
-library(tidyverse)
-```
-
---
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
- * Once this command is run you have access to all the tidyverse functions in your environment. But even though the package is permanently installed, it is **loaded only for your current session**. So each time you start a new R session, you'll have to load the packages you need with the `library()` command.
-
----
-
-&lt;h3&gt;Overview&lt;/h3&gt;
-
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning R
-
-#### 6. Wrap up!
-]
-
----
-
-&lt;h3&gt;Overview&lt;/h3&gt;
-
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning R
-]
-
----
-
-### 5. A few words on learning R
-
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
-
-#### We're finally done with the "theoretical" part of programming!
-
- * That's normal if some concepts we saw are not completely obvious to you, fluency will comes with practice 
- * Take time to go through the first two lectures by yourself and tell me if anything's unclear. 
- * There are still some important coding tools you need to learn but we'll see that progressively throughout the course.
-
---
-
-#### When your code won't work
-
-To finish the Lecture I'd like to give you some tips about learning programming. Often times it can be quite frustrating when you can't make your code work.
- * When it doesn't not work the way you want 
- * When it doesn't work at all
-
----
-
-### 5. A few words on learning R
-
-#### When it doesn't work the way you want
-
- * When things do not work the way you want, NAs are the usual suspects. For instance, this is how the mean function reacts to NAs.
- 
---
-
-
-```r
-mean(c(1, 2, NA))
-```
-
-```
-## [1] NA
-```
---
-
-```r
-mean(c(1, 2, NA), na.rm = T)
-```
-
-```
-## [1] 1.5
-```
-
---
-
- * From the output it obvious in this case that NAs are the problem, but sometimes it's not that transparent. So take a look at your data to see whether NAs could mess things up. You can seek for NAs using `is.na()`:
- 
-
-```r
-is.na(c(1, 2, NA))
-```
---
-
-```
-## [1] FALSE FALSE  TRUE
-```
-
----
-
-### 5. A few words on learning R
-
-#### Where to find help
-
- * Help files are made for that. Sometimes things don't work just because you did not understand a function's argument or you don't know that there exists an argument you should use. Every function has a help file, just enter the name of the function preceded by a question mark in your console and it will appear in the Help tab of R studio.
- 
-
-```r
-?pivot_longer
-```
-
---
-
-&lt;center&gt;
-&lt;img src = "pivot_longer.png"/&gt;
-&lt;/center&gt;
-
----
-
-### 5. A few words on learning R
-
-#### Where to find help
-
- * Search on the internet. I'm pretty sure that any question you might have during these first months of programming is already asked and answered on https://stackoverflow.com/.
- 
---
-
-&lt;center&gt;
-&lt;img src = "ask_google.png" width = 750 /&gt;
-&lt;/center&gt;
-
----
-
-### 5. A few words on learning R
-
-#### When it doesn't work at all
-
- * Sometimes R breaks and returns an error. And errors are usually kind of cryptic.
-
---
-
-
-```r
-read.csv("C:\Users\l.sirugue\Documents\R")
-```
-
-```
-## Error: '\U' non suivi de chiffres hexadécimaux dans la chaîne de caractères débutant ""C:\U"
-```
-
---
-
- * Try to look for keywords that might help you understand where it comes from, and paste your it in Google with the name of your command. Chances are many people already struggled with that 
-
---
-
-&lt;center&gt;
-&lt;img src = "error.png" width = 750 /&gt;
-&lt;/center&gt;
-
----
-
-&lt;h3&gt;Overview&lt;/h3&gt;
-
-.pull-left[
-#### 1. Getting started &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning R &amp;#10004;
-
-#### 6. Wrap up!
-]
-
----
-
-### 6. Wrap up!
-
-&lt;p style = "margin-bottom:.5cm;"&gt;
-
-#### 1. Main classes of R objects: numeric, character, logical
-
-
-```r
-is.numeric("a") # What would be the output?
-```
---
 
 ```
 ## [1] FALSE
@@ -2121,96 +3174,18 @@ is.numeric("a") # What would be the output?
 
 --
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
 
-#### 2. Vectors
-
-
-```r
-week &lt;- c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-length(week) # What would be the output?
-```
---
-
-```
-## [1] 7
-```
---
-
-```r
-match(7, week) # What would be the output?
-```
---
-
-```
-## [1] NA
-```
-
----
-
-### 6. Wrap up!
-
-#### 3. Functions
+#### 3. Subsetting
 
 
 ```r
-shift_grades &lt;- function(grades, shift) { # Inputs
-  grades &lt;- grades + shift
-  grades[grades &gt; 20] &lt;- 20 
-  return(grades) # Output
-}
-
-shift_grades(grades = c(0, 10, 20), shift = 5)
+fb$Home[3]
 ```
 
 ```
-## [1]  5 15 20
+## [1] "Troyes"
 ```
-
---
-
-&lt;p style = "margin-bottom:2cm;"&gt;
-
-#### 4. Packages
-
-
-```r
-install.packages("tidyverse") # Run only once to download the package
-library(tidyverse) # Run at each session to load the package
-```
-
----
-
-### To do by next time
-
-&lt;p style = "margin-bottom:2.5cm;"&gt;
-
---
-
-#### 1) Go through the slides once again
-
---
-
-#### 2) Do Quiz 1 and send me your results
-
---
-
-#### 3) Install all the packages required for this course
-
-
-```r
-install.packages()
-```
-
---
-
-#### 4) Send me your questions if you have some
-
---
-
-&lt;p style = "margin-bottom:3cm;"&gt;
-
-&lt;center&gt;&lt;h3&gt;&lt;i&gt;See you next week!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -2302,6 +3277,44 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<style>
+.logo {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 0;
+ width: 10px;
+  height: 10px;
+   background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #F3F5F7, 
+              -4px -4px 6px #D8DEE3;
+}
+
+.logo:active {
+  box-shadow: inset 4px 4px 6px #F3F5F7, 
+              inset -4px -4px 6px #D8DEE3
+}
+
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"><a href = "https://louissirugue.github.io/metrics_on_R/home_dark.html"><p style = "margin-left:-.55cm;margin-top:-.55cm;width:53px"> <img src = "../source/home2.png"> </p> </a></div>';
+  });
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {

@@ -3,6 +3,8 @@ title: "Introduction to R"
 subtitle: "Lecture 1"
 author: "<br>Louis SIRUGUE"
 date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+<style> .left-column {width: 65%;} .right-column {width: 31%;} </style>
+
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -30,30 +35,46 @@ stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
 options(htmltools.dir.version = F)
 knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
+Sys.setenv(LANG = "en")
 ```
 
-### Welcome to the course!
-
---
-
-<p style = "margin-bottom:-.75cm;"></p>
-
-.pull-left[
-
-#### About me:
+### Welcome to the course
 
 <p style = "margin-bottom:1.5cm;"></p>
 
+--
+
+.pull-left[
+
+<center><b>About me</b></center>
+
+<p style = "margin-bottom:1cm;"></p>
+
 <ul>
-  <li style = "margin-bottom:.75cm;">PhD student at the Paris School of Economics</li>
+  <li>PhD student at the Paris School of Economics</li>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
   <li>I work primarily on:</li>
   <ul>
-    <li>Intergenerational (income) mobility</li> 
+    <li>Intergenerational (income) mobility</li>
     <li>Residential segregation</li>
-    <li style = "margin-bottom:.75cm;">Discrimination</li>
+    <li>Discrimination</li>
   </ul>
-  <li style = "margin-bottom:.75cm;">I do empirical research, so I use Econometrics and (R) programming on a daily basis</li>
-  <li>You can reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course</li>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>I do empirical research, so I use Econometrics and (R) programming on a daily basis</li>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>You can reach me at <a href="mailto:louis.sirugue@psemail.eu">louis.sirugue@psemail.eu</a> for any question or comment about the course</li>
 </ul>
 ]
 
@@ -61,7 +82,7 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
 
 .pull-right[
 
-#### About the course:
+<center><b>About the course</b></center>
 
 <p style = "margin-bottom:-.25cm;"></p>
 
@@ -70,19 +91,25 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
   <ul>
     <li style = "margin-bottom:.3cm;">Give you the necessary statistical and data visualization tools to perform data analyses</li>
   </ul>
+</ul>
 
+<ul>
   <li><b>Prerequisites:</b></li>
   <ul>
     <li style = "margin-bottom:.3cm;">None (middle-school maths level)</li>
   </ul>
+</ul>
 
+<ul>
   <li><b>What you'll learn:</b></li>
   <ul>
     <li>Find and manipulate data</li>
     <li>Summarize data with relevant statistics and compelling graphics</li>
     <li style = "margin-bottom:.3cm;">Carry out an empirical research project</li>
   </ul>
+</ul>
 
+<ul>
   <li><b>Thus, this course is a mix of:</b></li>
   <ul>
     <li>Programming on R</li>
@@ -92,51 +119,423 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
 </ul>
 ]
 
+---
+
+### First semester
+
+#### Course format
+
+<ul>
+  <li>The course is divided into <b>2 parts</b> that are <b>structured</b> the same way:</li>
+  <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+ 
+.pull-left[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 1:7),
+             b = c("Introduction to R", "Descriptive statistics", 
+                   "Basic data manipulation", "Data visualization", 
+                   "R Markdown & LaTeX", "Text data & sentiment analysis", 
+                   "Homework correction")),
+      caption = "Part I: Introduction to R programming", col.names = NULL) %>% 
+ row_spec(1:7, background = "#DFE6EB", color = "#DFE6EB")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+.pull-right[
+<p style = "margin-bottom:-1.6cm;"></p>
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 8:15),
+             b = c("Univariate regressions", "Multivariate regressions", 
+                   "Inference", "Causality", 
+                   "Interpretation", "Applications in academic research", 
+                   "Maps and geolocalized data", "Final Exam")),
+      caption = "Part II: Introduction to Econometrics", col.names = NULL) %>% 
+ row_spec(1:8, background = "#DFE6EB", color = "#DFE6EB")  %>%
+  kable_styling(full_width = T)
+```
+]
 
 ---
 
 ### First semester
 
-#### Course format:
+#### Course format
 
-<p style = "margin-bottom:-.25cm;">
-
-<p style = "margin-left:.5cm;"> &#10140; 15 formal lectures divided into 3 parts:</p>
-<p style = "margin-bottom:-.25cm;">
-
---
-
-<ol style = "padding-left:4em">
-  <li>Introduction to R Programming </li>
-  <li>Data analysis</li>
-  <li>Data visualization</li>
-</ol>
+<ul>
+  <li>The course is divided into <b>2 parts</b> that are <b>structured</b> the same way:</li>
+  <ul>
+    <li>3 core <b>lectures with</b> weekly online <b>quizzes</b></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
  
---
+.pull-left[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 1:7),
+             b = c("Introduction to R*", "Descriptive statistics*", 
+                   "Basic data manipulation*", "Data visualization", 
+                   "R Markdown & LaTeX", "Text data & sentiment analysis", 
+                   "Homework correction")),
+      caption = "Part I: Introduction to R programming", col.names = NULL) %>% 
+ row_spec(1:3, background = "#DFE6EB") %>% 
+ row_spec(4:7, background = "#DFE6EB", color = "#DFE6EB")  %>%
+  kable_styling(full_width = T)
+```
+]
 
-<p style = "margin-bottom:1cm;">
+.pull-right[
+<p style = "margin-bottom:-1.6cm;"></p>
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 8:15),
+             b = c("Univariate regressions*", "Multivariate regressions*", 
+                   "Inference*", "Causality", 
+                   "Interpretation", "Applications in academic research", 
+                   "Maps and geolocalized data", "Final Exam")),
+      caption = "Part II: Introduction to Econometrics", col.names = NULL) %>% 
+ row_spec(1:3, background = "#DFE6EB") %>% 
+ row_spec(4:8, background = "#DFE6EB", color = "#DFE6EB")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+---
+
+### First semester
+
+#### Course format
+
+<ul>
+  <li>The course is divided into <b>2 parts</b> that are <b>structured</b> the same way:</li>
+  <ul>
+    <li>3 core <b>lectures with</b> weekly online <b>quizzes</b></li>
+    <li>2-3 core <b>lectures without quizzes</b></li>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+ 
+.pull-left[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 1:7),
+             b = c("Introduction to R*", "Descriptive statistics*", 
+                   "Basic data manipulation*", "Data visualization", 
+                   "R Markdown & LaTeX", "Text data & sentiment analysis", 
+                   "Homework correction")),
+      caption = "Part I: Introduction to R programming", col.names = NULL) %>% 
+ row_spec(1:5, background = "#DFE6EB") %>% 
+ row_spec(6:7, background = "#DFE6EB", color = "#DFE6EB")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+.pull-right[
+<p style = "margin-bottom:-1.6cm;"></p>
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 8:15),
+             b = c("Univariate regressions*", "Multivariate regressions*", 
+                   "Inference*", "Causality", 
+                   "Interpretation", "Applications in academic research", 
+                   "Maps and geolocalized data", "Final Exam")),
+      caption = "Part II: Introduction to Econometrics", col.names = NULL) %>% 
+ row_spec(1:6, background = "#DFE6EB") %>% 
+ row_spec(7:8, background = "#DFE6EB", color = "#DFE6EB")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+---
+
+### First semester
+
+#### Course format
+
+<ul>
+  <li>The course is divided into <b>2 parts</b> that are <b>structured</b> the same way:</li>
+  <ul>
+    <li>3 core <b>lectures with</b> weekly online <b>quizzes</b></li>
+    <li>2-3 core <b>lectures without quizzes</b></li>
+    <li>1 buffer <b>lecture</b> that will <b>not</b> be <b>in the exams</b></li>
+    <li></li>
+  </ul>
+</ul>
+ 
+.pull-left[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 1:7),
+             b = c("Introduction to R*", "Descriptive statistics*", 
+                   "Basic data manipulation*", "Data visualization", 
+                   "R Markdown & LaTeX", "Text data & sentiment analysis", 
+                   "Homework correction")),
+      caption = "Part I: Introduction to R programming", col.names = NULL) %>% 
+ row_spec(1:5, background = "#DFE6EB") %>% 
+ row_spec(6:6, background = "#DFE6EB", color = "#6794A7")  %>%
+ row_spec(7:7, background = "#DFE6EB", color = "#DFE6EB")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+.pull-right[
+<p style = "margin-bottom:-1.6cm;"></p>
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 8:15),
+             b = c("Univariate regressions*", "Multivariate regressions*", 
+                   "Inference*", "Causality", 
+                   "Interpretation", "Applications in academic research", 
+                   "Maps and geolocalized data", "Final Exam")),
+      caption = "Part II: Introduction to Econometrics", col.names = NULL) %>% 
+ row_spec(1:6, background = "#DFE6EB") %>% 
+ row_spec(7:7, background = "#DFE6EB", color = "#6794A7")  %>%
+ row_spec(8:8, background = "#DFE6EB", color = "#DFE6EB")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+---
+
+### First semester
+
+#### Course format
+
+<ul>
+  <li>The course is divided into <b>2 parts</b> that are <b>structured</b> the same way:</li>
+  <ul>
+    <li>3 core <b>lectures with</b> weekly online <b>quizzes</b></li>
+    <li>2-3 core <b>lectures without quizzes</b></li>
+    <li>1 buffer <b>lecture</b> that will <b>not</b> be <b>in the exams</b></li>
+    <li>1 <b>exam</b> (homework/final exam)</li>
+  </ul>
+</ul>
+ 
+.pull-left[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 1:7),
+             b = c("Introduction to R*", "Descriptive statistics*", 
+                   "Basic data manipulation*", "Data visualization", 
+                   "R Markdown & LaTeX", "Text data & sentiment analysis", 
+                   "Homework correction")),
+      caption = "Part I: Introduction to R programming", col.names = NULL) %>% 
+ row_spec(1:5, background = "#DFE6EB") %>% 
+ row_spec(6:6, background = "#DFE6EB", color = "#6794A7")  %>%
+ row_spec(7:7, background = "#DFE6EB", color = "#00A2D9")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+.pull-right[
+<p style = "margin-bottom:-1.6cm;"></p>
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 8:15),
+             b = c("Univariate regressions*", "Multivariate regressions*", 
+                   "Inference*", "Causality", 
+                   "Interpretation", "Applications in academic research", 
+                   "Maps and geolocalized data", "Final Exam")),
+      caption = "Part II: Introduction to Econometrics", col.names = NULL) %>% 
+ row_spec(1:6, background = "#DFE6EB") %>% 
+ row_spec(7:7, background = "#DFE6EB", color = "#6794A7")  %>%
+ row_spec(8:8, background = "#DFE6EB", color = "#00A2D9")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+---
+
+### First semester
 
 #### Grading:
 
-<p style = "margin-bottom:-.25cm;">
 
-<ul>
-  <li>Weekly short online quizzes (25% of the grade) </li>
+.pull-left[
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:3cm;">
+  <li>The exam <b>coefficients</b> are:</li>
   <ul>
-    <li>5 shorts questions related to the content of the previous class </li>
-    <li>The quiz opens at the end of the lecture and closes at the beginning of the following one</li>
-    <li>Possibility to retry the quiz as many times as you want before submitting</li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r echo = F, fig.width = 4, fig.height = 4, dpi=300, out.width = "70%", fig.align='left'}
+exams <- tibble(exam = c("Online quizzes", "Homework", "Final exam"),
+                order_exam = 1:3,
+                coef = as.numeric(c(NA, NA, NA)))
+
+ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Coefficient", limits = c(0, 50), breaks = seq(0, 50, 10),
+                     labels = paste0(seq(0, 50, 10), "%")) +
+  theme(axis.title.x = element_blank())
+```
+<ul style = "margin-bottom:-.75cm;">
+]
+
+---
+
+### First semester
+
+#### Grading:
+
+
+.pull-left[
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:3cm;">
+  <li>The exam <b>coefficients</b> are:</li>
+  <ul>
+    <li>Online quizzes: 25%</li>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r echo = F, fig.width = 4, fig.height = 4, dpi=300, out.width = "70%", fig.align='left'}
+exams <- tibble(exam = c("Online quizzes", "Homework", "Final exam"),
+                order_exam = 1:3,
+                coef = c(25, NA, NA))
+
+ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Coefficient", limits = c(0, 50), breaks = seq(0, 50, 10),
+                     labels = paste0(seq(0, 50, 10), "%")) +
+  theme(axis.title.x = element_blank())
+```
+<ul style = "margin-bottom:-.75cm;">
+]
+
+---
+
+### First semester
+
+#### Grading:
+
+
+.pull-left[
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:3cm;">
+  <li>The exam <b>coefficients</b> are:</li>
+  <ul>
+    <li>Online quizzes: 25%</li>
+    <li>Homework: 30%</li>
+    <li></li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r echo = F, fig.width = 4, fig.height = 4, dpi=300, out.width = "70%", fig.align='left'}
+exams <- tibble(exam = c("Online quizzes", "Homework", "Final exam"),
+                order_exam = 1:3,
+                coef = c(25, 30, NA))
+
+ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Coefficient", limits = c(0, 50), breaks = seq(0, 50, 10),
+                     labels = paste0(seq(0, 50, 10), "%")) +
+  theme(axis.title.x = element_blank())
+```
+<ul style = "margin-bottom:-.75cm;">
+]
+
+---
+
+### First semester
+
+#### Grading:
+
+.pull-left[
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:3cm;">
+  <li>The exam <b>coefficients</b> are:</li>
+  <ul>
+    <li>Online quizzes: 25%</li>
+    <li>Homework: 30%</li>
+    <li>Final exam: 45%</li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r echo = F, fig.width = 4, fig.height = 4, dpi=300, out.width = "70%", fig.align='left'}
+exams <- tibble(exam = c("Online quizzes", "Homework", "Final exam"),
+                order_exam = 1:3,
+                coef = c(25, 30, 45))
+
+ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Coefficient", limits = c(0, 50), breaks = seq(0, 50, 10),
+                     labels = paste0(seq(0, 50, 10), "%")) +
+  theme(axis.title.x = element_blank())
+```
+<ul style = "margin-bottom:-.75cm;">
+]
+
+--
+<ul>
+  <li><b>Online quizzes:</b></li>
+  <ul>
+    <li>Available in the <i>Material</i> section of the course webpage</li>
+    <li>Log in using the verification code I sent you via email</li>
+    <li><b>3-5 shorts questions</b> on to the content of the previous class </li>
+    <li>Quizzes open at the end of the lecture and <b>close at the beginning of the next one</b></li>
+    <li>You can retry the quiz as many times as you want before submitting</li>
+    <li>To submit click on <i>download results</i> and <b>send the downloaded file</b> to me by email</li>
   </ul>
 </ul> 
 
+---
+
+### First semester
+
+#### Grading:
+
+
+<ul>
+  <li><b>Homework:</b></li>
+  <ul>
+    <li><b>Set of exercises</b> related to the first five lectures of the course</li>
+    <li>It can be done <b>alone or by pairs</b></li>
+    <li>Must be handed over via email by the end of the sixth week <b>(16th of October 23:59)</b></li>
+    <li><b>Late submissions will be penalized</b> by half a point for each 30min beyond the deadline</li>
+    <li>I encourage you to <b>work on it progressively</b> as we go the trough the course</li>
+    <li>You can help each other but write your answers yourselves <b>(no copy-pasting)</b></li>
+  </ul>
+</ul>
+
 --
 
-<p style = "margin-bottom:.15cm;">
-  
+<p style = "margin-bottom:1.5cm;"></p>
+
 <ul>
-  <li>Homeworks (3, one for each part, 25% of the grade each)</li>
+  <li><b>Final exam:</b></li>
   <ul>
-    <li>Homeworks are already available <a href="https://louissirugue.github.io/data-analysis-course/home.html">here</a>, work on it progressively as we go through the course </li>
+    <li><b>Paper exam in classroom</b></li>
+    <li>You can <b>bring a cheatsheet</b> with you as long as:</li>
+    <ul>
+      <li>It is <b>handwritten</b> on paper</li>
+      <li>It stands on a single A4 (21cm x 29.7cm) page, i.e., <b>recto only</b></li>
+    </ul>
+    <li>Cheatsheets that do not comply with these rules will be confiscated</li>
+    <li>Beyond that, standard examination rules apply</li>
   </ul>
 </ul>
 
@@ -144,80 +543,373 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
 
 ### Second semester
 
-#### Course format:
-
-<p style = "margin-bottom:-.25cm;">
+#### Course format
 
 <ul>
-  <li style = "margin-bottom:.25cm;">Apart from 2 refreshers at the beginning, the whole semester will be dedicated to you research projects </li>
-  <li style = "margin-bottom:.25cm;">At each session a T.A. will guide you through the research process </li>
+  <li>The <b>second semester</b> will be all about carrying out your <b>own research project:</b></li>
   <ul>
-    <li>From framing a relevant question and finding appropriate data </li>
-    <li>To the final details of your data analysis</li>
+    <li></li>
+    <li></li>
+    <li></li>
   </ul>
-</ul> 
-
-<p style = "margin-bottom:1cm;">
-
---
-
-#### Grading:
-<ul>
-  <li style = "margin-bottom:.25cm;">Basically the whole grade will be based on your research project </li>
-  <li style = "margin-bottom:.25cm;">The detailed (indicative) grading scheme is available <a href="https://louissirugue.github.io/data-analysis-course/project/grading.html">here</a>. </li>
-</ul> 
-
---
-
-<p style = "margin-bottom:1.75cm;">
-
-<center><h3 style = "font-size: 20pt;"><i> &#10140; Visit the <a href="https://louissirugue.github.io/data-analysis-course/home.html">course webpage</a> for more detail, everything's there!</i></h3></center>
+</ul>
 
 ---
 
-<h3>Let's delve into it!</h3>
+### Second semester
 
+#### Course format
+
+<ul>
+  <li>The <b>second semester</b> will be all about carrying out your <b>own research project:</b></li>
+  <ul>
+    <li><b>Guidelines and refreshers</b> will give you time find data and a research question</li>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+ 
 .pull-left[
-#### 1. Getting started
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 1:3),
+             b = c("How to conduct a research project", 
+                   "Refresher: R Programming", 
+                   "Refresher: Econometrics")),
+      caption = "", col.names = NULL) %>% 
+ row_spec(1:3, background = "#DFE6EB", color = "#6794A7") %>% 
+  kable_styling(full_width = T)
+```
 
-#### 2. Classes of R objects
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
 ]
 
 .pull-right[
-#### 4. Functions and packages
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Functions
- * 4.2. Packages
 
-#### 5. A few words on learning R
+]
 
-#### 6. Wrap up!
+---
+
+### Second semester
+
+#### Course format
+
+<ul>
+  <li>The <b>second semester</b> will be all about carrying out your <b>own research project:</b></li>
+  <ul>
+    <li><b>Guidelines and refreshers</b> will give you time find data and a research question</li>
+    <li>The rest of the semester will be made of <b>follow-up sessions</b></li>
+    <li></li>
+  </ul>
+</ul>
+ 
+.pull-left[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 1:3),
+             b = c("How to conduct a research project", 
+                   "Refresher: R Programming", 
+                   "Refresher: Econometrics")),
+      caption = "", col.names = NULL) %>% 
+ row_spec(1:3, background = "#DFE6EB", color = "#6794A7") %>% 
+  kable_styling(full_width = T)
+```
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 4:7),
+             b = c("Presentation of question and data", 
+                   "Follow-up: Data cleaning I", 
+                   "Follow-up: Data cleaning II", 
+                   "Follow-up: Descriptive statistics")),
+      caption = "", col.names = NULL) %>% 
+   row_spec(1:4, background = "#DFE6EB") %>% 
+  kable_styling(full_width = T)
+```
+]
+
+.pull-right[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 8:15),
+             b = c("Follow-up: Visualizing the data", "Follow-up: Regression analysis", 
+                   "Follow-up: Midterm report feedback", "Follow-up: Causality assessment", 
+                   "Follow-up: Robustness", "Follow-up: Heterogeneity", 
+                   "Follow-up: Last tips", "Final presentation")),
+      caption = "", col.names = NULL) %>% 
+ row_spec(c(1:8), background = "#DFE6EB") %>% 
+  kable_styling(full_width = T)
+```
+]
+
+---
+
+### Second semester
+
+#### Course format
+
+<ul>
+  <li>The <b>second semester</b> will be all about carrying out your <b>own research project:</b></li>
+  <ul>
+    <li><b>Guidelines and refreshers</b> will give you time find data and a research question</li>
+    <li>The rest of the semester will be made of <b>follow-up sessions</b></li>
+    <li><b>Exams</b> will take place at <b>3 stages</b> of the research process</li>
+  </ul>
+</ul>
+ 
+.pull-left[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 1:3),
+             b = c("How to conduct a research project", 
+                   "Refresher: R Programming", 
+                   "Refresher: Econometrics")),
+      caption = "", col.names = NULL) %>% 
+ row_spec(1:3, background = "#DFE6EB", color = "#6794A7") %>% 
+  kable_styling(full_width = T)
+```
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 4:7),
+             b = c("Presentation of question and data", 
+                   "Follow-up: Data cleaning I", 
+                   "Follow-up: Data cleaning II", 
+                   "Follow-up: Descriptive statistics")),
+      caption = "", col.names = NULL) %>% 
+   row_spec(1:1, background = "#DFE6EB", color = "#00A2D9")  %>%
+ row_spec(2:4, background = "#DFE6EB") %>% 
+  kable_styling(full_width = T)
+```
+]
+
+.pull-right[
+```{r, echo = F}
+knitr::kable(tibble(a = paste("Lecture", 8:15),
+             b = c("Follow-up: Visualizing the data", "Follow-up: Regression analysis", 
+                   "Follow-up: Midterm report feedback", "Follow-up: Causality assessment", 
+                   "Follow-up: Robustness", "Follow-up: Heterogeneity", 
+                   "Follow-up: Last tips", "Final presentation")),
+      caption = "", col.names = NULL) %>% 
+ row_spec(c(1:2, 4:7), background = "#DFE6EB") %>% 
+ row_spec(c(3, 8), background = "#DFE6EB", color = "#00A2D9")  %>%
+  kable_styling(full_width = T)
+```
+]
+
+---
+
+### Second semester
+
+#### Grading:
+
+
+.pull-left[
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;">
+  <li>The exam <b>coefficients</b> are:</li>
+  <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r echo = F, fig.width = 4, fig.height = 4, dpi=300, out.width = "70%", fig.align='left'}
+exams <- tibble(exam = c("Presentation of\nresearch idea", "Midterm\nreport", "Final project/\npresentation"),
+                order_exam = 1:3,
+                coef = as.numeric(c(NA, NA, NA)))
+
+ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Coefficient", limits = c(0, 50), breaks = seq(0, 50, 10),
+                     labels = paste0(seq(0, 50, 10), "%")) +
+  theme(axis.title.x = element_blank())
+```
+]
+
+---
+
+### Second semester
+
+#### Grading:
+
+
+.pull-left[
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;">
+  <li>The exam <b>coefficients</b> are:</li>
+  <ul>
+    <li>Presentation of research idea: 25%</li>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r echo = F, fig.width = 4, fig.height = 4, dpi=300, out.width = "70%", fig.align='left'}
+exams <- tibble(exam = c("Presentation of\nresearch idea", "Midterm\nreport", "Final project/\npresentation"),
+                order_exam = 1:3,
+                coef = c(25, NA, NA))
+
+ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Coefficient", limits = c(0, 50), breaks = seq(0, 50, 10),
+                     labels = paste0(seq(0, 50, 10), "%")) +
+  theme(axis.title.x = element_blank())
+```
+]
+
+---
+
+### Second semester
+
+#### Grading:
+
+
+.pull-left[
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;">
+  <li>The exam <b>coefficients</b> are:</li>
+  <ul>
+    <li>Presentation of research idea: 25%</li>
+    <li>Midterm report: 30%</li>
+    <li></li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r echo = F, fig.width = 4, fig.height = 4, dpi=300, out.width = "70%", fig.align='left'}
+exams <- tibble(exam = c("Presentation of\nresearch idea", "Midterm\nreport", "Final project/\npresentation"),
+                order_exam = 1:3,
+                coef = c(25, 30, NA))
+
+ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Coefficient", limits = c(0, 50), breaks = seq(0, 50, 10),
+                     labels = paste0(seq(0, 50, 10), "%")) +
+  theme(axis.title.x = element_blank())
+```
+]
+
+---
+
+### Second semester
+
+#### Grading:
+
+
+.pull-left[
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;">
+  <li>The exam <b>coefficients</b> are:</li>
+  <ul>
+    <li>Presentation of research idea: 25%</li>
+    <li>Midterm report: 30%</li>
+    <li>Final project/presentation: 45%</li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+<p style = "margin-bottom:-2.5cm;"></p>
+```{r echo = F, fig.width = 4, fig.height = 4, dpi=300, out.width = "70%", fig.align='left'}
+exams <- tibble(exam = c("Presentation of\nresearch idea", "Midterm\nreport", "Final project/\npresentation"),
+                order_exam = 1:3,
+                coef = c(25, 30, 45))
+
+ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
+  geom_bar(stat = "identity", color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Coefficient", limits = c(0, 50), breaks = seq(0, 50, 10),
+                     labels = paste0(seq(0, 50, 10), "%")) +
+  theme(axis.title.x = element_blank())
+```
+<ul style = "margin-bottom:-.75cm;">
+]
+
+--
+
+.pull-left[
+<ul>
+  <li><b>Additional information:</b></li>
+  <ul>
+    <li>Research projects must be done <b>by pairs</b></li>
+    <li>It can be written in <b>French or in English</b></li>
+    <li>Follow-ups are <b>group meetings</b> with a T.A.</li>
+    <li>Find an <b>example</b> of what is expected <a href = "https://louissirugue.github.io/metrics_on_R/project/example.html">here</a></li>
+    <li>We'll come back to that in due time (January)</li>
+  </ul>
+</ul> 
+]
+
+--
+
+.pull-right[
+<p style = "margin-bottom:-3.5cm;"></p>
+<center><b><i>&#10140; Check out the <a href = "https://louissirugue.github.io/metrics_on_R/home.html">course webpage</a> for<br>more details, all the information is there!</i></b></center>
+]
+    
+---
+
+<h3>Let's delve into it!</h3>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Getting started</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. About R</li>
+    <li>1.2. The R Studio IDE</li>
+    <li>1.3. Import and eyeball data</li>
+    <li>1.4. Use functions</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Anatomy of a data.frame</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data structure</li>
+    <li>2.2. Classes</li>
+    <li>2.3. Vectors</li>
+    <li>2.4. Subsetting</li>
+  </ul>
+</ul>
+
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
 ]
 
 ---
 
 <h3>Let's delve into it!</h3>
 
+<p style = "margin-bottom:1.75cm;"></p>
+
 .pull-left[
-#### 1. Getting started
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Getting started</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. About R</li>
+    <li>1.2. The R Studio IDE</li>
+    <li>1.3. Import and eyeball data</li>
+    <li>1.4. Use functions</li>
+  </ul>
+</ul>
 ]
 
 ---
@@ -227,6 +919,10 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
 #### 1.1. About R
 
  * R is a **programming language** and free software environment for **statistical computing and graphics**
+ 
+<img style = "margin-left:16cm;margin-top:2.5cm;" src = "rstudio_logo.png" width = "300"/>
+
+<p style = "margin-bottom:-11cm;"></p>
 
 --
 
@@ -250,7 +946,7 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
    <ul>
      <li><a href="https://louissirugue.github.io/data-analysis-course/project/example.html">Reports</a></li>
      <li><a href="https://www.r-graph-gallery.com/bubble_chart_interactive_ggplotly.html">Nice plots</a></li>
-     <li><a href="https://louissirugue.github.io/data-analysis-course/home.html">All the material of this course</a></li>
+     <li><a href="https://louissirugue.github.io/metrics_on_R/home.html">All the material of this course</a></li>
      <li><a href="https://pubs.aeaweb.org/doi/pdfplus/10.1257/app.20200447">Academic research</a></li>
      <li><a href="https://www.kaggle.com/xavierconort">Win kaggle competitions</a></li>
      <li><a href="https://vac-lshtm.shinyapps.io/ncov_tracker/?_ga=2.29922175.1739025613.1656421238-871875772.1628005923">Interactive data visualization</a></li>
@@ -262,42 +958,58 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
 
 ### 1. Getting started
 
-#### 1.2. The R studio environment
+#### 1.2. The R Studio IDE
 
 <center>
 <img src = "rstudio.png" width = "770"/>
 </center>
-
+ 
 ---
 
 ### 1. Getting started
 
-#### 1.2. The R studio environment
+#### 1.2. The R Studio IDE
+
+<center>
+<img src = "console.png" width = "300"/>
+</center>
 
 &#10140; <b>The Console panel</b>
 
-<p style = "margin-bottom:-.3cm;">
-
- * This is where you **communicate with R**. You can write instructions after the `>`, press enter and R will **execute**  
-    - Try with `1+1`:
+<ul>
+  <li>This is where you <b>communicate with R</b>
+  <ul>
+    <li>You can write instructions after the <b>></b>, <b>press enter</b> and R will <b>execute</b></li>
+    <li>Try with <b>1+1:</b></li>
+  </ul>
+</ul>
 
 --
 
 ```{r}
 1+1
 ```
+ 
+---
 
---
+### 1. Getting started
 
-<p style = "margin-bottom:1cm;">
+#### 1.2. The R Studio IDE
+
+<center>
+<img src = "source.png" width = "300"/>
+</center>
 
 &#10140; <b>The Source panel</b>
 
-<p style = "margin-bottom:-.3cm;">
-
-* This is where you **write and save your code** (File > New File > R Script) 
- * Separate different commands with a line break 
- * The `#` symbol allows to annotate the code, everything after `#` will be ignored by R until the next line break
+<ul>
+  <li>This is where you <b>write and save your code</b> (File > New File > R Script)</li>
+  <ul>
+    <li><b>Separate</b> different commands with a <b>line break</b></li>
+    <li>The <b>#</b> symbol allows to <b>comment</b> your code</li>
+    <li>Everything after <b>#</b> will be <b>ignored</b> by R until the next line break</li>
+  </ul>
+</ul>
 
 --
 
@@ -305,36 +1017,57 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
 1+1 # Do not put 2+2 on the same line, press enter to go to next line 
 2+2
 ```
-
+ 
 ---
 
 ### 1. Getting started
 
-#### 1.2. The R studio environment
+#### 1.2. The R Studio IDE
+
+<center>
+<img src = "source.png" width = "300"/>
+</center>
 
 &#10140; <b>The Source panel</b>
 
-<p style = "margin-bottom:-.3cm;">
+<ul>
+  <li>To send the command from the source panel to the console panel:</li>
+  <ol>
+    <li><b>Highlight</b> the lines you want to execute</li>
+    <li>Press <b>ctrl + enter</b></li>
+  </ol>
+</ul>
 
- * To send the command from the source panel to the console panel:
-   1. Highlight the lines you want to execute 
-   2. Press `crtl` + `enter`
- * If you do not highlight anything the line of code where your cursor stands will be executed
- * Check the console to see the output of your code
- 
 --
 
-<p style = "margin-bottom:1cm;">
+<ul><li>If you do not highlight anything the line of code where your cursor stands will be executed</li></ul>
+
+--
+
+<ul><li>Check the console to see the output of your code</li></ul>
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+<center>
+<img src = "environment.png" width = "300"/>
+</center>
 
 &#10140; <b>The Environment panel</b>
 
-<p style = "margin-bottom:-.3cm;">
-
- * Data analysis requires manipulating datasets, vectors, functions, etc. 
-    * These **elements are stored in the environment** panel.
- * For instance we can assign a value to an object using `<-`
+<ul>
+  <li>Data analysis requires manipulating datasets, vectors, functions, etc.</li>
+  <ul>
+    <li>These <b>elements are stored in the environment</b> panel</li>
+  </ul>
+</ul>
 
 --
+
+ * For instance we can assign a value to an object using `<-`
 
 ```{r}
 x <- 1
@@ -342,511 +1075,1175 @@ x <- 1
 
 --
 
-<center><i> &#10140; You now have an object called 'x' in your environment, which takes the value 1</i></center>
+<center><i><b> &#10140; You now have an object called 'x' in your environment, which takes the value 1</b></i></center>
 
 ---
 
 ### 1. Getting started
 
-#### 1.2. The R studio environment
+#### 1.2. The R Studio IDE
+
+<center>
+<img src = "environment.png" width = "300"/>
+</center>
 
 &#10140; <b>The Environment panel</b>
 
- * Now that the object `x` is stored in your environment, you can use it:
+.pull-left[
 
---
+ * Now that the object `x` is stored in your environment, you can use it:
 
 ```{r}
 x + 1
 ```
 
+]
+
 --
 
-<p style = "margin-bottom:1cm;">
+.pull-right[
 
  * You can also modify that object at any point:
 
 ```{r}
-x <- x + 1 # What's gonna be the value of x?
-```
-
---
-
-```{r}
+x <- x + 1
 x
 ```
 
+]
 
 ---
 
 ### 1. Getting started
 
-<style> .left-column {width: 60%;} .right-column {width: 36%;} </style>
+#### 1.2. The R Studio IDE
 
-<p style = "margin-bottom:-.7cm;">
-
-.left-column[
-
-#### 1.2. The R studio environment
-
-<p style = "margin-bottom:2cm;">
+<center>
+<img src = "plot.png" width = "300"/>
+</center>
 
 &#10140; <b>The Files/Plots/... panel</b>
 
-<p style = "margin-bottom:.5cm;">
-
  * In this panel we'll mainly be interested in the following 4 tabs
-   * **Files:** Shows your working directory
-   * **Plots:** Where R returns plots
-   * **Packages:** A library of tools that we can load if needed
-   * **Help:** Where to look for documentation on R functions
-
-<p style = "margin-bottom:1cm;">
-
- * Enter `?getwd()` in the console to see what a **help file** looks like
-   * It **describes** what the command does
-   * It **explains** the different parameters of the command
-   * It **gives examples** of how to use the command
-]
 
 --
-
-.right-column[
-
-<img src = "help_file.png" width = "370"/>
-
-]
+<ul style = "margin-top:1em;"><li><b>Files:</b> Shows your working directory</li></ul>
+--
+<ul style = "margin-top:1em;"><li><b>Plots:</b> Where R returns plots</li></ul>
+--
+<ul style = "margin-top:1em;"><li><b>Packages:</b> A library of tools that we can load if needed</li></ul>
+--
+<ul style = "margin-top:1em;"><li><b>Help:</b> Where to look for documentation on R functions</li></ul>
 
 ---
 
-<h3>Overview</h3>
+### 1. Getting started
 
+#### 1.2. The R Studio IDE
 
-.pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
+<center>
+<img src = "plot.png" width = "300"/>
+</center>   
 
-#### 2. Classes of R objects
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
+&#10140; <b>The Files/Plots/... panel</b>
 
-#### 3. Vectors
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning R
-
-#### 6. Wrap up!
-]
-
----
-
-<h3>Overview</h3>
-
-.pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-]
-
----
-
-### 2. Classes of R objects
-
-<p style = "margin-bottom:1.5cm;">
-
-<center><b>&#10140; There are 3 main classes of R objects</b></center>
-
---
-
-.pull-left[
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul style = "margin-left:1cm;">
-  <li><b>Numeric values:</b></li>
-  <ul>
-    <li>42</li>
-    <li>-10^3</li>
-    <li>2.6879098767</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul style = "margin-left:1cm;">
-  <li><b>Character values:</b></li>
-  <ul>
-    <li>A</li>
-    <li>Hello world</li>
-    <li>PM2.5</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul style = "margin-left:1cm;">
-  <li><b>Logical values:</b></li>
-  <ul>
-    <li>TRUE (<i>or equivalently</i> T)</li>
-    <li>FALSE (<i>or equivalently</i> F)</li>
-  </ul>
-</ul>
-
-]
-
---
-
-.pull-right[
-
-<p style = "margin-bottom:2.5cm;">
-
-The class of an object is a <b>key attribute</b>:
-
-<ul style = "margin-left:-2.5cm;">
-  <li>Different types of operations are available for different classes of object</li>
-</ul>
-
-<ul style = "margin-left:-2.5cm;">
-  <li>Objects of different classes may react differently to a same operation</li>
-</ul>
-
-<ul style = "margin-left:-2.5cm;">
-  <li>Class mistakes is a common source of programming errors</li>
-</ul>
-
-]
-
----
-
-### 2. Classes of R objects
-
-#### 2.1. Numeric values
-
-<center><b>Basic operations with numeric values:</b></center>
-
---
-
-.pull-left[
+ *  Enter `?getwd()` in the console to see what a **help file** looks like
  
-```{r}
-2 + 3 # Addition
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+<img style = "margin-left:5cm;" src = "plot.png" width = "300"/>
+
+&#10140; <b>The Files/Plots/... panel</b>
+
+ *  Enter `?getwd()` in the console to see what a **help file** looks like
+
+<ul><ul><li>It <b>describes</b> what the command does</li></ul></ul>
+<ul><ul><li>It <b>explains</b> the different parameters of the command</li></ul></ul>
+<ul><ul><li>It <b>gives examples</b> of how to use the command</li></ul></ul>
+
+<img style = "margin-top:-12.75cm;margin-left:18.5cm;" src = "help_file.png" width = "370"/>
+
+---
+
+class: inverse, hide-logo
+
+### Practice
+
+#### 1) Open a new R script (`Ctrl + Shift + N`) and write a code to create these objects:
+
+```{r, echo = F}
+tibble(a = c("Object name:", "Assigned value:"), 
+       b = c("a", 2), 
+       c = c("b", 4), 
+       d = c("c", 5)) %>%
+   knitr::kable(col.names = NULL, align = "lccc", caption = "Objects to create")  %>% 
+ row_spec(2, background = "#014D64")
 ```
 
-```{r}
-2 - 3 # Subtraction
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+#### 2) Run this code and create a new object named `result` that takes the value $\frac{b\times c}{a} + (b-a)^c$
+
+```{r, echo = F}
+tibble(a = c("Operation:", "Symbol in R:"), 
+       b = c("Addition", "+"), 
+       c = c("Subtraction", "-"), 
+       d = c("Multiplication", "*"), 
+       e = c("Division", "/"), 
+       f = c("Exponentiation", "^"),
+       g = c("Parentheses", "()")) %>%
+  kable(col.names = NULL, align = "lcccccc", caption = "Basic operations in R") %>% 
+ row_spec(2, background = "#014D64")
 ```
 
-```{r}
-2 * 3 # Multiplication
-```
+--
 
-```{r}
-2 / 3 # Division
-```
+<p style = "margin-bottom:1cm;"></p>
 
+#### 3) Print `result` in your console and save your script somewhere in your computer (`Ctrl+S`)
+
+--
+
+<p style = "margin-bottom:-.25cm;"></p>
+
+<center><h3><i>You've got 3 minutes!</i></h3></center>
+
+`r countdown(minutes = 3, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+#### 1) Open a new R script (`Ctrl + Shift + N`) and write a code to create these objects:
+
+.pull-left[
+```{r, echo = F}
+tibble(a = c("Object name:", "Assigned value:"), 
+       b = c("a", 2), 
+       c = c("b", 4), 
+       d = c("c", 5)) %>%
+  kable(col.names = NULL, align = "lccc", caption = "Objects to create")  %>% 
+ row_spec(2, background = "#014D64")
+```
 ]
 
 --
 
 .pull-right[
+```{r}
+a <- 2
+b <- 4
+c <- 5
+```
+]
+
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+#### 2) Run this code and create a new object named `result` that takes the value $\frac{b\times c}{a} + (b-a)^c$
+
+--
 
 ```{r}
-2 ^ 2 # Exponent
+result <- b*c/a + (b-a)^c
 ```
 
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+#### 3) Print `result` in your console and save your script somewhere in your computer (`Ctrl + S`)
+
+--
+
 ```{r}
-4 ^ (1/2) # Root
-```
-
-<p style = "margin-bottom:1.5cm;"></p>
-
- * Store the result of a computation in an object:
-
-```{r}
-result <-((2 + 2)^(2 / (2 * 2))) - 2
 result
 ```
 
-]
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+ * We now know how to <b>use R</b> as a calculator, but our goal is <b>to analyze data!</b>
+
+--
+
+<center><i>&#10140; Take for instance the statistics from the last season of Ligue 1 available at <a href = "https://fbref.com/en/comps/13/schedule/Ligue-1-Scores-and-Fixtures">fbref.com</a></i></center>
+
+<p style = "margin-bottom:.5cm;"></p>
+
+<center>
+<img src = "fbref_2022.png" width = "825"/>
+</center>
 
 ---
 
-### 2. Classes of R objects
+### 1. Getting started
 
-#### 2.2. Character values
-
-<center><b>Character values need to be surrounded by quotation marks (' or ")</b></center>
-
---
-
-```{r}
-language <- "R"
-language
-```
-
---
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<center><b>Without quotation marks, R will think that you refer to an object</b></center>
-
-```{r, error=TRUE}
-R
-```
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-<center><b>Characters are not necessarily letters</b></center>
-
-```{r}
-character_string <- "R'{ç^*µ,,,_hi3"
-```
-
----
-
-### 2. Classes of R objects
-
-#### 2.2. Character values
-
-<center><b>Useful functions with characters</b></center>
-
-<p style = "margin-bottom:1cm;"></p>
-
-.pull-left[
-
-<center><b>Combining strings</b></center>
-
-```{r}
-paste("Hello", "world") 
-```
-
-<p style = "margin-bottom:1cm;"></p>
-
-```{r}
-paste("a", "b", "c", sep = "-") 
-```
-
-<p style = "margin-bottom:1cm;"></p>
-
-```{r}
-paste0("a", "b", "c") 
-```
-
-]
-
---
-
-.pull-right[
-
-<center><b>Splitting strings</b></center>
-
-```{r}
-substr("abcdefghijklmnopqrstuvwxyz", 3, 5)
-```
-
-<p style = "margin-bottom:1cm;"></p>
-
-```{r}
-nchar("Hello world")
-```
-
-<p style = "margin-bottom:1cm;"></p>
-
-```{r}
-substr("Hello world", 5, nchar("Hello world"))
-```
-
-]
-
----
-
-### 2. Classes of R objects
-
-#### 2.3. Logical values
-
-.pull-left[
-
-A logical value/**Boolean**, is a value that can be either:
- 
-<p style = "margin-bottom:1.25cm;"></p>
- 
-<ul><ul><li><b>TRUE</b> (can be abbreviated as <b>T</b>)</li></ul></ul>
-
-```{r}
-T
-```
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-<ul><ul><li>or <b>FALSE</b> (can be abbreviated as <b>F</b>)</li></ul></ul>
-
-```{r}
-F
-```
-
-]
- 
---
-
-.pull-right[
- 
-```{r}
-2 + 2 == 4 # Equality
-```
-
-<p style = "margin-bottom:.75cm;"></p>
-
-```{r}
-2 + 2 != 4 # Inequality
-```
-
-<p style = "margin-bottom:.75cm;"></p>
-
-```{r}
-1 > 2 # Strictly lower/greater
-```
-
-<p style = "margin-bottom:.75cm;"></p>
-
-```{r}
-2 <= 2 # Weakly lower/greater
-```
-
-]
-
----
-
-### 2. Classes of R objects
-
-#### 2.3. Logical values
-
-
-.pull-left[
-
-<center><b>And (&) / or (|)</b></center>
- 
-```{r}
-(1 == 1) & (1 == 2) #AND
-```
-
-```{r}
-(1 == 1) | (1 == 2) #OR
-```
-
-```{r}
-1 == 1 | (2 == 2 & 1 == 2) #Parentheses matter
-```
-
-```{r}
-(1 == 1 | 2 == 2) & 1 == 2 #Parentheses matter
-```
-
-]
-
---
-
-.pull-right[
-
-<center><b>Opposite (!)</b></center>
- 
-```{r}
-is.numeric(1)
-```
-
-```{r}
-!is.numeric(1)
-```
-
-```{r}
-3 < 2
-```
-
-```{r}
-!3 < 2
-```
-
-]
-
----
-
-### 2. Classes of R objects
-
-#### 2.4. Manipulate classes
-
---
+#### 1.3. Import and eyeball data
 
 <ul>
-  <li>It is important to <b>keep in mind the class</b> of the object you are working with because they work differently</li>
+  <li>You can <b>download</b> this dataset <a href = "https://louissirugue.github.io/metrics_on_R/lecture1/data.zip">here</a> or from the course webpage</li>
   <ul>
-    <li>For instance, you can add two numeric values together but not two characters</li>
+    <li>Note that the extension of the file is <b>.csv</b> (for <i><b>C</b>omma <b>S</b>eparated <b>V</b>alues</i>)</li>
+    <li>Let's have a look at <b>first 5 lines</b> of the raw csv file</li>
+  </ul>
+</ul>
+
+--
+ 
+<p style = "margin-bottom:1.25cm;"></p>
+
+```{r, eval = F, highlight=F}
+Wk,Day,Date,Time,Home,xG,Score,xG,Away,Attendance,Venue,Referee,Match Report,Notes
+1,Fri,2021-08-06,21:00,Monaco,2.0,1–1,0.3,Nantes,7500,Stade Louis II.,Antony Gautier,Match Report,
+1,Sat,2021-08-07,17:00,Lyon,1.4,1–1,0.8,Brest,29018,Groupama Stadium,Mikael Lesage,Match Report,
+1,Sat,2021-08-07,21:00,Troyes,0.8,1–2,1.2,Paris S-G,15248,Stade de l'Aube,Amaury Delerue,Match Report,
+1,Sun,2021-08-08,13:00,Rennes,0.6,1–1,2.0,Lens,22567,Roazhon Park,Bastien Dechepy,Match Report,
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>The <b>.csv format</b> is very common and has a very <b>codified structure</b></li>
+  <ul>
+    <li>We can see that <b>each line</b> corresponds to <b>a row</b> (the first row generally contains column names)</li>
+    <li>And for each row the <b>values</b> of each column are <b>separated by commas</b></li>
   </ul>
 </ul>
 
 --
 
+<p style = "margin-bottom:1cm;"></p>
+
+<center><b><i>&#10140; But how to get it in our R studio environment?</i></b></center>
+
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+.pull-left[
 <ul>
-  <li>You can <b>find the class</b> of an object by hovering your mouse over its name in the environment panel, or using the <b>class()</b> function:</li>
+  <li>To <b>import</b> stuff in R we use <b><i>read</i> functions</b></li>
+  <ul>
+    <li>They take the <b>file directory</b> as an <b>input</b></li>
+    <li>And give the <b>file content</b> as an <b>output</b></li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+```{r, eval = F}
+function(input)
+```
+```{r, echo = F}
+"output"
+```
+]
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>The read function dedicated to .csv files is <b>read.csv()</b></li>
+</ul>
+
+```{r, eval = F}
+fb <- read.csv("C:\User\Documents\ligue1.csv")
+```
+
+--
+
+```{r, echo = F, error = T}
+fb <- read.csv("C:\User\Documents\ligue1.csv")
+```
+
+<center>Oops, slashes must be the other way around!</center>
+
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+```{r, eval = F}
+fb <- read.csv("C:/User/Documents/ligue1.csv")
+```
+
+--
+
+```{r, echo = F}
+fb <- read.csv("ligue1.csv")
+```
+
+<center><i>&#10140; Let's <b>inspect</b> this new object to check that it worked</i></center>
+
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+ * The first thing we can do is to use `head()` to print the **top rows**
+ 
+```{r, eval = F}
+head(fb, 4)
+```
+--
+```{r, echo = F}
+head(fb, 4)
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * `tail()` would print the **bottom rows**
+
+ * We can also run **`View(`**`fb`**`)`** *(a new tab will pop-up in your Source panel)*
+ 
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+<center>
+<img src = "view_fb.png" width = "1100"/>
+
+<p style = "margin-bottom:.5cm;"></p>
+
+<b>Seems like it worked!</b>
+</center>
+ 
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+<center>
+<img src = "view_fb_kinda.png" width = "1100"/>
+
+<p style = "margin-bottom:.5cm;"></p>
+
+<b>... or kind of worked?</b>
+</center>
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+<ul>
+  <li>That kind of <b>weird characters</b> kicks in when there is an <b>encoding issue</b></li>
+  <ul>
+    <li>Thankfully, <b>read.csv()</b> can take many <b>other inputs</b>, including encoding!</li>
+    <li>Usually the UTF-8 encoding is the solution to French characters</li>
+  </ul>
 </ul>
 
 --
 
-```{r}
-class(2)
+```{r, eval = F}
+fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+```{r, echo = F}
+fb <- read.csv("ligue1.csv", encoding = "UTF-8")
+```
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li>When you will be facing <b>similar issues</b>, check out the arguments of read.csv() using <b>?read.csv</b></li>
+</ul>
+
+--
+
+<center>
+<img src = "csv_help.png" width = "800"/>
+</center>
+
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+<ul>
+  <li>From the <b>documentation</b> you can see that functions have <b>many arguments</b></li>
+  <ul>
+    <li>Some <b>without default</b> values: You need to specify the argument for the function to work</li>
+    <li>Some <b>with default</b> values: If you don't specify these arguments, defaults will be used</li>
+  </ul>
+</ul>
+ 
+```{r, eval = F}
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
 ```
 
 --
 
-```{r}
-class("a")
+ * You don't need to write the argument names only for those written in the <b>correct order</b>
+
+
+
+.left-column[
+.pull-left[
+
+<p style="margin-bottom:-.5cm"></p>
+```{r, eval = F}
+read.csv(file = "dt.csv")
 ```
 
---
+```{r, eval = F}
+read.csv("dt.csv")
+```
 
-```{r}
-class(FALSE)
+]
+.pull-right[
+$$\Longleftrightarrow$$
+
+<p style="margin-bottom:.5cm"></p>
+
+$$\underset{\Longleftrightarrow}{?}$$
+
+
+]
+]
+.right-column[
+<p style="margin-bottom:-1.07cm"></p>
+```{r, eval = F}
+read.csv("dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+<ul>
+  <li>From the <b>documentation</b> you can see that functions have <b>many arguments</b></li>
+  <ul>
+    <li>Some <b>without default</b> values: You need to specify the argument for the function to work</li>
+    <li>Some <b>with default</b> values: If you don't specify these arguments, defaults will be used</li>
+  </ul>
+</ul>
+ 
+```{r, eval = F}
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the <b>correct order</b>
+
+.left-column[
+.pull-left[
+
+<p style="margin-bottom:-.5cm"></p>
+```{r, eval = F}
+read.csv(file = "dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+$$\Longleftrightarrow$$
+
+<p style="margin-bottom:1cm"></p>
+
+$$\Longleftrightarrow$$
+
+<p style="margin-bottom:.5cm"></p>
+
+$$\underset{\Longleftrightarrow}{?}$$
+
+]
+]
+.right-column[
+<p style="margin-bottom:-1.07cm"></p>
+```{r, eval = F}
+read.csv("dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+<ul>
+  <li>From the <b>documentation</b> you can see that functions have <b>many arguments</b></li>
+  <ul>
+    <li>Some <b>without default</b> values: You need to specify the argument for the function to work</li>
+    <li>Some <b>with default</b> values: If you don't specify these arguments, defaults will be used</li>
+  </ul>
+</ul>
+ 
+```{r, eval = F}
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the <b>correct order</b>
+
+.left-column[
+.pull-left[
+
+<p style="margin-bottom:-.5cm"></p>
+```{r, eval = F}
+read.csv(file = "dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+$$\Longleftrightarrow$$
+
+<p style="margin-bottom:1cm"></p>
+
+$$\Longleftrightarrow$$
+<p style="margin-bottom:1cm"></p>
+
+$$\not\not\Longleftrightarrow$$
+
+<p style="margin-bottom:.5cm"></p>
+
+$$\underset{\Longleftrightarrow}{?}$$
+
+]
+]
+.right-column[
+<p style="margin-bottom:-1.07cm"></p>
+```{r, eval = F}
+read.csv("dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", ",")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", TRUE, ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+<ul>
+  <li>From the <b>documentation</b> you can see that functions have <b>many arguments</b></li>
+  <ul>
+    <li>Some <b>without default</b> values: You need to specify the argument for the function to work</li>
+    <li>Some <b>with default</b> values: If you don't specify these arguments, defaults will be used</li>
+  </ul>
+</ul>
+ 
+```{r, eval = F}
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the <b>correct order</b>
+
+.left-column[
+.pull-left[
+
+<p style="margin-bottom:-.5cm"></p>
+```{r, eval = F}
+read.csv(file = "dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+$$\Longleftrightarrow$$
+
+<p style="margin-bottom:1cm"></p>
+
+$$\Longleftrightarrow$$
+<p style="margin-bottom:1cm"></p>
+
+$$\not\not\Longleftrightarrow$$
+
+<p style="margin-bottom:1cm"></p>
+
+$$\Longleftrightarrow$$
+
+]
+]
+.right-column[
+<p style="margin-bottom:-1.07cm"></p>
+```{r, eval = F}
+read.csv("dt.csv")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", sep = ",")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", ",")
+```
+
+```{r, eval = F}
+read.csv("dt.csv", TRUE, ",")
+```
+]
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Getting started &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. About R</li>
+    <li>1.2. The R Studio IDE</li>
+    <li>1.3. Import and eyeball data</li>
+    <li>1.4. Use functions</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Anatomy of a data.frame</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data structure</li>
+    <li>2.2. Classes</li>
+    <li>2.3. Vectors</li>
+    <li>2.4. Subsetting</li>
+  </ul>
+</ul>
+
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Getting started &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. About R</li>
+    <li>1.2. The R Studio IDE</li>
+    <li>1.3. Import and eyeball data</li>
+    <li>1.4. Use functions</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Anatomy of a data.frame</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data structure</li>
+    <li>2.2. Classes</li>
+    <li>2.3. Vectors</li>
+    <li>2.4. Subsetting</li>
+  </ul>
+</ul>
+]
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * Now that we imported the data properly, we can check out its **`str()`ucture** in more details
+
+```{r, eval = F}
+str(fb)
 ```
 
 ---
 
-### 2. Classes of R objects
+### 2. Anatomy of a `data.frame`
 
-#### 2.4. Manipulate classes
+#### 2.1. Data structure
 
-<ul><li>You can <b>change the class</b> of an object using functions of the form <b>as.[character/numeric/logical]()</b></li></ul>
+ * *Don't be scared of the output!*
 
+```{r}
+str(fb)
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * `str()` says that `fb` is a `data.frame`, and gives its numbers of **observations** (rows) and **variables** (columns)
+
+```{r, eval = F}
+str(fb)
+```
+```{r, eval= F, highlight=F}
+## 'data.frame':    380 obs. of  14 variables:
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * It also gives the **variables names**
+
+```{r, eval = F}
+str(fb)
+```
+```{r, eval= F, highlight=F}
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          
+##  $ Day         
+##  $ Date        
+##  $ Time        
+##  $ Home        
+##  $ xG          
+##  $ Score       
+##  $ xG.1        
+##  $ Away        
+##  $ Attendance  
+##  $ Venue       
+##  $ Referee     
+##  $ Match.Report
+##  $ Notes       
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * The **first values** of each variable
+
+```{r, eval = F}
+str(fb)
+```
+```{r, eval= F, highlight=F}
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          :      1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         :      "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        :      "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        :      "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        :      "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          :      2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       :      "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        :      0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        :      "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  :      7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       :      "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     :      "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report:      "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       :       NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * As well as the **class** of each variable
+
+```{r, eval = F}
+str(fb)
+```
+```{r, eval= F, highlight=F}
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         : chr  "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        : chr  "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        : chr  "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        : chr  "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          : num  2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       : chr  "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        : num  0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        : chr  "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  : int  7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       : chr  "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     : chr  "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report: chr  "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       : logi  NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * But what does the **class** correspond to?
+ 
+```{r, eval = F}
+str(fb)
+```
+```{r, eval= F, highlight=F}
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  ?
+##  $ Day         : chr  ?
+##  $ Date        : chr  ?
+##  $ Time        : chr  ?
+##  $ Home        : chr  ?
+##  $ xG          : num  ?
+##  $ Score       : chr  ?
+##  $ xG.1        : num  ?
+##  $ Away        : chr  ?
+##  $ Attendance  : int  ?
+##  $ Venue       : chr  ?
+##  $ Referee     : chr  ?
+##  $ Match.Report: chr  ?
+##  $ Notes       : logi  ?
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+<center><b>Numeric</b></center>
+]
+.pull-right[
+<center><b>Character</b></center>
+]
+]
+.right-column[
+<p style="margin-bottom:-1.07cm"></p>
+<center><b>Logical</b></center>
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+<center><b>Numeric</b></center>
+
+<p style="margin-bottom:1cm"></p>
+
+These are simply numbers:
+
+```{r}
+class(3)
+```
+
+```{r}
+class(-1.6180339)
+```
+
+<p style="margin-bottom:1.25cm"></p>
+
+Numeric variable classes include:
+<p style="margin-bottom:-.5cm"></p>
+
+<ul>
+  <li><b>int</b> for round numbers</li>
+  <li><b>dbl</b> for 2-decimal numbers</li>
+</ul>
+]
+.pull-right[
+<center><b>Character</b></center>
+]
+]
+.right-column[
+<p style="margin-bottom:-1.07cm"></p>
+<center><b>Logical</b></center>
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+<center><b>Numeric</b></center>
+
+<p style="margin-bottom:1cm"></p>
+
+These are simply numbers:
+
+```{r}
+class(3)
+```
+
+```{r}
+class(-1.6180339)
+```
+
+<p style="margin-bottom:1.25cm"></p>
+
+Numeric variable classes include:
+<p style="margin-bottom:-.5cm"></p>
+
+<ul>
+  <li><b>int</b> for round numbers</li>
+  <li><b>dbl</b> for 2-decimal numbers</li>
+</ul>
+]
+.pull-right[
+<center><b>Character</b></center>
+
+<p style="margin-bottom:1cm"></p>
+
+They must be surrounded by `"`:
+
+```{r}
+class("Roazhon Park")
+```
+
+```{r}
+class("35")
+```
+<p style="margin-bottom:1.25cm"></p>
+
+We also call these values:
+<p style="margin-bottom:-.5cm"></p>
+
+<ul>
+  <li>Character strings</li>
+  <li>Or just strings</li>
+</ul>
+
+]
+]
+.right-column[
+<p style="margin-bottom:-1.07cm"></p>
+<center><b>Logical</b></center>
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+<center><b>Numeric</b></center>
+
+<p style="margin-bottom:1cm"></p>
+
+These are simply numbers:
+
+```{r}
+class(3)
+```
+
+```{r}
+class(-1.6180339)
+```
+
+<p style="margin-bottom:1.25cm"></p>
+
+Numeric variable classes include:
+<p style="margin-bottom:-.5cm"></p>
+
+<ul>
+  <li><b>int</b> for round numbers</li>
+  <li><b>dbl</b> for 2-decimal numbers</li>
+</ul>
+]
+.pull-right[
+<center><b>Character</b></center>
+
+<p style="margin-bottom:1cm"></p>
+
+They must be surrounded by `"`:
+
+```{r}
+class("Roazhon Park")
+```
+
+```{r}
+class("35")
+```
+<p style="margin-bottom:1.25cm"></p>
+
+We also call these values:
+<p style="margin-bottom:-.5cm"></p>
+
+<ul>
+  <li>Character strings</li>
+  <li>Or just strings</li>
+</ul>
+
+]
+]
+.right-column[
+<p style="margin-bottom:-1.07cm"></p>
+<center><b>Logical</b></center>
+
+<p style="margin-bottom:1cm"></p>
+
+Something either `TRUE` of `FALSE`:
+
+```{r}
+3 >= 4
+```
+
+```{r}
+class(T)
+```
+<p style="margin-bottom:1.25cm"></p>
+
+Most common logical operators:
+<p style="margin-bottom:-.5cm"></p>
+
+<ul>
+  <li>== > < <= >=</li>
+  <li>& (and) | (or) ! (opposite)</li>
+</ul>
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+<center><b>Guess the output!</b></center>
+ 
+```{r, eval = F}
+as.numeric("2022")
+```
 --
+```{r, echo = F}
+as.numeric("2022")
+```
+--
+
+<p style="margin-bottom:.75cm"></p>
+
+<center><b>What about this one?</b></center>
+```{r, eval = F}
+as.character(2022-2023)
+```
+--
+```{r, echo = F}
+as.character(2022-2023)
+```
+--
+
+<p style="margin-bottom:.75cm"></p>
+
+<center><b>A final one:</b></center>
+```{r, eval = F}
+as.character(2022>2023)
+```
+--
+```{r, echo = F}
+as.character(2022>2023)
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * To know everything:
 
 <p style = "margin-bottom:.5cm;"></p>
 
 <center><b>Class conversion table:</b></center>
 
-```{r, echo = F}
+```{r, echo = F, eval = F}
 tibble(` ` = c("<b>numeric</b>", 
                "<b>character</b>", 
                "<b>logical</b>"),
@@ -862,944 +2259,403 @@ tibble(` ` = c("<b>numeric</b>",
   kable(., caption = "", align = 'lccc', escape = F)
 ```
 
-<p style = "margin-bottom:.75cm;"></p>
-
-<ul>
-  <li><b>NA</b> stands for <i>'Not Available'</i>, it corresponds to a <b>missing value</b></li>
-  <ul>
-    <li><b>Beware of NAs</b>, it is a common source of programming errors (more on that next week)</li>
-  </ul>
-</ul>
-
----
-
-### 2. Classes of R objects
-
-#### 2.4. Manipulate classes
-
-<center><b>Some examples</b></center>
-
---
-
-.pull-left[
-
-```{r}
-as.numeric("2022")
+```{r, echo = F}
+tibble(` ` = c("<b>as.numeric()</b>", 
+               "<b>as.character()</b>", 
+               "<b>as.logical</b>()"),
+       `numeric` = c("No effect", 
+                     "Converts numeric values <br> into strings of numbers",
+                     'Returns TRUE if != 0 <p style = "margin-bottom:-.25cm;"></p> Returns FALSE if 0'),
+       `character` = c('Converts strings of numbers <br> into numeric values <p style = "margin-bottom:-.25cm;"></p> Returns NA if characters in the string',
+                       "No effect", 
+                       'Returns TRUE if "T" or"TRUE" <br> Returns FALSE if "F" or "FALSE" <p style = "margin-bottom:-.25cm;"></p> Returns NA otherwise'),
+       `logical` = c('Returns 1 if TRUE  <p style = "margin-bottom:-.25cm;"></p> Returns 0 if FALSE',
+                     'Returns "TRUE" if TRUE <p style = "margin-bottom:-.25cm;"></p> Returns "FALSE" if FALSE',
+                     "No effect")) %>%
+  kable(., caption = "", align = 'lccc', escape = F)
 ```
-
-```{r}
-as.numeric("2022-2023")
-```
-
-```{r}
-as.numeric(T)
-```
-
-```{r}
-as.numeric(FALSE)
-```
-
-]
-
---
-
-.pull-right[
-
-```{r}
-as.character(2022)
-```
-
-```{r}
-as.logical(0)
-```
-
-```{r}
-as.logical(1)
-```
-
-```{r}
-as.logical(-.75)
-```
-
-]
-
----
-
-<h3>Overview</h3>
-
-.pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning
-
-#### 6. Wrap up!
-]
-
----
-
-<h3>Overview</h3>
-
-.pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
- 
-#### 3. Vectors
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
----
-
-### 3. Vectors
-
-#### 3.1. Definition
-
-<ul>
-  <li>In R, a vector is a <b>sequence of objects that have the same class</b></li>
-  <ul>
-    <li>To create a vector you should list its elements separated by commas inside <b>c()</b></li>
-  </ul>
-</ul>
-
---
-
-```{r}
-months <- c("January", "February", "March", "April", "May", "June", "July", 
-            "August", "September", "October", "November", "December")
-```
-
---
-
- * Vectors are <b>ordered</b>, you can recover elements of a vector using their position in the sequence using `[]`
-
---
-
-```{r}
-months[3]
-```
-
---
-
- * Conversely, the function `match()` allows you to recover the position of specific elements in a vector:
-
---
-
-```{r}
-match(c("August", "December"), months)
-```
-
----
-
-### 3. Vectors
-
-#### 3.2. Operations with vectors
-
- * Numeric operations apply to every element of the vector:
-
-```{r}
-4 + c(10, 20, 30)
-```
-
---
-
-```{r}
-c(1, 2, 3) * 4
-```
-
---
-
-```{r}
-4 ^ c(1, 2, 3)
-```
-
---
-
-```{r}
-c(1, 2, 3) ^ 4
-```
-
----
-
-### 3. Vectors
-
-#### 3.3. Useful functions
 
 <p style = "margin-bottom:1cm;"></p>
 
- * The `length()` function for the <b>number of elements</b> in a vector
+<center><b>NA</b> stands for <i>'Not Available'</i>, it corresponds to a <b>missing value</b></center>
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * Great! But there is one last mystery...
+
+```{r, eval = F}
+str(fb)
+```
+```{r, eval= F, highlight=F}
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         : chr  "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        : chr  "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        : chr  "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        : chr  "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          : num  2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       : chr  "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        : num  0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        : chr  "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  : int  7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       : chr  "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     : chr  "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report: chr  "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       : logi  NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * Are these dollar signs here for a reason?
+
+```{r, eval = F}
+str(fb)
+```
+```{r, eval= F, highlight=F}
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          
+##  $ Day         
+##  $ Date        
+##  $ Time        
+##  $ Home        
+##  $ xG          
+##  $ Score       
+##  $ xG.1        
+##  $ Away        
+##  $ Attendance  
+##  $ Venue       
+##  $ Referee     
+##  $ Match.Report
+##  $ Notes       
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.3. Vectors
+
+ * It's actually just a reference to the fact that <b>`$`</b> allows to <b>extract a variable</b> from a dataset
 
 --
 
-```{r}
-length(months)
+```{r, echo = F}
+options(width = 92)
 ```
+
+```{r}
+fb$Wk
+```
+
+```{r, echo = F}
+options(width = 80)
+```
+ 
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.3. Vectors
+
+<ul>
+  <li>We call these objects <b>vectors</b></li>
+  <ul>
+    <li>Vectors are basically <b>sequences of values that have the same class</b></li>
+    <li>R won't let you create a vector containing elements of different classes</li>
+  </ul>
+</ul>
+
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+
+--
+
+ * We make our own vectors using the **`c()`oncatenate** function
+ 
+--
+
+```{r}
+c("Hello world", 35, FALSE)
+```
+
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+
+--
+
+<ul>
+  <li>The fact that vectors are homogeneous in class allows that <b>operations apply to all their elements</b></li>
+</ul>
+
+--
+
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+
+.pull-left[
+```{r}
+c(1, 2, 3) / 3
+```
+]
+
+--
+
+.pull-right[
+```{r}
+3 / c(1, 2, 3)
+```
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.4. Subsetting
+
+<ul>
+  <li>But <b>$</b> is not the only way to <b>extract</b> a variable from a dataset</li>
+  <ul>
+    <li>You can also make use of the <b>[ ]</b> subsetting operator</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+$$\text{data}[\text{row}, \:\:\text{columns}] $$
+
+--
+
+<ul>
+  <li>Inside the <b>brackets</b>, indicate what you want to <b>keep using:</b></li>
+  <ul>
+    <li><b>Indices:</b> e.g., the third column has index 3</li>
+    <li><b>Logical:</b> A vector of TRUE and FALSE</li>
+    <li><b>Names:</b> They must be in quotation marks</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:0cm;"></p>
+
+--
+
+.pull-left[
+
+ * Example:
+
+```{r}
+fb[1, c("Venue", "Attendance")]
+```
+]
+
+--
+
+.pull-right[
+
+ * Brackets also work for vectors:
+ 
+```{r}
+vec <- c(3, 2, 1)
+vec[c(T, F, T)]
+```
+]
+
+---
+
+class: inverse, hide-logo
+
+### Practice
+
+<p style = "margin-bottom:3cm;"></p>
+
+#### 1) Download and import the dataset if you haven't already
 
 --
 
 <p style = "margin-bottom:2cm;"></p>
 
- * The `rep()` function for <b>repeating a vector</b>
+#### 2) Combine the use of `[ ]` and `nrow()` to obtain the last value of the `Wk` variable
 
 --
 
-.pull-left[
+<p style = "margin-bottom:2cm;"></p>
 
-<ul><ul><li>Vector-wise:</li></ul></ul>
-
-```{r}
-rep(c(1, 2, 3), 2)
-```
-
-]
+#### 3) Subset the home team, the score, and the away team for matches that occured during the last week
 
 --
 
-.pull-right[
-<ul><ul><li>Or element-wise:</li></ul></ul>
+<p style = "margin-bottom:2.5cm;"></p>
 
-```{r}
-rep(c(1, 2, 3), each = 2)
-```
-]
+<center><h3><i>You've got 6 minutes!</i></h3></center>
+
+`r countdown(minutes = 6, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 
-### 3. Vectors
-
-#### 3.3. Useful functions
-
-<p style = "margin-bottom:1cm;"></p>
-
- * The `seq()` function for <b>sequences</b>
-
---
-
-```{r}
-seq(0, 100, 10)
-```
---
-```{r}
-seq(2, 3, .2)
-```
-
---
-
-<p style = "margin-bottom:1.5cm;"></p>
-
- * Sequences of <b>consecutive integers</b> can be easily produced using `:`
- 
-```{r}
-1:10
-```
-
----
-
-### 3. Vectors
-
-#### 3.3. Useful functions
-
- * The `paste()` function also applies to all the elements of the vector
-
---
-
-```{r}
-paste0("A", 1:5) 
-```
-
---
-
-<p style = "margin-bottom:1.5cm;"></p>
-
- * And can merge the elements of a vector with the `collapse` argument
-
---
-
-```{r}
-sentence <- c("Lorem", "ipsum", "dolor", "sit", "amet")
-sentence
-paste0(sentence, collapse = " ")
-```
-
----
-
-### 3. Vectors
-
-#### 3.4. Classes of vectors
-
- * As the elements of a vector should be of the same class, the class of a vector is always that of its elements:
-
-```{r}
-class(c(1, 2, 3))
-```
-
-<p style = "margin-bottom:1.25cm;">
-
---
-
-<ul>
-  <li>But there is <b>another class</b> you should know for vectors: the <b>factor</b> class</li>
-  <ul>
-    <li>It's made for vectors with numeric values that can't be interpreted but simply indicate a <b>group/category</b></li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1cm;">
-
---
-
-<ul>
-  <li>Consider for instance the following age vectors:</li>
-  <ol>
-    <li>Vector age1 indicates the actual age of an individual, it should be of class numeric</li>
-    <li>Vector age2 indicates an age group (1 = 1 to 10, 2 = 10 to 20, ...) it should be of class factor</li>
-  </ol>
-</ul>
-
-<p style = "margin-bottom:1cm;">
-
-***&#10140; In vector age2, numbers don't mean anything, they're just group indicators and R should interpret it as such***
-
----
-
-### 3. Vectors
-
-#### 3.4. Classes of vectors
-
- * R understands that multiplying the values of a factor by 2 makes no sense
- 
---
- 
-```{r, error = TRUE}
-as.factor(c(1, 2, 2)) * 2
-```
-
---
-
-<p style = "margin-bottom:.75cm;">
-
- * R converts a factor to the numeric format by attributing a number from 1 to $n$ to each category
- 
-```{r}
-as.numeric(as.factor(c(46, 44, 46, 45)))
-```
-
---
-
-<p style = "margin-bottom:.75cm;">
-
- * To have a numeric vector with the values of a factor, you should thus go through the character class
- 
-```{r}
-as.numeric(as.character(as.factor(c(46, 44, 46, 45))))
-```
-
----
-
-### Practice
-
-#### &#10140; You have the social security number of 4 individuals
-
-```{r}
-ssn <- c("1970248765890", "2891135987473", "17875109483", "29931298043")
-```
-
---
-
-<p style = "margin-bottom:1.5cm;"></p>
-
-$$\text{How SSNs are constructed:}\hspace{2em}\underbrace{1}_{\text{Sex}}\underbrace{97}_{\substack{\text{Year} \\ \text{of birth}}}\underbrace{02}_{\substack{\text{Month} \\ \text{of birth}}}\underbrace{48}_{\substack{\text{Department} \\ \text{of birth}}}\underbrace{765}_{\substack{\text{Municipality} \\ \text{INSEE code}}}\underbrace{890}_{\substack{\text{Registration} \\ \text{number}}}$$
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-#### Task: Use R programming to compute the age of these 4 individuals
-
-<p style = "margin-bottom:-.5cm;"></p>
-
---
-
-<ol>
-  <li>Copy/paste the line above into an .R script and run it</li>
-  <li>Extract the second to third characters from the SSNs</li>
-  <li>Convert these values to the numeric class</li>
-  <li>Add 1900 to these number to obtain the year of birth</li>
-  <li>Substract these number from 2022 to get the age</li>
-</ol>
-
---
-
-<center><h3><i>You've got 10 minutes!</i></h3></center>
-
----
+class: inverse, hide-logo
 
 ### Solution
 
-#### 1) Copy/paste the line above into an .R script and run it
+<p style = "margin-bottom:3cm;"></p>
 
-```{r}
-ssn <- c("1970248765890", "2891135987473", "17875109483", "29931298043")
+#### 1) Download and import the dataset if you haven't already
+
+--
+
+```{r, eval = F}
+fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
 ```
 
 --
 
-#### 2) Extract the second to third characters from the SSNs
+<p style = "margin-bottom:2.5cm;"></p>
 
-```{r}
-birth_year <- substr(ssn, 2, 3)
-```
+#### 2) Combine the use of `[ ]` and `nrow()` to obtain the last value of the `Wk` variable
 
 --
 
-#### 3) Convert these values to the numeric class
-
 ```{r}
-birth_year <- as.numeric(birth_year)
+last_week <- fb[nrow(fb), "Wk"]
+last_week
 ```
 
---
 
-#### 4) Add 1900 to these numbers and substract from 2022 to get the age
-
-```{r}
-age <- 2022 - (birth_year + 1900)
-age
-```
-
---
-
-#### 5) 
-
-```{r}
-age <- 2022 - birth_year
-age
-```
 ---
 
-<h3>Overview</h3>
+class: inverse, hide-logo
+
+### Solution
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 3) Subset the home team, the score, and the away team for matches that occured during the last week
+
+--
+
+```{r, error = T}
+fb[Wk == last_week, c("Home", "Score", "Away")]
+```
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
 
 .pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
 
-#### 2. Classes of R objects &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning
-
-#### 6. Wrap up!
-]
-
----
-
-<h3>Overview</h3>
-
-.pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
- 
-#### 3. Vectors &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-] 
-
-.pull-right[
-#### 4. Functions and packages
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Functions
- * 4.2. Packages
-]
-
----
-
-### 4. Functions and packages
-
-#### 4.1. Functions
-
- * <b>Functions</b>, like `paste()`, `match()`, `sep()`, etc., are <b>sequences of operations</b> condensed into one command.  
- * Functions take <b>arguments as inputs</b>, specified in the parentheses and separated by commas, and <b>return an output</b> given these arguments.  
-
---
-
-<p style = "margin-bottom:1cm;">
-
-Consider the following example: 
-
-```{r}
-paste("Hello", "world")
-```
-
-<p style = "margin-bottom:1cm;">
-
---
-
- * Here the **function** `paste()`:
-   * Takes `"Hello"` and `"world"` as **inputs** 
-   * Produces `"Hello world"` as an **output**  
-
---
-
-<p style = "margin-bottom:1cm;">
-
-<center><h4><i> &#10140; Let's make our own function! </i></h4></center>
-
----
-
-### 4. Functions and packages
-
-#### 4.1. Functions
-
- * Imagine you have the following grade distribution
-
-```{r} 
-grades <- c(8, 10, 12, 13, 15, 15, 16, 17.5, 18, 19.5, 20)
-```
-
---
-
- * You want to add two points to everybody but grades should not be higher than 20
-
-```{r}
-grades <- grades + 2 # add 2 each element of the vector
-grades # Some grades are greater than 20
-grades > 20 # Their location in the vector can be found with a logical statement...
-grades[grades > 20] <- 20 # ... so we can easily replace their values
-```
-
----
-
-### 4. Functions and packages
-
-#### 4.1. Functions
-
- * If you need to do such computations frequently, it is handy to make a function so that it boils down to a single line of code
-
---
-
-```{r}
-shift_grades <- function(grades, shift) {
-  grades <- grades + shift # Shift grades
-  grades[grades > 20] <- 20 # Cap to 20
-  return(grades) # Return output
-}
-```
---
-```{r}
-shift_grades(grades = c(0, 10, 20), shift = 5)
-```
---
-```{r}
-shift_grades(grades = 10:20, shift = 3)
-```
-
-
----
-
-### 4. Functions and packages
-
-#### 4.2. Packages
-
-It is often the case that user-created functions can be very useful to many other users. That's what packages are about. **Packages are bundles of functions** that R users put to the disposal of other R users. Packages are centralized on the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/). **To download a CRAN package** you can simply use **`install.packages()`**. Next time we will use functions from the `tidyverse` package. Let's install it already.
-
---
-
-```{r}
-install.packages("tidyverse") # Requires and internet connection
-```
-
---
+<ul>
+  <li>Oops! Seems like <b>R couldn't find</b> the Wk variable</li>
+  <ul>
+    <li>R was looking for Wk <b>in our environment</b></li>
+    <li>But there is no Wk there</li>
+  </ul>
+</ul>
 
 <p style = "margin-bottom:1cm;"></p>
 
- * The `tidyverse` package is now installed on your computer and you won't have to do it again. But to be able to use `tidyverse` functions the **package should also be loaded** in our R session with the function `library()`.
-
---
-
-```{r}
-library(tidyverse)
-```
-
---
+<ul>
+  <li>We must <b>refer to fb</b> which is in our environment</li>
+  <ul>
+    <li>Then we can <b>access Wk using the $</b> symbol</li>
+  </ul>
+</ul>
 
 <p style = "margin-bottom:1cm;"></p>
 
- * Once this command is run you have access to all the tidyverse functions in your environment. But even though the package is permanently installed, it is **loaded only for your current session**. So each time you start a new R session, you'll have to load the packages you need with the `library()` command.
 
----
+```{r, eval = F}
+fb[fb$Wk == 38, c("Home", "Score", "Away")]
+```
 
-<h3>Overview</h3>
-
-.pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
 ]
 
+--
+
 .pull-right[
-#### 4. Functions and packages &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning R
-
-#### 6. Wrap up!
+```{r, echo = F}
+fb[fb$Wk == 38, c("Home", "Score", "Away")]
+```
 ]
 
 ---
 
 <h3>Overview</h3>
 
+<p style = "margin-bottom:1.75cm;"></p>
+
 .pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
 
-#### 2. Classes of R objects &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning R
-]
-
----
-
-### 5. A few words on learning R
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Getting started &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. About R</li>
+    <li>1.2. The R Studio IDE</li>
+    <li>1.3. Import and eyeball data</li>
+    <li>1.4. Use functions</li>
+  </ul>
+</ul>
 
 <p style = "margin-bottom:1cm;"></p>
 
-#### We're finally done with the "theoretical" part of programming!
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Anatomy of a data.frame &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data structure</li>
+    <li>2.2. Classes</li>
+    <li>2.3. Vectors</li>
+    <li>2.4. Subsetting</li>
+  </ul>
+</ul>
 
- * That's normal if some concepts we saw are not completely obvious to you, fluency will comes with practice 
- * Take time to go through the first two lectures by yourself and tell me if anything's unclear. 
- * There are still some important coding tools you need to learn but we'll see that progressively throughout the course.
 
---
+<p style = "margin-bottom:1cm;"></p>
 
-#### When your code won't work
-
-To finish the Lecture I'd like to give you some tips about learning programming. Often times it can be quite frustrating when you can't make your code work.
- * When it doesn't not work the way you want 
- * When it doesn't work at all
-
----
-
-### 5. A few words on learning R
-
-#### When it doesn't work the way you want
-
- * When things do not work the way you want, NAs are the usual suspects. For instance, this is how the mean function reacts to NAs.
- 
---
-
-```{r}
-mean(c(1, 2, NA))
-```
---
-```{r}
-mean(c(1, 2, NA), na.rm = T)
-```
-
---
-
- * From the output it obvious in this case that NAs are the problem, but sometimes it's not that transparent. So take a look at your data to see whether NAs could mess things up. You can seek for NAs using `is.na()`:
- 
-```{r, eval = F}
-is.na(c(1, 2, NA))
-```
---
-```{r, echo = F}
-is.na(c(1, 2, NA))
-```
-
----
-
-### 5. A few words on learning R
-
-#### Where to find help
-
- * Help files are made for that. Sometimes things don't work just because you did not understand a function's argument or you don't know that there exists an argument you should use. Every function has a help file, just enter the name of the function preceded by a question mark in your console and it will appear in the Help tab of R studio.
- 
-```{r, eval = F}
-?pivot_longer
-```
-
---
-
-<center>
-<img src = "pivot_longer.png"/>
-</center>
-
----
-
-### 5. A few words on learning R
-
-#### Where to find help
-
- * Search on the internet. I'm pretty sure that any question you might have during these first months of programming is already asked and answered on https://stackoverflow.com/.
- 
---
-
-<center>
-<img src = "ask_google.png" width = 750 />
-</center>
-
----
-
-### 5. A few words on learning R
-
-#### When it doesn't work at all
-
- * Sometimes R breaks and returns an error. And errors are usually kind of cryptic.
-
---
-
-```{r, error = TRUE}
-read.csv("C:\Users\l.sirugue\Documents\R")
-```
-
---
-
- * Try to look for keywords that might help you understand where it comes from, and paste your it in Google with the name of your command. Chances are many people already struggled with that 
-
---
-
-<center>
-<img src = "error.png" width = 750 />
-</center>
-
----
-
-<h3>Overview</h3>
-
-.pull-left[
-#### 1. Getting started &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. About R
- * 1.2. The R Studio environment
-
-#### 2. Classes of R objects &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Numeric values
- * 2.2. Character values
- * 2.3. Logical values
- * 2.4. Manipulate classes
-
-#### 3. Vectors &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Definition
- * 3.2. Operations with vectors
- * 3.3. Useful functions
- * 3.4. Classes of vectors
-]
-
-.pull-right[
-#### 4. Functions and packages &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Functions
- * 4.2. Packages
-
-#### 5. A few words on learning R &#10004;
-
-#### 6. Wrap up!
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
 ]
 
 ---
 
-### 6. Wrap up!
+### 3. Wrap up!
 
-<p style = "margin-bottom:.5cm;">
+#### 1. Import data
 
-#### 1. Main classes of R objects: numeric, character, logical
-
-```{r, results = 'hide'}
-is.numeric("a") # What would be the output?
-``` 
---
-```{r, echo = F}
-is.numeric("a") # What would be the output?
-``` 
-
---
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 2. Vectors
-
-```{r, results = 'hide'}
-week <- c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-length(week) # What would be the output?
-``` 
---
-```{r, echo = F}
-length(week)
-``` 
---
-```{r, results = 'hide'}
-match(7, week) # What would be the output?
-```
---
-```{r, echo = F}
-match(7, week)
+```{r, eval = F}
+fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
 ```
 
----
+--
 
-### 6. Wrap up!
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 3. Functions
+#### 2. Class
+
+```{r, eval = F}
+is.numeric("1.6180339") # What would be the output?
+```
+
+--
+
+```{r, echo = F}
+is.numeric("1.6180339") # What would be the output?
+```
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 3. Subsetting
 
 ```{r}
-shift_grades <- function(grades, shift) { # Inputs
-  grades <- grades + shift
-  grades[grades > 20] <- 20 
-  return(grades) # Output
-}
-
-shift_grades(grades = c(0, 10, 20), shift = 5)
+fb$Home[3]
 ```
-
---
-
-<p style = "margin-bottom:2cm;">
-
-#### 4. Packages
-
-```{r, eval = F}
-install.packages("tidyverse") # Run only once to download the package
-library(tidyverse) # Run at each session to load the package
-```
-
----
-
-### To do by next time
-
-<p style = "margin-bottom:2.5cm;">
-
---
-
-#### 1) Go through the slides once again
-
---
-
-#### 2) Do Quiz 1 and send me your results
-
---
-
-#### 3) Install all the packages required for this course
-
-```{r, eval = F}
-install.packages()
-```
-
---
-
-#### 4) Send me your questions if you have some
-
---
-
-<p style = "margin-bottom:3cm;">
-
-<center><h3><i>See you next week!</i></h3></center>
-
