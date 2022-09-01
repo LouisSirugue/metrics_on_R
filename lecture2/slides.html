@@ -6,6 +6,8 @@
     <meta name="author" content=" Louis SIRUGUE" />
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
     <link rel="shortcut icon" href="star.png" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="theme.css" type="text/css" />
@@ -26,95 +28,126 @@ class: center, middle, inverse, title-slide
 
 
 
-### Last time we saw
+### Quick reminder
+
+#### 1. Import data
+
+
+```r
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+
+
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 2. Class
+
+
+```r
+is.numeric("1.6180339") # What would be the output?
+```
+
+--
+
+
+```
+## [1] FALSE
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 3. Subsetting
+
+
+```r
+fb$Home[3]
+```
+
+```
+## [1] "Troyes"
+```
+
+---
+
+&lt;h3&gt;Today we learn how to describe data&lt;/h3&gt;
 
 &lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
 
 --
 
- * **Different classes of R objects**
-
-
-```r
-class("numeric") # What would be the output and why?
-```
-
---
-
- * **Vectors**
- 
-
-```r
-match(8, c(6, 1, 9, 5, 8, 4)) # What would be the output and why?
-```
- 
---
- 
- * **Functions**
- 
-
-```r
-age_from_ssn &lt;- function(ssn) {
-  return(2022 - (as.numeric(substr(ssn, 2, 3)) + 1900))
-}
-```
-
---
-
- * **Packages**
-
-
-```r
-library(tidyverse)
-```
-
----
-
-&lt;h3&gt;Today we learn how to describe data&lt;/h3&gt;
-
---
-
 .pull-left[
-#### 1. Distributions
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### 3. Spread
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Central tendency&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Mean&lt;/li&gt;
+    &lt;li&gt;2.2. Median&lt;/li&gt;
+    &lt;li&gt;2.3. Mean vs. median&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Spread&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Range, quantiles, and the IQR&lt;/li&gt;
+    &lt;li&gt;3.2. Variance and standard deviation&lt;/li&gt;
+    &lt;li&gt;3.3. Standard deviation vs. IQR&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
 ]
 
 .pull-right[
-#### 4. Inference
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
 
-#### 5. Wrap up!
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Inference&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. Data generating process&lt;/li&gt;
+    &lt;li&gt;4.2. Empirical vs. theoretical moments&lt;/li&gt;
+    &lt;li&gt;4.3. Confidence interval&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
 ]
 
 ---
 
 &lt;h3&gt;Today we learn how to describe data&lt;/h3&gt;
 
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
 .pull-left[
-#### 1. Distributions
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 ]
 
 ---
@@ -225,7 +258,7 @@ library(tidyverse)
 
 #### 1.2. Graphical representation
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-8-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-9-1.png" width="83%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -300,7 +333,7 @@ library(tidyverse)
 
 #### 1.2. Graphical representation
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="83%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -346,7 +379,7 @@ library(tidyverse)
 
 &lt;p style = "margin-bottom: 1.97cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="78%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -358,18 +391,6 @@ library(tidyverse)
   * We can divide the domain of this variable into 5 bins
 
 &lt;p style = "margin-bottom: 1.25cm;"&gt;&lt;/p&gt;
-
-&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="78%" style="display: block; margin: auto;" /&gt;
-
----
-
-### 1. Distributions
-
-#### 1.2. Graphical representation
-
- * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
-  * We can divide the domain of this variable into 5 bins
-  * And count the number of observations within each bin
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="78%" style="display: block; margin: auto;" /&gt;
 
@@ -384,6 +405,18 @@ library(tidyverse)
   * And count the number of observations within each bin
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="78%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Distributions
+
+#### 1.2. Graphical representation
+
+ * Consider for instance the following variable. For clarity each point is shifted vertically by a random amount
+  * We can divide the domain of this variable into 5 bins
+  * And count the number of observations within each bin
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="78%" style="display: block; margin: auto;" /&gt;
  
 ---
 
@@ -400,7 +433,7 @@ library(tidyverse)
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="83%" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -443,7 +476,7 @@ library(tidyverse)
 
 --
  
-&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-17-1.png" width="83%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -451,7 +484,7 @@ library(tidyverse)
 
 #### 1.3. Common distributions: Normal distribution
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-17-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-18-1.png" width="83%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -459,7 +492,7 @@ library(tidyverse)
 
 #### 1.3. Common distributions: Log-normal distribution
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-18-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-19-1.png" width="83%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -467,7 +500,7 @@ library(tidyverse)
 
 #### 1.3. Common distributions: Uniform distribution
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-19-1.png" width="83%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-20-1.png" width="83%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -478,25 +511,12 @@ library(tidyverse)
 &lt;p style = "margin-bottom:1cm;"&gt;
 
 --
-
-&lt;img src="slides_files/figure-html/unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" /&gt;
-
---
-
- * How to **summarize** these distributions with simple statistics?
-
----
-
-### 1. Distributions
-
-#### 1.3. Common distributions: Summarizing distributions
-
-&lt;p style = "margin-bottom:1cm;"&gt;
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
+--
+
  * How to **summarize** these distributions with simple statistics?
-  * By describing their **central tendency** (e.g., mean, median)
 
 ---
 
@@ -510,60 +530,105 @@ library(tidyverse)
 
  * How to **summarize** these distributions with simple statistics?
   * By describing their **central tendency** (e.g., mean, median)
+
+---
+
+### 1. Distributions
+
+#### 1.3. Common distributions: Summarizing distributions
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-23-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+ * How to **summarize** these distributions with simple statistics?
+  * By describing their **central tendency** (e.g., mean, median)
   * And their **spread** (e.g., standard deviation, inter-quartile range)
 
 ---
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
 .pull-left[
 
-#### 1. Distributions &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### 2. Central tendency
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
-#### 3. Spread
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Central tendency&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Mean&lt;/li&gt;
+    &lt;li&gt;2.2. Median&lt;/li&gt;
+    &lt;li&gt;2.3. Mean vs. median&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Spread&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Range, quantiles, and the IQR&lt;/li&gt;
+    &lt;li&gt;3.2. Variance and standard deviation&lt;/li&gt;
+    &lt;li&gt;3.3. Standard deviation vs. IQR&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
 ]
 
 .pull-right[
 
-#### 4. Inference
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Inference&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. Data generating process&lt;/li&gt;
+    &lt;li&gt;4.2. Empirical vs. theoretical moments&lt;/li&gt;
+    &lt;li&gt;4.3. Confidence interval&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
-#### 5. Wrap up!
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
 ]
 
 ---
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
-.pull-left[
-#### 1. Distributions &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
 
-#### 2. Central tendency
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Central tendency&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Mean&lt;/li&gt;
+    &lt;li&gt;2.2. Median&lt;/li&gt;
+    &lt;li&gt;2.3. Mean vs. median&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
 ]
  
@@ -748,7 +813,7 @@ As we have 14 observations, the median is the average of the 7&lt;sup&gt;th&lt;/
 
 &lt;p style = "margin-bottom:1.25cm;"&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-26-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-27-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -802,14 +867,14 @@ As we have 14 observations, the median is the average of the 7&lt;sup&gt;th&lt;/
 
 &lt;p style = "margin-bottom:-1cm;"&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-28-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-29-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
 
 ### 2. Central tendency
 
-#### 2.3. Mean vs median: in R
+#### 2.3. Mean vs. median: in R
 
  * Both statistics have **dedicated R functions**
  
@@ -854,7 +919,7 @@ mean(c(1, 2, 3, 4, NA), na.rm = T)
 
 ### 2. Central tendency
 
-#### 2.3. Mean vs median: with binary variable
+#### 2.3. Mean vs. median: with binary variable
 
 &lt;ul&gt;
   &lt;li&gt;A &lt;b&gt;binary variable&lt;/b&gt; is a variable that can take only &lt;b&gt;two values&lt;/b&gt; &lt;i&gt;(e.g., male/female, accepted/rejected)&lt;/i&gt;&lt;/li&gt;
@@ -902,59 +967,98 @@ mean(c(1, 2, 3, 4, NA), na.rm = T)
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
 .pull-left[
-#### 1. Distributions &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### 3. Spread
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Central tendency &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Mean&lt;/li&gt;
+    &lt;li&gt;2.2. Median&lt;/li&gt;
+    &lt;li&gt;2.3. Mean vs. median&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Spread&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Range, quantiles, and the IQR&lt;/li&gt;
+    &lt;li&gt;3.2. Variance and standard deviation&lt;/li&gt;
+    &lt;li&gt;3.3. Standard deviation vs. IQR&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
 ]
 
 .pull-right[
-#### 4. Inference
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
 
-#### 5. Wrap up!
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Inference&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. Data generating process&lt;/li&gt;
+    &lt;li&gt;4.2. Empirical vs. theoretical moments&lt;/li&gt;
+    &lt;li&gt;4.3. Confidence interval&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
 ]
 
 ---
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
 .pull-left[
-#### 1. Distributions &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### 3. Spread
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Central tendency &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Mean&lt;/li&gt;
+    &lt;li&gt;2.2. Median&lt;/li&gt;
+    &lt;li&gt;2.3. Mean vs. median&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Spread&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Range, quantiles, and the IQR&lt;/li&gt;
+    &lt;li&gt;3.2. Variance and standard deviation&lt;/li&gt;
+    &lt;li&gt;3.3. Standard deviation vs. IQR&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
 ]
 
 ---
@@ -983,7 +1087,7 @@ mean(c(1, 2, 3, 4, NA), na.rm = T)
 &lt;style&gt; .left-column {width: 66%;} .right-column {width: 32%;} &lt;/style&gt;
 
 .left-column[
-&lt;img src="slides_files/figure-html/unnamed-chunk-32-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-33-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
@@ -1089,7 +1193,7 @@ mean(c(1, 2, 3, 4, NA), na.rm = T)
 
 &lt;p style = "margin-bottom:.5cm;"&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-35-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-36-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1241,7 +1345,7 @@ mean(c(1, 2, 3, 4, NA), na.rm = T)
 
 &lt;p style = "margin-bottom:-.5cm;"&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-39-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -1256,7 +1360,7 @@ mean(c(1, 2, 3, 4, NA), na.rm = T)
 --
 
 .left-column[
-&lt;img src="slides_files/figure-html/unnamed-chunk-39-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-40-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
@@ -1318,6 +1422,8 @@ quantile(variable)
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### &amp;#10140; Consider the following variable
@@ -1346,7 +1452,14 @@ variable &lt;- c(1, 3, 8, 4, 9, 5, 3, 8, 8, 7, 4, 9,
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 5 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
+<div class="countdown" id="timer_f1696d0d" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1411,66 +1524,111 @@ quartiles[3] - quartiles[1]
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
 .pull-left[
-#### 1. Distributions &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### 3. Spread &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Central tendency &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Mean&lt;/li&gt;
+    &lt;li&gt;2.2. Median&lt;/li&gt;
+    &lt;li&gt;2.3. Mean vs. median&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Spread &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Range, quantiles, and the IQR&lt;/li&gt;
+    &lt;li&gt;3.2. Variance and standard deviation&lt;/li&gt;
+    &lt;li&gt;3.3. Standard deviation vs. IQR&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
 ]
 
 .pull-right[
-#### 4. Inference
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
 
-#### 5. Wrap up!
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Inference&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. Data generating process&lt;/li&gt;
+    &lt;li&gt;4.2. Empirical vs. theoretical moments&lt;/li&gt;
+    &lt;li&gt;4.3. Confidence interval&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
 ]
 
 ---
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
 .pull-left[
-#### 1. Distributions &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### 3. Spread &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Central tendency &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Mean&lt;/li&gt;
+    &lt;li&gt;2.2. Median&lt;/li&gt;
+    &lt;li&gt;2.3. Mean vs. median&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Spread &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Range, quantiles, and the IQR&lt;/li&gt;
+    &lt;li&gt;3.2. Variance and standard deviation&lt;/li&gt;
+    &lt;li&gt;3.3. Standard deviation vs. IQR&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
 ]
 
 .pull-right[
-#### 4. Inference
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Inference&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. Data generating process&lt;/li&gt;
+    &lt;li&gt;4.2. Empirical vs. theoretical moments&lt;/li&gt;
+    &lt;li&gt;4.3. Confidence interval&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
 ]
 
 ---
@@ -1540,7 +1698,7 @@ quartiles[3] - quartiles[1]
 ]
 
 .pull-right[
-&lt;img src="slides_files/figure-html/unnamed-chunk-46-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-47-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 ---
@@ -1652,7 +1810,7 @@ quartiles[3] - quartiles[1]
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-47-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-48-1.png" width="65%" style="display: block; margin: auto;" /&gt;
  
 ---
 
@@ -1666,7 +1824,7 @@ quartiles[3] - quartiles[1]
 
 &lt;p style = "margin-bottom:1.95cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-48-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-49-1.png" width="65%" style="display: block; margin: auto;" /&gt;
  
 ---
 
@@ -1683,7 +1841,7 @@ quartiles[3] - quartiles[1]
 
 &lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-49-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-50-1.png" width="65%" style="display: block; margin: auto;" /&gt;
  
 ---
 
@@ -1699,7 +1857,7 @@ quartiles[3] - quartiles[1]
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-50-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-51-1.png" width="65%" style="display: block; margin: auto;" /&gt;
  
 ---
 
@@ -1782,7 +1940,7 @@ quartiles[3] - quartiles[1]
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-51-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-52-1.png" width="65%" style="display: block; margin: auto;" /&gt;
  
 ---
 
@@ -1831,7 +1989,7 @@ quartiles[3] - quartiles[1]
 ]
 
 .pull-right[
-&lt;img src="slides_files/figure-html/unnamed-chunk-52-1.png" width="150%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-53-1.png" width="150%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -1931,34 +2089,57 @@ c(mean - t*se, mean + t*se)
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
 .pull-left[
-#### 1. Distributions &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Distributions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Definition&lt;/li&gt;
+    &lt;li&gt;1.2. Graphical representation&lt;/li&gt;
+    &lt;li&gt;1.3. Common distributions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### 3. Spread &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Central tendency &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Mean&lt;/li&gt;
+    &lt;li&gt;2.2. Median&lt;/li&gt;
+    &lt;li&gt;2.3. Mean vs. median&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Spread &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Range, quantiles, and the IQR&lt;/li&gt;
+    &lt;li&gt;3.2. Variance and standard deviation&lt;/li&gt;
+    &lt;li&gt;3.3. Standard deviation vs. IQR&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
 ]
 
 .pull-right[
-#### 4. Inference &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
 
-#### 5. Wrap up!
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Inference &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. Data generating process&lt;/li&gt;
+    &lt;li&gt;4.2. Empirical vs. theoretical moments&lt;/li&gt;
+    &lt;li&gt;4.3. Confidence interval&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
 ]
 
 ---
@@ -1971,7 +2152,7 @@ c(mean - t*se, mean + t*se)
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-58-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-59-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -1987,7 +2168,7 @@ c(mean - t*se, mean + t*se)
 
   * The **distribution** of a variable documents all its possible values and how frequent they are
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-59-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-60-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 
 &lt;p style = "margin-bottom:-1cm;"&gt;
 
@@ -2002,7 +2183,7 @@ c(mean - t*se, mean + t*se)
 
   * The **distribution** of a variable documents all its possible values and how frequent they are
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-60-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-61-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 
 &lt;p style = "margin-bottom:-1cm;"&gt;
 
@@ -2099,7 +2280,7 @@ $$\text{IQR} = Q_3 - Q_1 $$
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-61-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-62-1.png" width="95%" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -2191,6 +2372,43 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<style>
+.logo {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 0;
+ width: 10px;
+  height: 10px;
+  background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #c7c4c4, 
+              -4px -4px 6px #E7EDF0;
+}
+.logo:active {
+  box-shadow: inset 4px 4px 6px #c7c4c4, 
+              inset -4px -4px 6px #E7EDF0
+}
+
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"><a href = "https://louissirugue.github.io/metrics_on_R/home.html"><p style = "margin-left:-.55cm;margin-top:-.55cm;width:53px"> <img src = "../source/home2.png"> </p> </a></div>';
+  });
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {

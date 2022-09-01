@@ -3,6 +3,8 @@ title: "Descriptive statistics"
 subtitle: "Lecture 2"
 author: "<br>Louis SIRUGUE"
 date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -32,91 +35,120 @@ options(htmltools.dir.version = F)
 knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", dpi = 300, out.width = "100%")
 ```
 
-### Last time we saw
+### Quick reminder
+
+#### 1. Import data
+
+```{r, eval = F}
+fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+```{r, echo = F}
+fb <- read.csv("ligue1.csv", encoding = "UTF-8")
+```
+
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 2. Class
+
+```{r, eval = F}
+is.numeric("1.6180339") # What would be the output?
+```
+
+--
+
+```{r, echo = F}
+is.numeric("1.6180339") # What would be the output?
+```
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 3. Subsetting
+
+```{r}
+fb$Home[3]
+```
+
+---
+
+<h3>Today we learn how to describe data</h3>
 
 <p style = "margin-bottom:1.5cm;"></p>
 
 --
 
- * **Different classes of R objects**
-
-```{r, eval = F}
-class("numeric") # What would be the output and why?
-```
-
---
-
- * **Vectors**
- 
-```{r, eval = F}
-match(8, c(6, 1, 9, 5, 8, 4)) # What would be the output and why?
-```
- 
---
- 
- * **Functions**
- 
-```{r, eval = F}
-age_from_ssn <- function(ssn) {
-  return(2022 - (as.numeric(substr(ssn, 2, 3)) + 1900))
-}
-```
-
---
-
- * **Packages**
-
-```{r}
-library(tidyverse)
-```
-
----
-
-<h3>Today we learn how to describe data</h3>
-
---
-
 .pull-left[
-#### 1. Distributions
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
 
-#### 3. Spread
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Central tendency</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Mean</li>
+    <li>2.2. Median</li>
+    <li>2.3. Mean vs. median</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>3. Spread</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Range, quantiles, and the IQR</li>
+    <li>3.2. Variance and standard deviation</li>
+    <li>3.3. Standard deviation vs. IQR</li>
+  </ul>
+</ul>
 
 ]
 
 .pull-right[
-#### 4. Inference
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
 
-#### 5. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Inference</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Data generating process</li>
+    <li>4.2. Empirical vs. theoretical moments</li>
+    <li>4.3. Confidence interval</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
 ]
 
 ---
 
 <h3>Today we learn how to describe data</h3>
 
+<p style = "margin-bottom:1.5cm;"></p>
+
 .pull-left[
-#### 1. Distributions
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
 ]
 
 ---
@@ -535,54 +567,86 @@ ggarrange(norm_plot + ylab("") + xlab("") + theme(axis.text.y = element_blank())
 
 <h3>Overview</h3>
 
+<p style = "margin-bottom:1.5cm;"></p>
+
 .pull-left[
 
-#### 1. Distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
 
-#### 2. Central tendency
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+<p style = "margin-bottom:1cm;"></p>
 
-#### 3. Spread
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Central tendency</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Mean</li>
+    <li>2.2. Median</li>
+    <li>2.3. Mean vs. median</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>3. Spread</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Range, quantiles, and the IQR</li>
+    <li>3.2. Variance and standard deviation</li>
+    <li>3.3. Standard deviation vs. IQR</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
 
-#### 4. Inference
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Inference</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Data generating process</li>
+    <li>4.2. Empirical vs. theoretical moments</li>
+    <li>4.3. Confidence interval</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
 
-#### 5. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
 ]
 
 ---
 
 <h3>Overview</h3>
 
-.pull-left[
-#### 1. Distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 2. Central tendency
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Central tendency</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Mean</li>
+    <li>2.2. Median</li>
+    <li>2.3. Mean vs. median</li>
+  </ul>
+</ul>
 
 ]
  
@@ -847,59 +911,98 @@ $$\frac{1 + 1}{2} = 1$$
 
 <h3>Overview</h3>
 
+<p style = "margin-bottom:1.5cm;"></p>
+
 .pull-left[
-#### 1. Distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
 
-#### 3. Spread
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Central tendency &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Mean</li>
+    <li>2.2. Median</li>
+    <li>2.3. Mean vs. median</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>3. Spread</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Range, quantiles, and the IQR</li>
+    <li>3.2. Variance and standard deviation</li>
+    <li>3.3. Standard deviation vs. IQR</li>
+  </ul>
+</ul>
 
 ]
 
 .pull-right[
-#### 4. Inference
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
 
-#### 5. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Inference</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Data generating process</li>
+    <li>4.2. Empirical vs. theoretical moments</li>
+    <li>4.3. Confidence interval</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
 ]
 
 ---
 
 <h3>Overview</h3>
 
+<p style = "margin-bottom:1.5cm;"></p>
+
 .pull-left[
-#### 1. Distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
 
-#### 3. Spread
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Central tendency &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Mean</li>
+    <li>2.2. Median</li>
+    <li>2.3. Mean vs. median</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>3. Spread</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Range, quantiles, and the IQR</li>
+    <li>3.2. Variance and standard deviation</li>
+    <li>3.3. Standard deviation vs. IQR</li>
+  </ul>
+</ul>
+
 ]
 
 ---
@@ -1237,6 +1340,8 @@ quantile(variable)
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### &#10140; Consider the following variable
@@ -1264,7 +1369,11 @@ variable <- c(1, 3, 8, 4, 9, 5, 3, 8, 8, 7, 4, 9,
 
 <center><h3><i>You've got 5 minutes!</i></h3></center>
 
+`r countdown(minutes = 5, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1314,66 +1423,111 @@ quartiles[3] - quartiles[1]
 
 <h3>Overview</h3>
 
+<p style = "margin-bottom:1.5cm;"></p>
+
 .pull-left[
-#### 1. Distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
 
-#### 3. Spread &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Central tendency &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Mean</li>
+    <li>2.2. Median</li>
+    <li>2.3. Mean vs. median</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>3. Spread &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Range, quantiles, and the IQR</li>
+    <li>3.2. Variance and standard deviation</li>
+    <li>3.3. Standard deviation vs. IQR</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
-#### 4. Inference
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
 
-#### 5. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Inference</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Data generating process</li>
+    <li>4.2. Empirical vs. theoretical moments</li>
+    <li>4.3. Confidence interval</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
 ]
 
 ---
 
 <h3>Overview</h3>
 
+<p style = "margin-bottom:1.5cm;"></p>
+
 .pull-left[
-#### 1. Distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
 
-#### 3. Spread &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Central tendency &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Mean</li>
+    <li>2.2. Median</li>
+    <li>2.3. Mean vs. median</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>3. Spread &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Range, quantiles, and the IQR</li>
+    <li>3.2. Variance and standard deviation</li>
+    <li>3.3. Standard deviation vs. IQR</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
-#### 4. Inference
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Inference</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Data generating process</li>
+    <li>4.2. Empirical vs. theoretical moments</li>
+    <li>4.3. Confidence interval</li>
+  </ul>
+</ul>
+ 
 ]
 
 ---
@@ -1885,34 +2039,57 @@ c(mean - t*se, mean + t*se)
 
 <h3>Overview</h3>
 
+<p style = "margin-bottom:1.5cm;"></p>
+
 .pull-left[
-#### 1. Distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Graphical representation
- * 1.3. Common distributions
 
-#### 2. Central tendency &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Mean
- * 2.2. Median
- * 2.3. Mean vs. median
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Graphical representation</li>
+    <li>1.3. Common distributions</li>
+  </ul>
+</ul>
 
-#### 3. Spread &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Range, quantiles, and the IQR
- * 3.2. Variance and standard deviation
- * 3.3. Standard deviation vs. IQR
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Central tendency &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Mean</li>
+    <li>2.2. Median</li>
+    <li>2.3. Mean vs. median</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>3. Spread &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Range, quantiles, and the IQR</li>
+    <li>3.2. Variance and standard deviation</li>
+    <li>3.3. Standard deviation vs. IQR</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
-#### 4. Inference &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 4.1. Data generating process
- * 4.2. Empirical vs. theoretical moments
- * 4.3. Confidence interval
 
-#### 5. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Inference &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Data generating process</li>
+    <li>4.2. Empirical vs. theoretical moments</li>
+    <li>4.3. Confidence interval</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
 ]
 
 ---

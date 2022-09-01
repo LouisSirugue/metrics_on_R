@@ -1,0 +1,381 @@
+"Wk","Day","Date","Time","Home","xG","Score","xG.1","Away","Attendance","Venue","Referee","Match.Report","Notes"
+1,"Fri","2021-08-06","21:00","Monaco",2,"1-1",0.3,"Nantes",7500,"Stade Louis II.","Antony Gautier","Match Report",NA
+1,"Sat","2021-08-07","17:00","Lyon",1.4,"1-1",0.8,"Brest",29018,"Groupama Stadium","Mikael Lesage","Match Report",NA
+1,"Sat","2021-08-07","21:00","Troyes",0.8,"1-2",1.2,"Paris S-G",15248,"Stade de l'Aube","Amaury Delerue","Match Report",NA
+1,"Sun","2021-08-08","13:00","Rennes",0.6,"1-1",2,"Lens",22567,"Roazhon Park","Bastien Dechepy","Match Report",NA
+1,"Sun","2021-08-08","15:00","Bordeaux",0.7,"0-2",3.3,"Clermont Foot",18748,"Stade Matmut-Atlantique","Florent Batta","Match Report",NA
+1,"Sun","2021-08-08","15:00","Strasbourg",0.4,"0-2",0.9,"Angers",23250,"Stade de la Meinau","Jeremy Stinat","Match Report",NA
+1,"Sun","2021-08-08","15:00","Nice",0.8,"0-0",0.2,"Reims",18030,"Stade de Nice","Johan Hamel","Match Report",NA
+1,"Sun","2021-08-08","15:00","Saint-Étienne",2.1,"1-1",1.3,"Lorient",20461,"Stade Geoffroy-Guichard","Thomas Léonard","Match Report",NA
+1,"Sun","2021-08-08","17:00","Metz",0.7,"3-3",1.4,"Lille",15551,"Stade Saint-Symphorien","Eric Wattellier","Match Report",NA
+1,"Sun","2021-08-08","20:45","Montpellier",0.5,"2-3",2,"Marseille",13500,"Stade de la Mosson","Jérémie Pignard","Match Report",NA
+2,"Fri","2021-08-13","21:00","Lorient",0.8,"1-0",0.9,"Monaco",12149,"Stade Yves Allainmat - Le Moustoir","Hakim Ben El Hadj Salem","Match Report",NA
+2,"Sat","2021-08-14","17:00","Lille",1,"0-4",2.2,"Nice",30144,"Stade Pierre-Mauroy","Jérôme Brisard","Match Report",NA
+2,"Sat","2021-08-14","21:00","Paris S-G",2.5,"4-2",0.6,"Strasbourg",46962,"Parc des Princes","Willy Delajod","Match Report",NA
+2,"Sun","2021-08-15","13:00","Angers",1.4,"3-0",0.9,"Lyon",6154,"Stade Raymond Kopa","Clément Turpin","Match Report",NA
+2,"Sun","2021-08-15","15:00","Clermont Foot",2.3,"2-0",0.5,"Troyes",11005,"Stade Gabriel Montpied","Romain Lissorgue","Match Report",NA
+2,"Sun","2021-08-15","15:00","Brest",1.5,"1-1",0.9,"Rennes",14271,"Stade Francis-Le Blé","Benoît Bastien","Match Report",NA
+2,"Sun","2021-08-15","15:00","Nantes",1.4,"2-0",1.1,"Metz",12054,"Stade de la Beaujoire - Louis Fonteneau","Johan Hamel","Match Report",NA
+2,"Sun","2021-08-15","15:00","Reims",2.1,"3-3",2,"Montpellier",8887,"Stade Auguste-Delaune II","Jeremy Stinat","Match Report",NA
+2,"Sun","2021-08-15","17:00","Lens",1.8,"2-2",1.2,"Saint-Étienne",35541,"Stade Bollaert-Delelis","Amaury Delerue","Match Report",NA
+2,"Sun","2021-08-15","20:45","Marseille",1.1,"2-2",0.4,"Bordeaux",50000,"Orange Vélodrome","Ruddy Buquet","Match Report",NA
+3,"Fri","2021-08-20","21:00","Brest",1.2,"2-4",1.4,"Paris S-G",14586,"Stade Francis-Le Blé","Eric Wattellier","Match Report",NA
+3,"Sat","2021-08-21","17:00","Monaco",0.4,"0-2",0.7,"Lens",6483,"Stade Louis II.","Jérémie Pignard","Match Report",NA
+3,"Sat","2021-08-21","21:00","Saint-Étienne",0.4,"1-1",1.2,"Lille",20673,"Stade Geoffroy-Guichard","Mikael Lesage","Match Report",NA
+3,"Sun","2021-08-22","13:00","Lyon",3.8,"3-3",1.3,"Clermont Foot",34713,"Groupama Stadium","Thomas Léonard","Match Report",NA
+3,"Sun","2021-08-22","15:00","Strasbourg",2.2,"1-1",1.2,"Troyes",22185,"Stade de la Meinau","Jérôme Brisard","Match Report",NA
+3,"Sun","2021-08-22","15:00","Metz",0.7,"1-1",1.6,"Reims",14799,"Stade Saint-Symphorien","Florent Batta","Match Report",NA
+3,"Sun","2021-08-22","15:00","Montpellier",2.8,"3-1",0.7,"Lorient",6527,"Stade de la Mosson","Bastien Dechepy","Match Report",NA
+3,"Sun","2021-08-22","15:00","Bordeaux",0.7,"1-1",0.9,"Angers",18281,"Stade Matmut-Atlantique","Pierre Gaillouste","Match Report",NA
+3,"Sun","2021-08-22","17:00","Rennes",0.9,"1-0",0.5,"Nantes",27569,"Roazhon Park","Stéphanie Frappart","Match Report",NA
+4,"Fri","2021-08-27","21:00","Nantes",1.3,"0-1",1.7,"Lyon",23177,"Stade de la Beaujoire - Louis Fonteneau","Jérôme Brisard","Match Report",NA
+4,"Sat","2021-08-28","17:00","Nice",3.1,"4-0",0.8,"Bordeaux",NA,"Stade de Nice","Jérémie Pignard","Match Report",NA
+4,"Sat","2021-08-28","21:00","Marseille",2.6,"3-1",1,"Saint-Étienne",55039,"Orange Vélodrome","Benoît Millot","Match Report",NA
+4,"Sun","2021-08-29","13:00","Troyes",1,"1-2",2,"Monaco",9866,"Stade de l'Aube","Johan Hamel","Match Report",NA
+4,"Sun","2021-08-29","15:00","Strasbourg",1.6,"3-1",0.9,"Brest",22341,"Stade de la Meinau","Romain Lissorgue","Match Report",NA
+4,"Sun","2021-08-29","15:00","Angers",2.2,"2-0",0.9,"Rennes",6473,"Stade Raymond Kopa","Antony Gautier","Match Report",NA
+4,"Sun","2021-08-29","15:00","Lens",2.1,"2-2",1.7,"Lorient",35029,"Stade Bollaert-Delelis","Willy Delajod","Match Report",NA
+4,"Sun","2021-08-29","15:00","Clermont Foot",1.9,"2-2",1.5,"Metz",11274,"Stade Gabriel Montpied","Hakim Ben El Hadj Salem","Match Report",NA
+4,"Sun","2021-08-29","17:00","Lille",1.7,"2-1",0.6,"Montpellier",28859,"Stade Pierre-Mauroy","Amaury Delerue","Match Report",NA
+4,"Sun","2021-08-29","20:45","Reims",0.6,"0-2",1.2,"Paris S-G",20525,"Stade Auguste-Delaune II","François Letexier","Match Report",NA
+5,"Fri","2021-09-10","21:00","Lorient",2.3,"2-1",1.4,"Lille",10271,"Stade Yves Allainmat - Le Moustoir","Clément Turpin","Match Report",NA
+5,"Sat","2021-09-11","17:00","Paris S-G",2.8,"4-0",1.2,"Clermont Foot",47329,"Parc des Princes","Mikael Lesage","Match Report",NA
+5,"Sat","2021-09-11","21:00","Monaco",0.7,"0-2",1.8,"Marseille",8615,"Stade Louis II.","Stéphanie Frappart","Match Report",NA
+5,"Sun","2021-09-12","13:00","Montpellier",1.2,"2-0",1,"Saint-Étienne",10402,"Stade de la Mosson","Benoît Bastien","Match Report",NA
+5,"Sun","2021-09-12","15:00","Rennes",1,"0-2",0.5,"Reims",24486,"Roazhon Park","Thomas Léonard","Match Report",NA
+5,"Sun","2021-09-12","15:00","Bordeaux",0.8,"2-3",2.4,"Lens",19763,"Stade Matmut-Atlantique","Luís Godinho","Match Report",NA
+5,"Sun","2021-09-12","15:00","Brest",1.6,"1-1",1.3,"Angers",10982,"Stade Francis-Le Blé","Jeremy Stinat","Match Report",NA
+5,"Sun","2021-09-12","15:00","Metz",1.1,"0-2",0.8,"Troyes",15269,"Stade Saint-Symphorien","Pierre Gaillouste","Match Report",NA
+5,"Sun","2021-09-12","17:00","Nantes",1.6,"0-2",1.7,"Nice",14597,"Stade de la Beaujoire - Louis Fonteneau","Benoît Millot","Match Report",NA
+5,"Sun","2021-09-12","20:45","Lyon",1.9,"3-1",1.8,"Strasbourg",33267,"Groupama Stadium","Ruddy Buquet","Match Report",NA
+6,"Fri","2021-09-17","21:00","Strasbourg",2,"3-0",0.5,"Metz",25437,"Stade de la Meinau","Eric Wattellier","Match Report",NA
+6,"Sat","2021-09-18","17:00","Lens",0.7,"1-0",0.9,"Lille",36512,"Stade Bollaert-Delelis","Benoît Millot","Match Report",NA
+6,"Sat","2021-09-18","21:00","Saint-Étienne",1.4,"1-2",2,"Bordeaux",23869,"Stade Geoffroy-Guichard","Antony Gautier","Match Report",NA
+6,"Sun","2021-09-19","13:00","Nice",1.9,"2-2",2.3,"Monaco",NA,"Stade de Nice","François Letexier","Match Report",NA
+6,"Sun","2021-09-19","15:00","Troyes",1.1,"1-1",0.2,"Montpellier",7405,"Stade de l'Aube","Florent Batta","Match Report",NA
+6,"Sun","2021-09-19","15:00","Clermont Foot",0.8,"1-1",0.5,"Brest",11224,"Stade Gabriel Montpied","Bastien Dechepy","Match Report",NA
+6,"Sun","2021-09-19","15:00","Reims",1,"0-0",0.3,"Lorient",9443,"Stade Auguste-Delaune II","Hakim Ben El Hadj Salem","Match Report",NA
+6,"Sun","2021-09-19","15:00","Angers",1.1,"1-4",2.1,"Nantes",9046,"Stade Raymond Kopa","Amaury Delerue","Match Report",NA
+6,"Sun","2021-09-19","17:00","Marseille",2.2,"2-0",1.5,"Rennes",54188,"Orange Vélodrome","Willy Delajod","Match Report",NA
+6,"Sun","2021-09-19","20:45","Paris S-G",2,"2-1",0.6,"Lyon",47611,"Parc des Princes","Clément Turpin","Match Report",NA
+7,"Wed","2021-09-22","19:00","Rennes",2.4,"6-0",0.3,"Clermont Foot",24109,"Roazhon Park","Benoît Bastien","Match Report",NA
+7,"Wed","2021-09-22","19:00","Nantes",1.4,"3-1",0.6,"Brest",19676,"Stade de la Beaujoire - Louis Fonteneau","Thomas Léonard","Match Report",NA
+7,"Wed","2021-09-22","19:00","Lille",0.8,"2-1",1.4,"Reims",32604,"Stade Pierre-Mauroy","Johan Hamel","Match Report",NA
+7,"Wed","2021-09-22","19:00","Montpellier",1.5,"3-3",1,"Bordeaux",9585,"Stade de la Mosson","Mikael Lesage","Match Report",NA
+7,"Wed","2021-09-22","19:00","Monaco",1.9,"3-1",0.4,"Saint-Étienne",3579,"Stade Louis II.","Jérôme Brisard","Match Report",NA
+7,"Wed","2021-09-22","21:00","Lyon",2.5,"3-1",1.2,"Troyes",29714,"Groupama Stadium","Stéphanie Frappart","Match Report",NA
+7,"Wed","2021-09-22","21:00","Lens",1.4,"0-1",0.9,"Strasbourg",NA,"Stade Bollaert-Delelis","Jeremy Stinat","Match Report",NA
+7,"Wed","2021-09-22","21:00","Lorient",0.5,"1-0",2.3,"Nice",10687,"Stade Yves Allainmat - Le Moustoir","Romain Lissorgue","Match Report",NA
+7,"Wed","2021-09-22","21:00","Angers",0.4,"0-0",0.7,"Marseille",12458,"Stade Raymond Kopa","Ruddy Buquet","Match Report",NA
+7,"Wed","2021-09-22","21:00","Metz",0.6,"1-2",1.2,"Paris S-G",2661,"Stade Saint-Symphorien","Jérémie Pignard","Match Report",NA
+8,"Sat","2021-09-25","17:00","Saint-Étienne",0.5,"0-3",2.3,"Nice",19980,"Stade Geoffroy-Guichard","Amaury Delerue","Match Report",NA
+8,"Sat","2021-09-25","19:00","Strasbourg",0.7,"1-2",2.6,"Lille",23762,"Stade de la Meinau","François Letexier","Match Report",NA
+8,"Sat","2021-09-25","21:00","Paris S-G",2.2,"2-0",0.2,"Montpellier",47408,"Parc des Princes","Antony Gautier","Match Report",NA
+8,"Sat","2021-09-25","21:00","Lyon",1.1,"1-1",0.9,"Lorient",36424,"Groupama Stadium","Bastien Dechepy","Match Report",NA
+8,"Sun","2021-09-26","13:00","Bordeaux",0.7,"1-1",2.1,"Rennes",16675,"Stade Matmut-Atlantique","Hakim Ben El Hadj Salem","Match Report",NA
+8,"Sun","2021-09-26","15:00","Troyes",1.2,"1-1",1.2,"Angers",6868,"Stade de l'Aube","Thomas Léonard","Match Report",NA
+8,"Sun","2021-09-26","15:00","Brest",1.4,"1-2",0.6,"Metz",10398,"Stade Francis-Le Blé","Willy Delajod","Match Report",NA
+8,"Sun","2021-09-26","15:00","Reims",0.7,"3-1",0.8,"Nantes",280,"Stade Auguste-Delaune II","Eric Wattellier","Match Report",NA
+8,"Sun","2021-09-26","17:00","Clermont Foot",1.3,"1-3",1.3,"Monaco",11529,"Stade Gabriel Montpied","Benoît Millot","Match Report",NA
+8,"Sun","2021-09-26","20:45","Marseille",1.8,"2-3",2,"Lens",50001,"Orange Vélodrome","Mikael Lesage","Match Report",NA
+9,"Fri","2021-10-01","21:00","Lens",2.2,"2-0",0.2,"Reims",NA,"Stade Bollaert-Delelis","Benoît Bastien","Match Report",NA
+9,"Sat","2021-10-02","17:00","Montpellier",1,"1-1",0.4,"Strasbourg",9851,"Stade de la Mosson","Hakim Ben El Hadj Salem","Match Report",NA
+9,"Sat","2021-10-02","21:00","Nice",4.2,"2-1",0.5,"Brest",13503,"Stade de Nice","António Nobre","Match Report",NA
+9,"Sun","2021-10-03","13:00","Rennes",0.8,"2-0",1.4,"Paris S-G",28092,"Roazhon Park","Ruddy Buquet","Match Report",NA
+9,"Sun","2021-10-03","15:00","Lorient",0.4,"1-1",0.8,"Clermont Foot",12611,"Stade Yves Allainmat - Le Moustoir","Pierre Gaillouste","Match Report",NA
+9,"Sun","2021-10-03","15:00","Monaco",1.4,"3-0",0.3,"Bordeaux",3667,"Stade Louis II.","Clément Turpin","Match Report",NA
+9,"Sun","2021-10-03","15:00","Angers",2.2,"3-2",1.1,"Metz",3989,"Stade Raymond Kopa","Stéphanie Frappart","Match Report",NA
+9,"Sun","2021-10-03","15:00","Nantes",1.5,"2-0",1.5,"Troyes",15150,"Stade de la Beaujoire - Louis Fonteneau","Jérôme Brisard","Match Report",NA
+9,"Sun","2021-10-03","17:00","Lille",2.2,"2-0",0.6,"Marseille",44839,"Stade Pierre-Mauroy","Jérémie Pignard","Match Report",NA
+9,"Sun","2021-10-03","20:45","Saint-Étienne",3.3,"1-1",1.3,"Lyon",33643,"Stade Geoffroy-Guichard","François Letexier","Match Report",NA
+10,"Fri","2021-10-15","21:00","Paris S-G",1.9,"2-1",1.4,"Angers",47646,"Parc des Princes","Bastien Dechepy","Match Report",NA
+10,"Sat","2021-10-16","17:00","Clermont Foot",0.3,"1-0",0.8,"Lille",11537,"Stade Gabriel Montpied","Eric Wattellier","Match Report",NA
+10,"Sat","2021-10-16","21:00","Lyon",2.6,"2-0",0.6,"Monaco",50585,"Groupama Stadium","Amaury Delerue","Match Report",NA
+10,"Sun","2021-10-17","13:00","Troyes",1.1,"1-0",0.5,"Nice",7925,"Stade de l'Aube","Johan Hamel","Match Report",NA
+10,"Sun","2021-10-17","15:00","Brest",0.6,"1-1",0.8,"Reims",9693,"Stade Francis-Le Blé","Jeremy Stinat","Match Report",NA
+10,"Sun","2021-10-17","15:00","Bordeaux",0.7,"1-1",1.5,"Nantes",39510,"Stade Matmut-Atlantique","Willy Delajod","Match Report",NA
+10,"Sun","2021-10-17","15:00","Metz",0.9,"0-3",2.2,"Rennes",15679,"Stade Saint-Symphorien","Benoît Millot","Match Report",NA
+10,"Sun","2021-10-17","15:00","Strasbourg",2.1,"5-1",1.1,"Saint-Étienne",25371,"Stade de la Meinau","Mikael Lesage","Match Report",NA
+10,"Sun","2021-10-17","17:00","Montpellier",1.7,"1-0",1.3,"Lens",12474,"Stade de la Mosson","Florent Batta","Match Report",NA
+10,"Sun","2021-10-17","20:45","Marseille",1.7,"4-1",2.3,"Lorient",57349,"Orange Vélodrome","Antony Gautier","Match Report",NA
+11,"Fri","2021-10-22","21:00","Saint-Étienne",1.1,"2-2",0.6,"Angers",19836,"Stade Geoffroy-Guichard","Antony Gautier","Match Report",NA
+11,"Sat","2021-10-23","17:00","Nantes",1,"2-1",0.7,"Clermont Foot",19968,"Stade de la Beaujoire - Louis Fonteneau","Romain Lissorgue","Match Report",NA
+11,"Sat","2021-10-23","21:00","Lille",1.7,"1-1",1,"Brest",32613,"Stade Pierre-Mauroy","Clément Turpin","Match Report",NA
+11,"Sun","2021-10-24","13:00","Nice",2.3,"3-2",2,"Lyon",24519,"Stade de Nice","Jérôme Brisard","Match Report",NA
+11,"Sun","2021-10-24","15:00","Rennes",1.5,"1-0",0.6,"Strasbourg",27185,"Roazhon Park","Stéphanie Frappart","Match Report",NA
+11,"Sun","2021-10-24","15:00","Lens",1.9,"4-1",0.6,"Metz",35673,"Stade Bollaert-Delelis","Jérémie Pignard","Match Report",NA
+11,"Sun","2021-10-24","15:00","Lorient",1.7,"1-1",1.3,"Bordeaux",11678,"Stade Yves Allainmat - Le Moustoir","Thomas Léonard","Match Report",NA
+11,"Sun","2021-10-24","15:00","Reims",0.7,"1-2",0.7,"Troyes",12326,"Stade Auguste-Delaune II","Pierre Gaillouste","Match Report",NA
+11,"Sun","2021-10-24","17:00","Monaco",1.7,"3-1",1.1,"Montpellier",4861,"Stade Louis II.","François Letexier","Match Report",NA
+11,"Sun","2021-10-24","20:45","Marseille",1,"0-0",1,"Paris S-G",65121,"Orange Vélodrome","Benoît Bastien","Match Report",NA
+3,"Wed","2021-10-27","21:00","Nice",2.3,"1-1",0.8,"Marseille",NA,"Stade de l'Aube","Clément Turpin","Match Report",NA
+12,"Fri","2021-10-29","21:00","Paris S-G",2.4,"2-1",2,"Lille",47874,"Parc des Princes","Amaury Delerue","Match Report",NA
+12,"Sat","2021-10-30","17:00","Metz",0.6,"1-1",0.5,"Saint-Étienne",15914,"Stade Saint-Symphorien","Stéphanie Frappart","Match Report",NA
+12,"Sat","2021-10-30","21:00","Lyon",2,"2-1",2.2,"Lens",50373,"Groupama Stadium","Mikael Lesage","Match Report",NA
+12,"Sun","2021-10-31","13:00","Angers",1.1,"1-2",1,"Nice",6788,"Stade Raymond Kopa","Willy Delajod","Match Report",NA
+12,"Sun","2021-10-31","15:00","Bordeaux",1.8,"3-2",1.2,"Reims",11020,"Stade Matmut-Atlantique","Eric Wattellier","Match Report",NA
+12,"Sun","2021-10-31","15:00","Troyes",1.6,"2-2",1.4,"Rennes",8550,"Stade de l'Aube","Jeremy Stinat","Match Report",NA
+12,"Sun","2021-10-31","15:00","Montpellier",1.4,"2-0",0.8,"Nantes",11267,"Stade de la Mosson","Bastien Dechepy","Match Report",NA
+12,"Sun","2021-10-31","15:00","Strasbourg",2.5,"4-0",1.2,"Lorient",24002,"Stade de la Meinau","Florent Batta","Match Report",NA
+12,"Sun","2021-10-31","17:00","Brest",1.5,"2-0",0.4,"Monaco",12463,"Stade Francis-Le Blé","Johan Hamel","Match Report",NA
+12,"Sun","2021-10-31","20:45","Clermont Foot",0.9,"0-1",1.5,"Marseille",12240,"Stade Gabriel Montpied","Benoît Millot","Match Report",NA
+13,"Fri","2021-11-05","21:00","Lens",3.2,"4-0",0.6,"Troyes",35706,"Stade Bollaert-Delelis","Thomas Léonard","Match Report",NA
+13,"Sat","2021-11-06","17:00","Lille",1.7,"1-1",0.9,"Angers",33305,"Stade Pierre-Mauroy","François Letexier","Match Report",NA
+13,"Sat","2021-11-06","21:00","Bordeaux",1.3,"2-3",1.6,"Paris S-G",41172,"Stade Matmut-Atlantique","Ruddy Buquet","Match Report",NA
+13,"Sun","2021-11-07","13:00","Marseille",1.3,"0-0",1.4,"Metz",61539,"Orange Vélodrome","Jérôme Brisard","Match Report",NA
+13,"Sun","2021-11-07","15:00","Saint-Étienne",2.1,"3-2",1.1,"Clermont Foot",NA,"Stade Geoffroy-Guichard","Pierre Gaillouste","Match Report",NA
+13,"Sun","2021-11-07","15:00","Lorient",1.2,"1-2",2.5,"Brest",14649,"Stade Yves Allainmat - Le Moustoir","Romain Lissorgue","Match Report",NA
+13,"Sun","2021-11-07","15:00","Reims",0.3,"0-0",0.7,"Monaco",12080,"Stade Auguste-Delaune II","Jérémie Pignard","Match Report",NA
+13,"Sun","2021-11-07","15:00","Nantes",1.8,"2-2",2.1,"Strasbourg",18853,"Stade de la Beaujoire - Louis Fonteneau","Clément Turpin","Match Report",NA
+13,"Sun","2021-11-07","17:00","Nice",1.7,"0-1",0.4,"Montpellier",20157,"Stade de Nice","Antony Gautier","Match Report",NA
+13,"Sun","2021-11-07","20:45","Rennes",3.8,"4-1",1.1,"Lyon",28222,"Roazhon Park","Benoît Bastien","Match Report",NA
+14,"Fri","2021-11-19","21:00","Monaco",1.2,"2-2",2.1,"Lille",3778,"Stade Louis II.","Willy Delajod","Match Report",NA
+14,"Sat","2021-11-20","17:00","Paris S-G",1.7,"3-1",1.9,"Nantes",47777,"Parc des Princes","Jeremy Stinat","Match Report",NA
+14,"Sat","2021-11-20","21:00","Rennes",3.1,"2-0",0.7,"Montpellier",27003,"Roazhon Park","Mikael Lesage","Match Report",NA
+14,"Sun","2021-11-21","13:00","Brest",1.1,"4-0",1.4,"Lens",12462,"Stade Francis-Le Blé","Eric Wattellier","Match Report",NA
+14,"Sun","2021-11-21","15:00","Metz",1.4,"3-3",2.4,"Bordeaux",16077,"Stade Saint-Symphorien","Benoît Millot","Match Report",NA
+14,"Sun","2021-11-21","15:00","Angers",1.3,"1-0",0.9,"Lorient",6971,"Stade Raymond Kopa","Pierre Gaillouste","Match Report",NA
+14,"Sun","2021-11-21","15:00","Troyes",1.2,"0-1",1.2,"Saint-Étienne",10644,"Stade de l'Aube","Florent Batta","Match Report",NA
+14,"Sun","2021-11-21","15:00","Strasbourg",1.8,"1-1",1,"Reims",24439,"Stade de la Meinau","Amaury Delerue","Match Report",NA
+14,"Sun","2021-11-21","17:00","Clermont Foot",0.9,"1-2",0.4,"Nice",11683,"Stade Gabriel Montpied","Stéphanie Frappart","Match Report",NA
+15,"Fri","2021-11-26","21:00","Lens",1,"2-2",1.5,"Angers",35713,"Stade Bollaert-Delelis","Florent Batta","Match Report",NA
+15,"Sat","2021-11-27","17:00","Lille",1.3,"1-1",0.6,"Nantes",30419,"Stade Pierre-Mauroy","Johan Hamel","Match Report",NA
+15,"Sat","2021-11-27","21:00","Nice",1.5,"0-1",0.4,"Metz",17033,"Stade de Nice","François Letexier","Match Report",NA
+15,"Sun","2021-11-28","13:00","Saint-Étienne",0.8,"1-3",3.2,"Paris S-G",24586,"Stade Geoffroy-Guichard","Jérôme Brisard","Match Report",NA
+15,"Sun","2021-11-28","15:00","Reims",0.8,"1-0",0.5,"Clermont Foot",8420,"Stade Auguste-Delaune II","Benoît Bastien","Match Report",NA
+15,"Sun","2021-11-28","15:00","Lorient",0.9,"0-2",1.1,"Rennes",16321,"Stade Yves Allainmat - Le Moustoir","Bastien Dechepy","Match Report",NA
+15,"Sun","2021-11-28","15:00","Bordeaux",1.5,"1-2",2.8,"Brest",15280,"Stade Matmut-Atlantique","Pierre Gaillouste","Match Report",NA
+15,"Sun","2021-11-28","15:00","Monaco",1.7,"1-1",1,"Strasbourg",3478,"Stade Louis II.","Antony Gautier","Match Report",NA
+15,"Sun","2021-11-28","17:00","Montpellier",1.5,"0-1",0.9,"Lyon",14747,"Stade de la Mosson","Thomas Léonard","Match Report",NA
+15,"Sun","2021-11-28","20:45","Marseille",1.4,"1-0",0.1,"Troyes",NA,"Orange Vélodrome","Jérémie Pignard","Match Report",NA
+16,"Wed","2021-12-01","19:00","Angers",0.9,"1-3",3.4,"Monaco",8267,"Stade Raymond Kopa","Romain Lissorgue","Match Report",NA
+16,"Wed","2021-12-01","19:00","Troyes",1.2,"2-0",0.5,"Lorient",6506,"Stade de l'Aube","Jeremy Stinat","Match Report",NA
+16,"Wed","2021-12-01","19:00","Strasbourg",3,"5-2",0.9,"Bordeaux",24378,"Stade de la Meinau","Willy Delajod","Match Report",NA
+16,"Wed","2021-12-01","19:00","Brest",1.7,"1-0",0.7,"Saint-Étienne",13248,"Stade Francis-Le Blé","Mikael Lesage","Match Report",NA
+16,"Wed","2021-12-01","19:00","Metz",1.5,"1-3",1.4,"Montpellier",13992,"Stade Saint-Symphorien","Ruddy Buquet","Match Report",NA
+16,"Wed","2021-12-01","21:00","Rennes",0.8,"1-2",0.6,"Lille",25392,"Roazhon Park","Stéphanie Frappart","Match Report",NA
+16,"Wed","2021-12-01","21:00","Nantes",0.2,"0-1",1.1,"Marseille",34018,"Stade de la Beaujoire - Louis Fonteneau","Eric Wattellier","Match Report",NA
+16,"Wed","2021-12-01","21:00","Paris S-G",1.8,"0-0",0.8,"Nice",47502,"Parc des Princes","Clément Turpin","Match Report",NA
+16,"Wed","2021-12-01","21:00","Lyon",2.3,"1-2",1.1,"Reims",NA,"Groupama Stadium","Benoît Millot","Match Report",NA
+16,"Wed","2021-12-01","21:00","Clermont Foot",1.4,"2-2",0.9,"Lens",11948,"Stade Gabriel Montpied","Amaury Delerue","Match Report",NA
+17,"Sat","2021-12-04","17:00","Marseille",2.2,"1-2",1.6,"Brest",54413,"Orange Vélodrome","Antony Gautier","Match Report",NA
+17,"Sat","2021-12-04","19:00","Lille",1.5,"2-1",0.4,"Troyes",28286,"Stade Pierre-Mauroy","Benoît Bastien","Match Report",NA
+17,"Sat","2021-12-04","21:00","Lens",1.2,"1-1",1.9,"Paris S-G",36685,"Stade Bollaert-Delelis","François Letexier","Match Report",NA
+17,"Sun","2021-12-05","13:00","Saint-Étienne",0.6,"0-5",2.1,"Rennes",11257,"Stade Geoffroy-Guichard","Thomas Léonard","Match Report",NA
+17,"Sun","2021-12-05","15:00","Montpellier",0.7,"1-0",0.4,"Clermont Foot",9643,"Stade de la Mosson","Florent Batta","Match Report",NA
+17,"Sun","2021-12-05","15:00","Monaco",1.8,"4-0",0.5,"Metz",4923,"Stade Louis II.","Bastien Dechepy","Match Report",NA
+17,"Sun","2021-12-05","15:00","Reims",1.3,"1-2",2,"Angers",8238,"Stade Auguste-Delaune II","Johan Hamel","Match Report",NA
+17,"Sun","2021-12-05","15:00","Lorient",0.7,"0-1",0.2,"Nantes",16025,"Stade Yves Allainmat - Le Moustoir","Ruddy Buquet","Match Report",NA
+17,"Sun","2021-12-05","17:00","Nice",1.2,"0-3",2.6,"Strasbourg",16220,"Stade de Nice","Jérémie Pignard","Match Report",NA
+17,"Sun","2021-12-05","20:45","Bordeaux",2.4,"2-2",2.3,"Lyon",25210,"Stade Matmut-Atlantique","Jérôme Brisard","Match Report",NA
+18,"Fri","2021-12-10","21:00","Nantes",1.4,"3-2",1.1,"Lens",21890,"Stade de la Beaujoire - Louis Fonteneau","Stéphanie Frappart","Match Report",NA
+18,"Sat","2021-12-11","17:00","Brest",0.9,"0-4",1.5,"Montpellier",13111,"Stade Francis-Le Blé","Benoît Millot","Match Report",NA
+18,"Sat","2021-12-11","21:00","Reims",2.3,"2-0",0.1,"Saint-Étienne",12019,"Stade Auguste-Delaune II","Pierre Gaillouste","Match Report",NA
+18,"Sun","2021-12-12","13:00","Lille",2,"0-0",0.4,"Lyon",40248,"Stade Pierre-Mauroy","Amaury Delerue","Match Report",NA
+18,"Sun","2021-12-12","15:00","Angers",1.1,"0-1",1.7,"Clermont Foot",8149,"Stade Raymond Kopa","Jeremy Stinat","Match Report",NA
+18,"Sun","2021-12-12","15:00","Rennes",1.5,"1-2",1.2,"Nice",27892,"Roazhon Park","Willy Delajod","Match Report",NA
+18,"Sun","2021-12-12","15:00","Troyes",1.4,"1-2",0.8,"Bordeaux",7950,"Stade de l'Aube","Romain Lissorgue","Match Report",NA
+18,"Sun","2021-12-12","15:00","Metz",0.9,"4-1",1.3,"Lorient",14037,"Stade Saint-Symphorien","Eric Wattellier","Match Report",NA
+18,"Sun","2021-12-12","17:00","Strasbourg",2,"0-2",0.6,"Marseille",26028,"Stade de la Meinau","Mikael Lesage","Match Report",NA
+18,"Sun","2021-12-12","20:45","Paris S-G",1.6,"2-0",0.7,"Monaco",41154,"Parc des Princes","Benoît Bastien","Match Report",NA
+19,"Wed","2021-12-22","21:00","Lyon",1.6,"1-1",0.4,"Metz",34867,"Groupama Stadium","Pierre Gaillouste","Match Report",NA
+19,"Wed","2021-12-22","21:00","Saint-Étienne",1.2,"0-1",0.7,"Nantes",23681,"Stade Geoffroy-Guichard","Clément Turpin","Match Report",NA
+19,"Wed","2021-12-22","21:00","Lorient",1.3,"1-1",2.1,"Paris S-G",16603,"Stade Yves Allainmat - Le Moustoir","Jérémie Pignard","Match Report",NA
+19,"Wed","2021-12-22","21:00","Nice",0.8,"2-1",1.3,"Lens",22065,"Stade de Nice","Jérôme Brisard","Match Report",NA
+19,"Wed","2021-12-22","21:00","Monaco",1.4,"2-1",1.2,"Rennes",5354,"Stade Louis II.","Ruddy Buquet","Match Report",NA
+19,"Wed","2021-12-22","21:00","Marseille",1.3,"1-1",0.7,"Reims",55908,"Orange Vélodrome","François Letexier","Match Report",NA
+19,"Wed","2021-12-22","21:00","Montpellier",1,"4-1",0.6,"Angers",10990,"Stade de la Mosson","Hugo Miguel","Match Report",NA
+19,"Wed","2021-12-22","21:00","Troyes",1.1,"1-1",0.5,"Brest",6872,"Stade de l'Aube","Johan Hamel","Match Report",NA
+19,"Wed","2021-12-22","21:00","Bordeaux",1.2,"2-3",1.3,"Lille",39967,"Stade Matmut-Atlantique","Mikael Lesage","Match Report",NA
+20,"Fri","2022-01-07","21:00","Bordeaux",0.8,"0-1",2.1,"Marseille",NA,"Stade Matmut-Atlantique","Eric Wattellier","Match Report",NA
+20,"Sat","2022-01-08","21:00","Lens",0.7,"1-0",0.3,"Rennes",5000,"Stade Bollaert-Delelis","Benoît Bastien","Match Report",NA
+20,"Sun","2022-01-09","13:00","Brest",1.7,"0-3",1.5,"Nice",5102,"Stade Francis-Le Blé","Stéphanie Frappart","Match Report",NA
+20,"Sun","2022-01-09","15:00","Metz",0.4,"0-2",3,"Strasbourg",5000,"Stade Saint-Symphorien","Antony Gautier","Match Report",NA
+20,"Sun","2022-01-09","15:00","Clermont Foot",1.4,"0-0",0.9,"Reims",4923,"Stade Gabriel Montpied","Romain Lissorgue","Match Report",NA
+20,"Sun","2022-01-09","17:05","Nantes",0.6,"0-0",1,"Monaco",4133,"Stade de la Beaujoire - Louis Fonteneau","Thomas Léonard","Match Report",NA
+20,"Sun","2022-01-09","20:45","Lyon",1,"1-1",1.2,"Paris S-G",4977,"Groupama Stadium","François Letexier","Match Report",NA
+21,"Fri","2022-01-14","21:00","Nice",1.9,"2-1",0.6,"Nantes",5000,"Stade de Nice","Ruddy Buquet","Match Report",NA
+21,"Sat","2022-01-15","17:00","Saint-Étienne",1.1,"1-2",1,"Lens",5000,"Stade Geoffroy-Guichard","François Letexier","Match Report",NA
+21,"Sat","2022-01-15","21:00","Paris S-G",2.4,"2-0",0.9,"Brest",4925,"Parc des Princes","Mikael Lesage","Match Report",NA
+21,"Sun","2022-01-16","13:00","Rennes",3.3,"6-0",0.4,"Bordeaux",4951,"Roazhon Park","Bastien Dechepy","Match Report",NA
+21,"Sun","2022-01-16","15:00","Reims",0.5,"0-1",1.1,"Metz",3923,"Stade Auguste-Delaune II","Jérémie Pignard","Match Report",NA
+21,"Sun","2022-01-16","15:00","Monaco",3.4,"4-0",0.4,"Clermont Foot",2633,"Stade Louis II.","Jeremy Stinat","Match Report",NA
+21,"Sun","2022-01-16","15:00","Lorient",0.6,"0-0",0.7,"Angers",4387,"Stade Yves Allainmat - Le Moustoir","Johan Hamel","Match Report",NA
+21,"Sun","2022-01-16","15:00","Strasbourg",1.9,"3-1",1,"Montpellier",5217,"Stade de la Meinau","Pierre Gaillouste","Match Report",NA
+21,"Sun","2022-01-16","17:05","Troyes",0.5,"0-1",2.8,"Lyon",4224,"Stade de l'Aube","Jérôme Brisard","Match Report",NA
+21,"Sun","2022-01-16","20:45","Marseille",1.6,"1-1",0.7,"Lille",5034,"Orange Vélodrome","Amaury Delerue","Match Report",NA
+19,"Wed","2022-01-19","19:00","Clermont Foot",0.5,"0-2",1.5,"Strasbourg",4219,"Stade Gabriel Montpied","Bastien Dechepy","Match Report",NA
+20,"Wed","2022-01-19","19:00","Montpellier",0.6,"0-1",0.7,"Troyes",4943,"Stade de la Mosson","Jeremy Stinat","Match Report",NA
+20,"Wed","2022-01-19","19:00","Lille",1.8,"3-1",1.3,"Lorient",4834,"Stade Pierre-Mauroy","Florent Batta","Match Report",NA
+22,"Fri","2022-01-21","21:00","Lyon",2.1,"1-0",0.1,"Saint-Étienne",5000,"Groupama Stadium","Antony Gautier","Match Report",NA
+22,"Sat","2022-01-22","17:00","Brest",1.2,"2-0",1.6,"Lille",4358,"Stade Francis-Le Blé","Jérôme Brisard","Match Report",NA
+22,"Sat","2022-01-22","21:00","Lens",0.8,"0-2",1.4,"Marseille",5000,"Stade Bollaert-Delelis","Stéphanie Frappart","Match Report",NA
+22,"Sun","2022-01-23","13:00","Metz",0.3,"0-2",2.2,"Nice",5000,"Stade Saint-Symphorien","Amaury Delerue","Match Report",NA
+22,"Sun","2022-01-23","15:00","Clermont Foot",1.1,"2-1",1.5,"Rennes",4535,"Stade Gabriel Montpied","Thomas Léonard","Match Report",NA
+22,"Sun","2022-01-23","15:00","Nantes",1.1,"4-2",2,"Lorient",4275,"Stade de la Beaujoire - Louis Fonteneau","Pierre Gaillouste","Match Report",NA
+22,"Sun","2022-01-23","15:00","Angers",2.1,"2-1",1.6,"Troyes",5000,"Stade Raymond Kopa","Romain Lissorgue","Match Report",NA
+22,"Sun","2022-01-23","15:00","Bordeaux",2,"4-3",2.5,"Strasbourg",3308,"Stade Matmut-Atlantique","Mikael Lesage","Match Report",NA
+22,"Sun","2022-01-23","17:05","Montpellier",2,"3-2",1.3,"Monaco",5000,"Stade de la Mosson","Jérémie Pignard","Match Report",NA
+22,"Sun","2022-01-23","20:45","Paris S-G",2.7,"4-0",0.5,"Reims",5000,"Parc des Princes","Eric Wattellier","Match Report",NA
+20,"Wed","2022-01-26","19:00","Angers",0.4,"0-1",0.4,"Saint-Étienne",NA,"Stade Raymond Kopa","Clément Turpin","Match Report",NA
+14,"Tue","2022-02-01","21:00","Lyon",1.5,"2-1",0.5,"Marseille",NA,"Groupama Stadium","Benoît Bastien","Match Report",NA
+23,"Fri","2022-02-04","21:00","Marseille",2.5,"5-2",0.5,"Angers",60000,"Orange Vélodrome","Jeremy Stinat","Match Report",NA
+23,"Sat","2022-02-05","17:00","Saint-Étienne",2.3,"3-1",0.5,"Montpellier",20000,"Stade Geoffroy-Guichard","Thomas Léonard","Match Report",NA
+23,"Sat","2022-02-05","21:00","Monaco",2.1,"2-0",1.3,"Lyon",6550,"Stade Louis II.","Ruddy Buquet","Match Report",NA
+23,"Sun","2022-02-06","13:00","Lorient",1.8,"2-0",0.4,"Lens",10687,"Stade Yves Allainmat - Le Moustoir","Romain Lissorgue","Match Report",NA
+23,"Sun","2022-02-06","15:00","Reims",1.8,"5-0",0.1,"Bordeaux",8858,"Stade Auguste-Delaune II","Antony Gautier","Match Report",NA
+23,"Sun","2022-02-06","15:00","Nice",0.7,"0-1",1.7,"Clermont Foot",18022,"Stade de Nice","Jérôme Brisard","Match Report",NA
+23,"Sun","2022-02-06","15:00","Troyes",0.5,"0-0",0.4,"Metz",7227,"Stade de l'Aube","Pierre Gaillouste","Match Report",NA
+23,"Sun","2022-02-06","15:00","Strasbourg",1.8,"1-0",0.4,"Nantes",22240,"Stade de la Meinau","Amaury Delerue","Match Report",NA
+23,"Sun","2022-02-06","17:00","Rennes",2.7,"2-0",0.3,"Brest",25409,"Roazhon Park","Johan Hamel","Match Report",NA
+23,"Sun","2022-02-06","20:45","Lille",1,"1-5",2.9,"Paris S-G",48437,"Stade Pierre-Mauroy","François Letexier","Match Report",NA
+24,"Fri","2022-02-11","21:00","Paris S-G",1,"1-0",0.7,"Rennes",47000,"Parc des Princes","Benoît Bastien","Match Report",NA
+24,"Sat","2022-02-12","17:00","Montpellier",1.1,"0-1",1.4,"Lille",11784,"Stade de la Mosson","Stéphanie Frappart","Match Report",NA
+24,"Sat","2022-02-12","21:00","Lyon",2.7,"2-0",0.1,"Nice",41974,"Groupama Stadium","Benoît Millot","Match Report",NA
+24,"Sun","2022-02-13","13:00","Monaco",0.9,"0-0",0.1,"Lorient",3963,"Stade Louis II.","Bastien Dechepy","Match Report",NA
+24,"Sun","2022-02-13","15:00","Angers",0.5,"0-1",0.3,"Strasbourg",6521,"Stade Raymond Kopa","Pierre Gaillouste","Match Report",NA
+24,"Sun","2022-02-13","15:00","Brest",2.7,"5-1",0.3,"Troyes",10600,"Stade Francis-Le Blé","Florent Batta","Match Report",NA
+24,"Sun","2022-02-13","15:00","Nantes",0.6,"1-0",0.5,"Reims",14304,"Stade de la Beaujoire - Louis Fonteneau","Johan Hamel","Match Report",NA
+24,"Sun","2022-02-13","15:00","Clermont Foot",0.7,"1-2",0.7,"Saint-Étienne",12131,"Stade Gabriel Montpied","Ruddy Buquet","Match Report",NA
+24,"Sun","2022-02-13","17:05","Lens",2,"3-2",1,"Bordeaux",32662,"Stade Bollaert-Delelis","François Letexier","Match Report",NA
+24,"Sun","2022-02-13","20:45","Metz",1,"1-2",1.4,"Marseille",25482,"Stade Saint-Symphorien","Eric Wattellier","Match Report",NA
+25,"Fri","2022-02-18","21:00","Lille",1.2,"0-0",0.4,"Metz",30384,"Stade Pierre-Mauroy","Bastien Dechepy","Match Report",NA
+25,"Sat","2022-02-19","17:00","Lens",0.8,"1-1",1.1,"Lyon",36624,"Stade Bollaert-Delelis","Jérôme Brisard","Match Report",NA
+25,"Sat","2022-02-19","21:00","Nantes",2.2,"3-1",3.9,"Paris S-G",35500,"Stade de la Beaujoire - Louis Fonteneau","Mikael Lesage","Match Report",NA
+25,"Sun","2022-02-20","13:00","Nice",1.1,"1-0",0.9,"Angers",18257,"Stade de Nice","Romain Lissorgue","Match Report",NA
+25,"Sun","2022-02-20","15:00","Saint-Étienne",1.4,"2-2",1.3,"Strasbourg",24897,"Stade Geoffroy-Guichard","Antony Gautier","Match Report",NA
+25,"Sun","2022-02-20","15:00","Reims",0.6,"1-1",2.1,"Brest",9307,"Stade Auguste-Delaune II","Hakim Ben El Hadj Salem","Match Report",NA
+25,"Sun","2022-02-20","15:00","Rennes",2.6,"4-1",0.4,"Troyes",22967,"Roazhon Park","Clément Turpin","Match Report",NA
+25,"Sun","2022-02-20","15:00","Lorient",1.1,"0-1",0.3,"Montpellier",10135,"Stade Yves Allainmat - Le Moustoir","Jeremy Stinat","Match Report",NA
+25,"Sun","2022-02-20","17:05","Bordeaux",0.9,"1-1",0.9,"Monaco",29557,"Stade Matmut-Atlantique","Jérémie Pignard","Match Report",NA
+25,"Sun","2022-02-20","20:45","Marseille",1.4,"0-2",0.8,"Clermont Foot",53840,"Orange Vélodrome","Willy Delajod","Match Report",NA
+26,"Fri","2022-02-25","21:00","Montpellier",1.1,"2-4",1.6,"Rennes",10000,"Stade de la Mosson","Amaury Delerue","Match Report",NA
+26,"Sat","2022-02-26","17:00","Strasbourg",1,"0-0",0.1,"Nice",25150,"Stade de la Meinau","Stéphanie Frappart","Match Report",NA
+26,"Sat","2022-02-26","21:00","Paris S-G",2.3,"3-1",0.9,"Saint-Étienne",45000,"Parc des Princes","Pierre Gaillouste","Match Report",NA
+26,"Sun","2022-02-27","13:00","Monaco",1.6,"1-2",1.6,"Reims",3982,"Stade Louis II.","Benoît Millot","Match Report",NA
+26,"Sun","2022-02-27","15:00","Angers",0.6,"1-2",0.6,"Lens",9499,"Stade Raymond Kopa","Thomas Léonard","Match Report",NA
+26,"Sun","2022-02-27","15:00","Metz",0.4,"0-0",0.5,"Nantes",15851,"Stade Saint-Symphorien","Florent Batta","Match Report",NA
+26,"Sun","2022-02-27","15:00","Clermont Foot",0.7,"1-1",0.7,"Bordeaux",12032,"Stade Gabriel Montpied","Eric Wattellier","Match Report",NA
+26,"Sun","2022-02-27","15:00","Brest",0.3,"0-1",1.9,"Lorient",14050,"Stade Francis-Le Blé","Benoît Bastien","Match Report",NA
+26,"Sun","2022-02-27","17:05","Troyes",1.4,"1-1",1.1,"Marseille",16871,"Stade de l'Aube","François Letexier","Match Report",NA
+26,"Sun","2022-02-27","20:45","Lyon",1.7,"0-1",0.7,"Lille",42647,"Groupama Stadium","Clément Turpin","Match Report",NA
+27,"Fri","2022-03-04","21:00","Lorient",1.1,"1-4",2.3,"Lyon",13497,"Stade Yves Allainmat - Le Moustoir","Romain Lissorgue","Match Report",NA
+27,"Sat","2022-03-05","17:00","Lens",1.9,"0-1",0.5,"Brest",36305,"Stade Bollaert-Delelis","Johan Hamel","Match Report",NA
+27,"Sat","2022-03-05","21:00","Nice",0.7,"1-0",0.7,"Paris S-G",31949,"Stade de Nice","Willy Delajod","Match Report",NA
+27,"Sun","2022-03-06","13:00","Saint-Étienne",1.5,"1-0",0.6,"Metz",35706,"Stade Geoffroy-Guichard","Jeremy Stinat","Match Report",NA
+27,"Sun","2022-03-06","15:00","Nantes",1.3,"2-0",0.3,"Montpellier",21589,"Stade de la Beaujoire - Louis Fonteneau","Hakim Ben El Hadj Salem","Match Report",NA
+27,"Sun","2022-03-06","15:00","Reims",0.6,"1-1",0.8,"Strasbourg",10405,"Stade Auguste-Delaune II","Jérémie Pignard","Match Report",NA
+27,"Sun","2022-03-06","15:00","Rennes",1.7,"2-0",0.3,"Angers",27693,"Roazhon Park","Benoît Millot","Match Report",NA
+27,"Sun","2022-03-06","15:00","Bordeaux",0.8,"0-2",2.4,"Troyes",20287,"Stade Matmut-Atlantique","Ruddy Buquet","Match Report",NA
+27,"Sun","2022-03-06","17:05","Lille",2.2,"4-0",0.8,"Clermont Foot",33515,"Stade Pierre-Mauroy","Thomas Léonard","Match Report",NA
+27,"Sun","2022-03-06","20:45","Marseille",0.7,"0-1",0.8,"Monaco",56510,"Orange Vélodrome","Antony Gautier","Match Report",NA
+28,"Fri","2022-03-11","21:00","Lille",0.8,"0-0",0.6,"Saint-Étienne",40146,"Stade Pierre-Mauroy","Florent Batta","Match Report",NA
+28,"Sat","2022-03-12","17:00","Montpellier",3.1,"0-0",0.7,"Nice",11658,"Stade de la Mosson","Clément Turpin","Match Report",NA
+28,"Sat","2022-03-12","21:00","Troyes",1.3,"1-0",0.3,"Nantes",7400,"Stade de l'Aube","Stéphanie Frappart","Match Report",NA
+28,"Sun","2022-03-13","13:00","Paris S-G",1.7,"3-0",0.7,"Bordeaux",44000,"Parc des Princes","François Letexier","Match Report",NA
+28,"Sun","2022-03-13","15:00","Strasbourg",0.7,"1-0",0.5,"Monaco",25231,"Stade de la Meinau","Eric Wattellier","Match Report",NA
+28,"Sun","2022-03-13","15:00","Clermont Foot",0.8,"0-2",1.4,"Lorient",11359,"Stade Gabriel Montpied","Bastien Dechepy","Match Report",NA
+28,"Sun","2022-03-13","15:00","Metz",0.5,"0-0",0.5,"Lens",15687,"Stade Saint-Symphorien","Amaury Delerue","Match Report",NA
+28,"Sun","2022-03-13","15:00","Angers",2.2,"0-1",1.4,"Reims",5960,"Stade Raymond Kopa","Mikael Lesage","Match Report",NA
+28,"Sun","2022-03-13","17:05","Lyon",1.3,"2-4",1.1,"Rennes",46597,"Groupama Stadium","Antony Gautier","Match Report",NA
+28,"Sun","2022-03-13","20:45","Brest",0.6,"1-4",2.2,"Marseille",14611,"Stade Francis-Le Blé","Ruddy Buquet","Match Report",NA
+29,"Fri","2022-03-18","21:00","Saint-Étienne",1.2,"1-1",1,"Troyes",32193,"Stade Geoffroy-Guichard","Romain Lissorgue","Match Report",NA
+29,"Sat","2022-03-19","17:00","Lens",1.3,"3-1",1.3,"Clermont Foot",36182,"Stade Bollaert-Delelis","Jeremy Stinat","Match Report",NA
+29,"Sat","2022-03-19","21:00","Nantes",0.8,"0-1",1.2,"Lille",25977,"Stade de la Beaujoire - Louis Fonteneau","Pierre Gaillouste","Match Report",NA
+29,"Sun","2022-03-20","13:00","Monaco",1.9,"3-0",1.3,"Paris S-G",16642,"Stade Louis II.","Benoît Bastien","Match Report",NA
+29,"Sun","2022-03-20","15:00","Angers",1.6,"1-0",0.8,"Brest",7734,"Stade Raymond Kopa","Jérémie Pignard","Match Report",NA
+29,"Sun","2022-03-20","15:00","Rennes",3.3,"6-1",0.9,"Metz",27966,"Roazhon Park","Willy Delajod","Match Report",NA
+29,"Sun","2022-03-20","15:00","Bordeaux",3.3,"0-2",0.7,"Montpellier",15000,"Stade Matmut-Atlantique","Thomas Léonard","Match Report",NA
+29,"Sun","2022-03-20","15:00","Lorient",0.4,"0-0",1.2,"Strasbourg",9806,"Stade Yves Allainmat - Le Moustoir","Benoît Millot","Match Report",NA
+29,"Sun","2022-03-20","17:05","Reims",0.4,"0-0",1.9,"Lyon",14091,"Stade Auguste-Delaune II","Johan Hamel","Match Report",NA
+29,"Sun","2022-03-20","20:45","Marseille",1.3,"2-1",1.3,"Nice",64722,"Orange Vélodrome","Jérôme Brisard","Match Report",NA
+30,"Sat","2022-04-02","17:00","Nice",0.5,"1-1",1,"Rennes",24086,"Stade de Nice","Benoît Bastien","Match Report",NA
+30,"Sat","2022-04-02","19:00","Lille",3,"0-0",0,"Bordeaux",36351,"Stade Pierre-Mauroy","Bastien Dechepy","Match Report",NA
+30,"Sun","2022-04-03","13:00","Strasbourg",2.5,"1-0",0.9,"Lens",26005,"Stade de la Meinau","François Letexier","Match Report",NA
+30,"Sun","2022-04-03","15:00","Metz",0.9,"1-2",1.8,"Monaco",19812,"Stade Saint-Symphorien","Jérôme Brisard","Match Report",NA
+30,"Sun","2022-04-03","15:00","Saint-Étienne",0.3,"2-4",3.7,"Marseille",41278,"Stade Geoffroy-Guichard","Clément Turpin","Match Report",NA
+30,"Sun","2022-04-03","15:00","Troyes",1.3,"1-0",0.8,"Reims",9482,"Stade de l'Aube","Ruddy Buquet","Match Report",NA
+30,"Sun","2022-04-03","15:00","Montpellier",1.8,"1-2",0.7,"Brest",10929,"Stade de la Mosson","Florent Batta","Match Report",NA
+30,"Sun","2022-04-03","15:00","Clermont Foot",0.9,"2-3",1.8,"Nantes",11785,"Stade Gabriel Montpied","Mikael Lesage","Match Report",NA
+30,"Sun","2022-04-03","17:05","Lyon",1.6,"3-2",1.7,"Angers",34376,"Groupama Stadium","Eric Wattellier","Match Report",NA
+30,"Sun","2022-04-03","20:45","Paris S-G",1.7,"5-1",1,"Lorient",40000,"Parc des Princes","Hakim Ben El Hadj Salem","Match Report",NA
+31,"Fri","2022-04-08","21:00","Lorient",3.6,"6-2",1.2,"Saint-Étienne",15407,"Stade Yves Allainmat - Le Moustoir","Ruddy Buquet","Match Report",NA
+31,"Sat","2022-04-09","17:00","Reims",2.4,"2-3",1.5,"Rennes",10243,"Stade Auguste-Delaune II","Romain Lissorgue","Match Report",NA
+31,"Sat","2022-04-09","21:00","Clermont Foot",1.2,"1-6",3.4,"Paris S-G",12264,"Stade Gabriel Montpied","Eric Wattellier","Match Report",NA
+31,"Sun","2022-04-10","13:00","Bordeaux",1.7,"3-1",0.6,"Metz",21652,"Stade Matmut-Atlantique","Jérémie Pignard","Match Report",NA
+31,"Sun","2022-04-10","15:00","Monaco",0.6,"2-1",1,"Troyes",4786,"Stade Louis II.","Mikael Lesage","Match Report",NA
+31,"Sun","2022-04-10","15:00","Angers",0.7,"1-1",0.9,"Lille",9286,"Stade Raymond Kopa","Thomas Léonard","Match Report",NA
+31,"Sun","2022-04-10","15:00","Brest",1.4,"1-1",0.7,"Nantes",13145,"Stade Francis-Le Blé","Johan Hamel","Match Report",NA
+31,"Sun","2022-04-10","17:05","Lens",1,"3-0",2,"Nice",36668,"Stade Bollaert-Delelis","Willy Delajod","Match Report",NA
+31,"Sun","2022-04-10","19:00","Strasbourg",1.3,"1-1",1.4,"Lyon",26073,"Stade de la Meinau","Clément Turpin","Match Report",NA
+31,"Sun","2022-04-10","21:00","Marseille",2.8,"2-0",0.9,"Montpellier",51131,"Orange Vélodrome","Jeremy Stinat","Match Report",NA
+32,"Fri","2022-04-15","21:00","Rennes",1.9,"2-3",2.9,"Monaco",28336,"Roazhon Park","Stéphanie Frappart","Match Report",NA
+32,"Sat","2022-04-16","17:00","Saint-Étienne",0.9,"2-1",1.1,"Brest",27227,"Stade Geoffroy-Guichard","Eric Wattellier","Match Report",NA
+32,"Sat","2022-04-16","21:00","Lille",0.8,"1-2",0.9,"Lens",48169,"Stade Pierre-Mauroy","Jérôme Brisard","Match Report",NA
+32,"Sun","2022-04-17","13:00","Nice",2,"2-1",0.2,"Lorient",17212,"Stade de Nice","Amaury Delerue","Match Report",NA
+32,"Sun","2022-04-17","15:00","Nantes",2.9,"1-1",1.1,"Angers",25102,"Stade de la Beaujoire - Louis Fonteneau","Bastien Dechepy","Match Report",NA
+32,"Sun","2022-04-17","15:00","Metz",0.2,"1-1",2.7,"Clermont Foot",14335,"Stade Saint-Symphorien","Pierre Gaillouste","Match Report",NA
+32,"Sun","2022-04-17","15:00","Montpellier",1.2,"0-0",1.6,"Reims",10170,"Stade de la Mosson","Antony Gautier","Match Report",NA
+32,"Sun","2022-04-17","15:00","Troyes",1.5,"1-1",1.8,"Strasbourg",10000,"Stade de l'Aube","Benoît Millot","Match Report",NA
+32,"Sun","2022-04-17","17:05","Lyon",2,"6-1",1.8,"Bordeaux",38713,"Groupama Stadium","Florent Batta","Match Report",NA
+32,"Sun","2022-04-17","20:45","Paris S-G",1.3,"2-1",0.8,"Marseille",46000,"Parc des Princes","François Letexier","Match Report",NA
+33,"Wed","2022-04-20","19:00","Reims",0.9,"2-1",1.1,"Lille",10910,"Stade Auguste-Delaune II","Hakim Ben El Hadj Salem","Match Report",NA
+33,"Wed","2022-04-20","19:00","Monaco",2,"1-0",0.8,"Nice",10247,"Stade Louis II.","Benoît Millot","Match Report",NA
+33,"Wed","2022-04-20","19:00","Bordeaux",1,"2-2",0.9,"Saint-Étienne",38515,"Stade Matmut-Atlantique","Benoît Bastien","Match Report",NA
+33,"Wed","2022-04-20","19:00","Lorient",1.7,"1-0",1.5,"Metz",13544,"Stade Yves Allainmat - Le Moustoir","Mikael Lesage","Match Report",NA
+33,"Wed","2022-04-20","19:00","Troyes",1.6,"0-1",0.4,"Clermont Foot",7800,"Stade de l'Aube","Jérémie Pignard","Match Report",NA
+33,"Wed","2022-04-20","21:00","Angers",0.8,"0-3",1.5,"Paris S-G",13000,"Stade Raymond Kopa","Johan Hamel","Match Report",NA
+33,"Wed","2022-04-20","21:00","Strasbourg",2.6,"2-1",0.9,"Rennes",25148,"Stade de la Meinau","Willy Delajod","Match Report",NA
+33,"Wed","2022-04-20","21:00","Lens",0.9,"2-0",0.3,"Montpellier",36250,"Stade Bollaert-Delelis","Romain Lissorgue","Match Report",NA
+33,"Wed","2022-04-20","21:00","Brest",1.2,"2-1",2.7,"Lyon",14028,"Stade Francis-Le Blé","Jeremy Stinat","Match Report",NA
+33,"Wed","2022-04-20","21:00","Marseille",3.2,"3-2",0.5,"Nantes",55890,"Orange Vélodrome","Ruddy Buquet","Match Report",NA
+34,"Sat","2022-04-23","17:00","Lyon",3.8,"5-2",2.1,"Montpellier",46608,"Groupama Stadium","François Letexier","Match Report",NA
+34,"Sat","2022-04-23","19:00","Saint-Étienne",1.1,"1-4",2.9,"Monaco",30018,"Stade Geoffroy-Guichard","Bastien Dechepy","Match Report",NA
+34,"Sat","2022-04-23","21:00","Paris S-G",2.1,"1-1",0.8,"Lens",47000,"Parc des Princes","Amaury Delerue","Match Report",NA
+34,"Sun","2022-04-24","13:00","Rennes",1.6,"5-0",0.6,"Lorient",28324,"Roazhon Park","Benoît Millot","Match Report",NA
+34,"Sun","2022-04-24","15:00","Metz",0.4,"0-1",2,"Brest",19874,"Stade Saint-Symphorien","Florent Batta","Match Report",NA
+34,"Sun","2022-04-24","15:00","Nantes",2.3,"5-3",2.6,"Bordeaux",30000,"Stade de la Beaujoire - Louis Fonteneau","Clément Turpin","Match Report",NA
+34,"Sun","2022-04-24","15:00","Nice",2,"1-0",0.4,"Troyes",17065,"Stade de Nice","Hakim Ben El Hadj Salem","Match Report",NA
+34,"Sun","2022-04-24","15:00","Clermont Foot",1.9,"2-2",1.6,"Angers",11531,"Stade Gabriel Montpied","Stéphanie Frappart","Match Report",NA
+34,"Sun","2022-04-24","17:05","Lille",0.7,"1-0",0.9,"Strasbourg",30211,"Stade Pierre-Mauroy","Jérémie Pignard","Match Report",NA
+34,"Sun","2022-04-24","20:45","Reims",0.6,"0-1",0.7,"Marseille",20835,"Stade Auguste-Delaune II","Jérôme Brisard","Match Report",NA
+35,"Fri","2022-04-29","21:00","Strasbourg",1.8,"3-3",1.8,"Paris S-G",26052,"Stade de la Meinau","Ruddy Buquet","Match Report",NA
+35,"Sat","2022-04-30","17:00","Lens",2.3,"2-2",1.5,"Nantes",36727,"Stade Bollaert-Delelis","Thomas Léonard","Match Report",NA
+35,"Sat","2022-04-30","21:00","Rennes",1.6,"2-0",0.4,"Saint-Étienne",27390,"Roazhon Park","Jeremy Stinat","Match Report",NA
+35,"Sun","2022-05-01","13:00","Troyes",2.9,"3-0",0.6,"Lille",10497,"Stade de l'Aube","Willy Delajod","Match Report",NA
+35,"Sun","2022-05-01","15:00","Brest",1.3,"2-0",1.3,"Clermont Foot",10592,"Stade Francis-Le Blé","Romain Lissorgue","Match Report",NA
+35,"Sun","2022-05-01","15:00","Monaco",2.1,"2-0",0.6,"Angers",4616,"Stade Louis II.","Hakim Ben El Hadj Salem","Match Report",NA
+35,"Sun","2022-05-01","15:00","Montpellier",2,"2-2",1.2,"Metz",10446,"Stade de la Mosson","Clément Turpin","Match Report",NA
+35,"Sun","2022-05-01","15:00","Lorient",2,"1-2",1.9,"Reims",12216,"Stade Yves Allainmat - Le Moustoir","Pierre Gaillouste","Match Report",NA
+35,"Sun","2022-05-01","17:05","Bordeaux",0.2,"0-1",2.7,"Nice",23552,"Stade Matmut-Atlantique","Johan Hamel","Match Report",NA
+35,"Sun","2022-05-01","20:45","Marseille",1.5,"0-3",2.2,"Lyon",68784,"Orange Vélodrome","Antony Gautier","Match Report",NA
+36,"Fri","2022-05-06","21:00","Lille",1.1,"1-2",0.4,"Monaco",39088,"Stade Pierre-Mauroy","François Letexier","Match Report",NA
+36,"Sat","2022-05-07","17:00","Brest",0.5,"0-1",2.4,"Strasbourg",12093,"Stade Francis-Le Blé","Mikael Lesage","Match Report",NA
+36,"Sun","2022-05-08","13:00","Metz",2.1,"3-2",2.1,"Lyon",20405,"Stade Saint-Symphorien","Eric Wattellier","Match Report",NA
+36,"Sun","2022-05-08","15:00","Clermont Foot",2.2,"2-1",1.2,"Montpellier",11587,"Stade Gabriel Montpied","Benoît Bastien","Match Report",NA
+36,"Sun","2022-05-08","15:00","Angers",2.8,"4-1",0.9,"Bordeaux",10852,"Stade Raymond Kopa","Benoît Millot","Match Report",NA
+36,"Sun","2022-05-08","15:00","Reims",0.5,"1-2",1.9,"Lens",16962,"Stade Auguste-Delaune II","Vitor Ferreira Fernandes","Match Report",NA
+36,"Sun","2022-05-08","17:05","Lorient",0.3,"0-3",1.8,"Marseille",16210,"Stade Yves Allainmat - Le Moustoir","Bastien Dechepy","Match Report",NA
+36,"Sun","2022-05-08","20:45","Paris S-G",2.2,"2-2",1.4,"Troyes",45000,"Parc des Princes","Jérôme Brisard","Match Report",NA
+36,"Wed","2022-05-11","19:00","Nice",1.4,"4-2",1.9,"Saint-Étienne",17704,"Stade de Nice","Ruddy Buquet","Match Report",NA
+36,"Wed","2022-05-11","21:00","Nantes",1.1,"2-1",2.3,"Rennes",26359,"Stade de la Beaujoire - Louis Fonteneau","Antony Gautier","Match Report",NA
+37,"Sat","2022-05-14","21:00","Nice",1.2,"1-3",2.1,"Lille",24232,"Stade de Nice","Thomas Léonard","Match Report",NA
+37,"Sat","2022-05-14","21:00","Bordeaux",0.9,"0-0",0.6,"Lorient",23191,"Stade Matmut-Atlantique","Ruddy Buquet","Match Report",NA
+37,"Sat","2022-05-14","21:00","Montpellier",0.7,"0-4",2.6,"Paris S-G",19586,"Stade de la Mosson","Jeremy Stinat","Match Report",NA
+37,"Sat","2022-05-14","21:00","Rennes",1.5,"2-0",0.5,"Marseille",28811,"Roazhon Park","Benoît Bastien","Match Report",NA
+37,"Sat","2022-05-14","21:00","Monaco",3.3,"4-2",1.6,"Brest",6000,"Stade Louis II.","Jérôme Brisard","Match Report",NA
+37,"Sat","2022-05-14","21:00","Troyes",0.3,"1-3",0.8,"Lens",19000,"Stade de l'Aube","François Letexier","Match Report",NA
+37,"Sat","2022-05-14","21:00","Strasbourg",1,"1-0",0.9,"Clermont Foot",25231,"Stade de la Meinau","Benoît Millot","Match Report",NA
+37,"Sat","2022-05-14","21:00","Metz",0.5,"1-0",0.6,"Angers",17213,"Stade Saint-Symphorien","Jérémie Pignard","Match Report",NA
+37,"Sat","2022-05-14","21:00","Lyon",2.4,"3-2",1.8,"Nantes",54404,"Groupama Stadium","Florent Batta","Match Report",NA
+37,"Sat","2022-05-14","21:00","Saint-Étienne",1.5,"1-2",1.9,"Reims",NA,"Stade Geoffroy-Guichard","Clément Turpin","Match Report",NA
+38,"Sat","2022-05-21","21:00","Lille",1.5,"2-2",1,"Rennes",40116,"Stade Pierre-Mauroy","Amaury Delerue","Match Report",NA
+38,"Sat","2022-05-21","21:00","Brest",1.1,"2-4",3.4,"Bordeaux",14484,"Stade Francis-Le Blé","Hakim Ben El Hadj Salem","Match Report",NA
+38,"Sat","2022-05-21","21:00","Nantes",2.2,"1-1",1.6,"Saint-Étienne",28636,"Stade de la Beaujoire - Louis Fonteneau","François Letexier","Match Report",NA
+38,"Sat","2022-05-21","21:00","Clermont Foot",2.1,"1-2",2.1,"Lyon",12000,"Stade Gabriel Montpied","Mikael Lesage","Match Report",NA
+38,"Sat","2022-05-21","21:00","Angers",2.2,"2-0",1.3,"Montpellier",11249,"Stade Raymond Kopa","Romain Lissorgue","Match Report",NA
+38,"Sat","2022-05-21","21:00","Lorient",1.3,"1-1",0.5,"Troyes",15131,"Stade Yves Allainmat - Le Moustoir","Johan Hamel","Match Report",NA
+38,"Sat","2022-05-21","21:00","Paris S-G",4.9,"5-0",0.4,"Metz",45000,"Parc des Princes","Antony Gautier","Match Report",NA
+38,"Sat","2022-05-21","21:00","Reims",0.7,"2-3",1.9,"Nice",12589,"Stade Auguste-Delaune II","Eric Wattellier","Match Report",NA
+38,"Sat","2022-05-21","21:00","Marseille",2.6,"4-0",0.9,"Strasbourg",63873,"Orange Vélodrome","Stéphanie Frappart","Match Report",NA
+38,"Sat","2022-05-21","21:00","Lens",2.3,"2-2",1.2,"Monaco",37764,"Stade Bollaert-Delelis","Benoît Bastien","Match Report",NA
