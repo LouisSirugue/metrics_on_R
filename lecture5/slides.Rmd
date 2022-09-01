@@ -3,6 +3,8 @@ title: "R Markdown & LaTeX"
 subtitle: "Lecture 5"
 author: "<br>Louis SIRUGUE"
 date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -29,10 +32,10 @@ source(paste0(getwd(), "/../source/style.R"))
 stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
 options(htmltools.dir.version = F)
-knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
+knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", dpi = 300, out.width = "100%")
 ```
 
-### Last time we saw
+### Quick reminder
 
 <p style = "margin-bottom:2cm;">
 
@@ -66,7 +69,7 @@ ggplot(data, aes(x = V1, y = V2)) +
 
 ---
 
-### Last time we saw
+### Quick reminder
 
 .pull-left[
 <p style = "margin-bottom:1.75cm;">
@@ -96,7 +99,7 @@ kable(tibble(Geometry = c("Bar plot", "Histogram", "Area", "Line",
 
 ---
 
-### Last time we saw
+### Quick reminder
 
 .pull-left[
 
@@ -122,7 +125,7 @@ kable(tibble(Argument = c("alpha", "color", "fill", "size", "shape", "linetype")
 <ul>
   <li>If specified <b>in the geometry</b></li>
   <ul>
-    <li>It will apply uniformly to every <b>all the geometry</b></li>
+    <li>It will apply uniformly to <b>all the geometry</b></li>
   </ul>
 </ul>
  
@@ -131,7 +134,7 @@ kable(tibble(Argument = c("alpha", "color", "fill", "size", "shape", "linetype")
 <ul>
   <li>If assigned to a variable <b>in aes</b></li>
   <ul>
-    <li>it will <b>vary with the variable</b> according to a scale documented in legend</li>
+    <li>It will <b>vary with the variable</b> according to a scale documented in legend</li>
   </ul>
 </ul>
 ]
@@ -147,54 +150,259 @@ ggplot(data, aes(x = V1, y = V2, size = V3)) +
 
 ---
 
-<h3>Today we learn how use R Markdown!</h3>
+class: inverse, hide-logo
 
-<p style = "margin-bottom:2cm;">
+### Warm up practice
+
+<ul>
+  <li>Today we're going to use the <a href = "https://www.insee.fr/fr/statistiques/2540004?sommaire=4767262"><b><i>"Fichier des prénoms"</i></b></a></li>
+  <ul>
+    <li>This is where the INSEE reports the <b>birth count</b> associated with <b>each first name in France</b></li>
+    <li>It is <b>virtually exhaustive from 1946</b>, when the INSEE was founded</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
 
 --
 
-.pull-left[
-#### 1. Basic principles
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
+```{r, eval = F}
+names <- read.csv("C:/User/Documents/fichier_prenoms.csv", sep = ";", encoding = "UTF-8")
+str(names)
+```
 
-#### 2. Useful features
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Inline code
- * 2.2. Tables
- * 2.3. Preset themes 
+```{r, echo = F}
+names <- read.csv("fichier_prenoms.csv", sep = ";", encoding = "UTF-8")
+str(names)
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+ * **`sexe`:** `1` for Male and `2` for Female
+ * **`preusuel`:** first name *(`_PRENOMS_RARES` gathers rare first names for anonymity considerations)*
+ * **`annais`:** birth year *(`XXXX` groups unknown birth years)*
+ * **`nombre`:** number of newborns for the corresponding sex/name/year
+
+---
+
+class: inverse, hide-logo
+
+### Warm up practice
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 1) Recode the `sexe` variable with `Male` and `Female` instead of `1` and `2`
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+#### 2) Filter out observations for which `annais` is `XXXX` and convert `annais` to numeric
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+#### 3) Summarise your data into the total number of births per year
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+#### 4) Plot the evolution of the number of births over time using a line geometry
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+--
+
+<center><h3><i>You've got 10 minutes!</i></h3></center>
+
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+#### Load the necessary packages
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+#### 1) Recode the `sexe` variable with `Male` and `Female` instead of `1` and `2`
+
+--
+
+```{r, eval = F}
+names %>%
+* mutate(sexe = ifelse(sexe == 1, "Male", "Female"))
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+#### 2) Filter out observations for which `annais` is `XXXX` and convert `annais` to numeric
+
+--
+
+```{r, eval = F}
+names %>%
+  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
+* filter(annais != "XXXX") %>%
+* mutate(annais = as.numeric(annais))
+```
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+#### 3) Summarise your data into the total number of births per year
+
+--
+
+```{r, eval = F}
+names %>%
+  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
+  filter(annais != "XXXX") %>%
+  mutate(annais = as.numeric(annais)) %>%
+* group_by(annais) %>%
+* summarise(n = sum(nombre))
+```
+
+--
+
+```{r, echo = F}
+names %>%
+  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
+  filter(annais != "XXXX") %>%
+  mutate(annais = as.numeric(annais)) %>%
+  group_by(annais) %>%
+  summarise(n = sum(nombre)) %>%
+  head(8)
+```
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+#### 4) Plot the evolution of the number of births over time using a line geometry
+
+--
+
+```{r, eval = F}
+names %>%
+  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
+  filter(annais != "XXXX") %>%
+  mutate(annais = as.numeric(annais)) %>%
+  group_by(annais) %>%
+  summarise(n = sum(nombre)) %>%
+* ggplot(aes(x = annais, y = n)) + geom_line()
+```
+
+--
+
+```{r, echo = F, fig.width = 6.67, fig.height = 3, out.width = "55%"}
+names %>%
+  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
+  filter(annais != "XXXX") %>%
+  mutate(annais = as.numeric(annais)) %>%
+  group_by(annais) %>%
+  summarise(n = sum(nombre)) %>%
+  ggplot(aes(x = annais, y = n)) + 
+  geom_line(color = "#dfe6eb") +
+  theme(plot.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.grid = element_blank(),
+        axis.title = element_text(color = "#dfe6eb"),
+        axis.text = element_text(color = "#dfe6eb"),
+        axis.line = element_line(color = "#dfe6eb"),
+        axis.ticks = element_line(color = "#dfe6eb"))
+```
+
+
+---
+
+<h3>Today we learn how to make reports with R Markdown!</h3>
+
+--
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Basic principles</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. What is R Markdown?</li>
+    <li>1.2. YAML header</li>
+    <li>1.3. Code chunks</li>
+    <li>1.4. Text formatting</li>
+    <li>1.5. Run and knit your code</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Useful features</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Inline code</li>
+    <li>2.2. Tables</li>
+    <li>2.3. Preset themes</li>
+    <li>2.4. Report parameters</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
-#### 3. LaTeX for equations
-<p style = "margin-bottom:-.5cm;">
- * 3.1. What is LaTeX?
- * 3.2. LaTeX syntax
- * 3.3. Large equations
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. LaTeX for equations</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. What is LaTeX?</li>
+    <li>3.2. LaTeX syntax</li>
+    <li>3.3. Large equations</li>
+  </ul>
+</ul>
  
-#### 4. Wrap up!
- 
-#### 5. Guidelines for the homework
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 ]
 
 ---
 
-<h3>Today we learn how use R Markdown!</h3>
+<h3>Today we learn how to make reports with R Markdown!</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:2.5cm;"></p>
 
 .pull-left[
-#### 1. Basic principles
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Basic principles</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. What is R Markdown?</li>
+    <li>1.2. YAML header</li>
+    <li>1.3. Code chunks</li>
+    <li>1.4. Text formatting</li>
+    <li>1.5. Run and knit your code</li>
+  </ul>
+</ul>
 ]
 
 ---
@@ -212,12 +420,12 @@ ggplot(data, aes(x = V1, y = V2, size = V3)) +
 --
 
 <ul>
-  <li>Here are some examples of R Markdown reports</li>
+  <li>Here are some examples of R Markdown reports <i>(from my other course)</i></li>
   <ul>
-  <li><a href="https://louissirugue.github.io/data-analysis-course/archives/2021/homework1/correction.html">Last year homework</a></li>
-  <li><a href="https://louissirugue.github.io/data-analysis-course/project/example">Example of research project</a></li>
-  <li><a href="https://louissirugue.github.io/data-analysis-course/covariance_vs_correlation_with_code.html">Supplementary material</a></li>
-  <li><a href="https://louissirugue.github.io/data-analysis-course/home.html">Course webpage and material</a></li>
+  <li><a href="https://louissirugue.github.io/metrics_on_R/2021_homework1/correction.html">Last year homework</a></li>
+  <li><a href="https://louissirugue.github.io/metrics_on_R/project/example">Example of research project</a></li>
+  <li><a href="https://louissirugue.github.io/metrics_on_R/2021_covariance_vs_correlation_with_code.html">Supplementary material</a></li>
+  <li><a href="https://louissirugue.github.io/metrics_on_R/home.html">Course webpage and material</a></li>
   </ul>
 </ul>
 
@@ -262,7 +470,7 @@ ggplot(data, aes(x = V1, y = V2, size = V3)) +
 <p style = "margin-bottom:2.5cm;">
 
 <ol>
-  <li>Fill up the information and select <b>HTML</b></li>
+  <li>Fill out the information and select <b>HTML</b></li>
   <li style = "margin-top:7cm;">Click on <b>OK</b></li>
 </ol>
 ]
@@ -330,15 +538,14 @@ ggplot(data, aes(x = V1, y = V2, size = V3)) +
 
 * It should be specified at the **very beginning** of the document and surrounded by **three dashes** like so:
 
-```{r, eval = F}
+````markdown
 ---
 title: "My First Markdown Report"
 author: "Louis Sirugue"
 date: "24/09/2021"
 output: html_document
 ---
-```
-
+````
 ---
 
 ### 1. Basic principles
@@ -460,10 +667,10 @@ kable(tibble(Option = c("eval", "echo", "warning", "error", "message",
   <ul>
     <li>Italics</li>
     <li>Bold</li>
-    <li>hyperlinks</li>
-    <li>headers</li>
-    <li>block quote</li>
-    <li>un/ordered lists</li>
+    <li>Hyperlinks</li>
+    <li>Headers</li>
+    <li>Block quotes</li>
+    <li>Un/ordered lists</li>
     <li>...</li>
   </ul>
 </ul>
@@ -654,7 +861,7 @@ Horizontal rule:
 
 #### 1.5. Run and knit your code
 
- * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/>
+ * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/> (`ctrl + shift + k`)
  
 --
 
@@ -666,7 +873,7 @@ Horizontal rule:
 
 #### 1.5. Run and knit your code
 
- * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/>
+ * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/> (`ctrl + shift + k`)
 
 <center><img src = "comparison_2.png" width = "900"/></center>
 
@@ -674,56 +881,82 @@ Horizontal rule:
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:2.5cm;"></p>
 
 .pull-left[
-#### 1. Basic principles &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
 
-#### 2. Useful features
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Inline code
- * 2.2. Tables
- * 2.3. Preset themes 
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Basic principles &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. What is R Markdown?</li>
+    <li>1.2. YAML header</li>
+    <li>1.3. Code chunks</li>
+    <li>1.4. Text formatting</li>
+    <li>1.5. Run and knit your code</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Useful features</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Inline code</li>
+    <li>2.2. Tables</li>
+    <li>2.3. Preset themes</li>
+    <li>2.4. Report parameters</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
-#### 3. LaTeX for equations
-<p style = "margin-bottom:-.5cm;">
- * 3.1. What is LaTeX?
- * 3.2. LaTeX syntax
- * 3.3. Large equations
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. LaTeX for equations</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. What is LaTeX?</li>
+    <li>3.2. LaTeX syntax</li>
+    <li>3.3. Large equations</li>
+  </ul>
+</ul>
  
-#### 4. Wrap up!
- 
-#### 5. Guidelines for the homework
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 ]
 
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:2.5cm;"></p>
 
 .pull-left[
-#### 1. Basic principles &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
 
-#### 2. Useful features
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Inline code
- * 2.2. Tables
- * 2.3. Preset themes 
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Basic principles &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. What is R Markdown?</li>
+    <li>1.2. YAML header</li>
+    <li>1.3. Code chunks</li>
+    <li>1.4. Text formatting</li>
+    <li>1.5. Run and knit your code</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Useful features</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Inline code</li>
+    <li>2.2. Tables</li>
+    <li>2.3. Preset themes</li>
+    <li>2.4. Report parameters</li>
+  </ul>
+</ul>
+
 ]
 
 ---
@@ -754,7 +987,7 @@ Horizontal rule:
 --
 
 <ul>
-  <li>Imagine that you forgot to filter an irrelevant group of observations at the beginning</li>
+  <li>Imagine that you forgot to filter out an irrelevant group of observations at the beginning</li>
   <ul>
     <li>If you simply filter your data at the beginning in a code chunk</li>
     <li>All your tables and figures will <b>update automatically</b></li>
@@ -916,12 +1149,13 @@ kable(head(mtcars), caption = "First rows of the dataset")
 
  * For **big tables**, one solution is the `datatable()` function from the `DT` package
  
+<p style = "margin-bottom:1cm;">
+
 --
   
  * As with `kable()`, you just need to put the table you want to display inside the `datatable()` function
  
 ```{r, eval = FALSE}
-install.packages("DT") # if not already installed
 library("DT")
 datatable(mtcars)
 ```
@@ -987,7 +1221,7 @@ datatable(mtcars, options = list(pageLength = 5))
 
 <p style = "margin-bottom:1cm;">
  
-```{r, eval = F}
+````markdown
 ---
 title: "My First Markdown Report"
 author: "Louis Sirugue"
@@ -996,14 +1230,14 @@ output:
   html_document:
     theme: cosmo
 ---
-```
+````
 
 <p style = "margin-bottom:1cm;">
 
 --
 
 <ul>
-  <li>When using themes from downloaded packages, how to set the theme can be slightly different</li>
+  <li>When using themes from downloaded packages, the way you set the theme can be slightly different</li>
   <ul>
     <li>Check the online documentation</li>
   </ul>
@@ -1097,70 +1331,495 @@ output:
 <img src = "rmdformats_robobook.png" width = "550"/></center>
 ]
 
+
+---
+
+class: inverse, hide-logo
+
+### Practice
+
+.pull-left[
+
+<p style = "margin-bottom:2cm;"></p>
+<center><b><i>Reproduce the following html using R markdown</i></b></center>
+
+<p style = "margin-bottom:.25cm;"></p>
+<center><button onclick="copyText()">Copy raw output</button></center>
+<script>
+  function copyText() {
+    navigator.clipboard.writeText
+      ("Report on the first name LOUIS \n Your name \n Fall 2022 \n  \n 1. Setup \n  \n The packages needed in an Rmd must always be loaded in a code chunk at the beginning of the file. \n  \n library(dplyr) \n library(ggplot2) \n  \n However, the command install.packages() must not be written in an R markdown. \n It should be run only once in the console. \n  \n 2. Data cleaning \n  \n names <- read.csv('fichier_prenoms.csv', encoding = 'UTF-8', sep = ';') %>% \n mutate(sexe = ifelse(sexe == 1, 'Male', 'Female')) %>% \n rename(Sex = sexe, Year = annais) %>% \n filter(Year != 'XXXX') %>% \n mutate(Year = as.numeric(Year)) \n  \n 3. Evolution of the first name LOUIS over time \n  \n 3715 children were born under the name LOUIS in 2021. This statistic is written in inline code such that it updates automatically.");
+  }
+</script>
+
+<p style = "margin-bottom:2cm;"></p>
+<center><h3><i>You've got 15 minutes!</i></h3></center>
+
+`r countdown(minutes = 15, bottom = 1, left = 0, style = "margin-left:5.65cm;", play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
+]
+
+.pull-right[
+<p style = "margin-bottom:-4cm;"></p>
+<center><img src = "louis.png" height = "677" width = "auto"/></center>
+]
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+````markdown
+---
+title: "Report on the first name LOUIS"
+author: "Your name"
+date: "Fall 2022"
+output: 
+  html_document:
+    theme: cosmo
+---
+
+### 1) Setup
+
+The packages needed in an Rmd must *always* be loaded in a code chunk at the beginning of the file.
+
+`r ''````{r, message = F, warning = F}
+library(dplyr)
+library(ggplot2)
+```
+
+However, the command `install.packages()` must **not** be written in an R markdown.  
+It should be run only once in the console.
+````
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+````markdown
+### 2) Data cleaning
+
+`r ''````{r}
+names <- read.csv("fichier_prenoms.csv", encoding = "UTF-8", sep = ";") %>%
+  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
+  rename(Sex = sexe, Year = annais) %>%
+  filter(Year != "XXXX") %>%
+  mutate(Year = as.numeric(Year))
+```
+
+### 3) Evolution of the first name LOUIS over time
+
+`r ''````{r, echo = F, message = F, fig.height = 3}
+names %>%
+  filter(preusuel == "LOUIS") %>%
+  group_by(Sex, Year) %>%
+  summarise(Total = sum(nombre)) %>% 
+  ggplot(aes(x = Year, y = Total, color = Sex)) +
+  geom_line()
+```
+
+`r "\u0060r sum(names[names$preusuel=='LOUIS' & names$Year==2021, 'nombre'])\u0060"` children were born under the
+name LOUIS in 2021. This statistic is written in **inline code** such that it updates automatically
+````
+---
+
+### 2. Useful features
+
+#### 2.4. Report parameters
+
+<ul>
+  <li>It may sometimes be useful to produce <b>separate html reports for differents groups</b> in your data</li>
+  <ul>
+    <li>Country/state-specific reports</li>
+    <li>Here, a different report for each first name</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+<ul>
+  <li><b>YAML parameters</b> are very useful for that</li>
+  <ul>
+    <li>They are accessible <b>like any object</b> in your environment</li>
+    <li>They must be specified as follows</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+```{r, eval = F}
+*title: "Report on the first name `r params$name`"
+author: "Your name"
+date: "Fall 2022"
+output: 
+  html_document:
+    theme: cosmo
+*params:
+* name: "LOUIS"
+```
+
+<p style = "margin-bottom:1cm;"></p>
+
+---
+
+### 2. Useful features
+
+#### 2.4. Report parameters
+
+ * You simply have to call that object in your code chunks or inline code when needed
+ 
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+````markdown
+*### 3) Evolution of the first name `r "\u0060r params$name\u0060"` over time
+
+`r ''````{r, echo = F, message = F, fig.height = 3}
+names %>%
+* filter(preusuel == params$name) %>%
+  group_by(Sex, Year) %>%
+  summarise(Total = sum(nombre)) %>% 
+  ggplot(aes(x = Year, y = Total, color = Sex)) +
+  geom_line()
+```
+
+*`r "\u0060r sum(names[names$preusuel == params$name & names$Year == 2021, 'nombre'])\u0060"` children were born 
+*under the name `r "\u0060r params$name\u0060"` in 2021. This statistic is written in **inline code** such that it
+updates automatically.
+````
+--
+
+<center><i><b>&#10140; Let's knit our .Rmd with different values of that parameter!</b></i></center>
+
+---
+class: hide-logo
+.pull-left[
+<p style = "margin-bottom:-.9cm;"></p>
+<center><img src = "louis.png" height = "677" width = "auto"/></center>
+]
+--
+.pull-right[
+<p style = "margin-bottom:-.9cm;"></p>
+<center><img src = "didier.png" height = "677" width = "auto"/></center>
+]
+
+---
+class: hide-logo
+.pull-left[
+<p style = "margin-bottom:-.9cm;"></p>
+<center><img src = "pauline.png" height = "677" width = "auto"/></center>
+]
+--
+.pull-right[
+<p style = "margin-bottom:-.9cm;"></p>
+<center><img src = "camille.png" height = "677" width = "auto"/></center>
+]
+
+---
+
+### 2. Useful features
+
+#### 2.4. Report parameters
+
+<ul>
+  <li>But by <b>default</b> the <b>name of the .html</b> output will be the name of your .Rmd</li>
+  <ul>
+    <li>So if you <b>knit report.Rmd</b> for the first name Louis it will save the report under <b>report.html</b></li>
+    <li>And if you <b>knit it a second time</b> for the first name Didier it will <b>override</b> the first .html</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+<ul>
+  <li>The <b>solution</b> is to <b>knit</b> your .Rmd <b>externally</b></li>
+  <ul>
+    <li>You can do that with the <b>render()</b> function of the rmarkdown package</li>
+    <li>Save your .Rmd and <b>open a new .R script</b> to try it out</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+```{r, eval = F}
+library(rmarkdown)
+
+render(
+  input = "C:/User/Documents/prenom.Rmd",                   # Specify the input .Rmd
+  output_file = "C:/User/Documents/LOUIS.html",             # Specify the output file
+  params = list(name = "LOUIS")                             # Specify the YAML parameter(s)
+)                                          
+```
+
+---
+
+### 2. Useful features
+
+#### 2.4. Report parameters
+
+<ul>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
+</ul>
+
+--
+
+<ul style = "margin-top:-.53cm">
+  <ol>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ol>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+```{r, eval = F}
+for ( in ) {
+
+  
+  
+  
+  
+  
+  
+  
+  
+}
+```
+
+---
+
+### 2. Useful features
+
+#### 2.4. Report parameters
+
+<ul>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
+  <ol>
+    <li>First we should name the object that will successively take the value of each first name</li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ol>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+```{r, eval = F}
+for (i in ) {
+
+  
+  
+  
+  
+  
+  
+  
+  
+}
+```
+
+---
+
+### 2. Useful features
+
+#### 2.4. Report parameters
+
+<ul>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
+  <ol>
+    <li>First we should name the object that will successively take the value of each first name</li>
+    <li>Then indicate which values this object must successively take</li>
+    <li></li>
+    <li></li>
+  </ol>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+```{r, eval = F}
+for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
+
+  
+  
+  
+  
+  
+  
+  
+  
+}
+```
+
+---
+
+### 2. Useful features
+
+#### 2.4. Report parameters
+
+<ul>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
+  <ol>
+    <li>First we should name the object that will successively take the value of each first name</li>
+    <li>Then indicate which values this object must successively take</li>
+    <li>Then indicate what to do at each iteration</li>
+    <li></li>
+  </ol>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+```{r, eval = F}
+for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
+
+  render(
+    input = "C:/User/Documents/prenom.Rmd",  
+    output_file = "C:/User/Documents/LOUIS.html",
+    params = list(name = "LOUIS")
+  )  
+
+}
+```
+
+---
+
+### 2. Useful features
+
+#### 2.4. Report parameters
+
+<ul>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
+  <ol>
+    <li>First we should name the object that will successively take the value of each first name</li>
+    <li>Then indicate which values this object must successively take</li>
+    <li>Then indicate what to do at each iteration</li>
+    <li>And this should depend on the object that successively take each value</li>
+  </ol>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+```{r, eval = F}
+for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
+
+  render(
+    input = "C:/User/Documents/prenom.Rmd",  
+    output_file = paste0("C:/User/Documents/", i, ".html"),
+    params = list(name = i)
+  )  
+
+}
+```
+
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:2.5cm;"></p>
 
 .pull-left[
-#### 1. Basic principles &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
 
-#### 2. Useful features &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Inline code
- * 2.2. Tables
- * 2.3. Preset themes 
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Basic principles &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. What is R Markdown?</li>
+    <li>1.2. YAML header</li>
+    <li>1.3. Code chunks</li>
+    <li>1.4. Text formatting</li>
+    <li>1.5. Run and knit your code</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Useful features &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Inline code</li>
+    <li>2.2. Tables</li>
+    <li>2.3. Preset themes</li>
+    <li>2.4. Report parameters</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
-#### 3. LaTeX for equations
-<p style = "margin-bottom:-.5cm;">
- * 3.1. What is LaTeX?
- * 3.2. LaTeX syntax
- * 3.3. Large equations
- 
-#### 4. Wrap up!
- 
-#### 5. Guidelines for the homework
-]
 
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. LaTeX for equations</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. What is LaTeX?</li>
+    <li>3.2. LaTeX syntax</li>
+    <li>3.3. Large equations</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:2.5cm;"></p>
 
 .pull-left[
-#### 1. Basic principles &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
 
-#### 2. Useful features &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Inline code
- * 2.2. Tables
- * 2.3. Preset themes 
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Basic principles &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. What is R Markdown?</li>
+    <li>1.2. YAML header</li>
+    <li>1.3. Code chunks</li>
+    <li>1.4. Text formatting</li>
+    <li>1.5. Run and knit your code</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Useful features &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Inline code</li>
+    <li>2.2. Tables</li>
+    <li>2.3. Preset themes</li>
+    <li>2.4. Report parameters</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
-#### 3. LaTeX for equations
-<p style = "margin-bottom:-.5cm;">
- * 3.1. What is LaTeX?
- * 3.2. LaTeX syntax
- * 3.3. Large equations
-]
 
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. LaTeX for equations</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. What is LaTeX?</li>
+    <li>3.2. LaTeX syntax</li>
+    <li>3.3. Large equations</li>
+  </ul>
+</ul>
+]
 ---
 
 ### 3. LaTeX for equations
@@ -1177,7 +1836,7 @@ output:
   <li>But LaTeX is not a <i>"what you see is what you get"</i> system</li>
   <ul>
     <li>In Microsoft Word or Google doc, you work directly on the "output document"</li>
-    <li><b>LateX</b> works more like R Markdown: <b>Edit</b> your text <b>in a script using commands and symbols</b></li> 
+    <li><b>LaTeX</b> works more like R Markdown: <b>Edit</b> your text <b>in a script using commands and symbols</b></li> 
   </ul>
 </ul>
 
@@ -1201,7 +1860,7 @@ output:
 
 --
 
- * We're not gonna learn how to make $\LaTeX$ documents, but just how to make equations 
+ * We're not gonna learn how to make $\LaTeX$ documents ([do it in 30mn](https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes)), but just how to make equations
  
 $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 
@@ -1209,7 +1868,7 @@ $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 
 ### 3. LaTeX for equations
 
-#### 3.1. What is LaTeX?
+#### 3.2. LaTeX syntax
 
  * To include a **LaTeX equation** in R Markdown, you simply have to surround it with the **`$` sign**:
  
@@ -1428,7 +2087,7 @@ $\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$
 <p style = "margin-bottom:1cm;"> 
 
 <ul>
-  <li>You can also surround a LaTeX input with <b>two $</b></li>
+  <li>You can also surround a LaTeX input with <b>two $</b> on each side</li>
   <ul>
     <li>It puts the equation at the <b>center of a new line</b></li>
     <li>And gives <b>more vertical space</b> to the equation</li>
@@ -1440,7 +2099,7 @@ $\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$
 <p style = "margin-bottom:1cm;"> 
 
 <ul>
-  <li>To surround a LaTeX input with two $ is usually good for:</li>
+  <li>Surrounding a LaTeX input with two $ is usually good for:</li>
   <ul>
     <li>Large equations</li>
     <li>Equations that should be emphasized</li>
@@ -1476,9 +2135,9 @@ $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 #### 3.3. Large equations
 
 <ul>
-  <li>Sometimes you do not want to <b>consecutive lines</b> of equations to be centered</li>
+  <li>Sometimes you do not want two <b>consecutive lines</b> of equations to be centered</li>
   <ul>
-    <li>You may want to <b>align</b> them based on <b>common part</b> within the equations</li>
+    <li>You may want to <b>align</b> them based on a <b>common part</b> within the equations</li>
   </ul>
 </ul>
 
@@ -1561,146 +2220,111 @@ $$\text{Mean}(x)=\frac{1}{N}\sum_{i=1}^N x_i$$
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
-.left-column[
+<p style = "margin-bottom:3cm;"></p>
+
+#### 1) Inside your .Rmd, reproduce the following mathematical expression
+
+$$Y_i = \alpha + \beta X_i + \varepsilon_i$$
+
+--
 
 <p style = "margin-bottom:2cm;"></p>
 
-<center><b><i>Reproduce the following html output using R markdown</i></b></center>
+#### 2) Then reproduce the following sentence
 
-<p style = "margin-bottom:5cm;"></p>
+$\hat{Y_i}$ denote the fitted values of the model.
 
-<center><h3><i>You've got 15 minutes!</i></h3></center>
+--
 
-]
+<p style = "margin-bottom:3cm;"></p>
+<center><h3><i>You've got 3 minutes!</i></h3></center>
 
-.right-column[
-<p style = "margin-bottom:-3.5cm;"></p>
-<center><img src = "practice.png" width = "555"/></center>
-]
+`r countdown(minutes = 3, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
-<p style = "margin-bottom:1.5cm;"></p>
+<p style = "margin-bottom:3cm;"></p>
 
-````markdown
----
-title: "Lecture 5 - Practice"
-author: "Your name"
-date: "03/10/2022"
-output: 
-  html_document:
-    theme: cosmo
----
+#### 1) Inside your .Rmd, reproduce the following mathematical expression
 
-### 1. Setup
+$$Y_i = \alpha + \beta X_i + \varepsilon_i$$
 
-The packages needed in an Rmd must *always* be loaded in a code chunk at the beginning of the file.
+--
 
-̀ ̀ ̀ {r, message = F, warning = F}
-library(tidyverse)
-̀ ̀ ̀
+```{r, eval = F}
+$$Y_i = \alpha + \beta X_i + \varepsilon_i$$
+```
 
-However, the command `install.packages()` must **not** be written in an R markdown.  
-It should be run only once in the console.
-````
+--
 
----
+<p style = "margin-bottom:2cm;"></p>
 
-### Solution
+#### 2) Then reproduce the following sentence
 
-<p style = "margin-bottom:1.5cm;"></p>
+$\hat{Y_i}$ denote the fitted values of the model.
 
-````markdown
+--
 
-### 2. Computations
-
-The `rnorm(n, mean, sd)` command allows to generate n observations drawn from a normal distribution
-with a given mean and standard deviation.
-
-̀ ̀ ̀ {r}
-x <- rnorm(1000, 0, 1)
-̀ ̀ ̀
-
-We can compute the mean $\overline{x}$ of this variable:
-
-$$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
-
-̀ ̀ ̀ {r}
-mean(x)
-̀ ̀ ̀
-
-Here is the result, written in **inline code** such that it updates automatically: ̀ r mean(x)̀ 
-   ⠀
-````
+```{r, eval = F}
+$\hat{Y_i}$ denote the fitted values of the model.
+```
 
 ---
+
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:2.5cm;"></p>
 
 .pull-left[
-#### 1. Basic principles &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
 
-#### 2. Useful features &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Inline code
- * 2.2. Tables
- * 2.3. Preset themes 
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Basic principles &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. What is R Markdown?</li>
+    <li>1.2. YAML header</li>
+    <li>1.3. Code chunks</li>
+    <li>1.4. Text formatting</li>
+    <li>1.5. Run and knit your code</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Useful features &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Inline code</li>
+    <li>2.2. Tables</li>
+    <li>2.3. Preset themes</li>
+    <li>2.4. Report parameters</li>
+  </ul>
+</ul>
+
 ]
 
 .pull-right[
-#### 3. LaTeX for equations &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. What is LaTeX?
- * 3.2. LaTeX syntax
- * 3.3. Large equations
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. LaTeX for equations &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. What is LaTeX?</li>
+    <li>3.2. LaTeX syntax</li>
+    <li>3.3. Large equations</li>
+  </ul>
+</ul>
  
-#### 4. Wrap up!
- 
-#### 5. Guidelines for the homework
-]
+<p style = "margin-bottom:1cm;"></p>
 
----
-
-<h3>Overview</h3>
-
-<p style = "margin-bottom:2cm;">
-
-.pull-left[
-#### 1. Basic principles &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
-
-#### 2. Useful features &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Inline code
- * 2.2. Tables
- * 2.3. Preset themes 
-]
-
-.pull-right[
-#### 3. LaTeX for equations &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. What is LaTeX?
- * 3.2. LaTeX syntax
- * 3.3. Large equations
- 
-#### 4. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 ]
 
 ---
@@ -1815,79 +2439,3 @@ $\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$
 $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$ 
 
 ]
-
----
-
-<h3>Overview</h3>
-
-<p style = "margin-bottom:2cm;">
-
-.pull-left[
-#### 1. Basic principles &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is R Markdown?
- * 1.2. YAML header
- * 1.3. Code chunks
- * 1.4. Text formatting
- * 1.5. Run and knit your code
-
-#### 2. Useful features &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Inline code
- * 2.2. Tables
- * 2.3. Preset themes 
-]
-
-.pull-right[
-#### 3. LaTeX for equations &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. What is LaTeX?
- * 3.2. LaTeX syntax
- * 3.3. Large equations
- 
-#### 4. Wrap up! &#10004;
- 
-#### 5. Guidelines for the homework 
-]
-
----
-
-### 5. Guidelines for the homework
-
-<ul>
-  <li>The homework should be done with R Markdown</li>
-  <ul>
-    <li>Both the .Rmd and the corresponding .html should be sent</li>
-    <li>Deadline: October 10</li>
-  </ul>
-</ul>
-
---
-
-<ul>
-  <li>You are expected to use (when relevant) the features covered today. It will be taken into account in the grading (see the <b>indicative</b> grading system <a href="https://louissirugue.github.io/data-analysis-course/homework1/grading.html">here</a>)</li>
-  <ul>
-    <li>Inline code</li>
-    <li>kable</li>
-    <li>LaTeX equations</li>
-    <li>...</li>
-  </ul>
-</ul>
-
---
-
-<ul>
-  <li>Your Markdown report should run without error</li>
-  <ul>
-    <li>If you use absolute paths that I need to change, define it once at the very beginning and use paste0()</li>
-  </ul>
-</ul>
-
-```{r, eval = F}
-path <- "C:/Users/name/Desktop/homework/"
-data1 <- read.csv(paste0(path, "file1.csv"))
-
-...
-
-data2 <- read.csv(paste0(path, "file2.csv"))
-```

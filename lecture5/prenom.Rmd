@@ -1,0 +1,45 @@
+---
+title: "Report on the first name `r params$name`"
+author: "Your name"
+date: "Fall 2022"
+output: 
+  html_document:
+    theme: cosmo
+params:
+  name: "PAULINE"
+---
+
+### 1. Setup
+
+The packages needed in an Rmd must *always* be loaded in a code chunk at the beginning of the file.
+
+```{r, message = F, warning = F}
+library(dplyr)
+library(ggplot2)
+```
+
+However, the command `install.packages()` must **not** be written in an R markdown.  
+It should be run only once in the console.
+
+### 2. Data cleaning
+
+```{r}
+names <- read.csv("fichier_prenoms.csv", encoding = "UTF-8", sep = ";") %>%
+  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
+  rename(Sex = sexe, Year = annais) %>%
+  filter(Year != "XXXX") %>%
+  mutate(Year = as.numeric(Year))
+```
+
+### 3. Evolution of the first name `r params$name` over time
+
+```{r, echo = F, message = F, fig.height = 3}
+names %>%
+  filter(preusuel == params$name) %>%
+  group_by(Sex, Year) %>%
+  summarise(Total = sum(nombre)) %>% 
+  ggplot(aes(x = Year, y = Total, color = Sex)) +
+  geom_line()
+```
+
+`r sum(names[names$preusuel == params$name & names$Year == 2021, "nombre"])` children were born under the name `r params$name` in 2021. This statistic is written in **inline code** such that it updates automatically.
