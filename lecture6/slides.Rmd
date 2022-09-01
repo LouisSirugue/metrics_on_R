@@ -3,6 +3,8 @@ title: "Text data & sentiment analysis"
 subtitle: "Lecture 6"
 author: "<br>Louis SIRUGUE"
 date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader: 
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -36,7 +39,7 @@ set.seed(1)
 
 <style> .left-column {width: 65%;} .right-column {width: 35%;} </style>
 
-### Last time we saw
+### Quick reminder
 
 #### 1. Three types of contents
 
@@ -56,7 +59,7 @@ set.seed(1)
 
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 2. Useful features
 
@@ -103,7 +106,7 @@ datatable(results_table)
 
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 3. LaTeX for equations
 
@@ -145,35 +148,48 @@ $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 
 ---
 
-### Today: Text data and sentiment analysis
+<h3>Today: Text data and sentiment analysis</h3>
 
-<p style = "margin-bottom:3cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Cleaning text data
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Exploring the data
- * 1.2. Regular expressions
- * 1.3. Tokenization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Cleaning text data</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Exploring the data</li>
+    <li>1.2. Regular expressions</li>
+    <li>1.3. Tokenization</li>
+  </ul>
+</ul>
 
-#### 2. Sentiment analysis
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Stopwords
- * 2.2. Sentiments
- * 2.3. Analysis
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 3. Wrap up!
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Sentiment analysis</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Stopwords</li>
+    <li>2.2. Sentiments</li>
+    <li>2.3. Analysis</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 
 ---
 
-### Today: Text data and sentiment analysis
+<h3>Today: Text data and sentiment analysis</h3>
 
-<p style = "margin-bottom:3cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Cleaning text data
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Exploring the data
- * 1.2. Regular expressions
- * 1.3. Tokenization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Cleaning text data</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Exploring the data</li>
+    <li>1.2. Regular expressions</li>
+    <li>1.3. Tokenization</li>
+  </ul>
+</ul>
 
 ---
 
@@ -711,6 +727,8 @@ grep("^\\^", c("^a", "b", "^c", "^d", "e", "f"), value = T)
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### &#10140; Use `grepl` to create a variable that identifies every line that contains a (complete) stage direction
@@ -743,7 +761,11 @@ raj <- raj %>% filter(row_number() >= beginning$line_number[2])
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
+  `r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -969,14 +991,12 @@ raj <- raj %>%
 #### 1.3. Tokenization
 
 ```{r, eval = F}
-library("DT")
 datatable(raj %>% filter(act_delim|scene_delim), options = list(pageLength = 6))
 ```
 
 --
 
 ```{r, echo = F}
-library("DT")
 datatable(raj %>% filter(act_delim|scene_delim), options = list(pageLength = 6))
 ```
 
@@ -1390,41 +1410,59 @@ kable(raj %>% filter(id_act == 1 & id_scene == 2 & id_line == 18), caption = "")
 
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:3cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Cleaning text data &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Exploring the data
- * 1.2. Regular expressions
- * 1.3. Tokenization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Cleaning text data &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Exploring the data</li>
+    <li>1.2. Regular expressions</li>
+    <li>1.3. Tokenization</li>
+  </ul>
+</ul>
 
-#### 2. Sentiment analysis
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Stopwords
- * 2.2. Sentiments
- * 2.3. Analysis
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 3. Wrap up!
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Sentiment analysis</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Stopwords</li>
+    <li>2.2. Sentiments</li>
+    <li>2.3. Analysis</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:3cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Cleaning text data &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Exploring the data
- * 1.2. Regular expressions
- * 1.3. Tokenization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Cleaning text data &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Exploring the data</li>
+    <li>1.2. Regular expressions</li>
+    <li>1.3. Tokenization</li>
+  </ul>
+</ul>
 
-#### 2. Sentiment analysis
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Stopwords
- * 2.2. Sentiments
- * 2.3. Analysis
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Sentiment analysis</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Stopwords</li>
+    <li>2.2. Sentiments</li>
+    <li>2.3. Analysis</li>
+  </ul>
+</ul>
 
 ---
 
@@ -1956,23 +1994,33 @@ sentiment_evolution("the_tragedy_of_king_lear.txt") %>%
 
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:3cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Cleaning text data &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Exploring the data
- * 1.2. Regular expressions
- * 1.3. Tokenization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Cleaning text data &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Exploring the data</li>
+    <li>1.2. Regular expressions</li>
+    <li>1.3. Tokenization</li>
+  </ul>
+</ul>
 
-#### 2. Sentiment analysis &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Stopwords
- * 2.2. Sentiments
- * 2.3. Analysis
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 3. Wrap up!
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Sentiment analysis &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Stopwords</li>
+    <li>2.2. Sentiments</li>
+    <li>2.3. Analysis</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 
 ---
 
