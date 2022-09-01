@@ -1,0 +1,381 @@
+"Wk","Day","Date","Time","Home","xG","Score","xG.1","Away","Attendance","Venue","Referee","Match.Report","Notes"
+1,"Fri","2020-08-21","19:00","Bordeaux",0.4,"0-0",0.3,"Nantes",NA,"Stade Matmut-Atlantique","Benoît Bastien","Match Report",NA
+1,"Sat","2020-08-22","17:00","Dijon",0.5,"0-1",2.1,"Angers",NA,"Stade Gaston Gérard","Eric Wattellier","Match Report",NA
+1,"Sat","2020-08-22","21:00","Lille",0.5,"1-1",1.4,"Rennes",3975,"Stade Pierre-Mauroy","Clément Turpin","Match Report",NA
+1,"Sun","2020-08-23","13:00","Monaco",2,"2-2",1.3,"Reims",NA,"Stade Louis II.","François Letexier","Match Report",NA
+1,"Sun","2020-08-23","15:00","Nîmes",1.1,"4-0",0.4,"Brest",NA,"Stade des Costières","Jérémie Pignard","Match Report",NA
+1,"Sun","2020-08-23","15:00","Lorient",2.8,"3-1",0.5,"Strasbourg",NA,"Stade Yves Allainmat - Le Moustoir","Johan Hamel","Match Report",NA
+1,"Sun","2020-08-23","17:00","Nice",0.2,"2-1",2.5,"Lens",NA,"Stade de Nice","Jérôme Miguelgorry","Match Report",NA
+2,"Fri","2020-08-28","21:00","Lyon",4.9,"4-1",0.4,"Dijon",NA,"Groupama Stadium","Benoît Millot","Match Report",NA
+2,"Sat","2020-08-29","17:00","Rennes",1.9,"2-1",0.5,"Montpellier",NA,"Roazhon Park","Willy Delajod","Match Report",NA
+2,"Sat","2020-08-29","21:00","Strasbourg",0.2,"0-2",1.4,"Nice",NA,"Stade de la Meinau","Jérôme Brisard","Match Report",NA
+2,"Sun","2020-08-30","13:00","Reims",0.2,"0-1",1.1,"Lille",NA,"Stade Auguste-Delaune II","Stéphanie Frappart","Match Report",NA
+2,"Sun","2020-08-30","15:00","Metz",0.7,"0-1",0.3,"Monaco",4463,"Stade Saint-Symphorien","Jeremy Stinat","Match Report",NA
+2,"Sun","2020-08-30","15:00","Angers",0.9,"0-2",2.1,"Bordeaux",NA,"Stade Raymond Kopa","Karim Abed","Match Report",NA
+2,"Sun","2020-08-30","15:00","Nantes",2.3,"2-1",1.4,"Nîmes",NA,"Stade de la Beaujoire - Louis Fonteneau","Hakim Ben El Hadj Salem","Match Report",NA
+2,"Sun","2020-08-30","15:00","Saint-Étienne",1.3,"2-0",0.2,"Lorient",NA,"Stade Geoffroy-Guichard","Florent Batta","Match Report",NA
+2,"Sun","2020-08-30","21:00","Brest",2.7,"2-3",1.4,"Marseille",NA,"Stade Francis-Le Blé","Amaury Delerue","Match Report",NA
+2,"Thu","2020-09-10","21:00","Lens",1.4,"1-0",0.6,"Paris S-G",NA,"Stade Bollaert-Delelis","Hakim Ben El Hadj Salem","Match Report",NA
+3,"Fri","2020-09-11","21:00","Bordeaux",0.2,"0-0",2.2,"Lyon",NA,"Stade Matmut-Atlantique","Ruddy Buquet","Match Report",NA
+3,"Sat","2020-09-12","17:00","Montpellier",1.6,"3-1",0.4,"Nice",NA,"Stade de la Mosson","Antony Gautier","Match Report",NA
+3,"Sat","2020-09-12","21:00","Saint-Étienne",1.7,"2-0",1.2,"Strasbourg",NA,"Stade Geoffroy-Guichard","Eric Wattellier","Match Report",NA
+3,"Sun","2020-09-13","13:00","Lille",1.5,"1-0",0.7,"Metz",NA,"Stade Pierre-Mauroy","Jérémie Pignard","Match Report",NA
+3,"Sun","2020-09-13","15:00","Nîmes",1.4,"2-4",1.9,"Rennes",NA,"Stade des Costières","Mikael Lesage","Match Report",NA
+3,"Sun","2020-09-13","15:00","Angers",2,"1-0",0.3,"Reims",NA,"Stade Raymond Kopa","Benoît Bastien","Match Report",NA
+3,"Sun","2020-09-13","15:00","Lorient",1.3,"2-3",2.1,"Lens",NA,"Stade Yves Allainmat - Le Moustoir","Aurélien Petit","Match Report",NA
+3,"Sun","2020-09-13","15:00","Dijon",0.4,"0-2",2,"Brest",NA,"Stade Gaston Gérard","Bastien Dechepy","Match Report",NA
+3,"Sun","2020-09-13","17:00","Monaco",2,"2-1",0.6,"Nantes",NA,"Stade Louis II.","Clément Turpin","Match Report",NA
+3,"Sun","2020-09-13","21:00","Paris S-G",1.7,"0-1",0.5,"Marseille",NA,"Parc des Princes","Jérôme Brisard","Match Report",NA
+1,"Tue","2020-09-15","21:00","Montpellier",1.6,"2-1",1.6,"Lyon",NA,"Stade de la Mosson","François Letexier","Match Report",NA
+1,"Wed","2020-09-16","21:00","Paris S-G",2.3,"1-0",1.1,"Metz",NA,"Parc des Princes","Mikael Lesage","Match Report",NA
+1,"Thu","2020-09-17","21:00","Marseille",2.3,"0-2",1.5,"Saint-Étienne",NA,"Orange Vélodrome","Ruddy Buquet","Match Report",NA
+4,"Fri","2020-09-18","21:00","Lyon",1.3,"0-0",0.5,"Nîmes",4385,"Groupama Stadium","Amaury Delerue","Match Report",NA
+4,"Sat","2020-09-19","17:00","Lens",3.5,"2-1",0.4,"Bordeaux",NA,"Stade Bollaert-Delelis","Benoît Millot","Match Report",NA
+4,"Sat","2020-09-19","21:00","Rennes",1.3,"2-1",1.3,"Monaco",NA,"Roazhon Park","Jérôme Miguelgorry","Match Report",NA
+4,"Sun","2020-09-20","13:00","Nice",1,"0-3",3.2,"Paris S-G",NA,"Stade de Nice","Benoît Bastien","Match Report",NA
+4,"Sun","2020-09-20","15:00","Strasbourg",2,"1-0",0.5,"Dijon",NA,"Stade de la Meinau","Florent Batta","Match Report",NA
+4,"Sun","2020-09-20","15:00","Montpellier",1.3,"4-1",1,"Angers",NA,"Stade de la Mosson","Stéphanie Frappart","Match Report",NA
+4,"Sun","2020-09-20","15:00","Metz",0.9,"2-1",1.4,"Reims",NA,"Stade Saint-Symphorien","Johan Hamel","Match Report",NA
+4,"Sun","2020-09-20","15:00","Brest",1.4,"3-2",1.6,"Lorient",NA,"Stade Francis-Le Blé","Karim Abed","Match Report",NA
+4,"Sun","2020-09-20","17:00","Nantes",1.9,"2-2",1.1,"Saint-Étienne",NA,"Stade de la Beaujoire - Louis Fonteneau","Antony Gautier","Match Report",NA
+4,"Sun","2020-09-20","21:00","Marseille",0.7,"1-1",1.7,"Lille",NA,"Orange Vélodrome","Hakim Ben El Hadj Salem","Match Report",NA
+5,"Fri","2020-09-25","21:00","Lille",2,"2-0",0.9,"Nantes",NA,"Stade Pierre-Mauroy","Willy Delajod","Match Report",NA
+5,"Sat","2020-09-26","17:00","Saint-Étienne",0.4,"0-3",0.9,"Rennes",NA,"Stade Geoffroy-Guichard","Benoît Bastien","Match Report",NA
+5,"Sat","2020-09-26","21:00","Marseille",1.3,"1-1",1.1,"Metz",NA,"Orange Vélodrome","Eric Wattellier","Match Report",NA
+5,"Sun","2020-09-27","13:00","Bordeaux",1,"0-0",1,"Nice",NA,"Stade Matmut-Atlantique","François Letexier","Match Report",NA
+5,"Sun","2020-09-27","15:00","Monaco",1.5,"3-2",1.4,"Strasbourg",NA,"Stade Louis II.","Jérémie Pignard","Match Report",NA
+5,"Sun","2020-09-27","15:00","Angers",0.8,"3-2",3.1,"Brest",NA,"Stade Raymond Kopa","Jeremy Stinat","Match Report",NA
+5,"Sun","2020-09-27","15:00","Nîmes",0.6,"1-1",1.4,"Lens",NA,"Stade des Costières","Franck Schneider","Match Report",NA
+5,"Sun","2020-09-27","15:00","Dijon",1.5,"2-2",2.4,"Montpellier",NA,"Stade Gaston Gérard","Aurélien Petit","Match Report",NA
+5,"Sun","2020-09-27","17:00","Lorient",0.2,"1-1",0.8,"Lyon",NA,"Stade Yves Allainmat - Le Moustoir","Clément Turpin","Match Report",NA
+5,"Sun","2020-09-27","21:00","Reims",0.2,"0-2",4.4,"Paris S-G",NA,"Stade Auguste-Delaune II","Ruddy Buquet","Match Report",NA
+6,"Fri","2020-10-02","21:00","Paris S-G",2.1,"6-1",0.9,"Angers",NA,"Parc des Princes","Franck Schneider","Match Report",NA
+6,"Sat","2020-10-03","17:00","Lens",1.9,"2-0",0.1,"Saint-Étienne",NA,"Stade Bollaert-Delelis","Bastien Dechepy","Match Report",NA
+6,"Sat","2020-10-03","21:00","Nice",2.1,"2-1",1.3,"Nantes",NA,"Stade de Nice","Jérôme Brisard","Match Report",NA
+6,"Sun","2020-10-04","13:00","Montpellier",0.7,"0-1",0.5,"Nîmes",NA,"Stade de la Mosson","Benoît Millot","Match Report",NA
+6,"Sun","2020-10-04","15:00","Metz",1.7,"3-1",0.8,"Lorient",NA,"Stade Saint-Symphorien","Jérôme Miguelgorry","Match Report",NA
+6,"Sun","2020-10-04","15:00","Brest",1,"1-0",1.1,"Monaco",NA,"Stade Francis-Le Blé","Johan Hamel","Match Report",NA
+6,"Sun","2020-10-04","15:00","Strasbourg",1.7,"0-3",1.9,"Lille",NA,"Stade de la Meinau","Mikael Lesage","Match Report",NA
+6,"Sun","2020-10-04","15:00","Bordeaux",1.5,"3-0",0.3,"Dijon",NA,"Stade Matmut-Atlantique","Antony Gautier","Match Report",NA
+6,"Sun","2020-10-04","17:00","Rennes",2,"2-2",1.2,"Reims",NA,"Roazhon Park","Florent Batta","Match Report",NA
+6,"Sun","2020-10-04","21:00","Lyon",3.2,"1-1",0.2,"Marseille",NA,"Groupama Stadium","Stéphanie Frappart","Match Report",NA
+7,"Fri","2020-10-16","19:00","Dijon",0.9,"1-1",1,"Rennes",NA,"Stade Gaston Gérard","Bastien Dechepy","Match Report",NA
+7,"Fri","2020-10-16","21:00","Nîmes",0.1,"0-4",4.3,"Paris S-G",NA,"Stade des Costières","Clément Turpin","Match Report",NA
+7,"Sat","2020-10-17","17:00","Reims",0.4,"1-3",2.6,"Lorient",NA,"Stade Auguste-Delaune II","Mikael Lesage","Match Report",NA
+7,"Sat","2020-10-17","21:00","Marseille",1,"3-1",0.6,"Bordeaux",NA,"Orange Vélodrome","Franck Schneider","Match Report",NA
+7,"Sun","2020-10-18","13:00","Strasbourg",2.1,"2-3",3.9,"Lyon",NA,"Stade de la Meinau","Ruddy Buquet","Match Report",NA
+7,"Sun","2020-10-18","15:00","Monaco",2.1,"1-1",0.2,"Montpellier",NA,"Stade Louis II.","Hakim Ben El Hadj Salem","Match Report",NA
+7,"Sun","2020-10-18","15:00","Angers",1.1,"1-1",1.2,"Metz",NA,"Stade Raymond Kopa","Aurélien Petit","Match Report",NA
+7,"Sun","2020-10-18","15:00","Nantes",1.8,"3-1",1.1,"Brest",NA,"Stade de la Beaujoire - Louis Fonteneau","Jérémie Pignard","Match Report",NA
+7,"Sun","2020-10-18","17:00","Saint-Étienne",0.8,"1-3",2.3,"Nice",NA,"Stade Geoffroy-Guichard","Amaury Delerue","Match Report",NA
+7,"Sun","2020-10-18","21:00","Lille",2.6,"4-0",0.4,"Lens",NA,"Stade Pierre-Mauroy","François Letexier","Match Report",NA
+8,"Fri","2020-10-23","21:00","Rennes",1,"1-2",1.4,"Angers",NA,"Roazhon Park","Jérémie Pignard","Match Report",NA
+8,"Sat","2020-10-24","17:00","Lorient",0.5,"0-1",1.3,"Marseille",NA,"Stade Yves Allainmat - Le Moustoir","Benoît Bastien","Match Report",NA
+8,"Sat","2020-10-24","21:00","Paris S-G",4.6,"4-0",1.7,"Dijon",NA,"Parc des Princes","Johan Hamel","Match Report",NA
+8,"Sun","2020-10-25","15:00","Brest",0.9,"0-3",1.1,"Strasbourg",NA,"Stade Francis-Le Blé","Jérôme Miguelgorry","Match Report",NA
+8,"Sun","2020-10-25","15:00","Montpellier",0.2,"0-4",4,"Reims",NA,"Stade de la Mosson","Willy Delajod","Match Report",NA
+8,"Sun","2020-10-25","15:00","Bordeaux",2.3,"2-0",0.9,"Nîmes",NA,"Stade Matmut-Atlantique","Bastien Dechepy","Match Report",NA
+8,"Sun","2020-10-25","15:00","Metz",0.3,"2-0",0.4,"Saint-Étienne",5000,"Stade Saint-Symphorien","Karim Abed","Match Report",NA
+8,"Sun","2020-10-25","17:00","Nice",1,"1-1",0.5,"Lille",NA,"Stade de Nice","Franck Schneider","Match Report",NA
+8,"Sun","2020-10-25","21:00","Lyon",3.2,"4-1",1.9,"Monaco",NA,"Groupama Stadium","Jérôme Brisard","Match Report",NA
+9,"Sat","2020-10-31","17:00","Rennes",1.5,"2-1",0.7,"Brest",NA,"Roazhon Park","Stéphanie Frappart","Match Report",NA
+9,"Sat","2020-10-31","21:00","Nantes",1.7,"0-3",2.1,"Paris S-G",NA,"Stade de la Beaujoire - Louis Fonteneau","Hakim Ben El Hadj Salem","Match Report",NA
+9,"Sun","2020-11-01","13:00","Saint-Étienne",0.7,"0-1",0.6,"Montpellier",NA,"Stade Geoffroy-Guichard","Jérôme Miguelgorry","Match Report",NA
+9,"Sun","2020-11-01","15:00","Angers",0.4,"0-3",2.3,"Nice",NA,"Stade Raymond Kopa","Jeremy Stinat","Match Report",NA
+9,"Sun","2020-11-01","15:00","Dijon",0.4,"0-0",1.1,"Lorient",NA,"Stade Gaston Gérard","Aurélien Petit","Match Report",NA
+9,"Sun","2020-11-01","15:00","Reims",0.7,"2-1",1.9,"Strasbourg",NA,"Stade Auguste-Delaune II","Eric Wattellier","Match Report",NA
+9,"Sun","2020-11-01","15:00","Nîmes",1.1,"0-1",1.5,"Metz",NA,"Stade des Costières","Amaury Delerue","Match Report",NA
+9,"Sun","2020-11-01","17:00","Monaco",3,"4-0",0.3,"Bordeaux",NA,"Stade Louis II.","Ruddy Buquet","Match Report",NA
+9,"Sun","2020-11-01","21:00","Lille",0.5,"1-1",0.8,"Lyon",NA,"Stade Pierre-Mauroy","Mikael Lesage","Match Report",NA
+10,"Fri","2020-11-06","21:00","Strasbourg",0.3,"0-1",0.1,"Marseille",NA,"Stade de la Meinau","Johan Hamel","Match Report",NA
+10,"Sat","2020-11-07","17:00","Bordeaux",0.6,"0-2",1.5,"Montpellier",NA,"Stade Matmut-Atlantique","Antony Gautier","Match Report",NA
+10,"Sat","2020-11-07","21:00","Paris S-G",0.9,"3-0",1.1,"Rennes",NA,"Parc des Princes","Benoît Bastien","Match Report",NA
+10,"Sun","2020-11-08","13:00","Brest",1.2,"3-2",2.4,"Lille",NA,"Stade Francis-Le Blé","Florent Batta","Match Report",NA
+10,"Sun","2020-11-08","15:00","Nîmes",1.5,"1-5",3.2,"Angers",NA,"Stade des Costières","Franck Schneider","Match Report",NA
+10,"Sun","2020-11-08","15:00","Lens",1.5,"4-4",1.4,"Reims",NA,"Stade Bollaert-Delelis","Thomas Léonard","Match Report",NA
+10,"Sun","2020-11-08","15:00","Lorient",1.8,"0-2",1.7,"Nantes",NA,"Stade Yves Allainmat - Le Moustoir","Stéphanie Frappart","Match Report",NA
+10,"Sun","2020-11-08","15:00","Metz",2.1,"1-1",2.3,"Dijon",NA,"Stade Saint-Symphorien","Willy Delajod","Match Report",NA
+10,"Sun","2020-11-08","17:00","Nice",0.7,"1-2",1.5,"Monaco",NA,"Stade de Nice","Karim Abed","Match Report",NA
+10,"Sun","2020-11-08","21:00","Lyon",2.5,"2-1",1.7,"Saint-Étienne",NA,"Groupama Stadium","François Letexier","Match Report",NA
+11,"Fri","2020-11-20","19:00","Rennes",1.9,"0-1",0.7,"Bordeaux",NA,"Roazhon Park","Karim Abed","Match Report",NA
+11,"Fri","2020-11-20","21:00","Monaco",3.2,"3-2",1.7,"Paris S-G",NA,"Stade Louis II.","Clément Turpin","Match Report",NA
+11,"Sat","2020-11-21","17:00","Brest",0.9,"4-1",1.3,"Saint-Étienne",NA,"Stade Francis-Le Blé","Thomas Léonard","Match Report",NA
+11,"Sun","2020-11-22","13:00","Nantes",1.2,"1-1",1.6,"Metz",NA,"Stade de la Beaujoire - Louis Fonteneau","Benoît Millot","Match Report",NA
+11,"Sun","2020-11-22","15:00","Montpellier",1.7,"4-3",3.4,"Strasbourg",NA,"Stade de la Mosson","Jérôme Brisard","Match Report",NA
+11,"Sun","2020-11-22","15:00","Reims",1,"0-1",1.1,"Nîmes",NA,"Stade Auguste-Delaune II","Jeremy Stinat","Match Report",NA
+11,"Sun","2020-11-22","15:00","Dijon",0.6,"0-1",1.5,"Lens",NA,"Stade Gaston Gérard","Eric Wattellier","Match Report",NA
+11,"Sun","2020-11-22","17:00","Angers",0.9,"0-1",1,"Lyon",NA,"Stade Raymond Kopa","Amaury Delerue","Match Report",NA
+11,"Sun","2020-11-22","21:00","Lille",4.2,"4-0",0.7,"Lorient",NA,"Stade Pierre-Mauroy","Willy Delajod","Match Report",NA
+8,"Wed","2020-11-25","19:00","Lens",0.7,"1-1",2,"Nantes",NA,"Stade Bollaert-Delelis","Florent Batta","Match Report",NA
+12,"Fri","2020-11-27","21:00","Strasbourg",0.6,"1-1",1.9,"Rennes",NA,"Stade de la Meinau","Benoît Millot","Match Report",NA
+12,"Sat","2020-11-28","17:00","Marseille",3,"3-1",0.4,"Nantes",NA,"Orange Vélodrome","Mikael Lesage","Match Report",NA
+12,"Sat","2020-11-28","21:00","Paris S-G",2.6,"2-2",1.6,"Bordeaux",NA,"Parc des Princes","Jérémie Pignard","Match Report",NA
+12,"Sun","2020-11-29","13:00","Lyon",2.6,"3-0",0.4,"Reims",NA,"Groupama Stadium","Jérôme Miguelgorry","Match Report",NA
+12,"Sun","2020-11-29","15:00","Lens",1.4,"1-3",2.5,"Angers",NA,"Stade Bollaert-Delelis","Aurélien Petit","Match Report",NA
+12,"Sun","2020-11-29","15:00","Monaco",3.1,"3-0",0.2,"Nîmes",NA,"Stade Louis II.","Antony Gautier","Match Report",NA
+12,"Sun","2020-11-29","15:00","Lorient",0.3,"0-1",1.6,"Montpellier",NA,"Stade Yves Allainmat - Le Moustoir","Bastien Dechepy","Match Report",NA
+12,"Sun","2020-11-29","15:00","Metz",0.9,"0-2",1.3,"Brest",NA,"Stade Saint-Symphorien","Hakim Ben El Hadj Salem","Match Report",NA
+12,"Sun","2020-11-29","17:00","Nice",3.5,"1-3",1,"Dijon",NA,"Stade de Nice","François Letexier","Match Report",NA
+12,"Sun","2020-11-29","21:00","Saint-Étienne",0.9,"1-1",0.5,"Lille",NA,"Stade Geoffroy-Guichard","Benoît Bastien","Match Report",NA
+13,"Fri","2020-12-04","21:00","Nîmes",0.5,"0-2",2.3,"Marseille",NA,"Stade des Costières","Willy Delajod","Match Report",NA
+13,"Sat","2020-12-05","17:00","Rennes",0.7,"0-2",0.7,"Lens",NA,"Roazhon Park","Johan Hamel","Match Report",NA
+13,"Sat","2020-12-05","21:00","Montpellier",1.6,"1-3",1.9,"Paris S-G",NA,"Stade de la Mosson","Mikael Lesage","Match Report",NA
+13,"Sun","2020-12-06","13:00","Lille",1.1,"2-1",0.6,"Monaco",NA,"Stade Pierre-Mauroy","Jérôme Brisard","Match Report",NA
+13,"Sun","2020-12-06","15:00","Dijon",0.4,"0-0",0.7,"Saint-Étienne",NA,"Stade Gaston Gérard","Ruddy Buquet","Match Report",NA
+13,"Sun","2020-12-06","15:00","Angers",1.9,"2-0",0.6,"Lorient",NA,"Stade Raymond Kopa","Thomas Léonard","Match Report",NA
+13,"Sun","2020-12-06","15:00","Nantes",0.5,"0-4",3.1,"Strasbourg",NA,"Stade de la Beaujoire - Louis Fonteneau","Clément Turpin","Match Report",NA
+13,"Sun","2020-12-06","15:00","Bordeaux",1.6,"1-0",0.3,"Brest",NA,"Stade Matmut-Atlantique","Franck Schneider","Match Report",NA
+13,"Sun","2020-12-06","17:00","Reims",0.5,"0-0",0.8,"Nice",NA,"Stade Auguste-Delaune II","Stéphanie Frappart","Match Report",NA
+13,"Sun","2020-12-06","21:00","Metz",1.5,"1-3",2,"Lyon",NA,"Stade Saint-Symphorien","Karim Abed","Match Report",NA
+14,"Fri","2020-12-11","21:00","Saint-Étienne",1.4,"0-0",0.6,"Angers",NA,"Stade Geoffroy-Guichard","Jérôme Miguelgorry","Match Report",NA
+14,"Sat","2020-12-12","17:00","Marseille",0.9,"2-1",1.7,"Monaco",NA,"Orange Vélodrome","Benoît Millot","Match Report",NA
+14,"Sat","2020-12-12","21:00","Lens",1.8,"2-3",1.5,"Montpellier",NA,"Stade Bollaert-Delelis","Jeremy Stinat","Match Report",NA
+14,"Sun","2020-12-13","13:00","Nice",1.4,"0-1",1.4,"Rennes",NA,"Stade de Nice","Amaury Delerue","Match Report",NA
+14,"Sun","2020-12-13","15:00","Nantes",2.5,"1-1",1.2,"Dijon",NA,"Stade de la Beaujoire - Louis Fonteneau","Antony Gautier","Match Report",NA
+14,"Sun","2020-12-13","15:00","Lorient",2.9,"3-0",0.4,"Nîmes",NA,"Stade Yves Allainmat - Le Moustoir","Karim Abed","Match Report",NA
+14,"Sun","2020-12-13","15:00","Brest",2.5,"2-1",0.7,"Reims",NA,"Stade Francis-Le Blé","Aurélien Petit","Match Report",NA
+14,"Sun","2020-12-13","15:00","Strasbourg",1.3,"2-2",1.7,"Metz",NA,"Stade de la Meinau","François Letexier","Match Report",NA
+14,"Sun","2020-12-13","17:00","Lille",1.3,"2-1",0.6,"Bordeaux",NA,"Stade Pierre-Mauroy","Eric Wattellier","Match Report",NA
+14,"Sun","2020-12-13","21:00","Paris S-G",0.3,"0-1",0.9,"Lyon",NA,"Parc des Princes","Benoît Bastien","Match Report",NA
+15,"Wed","2020-12-16","19:00","Dijon",0.2,"0-2",1.1,"Lille",NA,"Stade Gaston Gérard","Hakim Ben El Hadj Salem","Match Report",NA
+15,"Wed","2020-12-16","19:00","Reims",1.6,"3-2",1.5,"Nantes",NA,"Stade Auguste-Delaune II","Karim Abed","Match Report",NA
+15,"Wed","2020-12-16","19:00","Montpellier",0.9,"0-2",1.4,"Metz",NA,"Stade de la Mosson","Jérémie Pignard","Match Report",NA
+15,"Wed","2020-12-16","19:00","Nîmes",0.9,"0-2",2,"Nice",NA,"Stade des Costières","Ruddy Buquet","Match Report",NA
+15,"Wed","2020-12-16","19:00","Angers",0.3,"0-2",0.6,"Strasbourg",NA,"Stade Raymond Kopa","Bastien Dechepy","Match Report",NA
+15,"Wed","2020-12-16","21:00","Monaco",0.9,"0-3",1.2,"Lens",NA,"Stade Louis II.","Willy Delajod","Match Report",NA
+15,"Wed","2020-12-16","21:00","Lyon",3.5,"2-2",1.5,"Brest",NA,"Groupama Stadium","Jérôme Brisard","Match Report",NA
+15,"Wed","2020-12-16","21:00","Paris S-G",2.5,"2-0",1.4,"Lorient",NA,"Parc des Princes","Johan Hamel","Match Report",NA
+15,"Wed","2020-12-16","21:00","Bordeaux",0.9,"1-2",2,"Saint-Étienne",NA,"Stade Matmut-Atlantique","Stéphanie Frappart","Match Report",NA
+15,"Wed","2020-12-16","21:00","Rennes",1.5,"2-1",0.8,"Marseille",NA,"Roazhon Park","Clément Turpin","Match Report",NA
+16,"Sat","2020-12-19","17:00","Metz",1,"2-0",1.1,"Lens",NA,"Stade Saint-Symphorien","Amaury Delerue","Match Report",NA
+16,"Sat","2020-12-19","19:00","Marseille",2.2,"1-1",0.2,"Reims",NA,"Orange Vélodrome","Thomas Léonard","Match Report",NA
+16,"Sat","2020-12-19","21:00","Nice",0.9,"1-4",3.5,"Lyon",NA,"Stade de Nice","Antony Gautier","Match Report",NA
+16,"Sun","2020-12-20","13:00","Brest",1.8,"2-2",0.6,"Montpellier",NA,"Stade Francis-Le Blé","Benoît Millot","Match Report",NA
+16,"Sun","2020-12-20","15:00","Nantes",0.7,"1-1",1,"Angers",NA,"Stade de la Beaujoire - Louis Fonteneau","Willy Delajod","Match Report",NA
+16,"Sun","2020-12-20","15:00","Strasbourg",0.8,"0-2",0.6,"Bordeaux",NA,"Stade de la Meinau","Benoît Bastien","Match Report",NA
+16,"Sun","2020-12-20","15:00","Saint-Étienne",2.6,"2-2",1.8,"Nîmes",NA,"Stade Geoffroy-Guichard","Mikael Lesage","Match Report",NA
+16,"Sun","2020-12-20","15:00","Dijon",1.1,"0-1",1.3,"Monaco",NA,"Stade Gaston Gérard","Jeremy Stinat","Match Report",NA
+16,"Sun","2020-12-20","17:00","Lorient",1.3,"0-3",1.3,"Rennes",NA,"Stade Yves Allainmat - Le Moustoir","Eric Wattellier","Match Report",NA
+16,"Sun","2020-12-20","21:00","Lille",0.6,"0-0",0.8,"Paris S-G",NA,"Stade Pierre-Mauroy","François Letexier","Match Report",NA
+17,"Wed","2020-12-23","19:00","Rennes",1,"1-0",1.1,"Metz",NA,"Roazhon Park","Florent Batta","Match Report",NA
+17,"Wed","2020-12-23","19:00","Lens",2.1,"2-1",1.4,"Brest",NA,"Stade Bollaert-Delelis","Bastien Dechepy","Match Report",NA
+17,"Wed","2020-12-23","19:00","Bordeaux",1.2,"1-3",1.4,"Reims",NA,"Stade Matmut-Atlantique","Jérôme Brisard","Match Report",NA
+17,"Wed","2020-12-23","19:00","Nice",0.4,"2-2",2.6,"Lorient",NA,"Stade de Nice","Aurélien Petit","Match Report",NA
+17,"Wed","2020-12-23","19:00","Nîmes",0.9,"1-3",1.3,"Dijon",NA,"Stade des Costières","Jérémie Pignard","Match Report",NA
+17,"Wed","2020-12-23","21:00","Lyon",3.6,"3-0",2,"Nantes",NA,"Groupama Stadium","Ruddy Buquet","Match Report",NA
+17,"Wed","2020-12-23","21:00","Angers",1,"2-1",1.3,"Marseille",NA,"Stade Raymond Kopa","Hakim Ben El Hadj Salem","Match Report",NA
+17,"Wed","2020-12-23","21:00","Monaco",0.8,"2-2",1.9,"Saint-Étienne",NA,"Stade Louis II.","Johan Hamel","Match Report",NA
+17,"Wed","2020-12-23","21:00","Montpellier",0.9,"2-3",2,"Lille",NA,"Stade de la Mosson","Clément Turpin","Match Report",NA
+17,"Wed","2020-12-23","21:00","Paris S-G",2.8,"4-0",0.9,"Strasbourg",NA,"Parc des Princes","Jérôme Miguelgorry","Match Report",NA
+18,"Wed","2021-01-06","19:00","Lorient",0.7,"2-5",2.2,"Monaco",NA,"Stade Yves Allainmat - Le Moustoir","Franck Schneider","Match Report",NA
+18,"Wed","2021-01-06","19:00","Brest",1.6,"2-0",1.4,"Nice",NA,"Stade Francis-Le Blé","Jeremy Stinat","Match Report",NA
+18,"Wed","2021-01-06","19:00","Nantes",1,"0-0",0.7,"Rennes",NA,"Stade de la Beaujoire - Louis Fonteneau","Jérémie Pignard","Match Report",NA
+18,"Wed","2021-01-06","19:00","Metz",0.7,"0-0",1,"Bordeaux",NA,"Stade Saint-Symphorien","Antony Gautier","Match Report",NA
+18,"Wed","2021-01-06","19:00","Strasbourg",4.4,"5-0",1,"Nîmes",NA,"Stade de la Meinau","Benoît Millot","Match Report",NA
+18,"Wed","2021-01-06","21:00","Saint-Étienne",1.2,"1-1",1.6,"Paris S-G",NA,"Stade Geoffroy-Guichard","Karim Abed","Match Report",NA
+18,"Wed","2021-01-06","21:00","Lyon",2.4,"3-2",0.7,"Lens",NA,"Groupama Stadium","Eric Wattellier","Match Report",NA
+18,"Wed","2021-01-06","21:00","Lille",0.5,"1-2",0.4,"Angers",NA,"Stade Pierre-Mauroy","Thomas Léonard","Match Report",NA
+18,"Wed","2021-01-06","21:00","Reims",0.6,"0-0",0.2,"Dijon",NA,"Stade Auguste-Delaune II","Amaury Delerue","Match Report",NA
+18,"Wed","2021-01-06","21:00","Marseille",2.6,"3-1",1.1,"Montpellier",NA,"Orange Vélodrome","Stéphanie Frappart","Match Report",NA
+19,"Sat","2021-01-09","21:00","Nîmes",0.3,"0-1",1,"Lille",NA,"Stade des Costières","Jérôme Brisard","Match Report",NA
+19,"Sat","2021-01-09","21:00","Rennes",1.4,"2-2",1.1,"Lyon",NA,"Roazhon Park","Mikael Lesage","Match Report",NA
+19,"Sat","2021-01-09","21:00","Monaco",2.5,"3-0",0.5,"Angers",NA,"Stade Louis II.","Benoît Bastien","Match Report",NA
+19,"Sat","2021-01-09","21:00","Paris S-G",2.9,"3-0",0.8,"Brest",NA,"Parc des Princes","Hakim Ben El Hadj Salem","Match Report",NA
+19,"Sat","2021-01-09","21:00","Bordeaux",1.4,"2-1",1.3,"Lorient",NA,"Stade Matmut-Atlantique","Willy Delajod","Match Report",NA
+19,"Sat","2021-01-09","21:00","Dijon",0.5,"0-0",1.5,"Marseille",NA,"Stade Gaston Gérard","Jérôme Miguelgorry","Match Report",NA
+19,"Sat","2021-01-09","21:00","Montpellier",1.2,"1-1",1,"Nantes",NA,"Stade de la Mosson","François Letexier","Match Report",NA
+19,"Sat","2021-01-09","21:00","Metz",1.3,"1-1",1.5,"Nice",NA,"Stade Saint-Symphorien","Johan Hamel","Match Report",NA
+19,"Sat","2021-01-09","21:00","Reims",1.4,"3-1",1.2,"Saint-Étienne",NA,"Stade Auguste-Delaune II","Florent Batta","Match Report",NA
+19,"Sat","2021-01-09","21:00","Lens",0.6,"0-1",1.3,"Strasbourg",NA,"Stade Bollaert-Delelis","Clément Turpin","Match Report",NA
+20,"Fri","2021-01-15","21:00","Montpellier",0.6,"2-3",2.7,"Monaco",NA,"Stade de la Mosson","Aurélien Petit","Match Report",NA
+20,"Sat","2021-01-16","17:00","Marseille",2.2,"1-2",1.5,"Nîmes",NA,"Orange Vélodrome","Jeremy Stinat","Match Report",NA
+20,"Sat","2021-01-16","21:00","Angers",0.9,"0-1",1.5,"Paris S-G",NA,"Stade Raymond Kopa","Amaury Delerue","Match Report",NA
+20,"Sun","2021-01-17","13:00","Brest",1.6,"1-2",1.7,"Rennes",NA,"Stade Francis-Le Blé","Ruddy Buquet","Match Report",NA
+20,"Sun","2021-01-17","15:00","Nice",0.7,"0-3",1.9,"Bordeaux",NA,"Stade de Nice","Thomas Léonard","Match Report",NA
+20,"Sun","2021-01-17","15:00","Strasbourg",2.3,"1-0",1.3,"Saint-Étienne",NA,"Stade de la Meinau","Antony Gautier","Match Report",NA
+20,"Sun","2021-01-17","15:00","Nantes",1,"1-1",1.7,"Lens",NA,"Stade de la Beaujoire - Louis Fonteneau","Franck Schneider","Match Report",NA
+20,"Sun","2021-01-17","17:00","Lille",1.7,"2-1",0.5,"Reims",NA,"Stade Pierre-Mauroy","Benoît Millot","Match Report",NA
+20,"Sun","2021-01-17","21:00","Lyon",1.4,"0-1",1.9,"Metz",NA,"Groupama Stadium","Stéphanie Frappart","Match Report",NA
+9,"Wed","2021-01-20","21:00","Marseille",0.1,"0-1",1.7,"Lens",NA,"Orange Vélodrome","Jérémie Pignard","Match Report",NA
+21,"Fri","2021-01-22","21:00","Paris S-G",5.4,"4-0",0.6,"Montpellier",NA,"Parc des Princes","Willy Delajod","Match Report",NA
+21,"Sat","2021-01-23","17:00","Lens",1,"0-1",0.6,"Nice",NA,"Stade Bollaert-Delelis","Hakim Ben El Hadj Salem","Match Report",NA
+21,"Sat","2021-01-23","21:00","Monaco",1.3,"3-1",0.5,"Marseille",NA,"Stade Louis II.","François Letexier","Match Report",NA
+21,"Sun","2021-01-24","13:00","Bordeaux",0.8,"2-1",1.7,"Angers",NA,"Stade Matmut-Atlantique","Florent Batta","Match Report",NA
+21,"Sun","2021-01-24","15:00","Reims",1,"1-0",0.8,"Brest",NA,"Stade Auguste-Delaune II","Johan Hamel","Match Report",NA
+21,"Sun","2021-01-24","15:00","Metz",0.8,"2-0",0.2,"Nantes",NA,"Stade Saint-Symphorien","Jérôme Miguelgorry","Match Report",NA
+21,"Sun","2021-01-24","15:00","Dijon",0.6,"1-1",2.9,"Strasbourg",NA,"Stade Gaston Gérard","Jérôme Brisard","Match Report",NA
+21,"Sun","2021-01-24","17:00","Rennes",0.8,"0-1",1,"Lille",NA,"Roazhon Park","Eric Wattellier","Match Report",NA
+21,"Sun","2021-01-24","21:00","Saint-Étienne",0.5,"0-5",1.7,"Lyon",NA,"Stade Geoffroy-Guichard","Benoît Bastien","Match Report",NA
+20,"Wed","2021-01-27","21:00","Lorient",1.2,"3-2",0.9,"Dijon",NA,"Stade Yves Allainmat - Le Moustoir","Bastien Dechepy","Match Report",NA
+22,"Fri","2021-01-29","21:00","Lyon",1.3,"2-1",1.1,"Bordeaux",NA,"Groupama Stadium","Clément Turpin","Match Report",NA
+22,"Sat","2021-01-30","17:00","Montpellier",1.4,"1-2",0.8,"Lens",NA,"Stade de la Mosson","Amaury Delerue","Match Report",NA
+22,"Sun","2021-01-31","13:00","Nice",0.5,"0-1",1.1,"Saint-Étienne",NA,"Stade de Nice","Franck Schneider","Match Report",NA
+22,"Sun","2021-01-31","15:00","Angers",1.5,"3-1",0.5,"Nîmes",NA,"Stade Raymond Kopa","Ruddy Buquet","Match Report",NA
+22,"Sun","2021-01-31","15:00","Lorient",1.4,"3-2",2.6,"Paris S-G",NA,"Stade Yves Allainmat - Le Moustoir","Jeremy Stinat","Match Report",NA
+22,"Sun","2021-01-31","15:00","Strasbourg",1.2,"0-1",1.3,"Reims",NA,"Stade de la Meinau","Stéphanie Frappart","Match Report",NA
+22,"Sun","2021-01-31","15:00","Brest",1.5,"2-4",1.6,"Metz",NA,"Stade Francis-Le Blé","Benoît Millot","Match Report",NA
+22,"Sun","2021-01-31","17:00","Lille",1.8,"1-0",0.4,"Dijon",NA,"Stade Pierre-Mauroy","Jérémie Pignard","Match Report",NA
+22,"Sun","2021-01-31","21:00","Nantes",0.8,"1-2",1.5,"Monaco",NA,"Stade de la Beaujoire - Louis Fonteneau","Thomas Léonard","Match Report",NA
+23,"Wed","2021-02-03","19:00","Reims",0.9,"0-0",0.3,"Angers",NA,"Stade Auguste-Delaune II","Aurélien Petit","Match Report",NA
+23,"Wed","2021-02-03","19:00","Rennes",1.5,"1-1",0.9,"Lorient",NA,"Roazhon Park","Hakim Ben El Hadj Salem","Match Report",NA
+23,"Wed","2021-02-03","19:00","Strasbourg",0.6,"2-2",0.9,"Brest",NA,"Stade de la Meinau","Florent Batta","Match Report",NA
+23,"Wed","2021-02-03","19:00","Bordeaux",0.9,"0-3",2.1,"Lille",NA,"Stade Matmut-Atlantique","Mikael Lesage","Match Report",NA
+23,"Wed","2021-02-03","19:00","Metz",0.7,"1-1",1.1,"Montpellier",NA,"Stade Saint-Symphorien","Bastien Dechepy","Match Report",NA
+23,"Wed","2021-02-03","21:00","Lens",1.5,"2-2",1.7,"Marseille",NA,"Stade Bollaert-Delelis","Willy Delajod","Match Report",NA
+23,"Wed","2021-02-03","21:00","Paris S-G",2,"3-0",1.7,"Nîmes",NA,"Parc des Princes","François Letexier","Match Report",NA
+23,"Wed","2021-02-03","21:00","Saint-Étienne",1.7,"1-1",1.7,"Nantes",NA,"Stade Geoffroy-Guichard","Eric Wattellier","Match Report",NA
+23,"Wed","2021-02-03","21:00","Dijon",1.5,"0-1",2.5,"Lyon",NA,"Stade Gaston Gérard","Johan Hamel","Match Report",NA
+23,"Wed","2021-02-03","21:00","Monaco",2.2,"2-1",0.3,"Nice",NA,"Stade Louis II.","Jérôme Brisard","Match Report",NA
+24,"Sat","2021-02-06","17:00","Lorient",0.8,"1-0",1,"Reims",NA,"Stade Yves Allainmat - Le Moustoir","Thomas Léonard","Match Report",NA
+24,"Sat","2021-02-06","19:00","Lyon",1.8,"3-0",0.3,"Strasbourg",NA,"Groupama Stadium","Amaury Delerue","Match Report",NA
+24,"Sat","2021-02-06","21:00","Lens",0.9,"0-0",0.8,"Rennes",NA,"Stade Bollaert-Delelis","Jeremy Stinat","Match Report",NA
+24,"Sun","2021-02-07","13:00","Brest",2.6,"2-1",1,"Bordeaux",NA,"Stade Francis-Le Blé","Eric Wattellier","Match Report",NA
+24,"Sun","2021-02-07","15:00","Nice",1.3,"3-0",0.7,"Angers",NA,"Stade de Nice","Jérôme Miguelgorry","Match Report",NA
+24,"Sun","2021-02-07","15:00","Montpellier",4.7,"4-2",1.2,"Dijon",NA,"Stade de la Mosson","Franck Schneider","Match Report",NA
+24,"Sun","2021-02-07","15:00","Nîmes",1.3,"3-4",1.5,"Monaco",NA,"Stade des Costières","Clément Turpin","Match Report",NA
+24,"Sun","2021-02-07","15:00","Saint-Étienne",0.7,"1-0",0.2,"Metz",NA,"Stade Geoffroy-Guichard","Ruddy Buquet","Match Report",NA
+24,"Sun","2021-02-07","17:00","Nantes",0.5,"0-2",1.8,"Lille",NA,"Stade de la Beaujoire - Louis Fonteneau","Stéphanie Frappart","Match Report",NA
+24,"Sun","2021-02-07","21:00","Marseille",0.5,"0-2",1.1,"Paris S-G",NA,"Orange Vélodrome","Benoît Bastien","Match Report",NA
+25,"Sat","2021-02-13","17:00","Paris S-G",2.3,"2-1",1,"Nice",NA,"Parc des Princes","Jérémie Pignard","Match Report",NA
+25,"Sat","2021-02-13","19:00","Reims",0.6,"1-1",3.3,"Lens",NA,"Stade Auguste-Delaune II","Eric Wattellier","Match Report",NA
+25,"Sat","2021-02-13","21:00","Lyon",3.3,"1-2",1.6,"Montpellier",NA,"Groupama Stadium","Antony Gautier","Match Report",NA
+25,"Sun","2021-02-14","13:00","Monaco",1.8,"2-2",1.3,"Lorient",NA,"Stade Louis II.","Benoît Millot","Match Report",NA
+25,"Sun","2021-02-14","15:00","Metz",0.8,"1-2",1.4,"Strasbourg",NA,"Stade Saint-Symphorien","Mikael Lesage","Match Report",NA
+25,"Sun","2021-02-14","15:00","Rennes",1.2,"0-2",0.4,"Saint-Étienne",NA,"Roazhon Park","Florent Batta","Match Report",NA
+25,"Sun","2021-02-14","15:00","Dijon",0.6,"0-2",1.9,"Nîmes",NA,"Stade Gaston Gérard","Aurélien Petit","Match Report",NA
+25,"Sun","2021-02-14","15:00","Angers",1.4,"1-3",1.9,"Nantes",NA,"Stade Raymond Kopa","François Letexier","Match Report",NA
+25,"Sun","2021-02-14","17:00","Lille",0.6,"0-0",0.1,"Brest",NA,"Stade Pierre-Mauroy","Bastien Dechepy","Match Report",NA
+25,"Sun","2021-02-14","21:00","Bordeaux",1.3,"0-0",0.2,"Marseille",NA,"Stade Matmut-Atlantique","Jérôme Brisard","Match Report",NA
+11,"Wed","2021-02-17","21:00","Marseille",0.6,"3-2",0.7,"Nice",NA,"Orange Vélodrome","Mikael Lesage","Match Report",NA
+26,"Fri","2021-02-19","21:00","Brest",1.8,"2-3",3.9,"Lyon",NA,"Stade Francis-Le Blé","Franck Schneider","Match Report",NA
+26,"Sat","2021-02-20","13:00","Saint-Étienne",2.1,"1-1",0.4,"Reims",NA,"Stade Geoffroy-Guichard","Antony Gautier","Match Report",NA
+26,"Sat","2021-02-20","17:00","Nantes",1.3,"1-1",0.5,"Marseille",NA,"Stade de la Beaujoire - Louis Fonteneau","Amaury Delerue","Match Report",NA
+26,"Sun","2021-02-21","13:00","Montpellier",2.5,"2-1",1.7,"Rennes",NA,"Stade de la Mosson","Clément Turpin","Match Report",NA
+26,"Sun","2021-02-21","15:00","Strasbourg",1.3,"0-0",0.3,"Angers",NA,"Stade de la Meinau","Hakim Ben El Hadj Salem","Match Report",NA
+26,"Sun","2021-02-21","15:00","Lens",0.9,"2-1",0.7,"Dijon",NA,"Stade Bollaert-Delelis","Benoît Bastien","Match Report",NA
+26,"Sun","2021-02-21","15:00","Nîmes",0.4,"2-0",1.2,"Bordeaux",NA,"Stade des Costières","Willy Delajod","Match Report",NA
+26,"Sun","2021-02-21","15:00","Nice",1.2,"1-2",1.2,"Metz",NA,"Stade de Nice","Jeremy Stinat","Match Report",NA
+26,"Sun","2021-02-21","17:00","Lorient",0.3,"1-4",1,"Lille",NA,"Stade Yves Allainmat - Le Moustoir","Johan Hamel","Match Report",NA
+26,"Sun","2021-02-21","21:00","Paris S-G",0.6,"0-2",0.7,"Monaco",NA,"Parc des Princes","Ruddy Buquet","Match Report",NA
+21,"Wed","2021-02-24","19:00","Nîmes",1.2,"1-0",0.5,"Lorient",NA,"Stade des Costières","Jérôme Miguelgorry","Match Report",NA
+27,"Fri","2021-02-26","21:00","Rennes",1.2,"1-2",2.1,"Nice",NA,"Roazhon Park","Johan Hamel","Match Report",NA
+27,"Sat","2021-02-27","13:00","Bordeaux",0.7,"1-2",1.7,"Metz",NA,"Stade Matmut-Atlantique","Aurélien Petit","Match Report",NA
+27,"Sat","2021-02-27","17:00","Dijon",0.3,"0-4",1.9,"Paris S-G",NA,"Stade Gaston Gérard","Mikael Lesage","Match Report",NA
+27,"Sun","2021-02-28","13:00","Monaco",2.3,"2-0",0.4,"Brest",NA,"Stade Louis II.","Jérémie Pignard","Match Report",NA
+27,"Sun","2021-02-28","15:00","Angers",1.6,"2-2",1.6,"Lens",NA,"Stade Raymond Kopa","Bastien Dechepy","Match Report",NA
+27,"Sun","2021-02-28","15:00","Lorient",0.7,"2-1",0.9,"Saint-Étienne",NA,"Stade Yves Allainmat - Le Moustoir","Stéphanie Frappart","Match Report",NA
+27,"Sun","2021-02-28","15:00","Reims",0.6,"0-0",0.5,"Montpellier",NA,"Stade Auguste-Delaune II","François Letexier","Match Report",NA
+27,"Sun","2021-02-28","15:00","Nîmes",0.9,"1-1",0.8,"Nantes",NA,"Stade des Costières","Florent Batta","Match Report",NA
+27,"Sun","2021-02-28","17:00","Lille",0.8,"1-1",1,"Strasbourg",NA,"Stade Pierre-Mauroy","Jérôme Brisard","Match Report",NA
+27,"Sun","2021-02-28","21:00","Marseille",1.7,"1-1",0.5,"Lyon",NA,"Orange Vélodrome","Benoît Millot","Match Report",NA
+28,"Wed","2021-03-03","19:00","Saint-Étienne",1.8,"2-3",2.3,"Lens",NA,"Stade Geoffroy-Guichard","Amaury Delerue","Match Report",NA
+28,"Wed","2021-03-03","19:00","Brest",1.1,"3-1",0.5,"Dijon",NA,"Stade Francis-Le Blé","Jeremy Stinat","Match Report",NA
+28,"Wed","2021-03-03","19:00","Metz",0.8,"0-1",1.1,"Angers",NA,"Stade Saint-Symphorien","Johan Hamel","Match Report",NA
+28,"Wed","2021-03-03","19:00","Lyon",2.2,"1-0",0.8,"Rennes",NA,"Groupama Stadium","Ruddy Buquet","Match Report",NA
+28,"Wed","2021-03-03","19:00","Nice",1.6,"2-1",1.8,"Nîmes",NA,"Stade de Nice","Hakim Ben El Hadj Salem","Match Report",NA
+28,"Wed","2021-03-03","21:00","Strasbourg",1,"1-0",0.7,"Monaco",NA,"Stade de la Meinau","Eric Wattellier","Match Report",NA
+28,"Wed","2021-03-03","21:00","Nantes",1.3,"1-2",0.6,"Reims",NA,"Stade de la Beaujoire - Louis Fonteneau","Willy Delajod","Match Report",NA
+28,"Wed","2021-03-03","21:00","Lille",2.1,"2-0",0.1,"Marseille",NA,"Stade Pierre-Mauroy","Clément Turpin","Match Report",NA
+28,"Wed","2021-03-03","21:00","Bordeaux",0.6,"0-1",0.9,"Paris S-G",NA,"Stade Matmut-Atlantique","Franck Schneider","Match Report",NA
+28,"Wed","2021-03-03","21:00","Montpellier",1.1,"1-1",1.8,"Lorient",NA,"Stade de la Mosson","Benoît Bastien","Match Report",NA
+22,"Wed","2021-03-10","19:00","Marseille",0.8,"1-0",0.5,"Rennes",NA,"Orange Vélodrome","Jérémie Pignard","Match Report",NA
+29,"Fri","2021-03-12","21:00","Reims",0.8,"1-1",1.8,"Lyon",NA,"Stade Auguste-Delaune II","Jérôme Brisard","Match Report",NA
+29,"Sat","2021-03-13","13:00","Angers",0.3,"0-1",0.7,"Saint-Étienne",NA,"Stade Raymond Kopa","Benoît Millot","Match Report",NA
+29,"Sat","2021-03-13","17:00","Marseille",1.5,"3-1",0.3,"Brest",NA,"Orange Vélodrome","Jérôme Miguelgorry","Match Report",NA
+29,"Sun","2021-03-14","13:00","Nîmes",1.5,"1-1",0.9,"Montpellier",NA,"Stade des Costières","Eric Wattellier","Match Report",NA
+29,"Sun","2021-03-14","15:00","Lens",2.2,"2-2",1.4,"Metz",NA,"Stade Bollaert-Delelis","Florent Batta","Match Report",NA
+29,"Sun","2021-03-14","15:00","Lorient",2.1,"1-1",0.5,"Nice",NA,"Stade Yves Allainmat - Le Moustoir","Ruddy Buquet","Match Report",NA
+29,"Sun","2021-03-14","15:00","Dijon",1.1,"1-3",1.3,"Bordeaux",NA,"Stade Gaston Gérard","Thomas Léonard","Match Report",NA
+29,"Sun","2021-03-14","15:00","Rennes",1.3,"1-0",0.7,"Strasbourg",NA,"Roazhon Park","Bastien Dechepy","Match Report",NA
+29,"Sun","2021-03-14","17:05","Monaco",0.6,"0-0",0.2,"Lille",NA,"Stade Louis II.","Stéphanie Frappart","Match Report",NA
+29,"Sun","2021-03-14","21:00","Paris S-G",0.8,"1-2",1.3,"Nantes",NA,"Parc des Princes","Karim Abed","Match Report",NA
+30,"Fri","2021-03-19","21:00","Saint-Étienne",0.5,"0-4",2.4,"Monaco",NA,"Stade Geoffroy-Guichard","Mikael Lesage","Match Report",NA
+30,"Sat","2021-03-20","13:00","Metz",0.7,"1-3",2.1,"Rennes",NA,"Stade Saint-Symphorien","Willy Delajod","Match Report",NA
+30,"Sat","2021-03-20","17:00","Nice",2.5,"3-0",0.4,"Marseille",NA,"Stade de Nice","François Letexier","Match Report",NA
+30,"Sun","2021-03-21","13:00","Strasbourg",2,"1-2",1.8,"Lens",NA,"Stade de la Meinau","Jeremy Stinat","Match Report",NA
+30,"Sun","2021-03-21","15:00","Montpellier",2.5,"3-1",1.4,"Bordeaux",NA,"Stade de la Mosson","Hakim Ben El Hadj Salem","Match Report",NA
+30,"Sun","2021-03-21","15:00","Brest",0.5,"0-0",1,"Angers",NA,"Stade Francis-Le Blé","Aurélien Petit","Match Report",NA
+30,"Sun","2021-03-21","15:00","Nantes",1.4,"1-1",1.4,"Lorient",NA,"Stade de la Beaujoire - Louis Fonteneau","Antony Gautier","Match Report",NA
+30,"Sun","2021-03-21","15:00","Dijon",0.9,"0-1",1.1,"Reims",NA,"Stade Gaston Gérard","Benoît Bastien","Match Report",NA
+30,"Sun","2021-03-21","17:05","Lille",1,"1-2",0.6,"Nîmes",NA,"Stade Pierre-Mauroy","Franck Schneider","Match Report",NA
+30,"Sun","2021-03-21","21:00","Lyon",0.7,"2-4",2.1,"Paris S-G",NA,"Groupama Stadium","Clément Turpin","Match Report",NA
+31,"Sat","2021-04-03","13:00","Monaco",2.8,"4-0",0.4,"Metz",NA,"Stade Louis II.","Johan Hamel","Match Report",NA
+31,"Sat","2021-04-03","17:00","Paris S-G",0.9,"0-1",0.4,"Lille",NA,"Parc des Princes","Benoît Bastien","Match Report",NA
+31,"Sat","2021-04-03","21:00","Lens",0.9,"1-1",2.2,"Lyon",NA,"Stade Bollaert-Delelis","Benoît Millot","Match Report",NA
+31,"Sun","2021-04-04","13:00","Angers",1.3,"1-1",1.7,"Montpellier",NA,"Stade Raymond Kopa","Florent Batta","Match Report",NA
+31,"Sun","2021-04-04","15:00","Reims",1.2,"2-2",1.8,"Rennes",NA,"Stade Auguste-Delaune II","Karim Abed","Match Report",NA
+31,"Sun","2021-04-04","15:00","Nantes",1.4,"1-2",2.1,"Nice",NA,"Stade de la Beaujoire - Louis Fonteneau","Stéphanie Frappart","Match Report",NA
+31,"Sun","2021-04-04","15:00","Lorient",1.5,"1-0",0.5,"Brest",NA,"Stade Yves Allainmat - Le Moustoir","Bastien Dechepy","Match Report",NA
+31,"Sun","2021-04-04","15:00","Bordeaux",2,"2-3",2.1,"Strasbourg",NA,"Stade Matmut-Atlantique","Jérôme Brisard","Match Report",NA
+31,"Sun","2021-04-04","17:05","Nîmes",1.7,"0-2",1.9,"Saint-Étienne",NA,"Stade des Costières","Thomas Léonard","Match Report",NA
+31,"Sun","2021-04-04","21:00","Marseille",1.3,"2-0",0.2,"Dijon",NA,"Orange Vélodrome","Ruddy Buquet","Match Report",NA
+32,"Fri","2021-04-09","21:00","Metz",1.8,"0-2",0.6,"Lille",NA,"Stade Saint-Symphorien","Clément Turpin","Match Report",NA
+32,"Sat","2021-04-10","17:00","Strasbourg",0.7,"1-4",1.7,"Paris S-G",NA,"Stade de la Meinau","Jérémie Pignard","Match Report",NA
+32,"Sat","2021-04-10","21:00","Montpellier",2.1,"3-3",1.7,"Marseille",NA,"Stade de la Mosson","Jérôme Brisard","Match Report",NA
+32,"Sun","2021-04-11","13:00","Rennes",0.7,"1-0",0.3,"Nantes",NA,"Roazhon Park","Amaury Delerue","Match Report",NA
+32,"Sun","2021-04-11","15:00","Saint-Étienne",2.9,"4-1",1.6,"Bordeaux",NA,"Stade Geoffroy-Guichard","Franck Schneider","Match Report",NA
+32,"Sun","2021-04-11","15:00","Nice",0.6,"0-0",0.5,"Reims",NA,"Stade de Nice","Jeremy Stinat","Match Report",NA
+32,"Sun","2021-04-11","15:00","Brest",2.3,"1-1",0.9,"Nîmes",NA,"Stade Francis-Le Blé","Willy Delajod","Match Report",NA
+32,"Sun","2021-04-11","15:00","Lens",3.1,"4-1",1.4,"Lorient",NA,"Stade Bollaert-Delelis","Eric Wattellier","Match Report",NA
+32,"Sun","2021-04-11","17:05","Monaco",3.4,"3-0",0.9,"Dijon",NA,"Stade Louis II.","Aurélien Petit","Match Report",NA
+32,"Sun","2021-04-11","21:00","Lyon",3,"3-0",0.9,"Angers",NA,"Groupama Stadium","Mikael Lesage","Match Report",NA
+33,"Fri","2021-04-16","21:00","Lille",1.2,"1-1",0.7,"Montpellier",NA,"Stade Pierre-Mauroy","Benoît Millot","Match Report",NA
+33,"Sat","2021-04-17","12:45","Angers",0.9,"0-3",1.5,"Rennes",NA,"Stade Raymond Kopa","Thomas Léonard","Match Report",NA
+33,"Sat","2021-04-17","17:00","Marseille",1.9,"3-2",1.8,"Lorient",NA,"Orange Vélodrome","Hakim Ben El Hadj Salem","Match Report",NA
+33,"Sun","2021-04-18","13:00","Paris S-G",2.3,"3-2",1,"Saint-Étienne",NA,"Parc des Princes","Ruddy Buquet","Match Report",NA
+33,"Sun","2021-04-18","15:00","Dijon",1.3,"2-0",0.9,"Nice",NA,"Stade Gaston Gérard","Johan Hamel","Match Report",NA
+33,"Sun","2021-04-18","15:00","Brest",0.3,"1-1",1.3,"Lens",NA,"Stade Francis-Le Blé","Karim Abed","Match Report",NA
+33,"Sun","2021-04-18","15:00","Reims",0.9,"0-0",0.4,"Metz",NA,"Stade Auguste-Delaune II","Jérôme Miguelgorry","Match Report",NA
+33,"Sun","2021-04-18","15:00","Nîmes",1.4,"1-1",1.2,"Strasbourg",NA,"Stade des Costières","Antony Gautier","Match Report",NA
+33,"Sun","2021-04-18","17:05","Bordeaux",1.1,"0-3",2.2,"Monaco",NA,"Stade Matmut-Atlantique","François Letexier","Match Report",NA
+33,"Sun","2021-04-18","21:00","Nantes",0.9,"1-2",2.3,"Lyon",NA,"Stade de la Beaujoire - Louis Fonteneau","Benoît Bastien","Match Report",NA
+34,"Fri","2021-04-23","21:00","Reims",0.8,"1-3",2.2,"Marseille",NA,"Stade Auguste-Delaune II","Eric Wattellier","Match Report",NA
+34,"Sat","2021-04-24","13:00","Saint-Étienne",0.8,"1-2",1.5,"Brest",NA,"Stade Geoffroy-Guichard","Florent Batta","Match Report",NA
+34,"Sat","2021-04-24","17:00","Metz",0.5,"1-3",2.7,"Paris S-G",NA,"Stade Saint-Symphorien","Willy Delajod","Match Report",NA
+34,"Sun","2021-04-25","13:00","Nice",2.1,"3-1",1.4,"Montpellier",NA,"Stade de Nice","Bastien Dechepy","Match Report",NA
+34,"Sun","2021-04-25","15:00","Lorient",2.9,"4-1",1,"Bordeaux",NA,"Stade Yves Allainmat - Le Moustoir","Jérémie Pignard","Match Report",NA
+34,"Sun","2021-04-25","15:00","Rennes",3.5,"5-1",1.1,"Dijon",NA,"Roazhon Park","Jeremy Stinat","Match Report",NA
+34,"Sun","2021-04-25","15:00","Lens",0.4,"2-1",1.4,"Nîmes",NA,"Stade Bollaert-Delelis","Aurélien Petit","Match Report",NA
+34,"Sun","2021-04-25","15:00","Strasbourg",1.4,"1-2",0.8,"Nantes",NA,"Stade de la Meinau","Ruddy Buquet","Match Report",NA
+34,"Sun","2021-04-25","17:05","Angers",0.1,"0-1",1.3,"Monaco",NA,"Stade Raymond Kopa","Hakim Ben El Hadj Salem","Match Report",NA
+34,"Sun","2021-04-25","21:00","Lyon",0.8,"2-3",2.1,"Lille",NA,"Groupama Stadium","François Letexier","Match Report",NA
+35,"Fri","2021-04-30","21:00","Marseille",0.8,"1-1",0.3,"Strasbourg",NA,"Orange Vélodrome","Stéphanie Frappart","Match Report",NA
+35,"Sat","2021-05-01","17:00","Paris S-G",1.6,"2-1",1.2,"Lens",NA,"Parc des Princes","Jérôme Brisard","Match Report",NA
+35,"Sat","2021-05-01","21:00","Lille",1,"2-0",0,"Nice",NA,"Stade Pierre-Mauroy","Amaury Delerue","Match Report",NA
+35,"Sun","2021-05-02","13:00","Bordeaux",0.6,"1-0",0.8,"Rennes",NA,"Stade Matmut-Atlantique","Antony Gautier","Match Report",NA
+35,"Sun","2021-05-02","15:00","Dijon",1,"1-5",1.7,"Metz",NA,"Stade Gaston Gérard","Franck Schneider","Match Report",NA
+35,"Sun","2021-05-02","15:00","Brest",1.7,"1-4",2.2,"Nantes",NA,"Stade Francis-Le Blé","Mikael Lesage","Match Report",NA
+35,"Sun","2021-05-02","15:00","Lorient",1.8,"2-0",0.8,"Angers",NA,"Stade Yves Allainmat - Le Moustoir","Willy Delajod","Match Report",NA
+35,"Sun","2021-05-02","15:00","Nîmes",2.6,"2-2",1,"Reims",NA,"Stade des Costières","Benoît Millot","Match Report",NA
+35,"Sun","2021-05-02","17:05","Montpellier",0.9,"1-2",3,"Saint-Étienne",NA,"Stade de la Mosson","Karim Abed","Match Report",NA
+35,"Sun","2021-05-02","21:00","Monaco",2.5,"2-3",1.8,"Lyon",NA,"Stade Louis II.","Clément Turpin","Match Report",NA
+36,"Fri","2021-05-07","21:00","Lens",1,"0-3",1.5,"Lille",NA,"Stade Bollaert-Delelis","Clément Turpin","Match Report",NA
+36,"Sat","2021-05-08","13:00","Nantes",1.9,"3-0",1.1,"Bordeaux",NA,"Stade de la Beaujoire - Louis Fonteneau","Benoît Millot","Match Report",NA
+36,"Sat","2021-05-08","17:00","Lyon",4.2,"4-1",0.6,"Lorient",NA,"Groupama Stadium","Mikael Lesage","Match Report",NA
+36,"Sun","2021-05-09","13:00","Saint-Étienne",1.9,"1-0",1.6,"Marseille",NA,"Stade Geoffroy-Guichard","Johan Hamel","Match Report",NA
+36,"Sun","2021-05-09","15:00","Nice",1.8,"3-2",0.7,"Brest",NA,"Stade de Nice","Thomas Léonard","Match Report",NA
+36,"Sun","2021-05-09","15:00","Angers",1.7,"3-0",0.5,"Dijon",NA,"Stade Raymond Kopa","Jérôme Brisard","Match Report",NA
+36,"Sun","2021-05-09","15:00","Strasbourg",1.7,"2-3",0.6,"Montpellier",NA,"Stade de la Meinau","Jérôme Miguelgorry","Match Report",NA
+36,"Sun","2021-05-09","15:00","Metz",0.8,"0-3",1.6,"Nîmes",NA,"Stade Saint-Symphorien","François Letexier","Match Report",NA
+36,"Sun","2021-05-09","17:05","Reims",0.3,"0-1",1.1,"Monaco",NA,"Stade Auguste-Delaune II","Antony Gautier","Match Report",NA
+36,"Sun","2021-05-09","21:00","Rennes",1,"1-1",1.9,"Paris S-G",NA,"Roazhon Park","Ruddy Buquet","Match Report",NA
+37,"Sun","2021-05-16","21:00","Dijon",0.9,"0-4",2.3,"Nantes",NA,"Stade Gaston Gérard","Karim Abed","Match Report",NA
+37,"Sun","2021-05-16","21:00","Paris S-G",4.6,"4-0",0.1,"Reims",NA,"Parc des Princes","Clément Turpin","Match Report",NA
+37,"Sun","2021-05-16","21:00","Nîmes",1.1,"2-5",2.7,"Lyon",NA,"Stade des Costières","Ruddy Buquet","Match Report",NA
+37,"Sun","2021-05-16","21:00","Lille",0.9,"0-0",0.4,"Saint-Étienne",NA,"Stade Pierre-Mauroy","Jérôme Brisard","Match Report",NA
+37,"Sun","2021-05-16","21:00","Bordeaux",2.3,"3-0",1.1,"Lens",NA,"Stade Matmut-Atlantique","Eric Wattellier","Match Report",NA
+37,"Sun","2021-05-16","21:00","Montpellier",0.3,"0-0",1.6,"Brest",NA,"Stade de la Mosson","Aurélien Petit","Match Report",NA
+37,"Sun","2021-05-16","21:00","Monaco",1,"2-1",0.5,"Rennes",NA,"Stade Louis II.","Benoît Bastien","Match Report",NA
+37,"Sun","2021-05-16","21:00","Nice",0.4,"0-2",1.8,"Strasbourg",NA,"Stade de Nice","Mikael Lesage","Match Report",NA
+37,"Sun","2021-05-16","21:00","Lorient",1.1,"2-1",0.1,"Metz",NA,"Stade Yves Allainmat - Le Moustoir","Florent Batta","Match Report",NA
+37,"Sun","2021-05-16","21:00","Marseille",2.7,"3-2",1.3,"Angers",NA,"Orange Vélodrome","Franck Schneider","Match Report",NA
+38,"Sun","2021-05-23","21:00","Nantes",1.3,"1-2",1,"Montpellier",NA,"Stade de la Beaujoire - Louis Fonteneau","Ruddy Buquet","Match Report",NA
+38,"Sun","2021-05-23","21:00","Metz",1.1,"1-1",1.2,"Marseille",NA,"Stade Saint-Symphorien","Hakim Ben El Hadj Salem","Match Report",NA
+38,"Sun","2021-05-23","21:00","Brest",0.9,"0-2",2.6,"Paris S-G",NA,"Stade Francis-Le Blé","Mikael Lesage","Match Report",NA
+38,"Sun","2021-05-23","21:00","Lens",0.5,"0-0",1.8,"Monaco",NA,"Stade Bollaert-Delelis","Jérémie Pignard","Match Report",NA
+38,"Sun","2021-05-23","21:00","Reims",0.8,"1-2",1.2,"Bordeaux",NA,"Stade Auguste-Delaune II","Jérôme Brisard","Match Report",NA
+38,"Sun","2021-05-23","21:00","Lyon",1.9,"2-3",1.6,"Nice",NA,"Groupama Stadium","Benoît Millot","Match Report",NA
+38,"Sun","2021-05-23","21:00","Saint-Étienne",1.7,"0-1",1.4,"Dijon",NA,"Stade Geoffroy-Guichard","Antony Gautier","Match Report",NA
+38,"Sun","2021-05-23","21:00","Rennes",1,"2-0",1.1,"Nîmes",NA,"Roazhon Park","Willy Delajod","Match Report",NA
+38,"Sun","2021-05-23","21:00","Strasbourg",0.3,"1-1",0.6,"Lorient",NA,"Stade de la Meinau","Stéphanie Frappart","Match Report",NA
+38,"Sun","2021-05-23","21:00","Angers",0.9,"1-2",1.3,"Lille",NA,"Stade Raymond Kopa","Benoît Bastien","Match Report",NA

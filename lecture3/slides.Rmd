@@ -3,6 +3,8 @@ title: "Basic data manipulation"
 subtitle: "Lecture 3"
 author: "<br>Louis SIRUGUE"
 date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+<style> .left-column {width: 65%;} .right-column {width: 31%;} </style>
+
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -30,9 +35,10 @@ stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
 options(htmltools.dir.version = F)
 knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
+Sys.setenv(LANG = "en")
 ```
 
-### Last time we saw
+### Quick reminder
 
 #### 1. Distributions
 
@@ -77,7 +83,7 @@ ggarrange(ggplot(data, aes(x = V1)) +
   
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 1. Distributions
 
@@ -104,7 +110,7 @@ ggarrange(ggplot(data, aes(x = V1)) +
 
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 1. Distributions
 
@@ -146,7 +152,7 @@ ggarrange(ggplot(data, aes(x = V1)) +
   
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 2. Central tendency
 
@@ -202,7 +208,7 @@ $$\text{IQR} = Q_3 - Q_1 $$
 
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 4. Inference
 
@@ -264,436 +270,284 @@ ggplot() +
 
 ---
 
-<h3>Today we learn how to manipulate data</h3>
+class: inverse, hide-logo
+
+### Warm up practice
+
+#### 1) Import the `ligue1.csv` dataset and store it in an object called `fb`
 
 --
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 1. Datasets
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is a dataset
- * 1.2. Import and eyeball data
- * 1.3. Subset data
+#### 2) Create a subset of this dataset containing only matches that took place at 13h
 
-#### 2. The dplyr grammar
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Basic functions
- * 2.2. Group by and summarise
- * 2.3. Merge and append data
- * 2.4. Reshape data
+--
 
-#### 3. Wrap up!
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 3) Print the number of matches in this subset and compute the average attendance
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 4) Redo the same exercise on matches that took place at 20h45
+
+--
+
+<p style = "margin-bottom:3cm;"></p>
+
+<center><h3><i>You've got 5 minutes!</i></h3></center>
+
+`r countdown(minutes = 5, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 
-<h3>Today we learn how to manipulate data</h3>
+class: inverse, hide-logo
 
-<p style = "margin-bottom:2cm;">
+### Solution
 
-#### 1. Datasets
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is a dataset
- * 1.2. Import and eyeball data
- * 1.3. Subset data
-
----
-
-### 1. Datasets
-
-#### 1.1. What is a dataset?
-
-&#10140; <b>Datasets</b> are typically tables in which each <b>row</b> corresponds to an <b>observation</b> and each <b>column</b> to a <b>variable</b>
+#### 1) Import the `ligue1.csv` dataset and store it in an object called `fb`
 
 --
 
-<p style = "margin-bottom:-.25cm;">
+```{r, eval = F}
+fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
 
-<style> .left-column {width: 22%;} .right-column {width: 75%;} </style>
-
-.left-column[
-
-<p style = "margin-bottom:1.5cm;">
-
-#### Observations can be:
-<p style = "margin-bottom:-.5cm;">
- * Individuals
- * Countries
- * Years
-
-<p style = "margin-bottom:1cm;">
-
-#### Variables can be:
-<p style = "margin-bottom:-.5cm;">
- * Age
- * GDP
- * Temperature
-]
-
---
-
-.right-column[
 ```{r, echo = F}
-kable(read.csv("cereals.csv") %>% 
-        select(name, calories, protein, fat, sodium, fiber, vitamins) %>%
-        head(8), caption = "Excerpt of a dataset on cereals")
-```
-]
-
----
-
-### 1. Datasets
-
-#### 1.1. What is a dataset?
-
- * Each column of a dataset can be seen as a <b>vector</b> whose <b>n<sup>th</sup> element</b> is about the <b>n<sup>th</sup> individual</b>
-   * This is how we can create a dataset: by assigning vectors to variable names in a data object
-
---
-
-```{r, results='hide'}
-departments <- data.frame(code = 1:4,
-                          department = c("Ain", "Aisne", "Allier", "Alpes-de-Haute-Provence"),
-                          capital = c("Bourg-en-Bresse", "Laon", "Moulin", "Digne-les-bains"))
-
-print(departments, row.names = F)
-```
---
-```{r, echo=FALSE}
-departments <- data.frame(code = 1:4,
-                          department = c("Ain", "Aisne", "Allier", "Alpes-de-Haute-Provence"),
-                          capital = c("Bourg-en-Bresse", "Laon", "Moulin", "Digne-les-bains"))
-
-print(departments, row.names = F)
-```
-
-<p style = "margin-bottom:1.25cm;">
-
---
-
- * This illustrates what datasets are made of, but the point is not to write datasets ourselves 
- 
-<p style = "margin-bottom:-.35cm;">
-
---
-
-<center><b> &#10140; We need to import data in R </b></center>
-
----
-
-### 1. Datasets
-
-#### 1.2. Import and eyeball data
-
-<ul>
-  <li>There are <b>various formats</b> of datasets, and as many ways to import them in R</li>
-  <ul>
-    <li>A very common format is the <b>.csv</b> (for <i>Comma Separated Values</i>), which basically looks like that:</li>
-  </ul>
-</ul>
-
-```{r, eval = FALSE}
-1,Ain,Bourg-en-Bresse
-2,Aisne,Laon
-3,Allier,Moulin         
-4,Alpes-de-Haute-Provence,Digne-les-bains
+fb <- read.csv("ligue1.csv", encoding = "UTF-8")
 ```
 
 --
 
-To **import** csv data, you can use **`read.csv()`**. This function has **many parameters** you can change to import the data the way you want. Here are a few of them:
- * `skip`: how many **lines to skip** before reading the data
- * `header`: whether the first row contains **variables names**
- * `sep`: the **character** that **separates** each observations in the csv (usually `","` or `";"`)
- * `fileEncoding`: if the data contain **special characters** you should set the right encoding
+#### 2) Create a subset of this dataset containing only matches that took place at 13h
 
 --
 
 ```{r}
-iris <- read.csv("iris.csv", skip = 0, header = TRUE, sep = ",", encoding = "UTF-8")
+sub13 <- fb[fb$Time == "13:00", ]
 ```
 
-<!-- *Other data formats such xls, dta, sas, etc., typically have their own read function, very similar to this one.* -->
-
----
-
-### 1. Datasets
-
-#### 1.2. Import and eyeball data
-
- * The `head` function prints the **first rows** of a dataset  
-
-```{r, results='hide'}
-head(iris, 12) # Show the first 12 rows of the data
-```
 --
-```{r, echo = FALSE}
-head(iris, 12) # Show the first 12 rows of the data
+
+#### 3) Print the number of matches in this subset and compute the average attendance
+
+--
+
+```{r}
+nrow(sub13)
+```
+
+--
+
+```{r}
+mean(sub13$Attendance)
 ```
 
 ---
 
-### 1. Datasets
+class: inverse, hide-logo
 
-#### 1.2. Import and eyeball data
+### Solution
 
- *  The `view` function opens the **data in a new tab** in the code panel. It should look like that:
+<ul>
+  <li>When there are <b>missing values</b> in a vector, the <b>mean</b> function returns <b>NA</b></li>
+  <ul>
+    <li>We need to set the <b>na.rm</b> option to <b>TRUE</b></li>
+  </ul>
+</ul>
+
+--
+
+#### 3) Print the number of matches in this subset and compute the average attendance
+
+```{r}
+mean(sub13$Attendance, na.rm = T)
+```
+
+--
+
+#### 4) Redo the same exercise on matches that took place at 20h45
+
+--
+
+```{r}
+sub2045 <- fb[fb$Time == "20:45", ]
+nrow(sub2045)
+mean(sub2045$Attendance, na.rm = T)
+```
+
+---
+
+<h3>Today we learn how to manipulate data</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The dplyr package</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Packages</li>
+    <li>1.2. Basic functions</li>
+    <li>1.3. group_by() and summarise()</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Merge and reshape</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Merge and append data</li>
+    <li>2.2. Reshape data</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. A few words on learning R</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. When it doesn't work the way you want</li>
+    <li>3.2. Where to find help</li>
+    <li>3.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Today we learn how to manipulate data</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The dplyr package</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Packages</li>
+    <li>1.2. Basic functions</li>
+    <li>1.3. group_by() and summarise()</li>
+  </ul>
+</ul>
+
+]
+
+---
+
+### 1. The `dplyr` package
+
+#### 1.1. Packages
+
+<ul>
+  <li>So far we only used functions that are directly available in R</li>
+  <ul>
+    <li>But there are tons of <b>user-created functions</b> out there that can make your life so much easier</li>
+    <li>These functions are shared in what we call <b>packages</b></li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Packages are <b>bundles of functions</b> that R users put at the disposal of other R users</li>
+  <ul>
+    <li>Packages are <b>centralized</b> on the <a href = "https://cran.r-project.org/">Comprehensive R Archive Network (CRAN)</a></li>
+    <li>To <b>download</b> and install a CRAN package you can simply use <b>install.packages()</b></li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>All the functions of the dplyr grammar are gathered in the <b>dplyr package</b></li>
+  <ul>
+    <li>We can download these functions and make them ready to use with the install.packages() function</li>
+  </ul>
+</ul>
+
+--
 
 ```{r, eval = F}
-view(iris)
+install.packages("dplyr") # Requires an internet connection
 ```
 
 --
 
-<center>
-<img src = "view.png" width = "550"/>
-</center>
+<p style = "margin-bottom:1cm;"></p>
 
----
-
-### 1. Datasets
-
-#### 1.2. Import and eyeball data
-
-<p style = "margin-bottom:.5cm;">
-
- * You can obtain the **dimension** of the data with the `dim()` function
-
-```{r, results = 'hide'}
-dim(iris)
-```
---
-```{r, echo = F}
-dim(iris)
-```
-
-The data has 150 rows and 5 columns
-
---
-
-<p style = "margin-bottom:1.75cm;">
-
- * You can access to the **variable names** with the `names()` function
-
-```{r, results = 'hide'}
-names(iris)
-```
---
-```{r, echo = F}
-names(iris)
-```
-
----
-
-### 1. Datasets
-
-#### 1.2. Import and eyeball data
-
- *  The function `summary()` allows you to get a concise **description of each variable** in your data
+<ul>
+  <li>The tidyverse package is <b>now installed</b> on your computer</li>
+  <ul>
+    <li>You won't have to do it again</li>
+  </ul>
+</ul>
  
-```{r, results = 'hide'}
-summary(iris, digits = 2) # Choose how to round numeric values with 'digits'
-```
---
-```{r, echo = F}
-summary(iris, digits = 2)
-```
-
---
-
-<p style = "margin-bottom:.75cm;">
-
-**&#10140; What we learn:**
-<p style = "margin-bottom:-.25cm;">
- * `Petal`/`Sepal.Lengths`/`Widths` are **numeric** while `Species` is a **character** variable
- * From the **mean** and the **range** of numeric variables: 
-  * Petals tend to be smaller than sepals (for irises)
-  * The range of numeric variables is quite large
-
 ---
 
-### 1. Datasets
+### 1. The `dplyr` package
 
-#### 1.2. Import and eyeball data
+#### 1.1. Packages
 
+ * The `dplyr` package is now <b>on your computer</b>, but it is <b>not loaded in R</b>
+
+--
+
+```{r, echo = F}
+detach("package:dplyr", unload=TRUE)
+```
+
+
+```{r, error = TRUE}
+ls("package:dplyr")
+```
+
+<p style = "margin-bottom:1.25cm;"></p>
 
 <ul>
-  <li>In R you can handle datasets in <b>different formats</b>:</li>
-  <ul>
-    <li>data.frame</li>
-    <li>tibble</li>
-    <li>matrix</li>
-    <li>data.table</li>
-  </ul>
+  <li>You need to use the <b>library()</b> command to load it</li>
 </ul>
 
 --
 
+```{r}
+library(dplyr)
+ls("package:dplyr")[1:5]
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
 <ul>
-  <li>All these formats have their specificities</li>
+  <li>But even though the package is permanently installed, it is <b>loaded only for your current session</b></li>
   <ul>
-    <li>In this course we'll focus on <b>data.frames</b> and <b>tibbles</b> (very similar) </li>
+    <li>Each time you start a <b>new R session</b>, you'll have to load the packages you need with <b>library()</b></li>
   </ul>
 </ul>
 
-<p style = "margin-bottom:-.25cm;">
-
---
-
-<ul>
-  <li>One specificity of the <b>tibble</b> can be observed when printing the data:</li>
-  <ul>
-    <li>It will display its <b>dimensions</b> (#rows \(\times\) #columns) and the <b>class</b> of each variable under its name</li>
-  </ul>
-</ul>
-
-```{r, results='hide'}
-head(as_tibble(iris), 2)
-```
---
-```{r, echo = F}
-head(as_tibble(iris), 2)
-```
-
 ---
 
-### 1. Datasets
+### 1. The `dplyr` package
 
-#### 1.3. Subset data: Extract values
+#### 1.2. Basic functions
 
-<ul>
-  <li>Just as with vectors, you can <b>access elements</b> of the data using <b>[]</b></li>
-  <ul>
-    <li>But while vectors have 1 dimension, datasets have <b>two dimensions</b>: rows and columns</li>
-    <li>To access specific cells of the data, you must indicate the <b>row number(s)</b> and the <b>column number(s)</b> <i>separated by a comma in the brackets</i></li>
-  </ul>
-</ul>
 
---
-```{r, results='hide'}
-iris[5, 2] # Fifth observation of the second variable
-```
---
-```{r, echo=F}
-iris[5, 2]
-```
---
-```{r, results='hide'}
-iris[2, ] # Second observation of each variable
-```
---
-```{r, echo=F}
-iris[2, ]
-```
---
-```{r, results='hide'}
-iris[c(3, 6), 4] # Observations 3 and 6 of the fourth variable
-```
---
-```{r, echo=F}
-iris[c(3, 6), 4]
-```
-
----
-
-### 1. Datasets
-
-#### 1.3. Subset data: Get variables
-
- * The **`$`** allows to <b>access a variable</b> of the data
-
-```{r, results='hide'}
-iris$Sepal.Length
-```
---
-```{r, echo = F}
-iris$Sepal.Length
-```
-
---
-
- * Alternative solutions include using **double brackets** or the **column index**
-
-```{r, eval = F}
-iris[["Sepal.Length"]]
-iris[, 1] 
-```
-
----
-
-### 1. Datasets
-
-#### 1.3. Subset data: Conditional subsetting
-
- * A **logical vector** (`T` and `F` / a condition) **before the comma** will select every **row** that meets this condition    
-
-```{r, results='hide'}
-iris[iris$Petal.Length > 6.5, ]
-```
---
-```{r, echo = F}
-iris[iris$Petal.Length > 6.5, ]
-```
-
---
-
- * A **logical vector** (`T` and `F` / a condition) **after the comma** will select every **column** that meets this condition    
-
-```{r, results='hide'}
-iris[iris$Petal.Length > 6.5, names(iris) %in% c("Petal.Length", "Species")]
-```
---
-```{r, echo = F}
-iris[iris$Petal.Length > 6.5, names(iris) %in% c("Petal.Length", "Species")]
-```
-
----
-
-<h3>Overview</h3>
-
-<p style = "margin-bottom:2cm;">
-
-#### 1. Datasets &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is a dataset
- * 1.2. Import and eyeball data
- * 1.3. Subset data
-
-#### 2. The dplyr grammar
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Basic functions
- * 2.2. Group by and summarise
- * 2.3. Merge and append data
- * 2.4. Reshape data
-
-#### 3. Wrap up!
-
----
-
-<h3>Overview</h3>
-
-<p style = "margin-bottom:2cm;">
-
-#### 1. Datasets &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is a dataset
- * 1.2. Import and eyeball data
- * 1.3. Subset data
- 
-#### 2. The dplyr grammar
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Basic functions
- * 2.2. Group by and summarise
- * 2.3. Merge and append data
- * 2.4. Reshape data
-
----
-
-### 2. The `dplyr` grammar
-
-#### 2.1. Basic functions
-
-`dplyr` is a **grammar** of data manipulation, providing very **user-friendly functions** to handle the most common **data manipulation** tasks. The functions you will probably use the most are the following:
+`dplyr` is a **grammar** of data manipulation providing very **user-friendly functions** to handle the most common **data manipulation** tasks:
 
 --
 
@@ -705,23 +559,22 @@ iris[iris$Petal.Length > 6.5, names(iris) %in% c("Petal.Length", "Species")]
 
 --
 
-.left-column[
+<p style = "margin-bottom:1cm;"></p>
+
 <img src = "pipe.png" width = "180"/>
-]
 
 --
 
-.right-column[
 
-<p style = "margin-bottom:1.25cm;">
+<p style = "margin-bottom:-5cm;"></p>
 
-<ul>
+<ul style = "margin-left:6cm;">
   <li>A very handy <b>operator</b> to use with the <b>dplyr</b> grammar is the <b>pipe %>%</b></li>
 </ul>
 
 <p style = "margin-bottom:-.25cm;">
 
-<ul>
+<ul style = "margin-left:6cm;">
   <ul>
     <li>You can basically read <b>a %>% b()</b> as <i>"apply function b() to object a"</i></li>
   </ul>
@@ -730,443 +583,577 @@ iris[iris$Petal.Length > 6.5, names(iris) %in% c("Petal.Length", "Species")]
 <p style = "margin-bottom:-.25cm;">
 
 
-<ul>
+<ul style = "margin-left:6cm;">
   <ul>
     <li>With this operator you can easily <b>chain the operations</b> you apply to an object</li>
   </ul>
 </ul>
 
-]
-
 ---
 
-### 2. The `dplyr` grammar
+### 1. The `dplyr` package
 
-#### 2.1. Basic functions
-
-```{r, eval = FALSE}
-iris %>% 
-  # Generate an new variable, the product of sepal length and width
-  mutate(product = Sepal.Length * Sepal.Width) %>%
-```
---
-<p style = "margin-bottom:-1.01cm;"></p>
-```{r, eval = FALSE}
-  # Keep only this variable and the species in the dataset
-  select(product, Species) %>%
-```
---
-<p style = "margin-bottom:-1.01cm;"></p>
-```{r, eval = FALSE}
-  # Keep only observations from the virginica species 
-  filter(Species == "virginica") %>%
-```
---
-<p style = "margin-bottom:-1.01cm;"></p>
-```{r, eval = FALSE}
-  # Arrange rows by decreasing value of the product variable
-  arrange(-product) %>%
-```
---
-<p style = "margin-bottom:-1.01cm;"></p>
-```{r, eval = FALSE}
-  # Show the first 5 observations
-  head(5)
-```
---
-```{r, echo = F}
-iris %>% 
-  mutate(product = Sepal.Length * Sepal.Width) %>%
-  select(product, Species) %>%
-  filter(Species == "virginica") %>%
-  arrange(-product) %>%
-  head(5)
-```
-
----
-
-### 2. The `dplyr` grammar
-
-<center><h4> &#9888; <i>Be careful when chaining operations with pipes, it's easy to get mixed up!</i> &#9888; </h4></center>
-
---
-
- * **Don't code blindfolded, `view()` your data at each step** to make sure that it goes the way you intend it to go 
- * Try to work on the subset of variables you actually need to make things easier
-
---
-
-```{r, eval = F}
-iris %>% 
-  mutate(product = Sepal.Length * Sepal.Width) %>%
-  view()
-```
---
-```{r, eval = F}
-iris %>% 
-  mutate(product = Sepal.Length * Sepal.Width) %>%
-  select(product, Species) %>%
-  view()
-```
---
-```{r, eval = F}
-iris %>% 
-  mutate(product = Sepal.Length * Sepal.Width) %>%
-  select(product, Species) %>%
-  filter(Species == "virginica") %>%
-  view()
-```
-
----
-
-### 2. The `dplyr` grammar
-
-#### 2.1. Basic functions: common mutate usage
-
- * Generate a variable as a function of other variables
-
-```{r}
-iris <- iris %>% mutate(new_var = (Sepal.Length * Sepal.Width) / 2)
-```
-
---
-
- * Add a variable from elsewhere (dimensions must match)
-
-```{r}
-iris <- iris %>% mutate(new_var = 1:nrow(iris))
-```
-
---
-
- * Use `ifelse(condition, value if condition is met, value if not)`
-
-```{r}
-iris <- iris %>% mutate(new_var = ifelse(Species == "virginica", 1, 0))
-```
-
---
-
- * Use `case_when()` when there are more than 2 cases
-
-```{r}
-iris <- iris %>% mutate(new_var = case_when(Species == "versicolor" ~ "VER",
-                                            Species == "virginica" ~ "VIR",
-                                            Species == "setosa" ~ "SET"))
-```
-
----
-
-### 2. The `dplyr` grammar
-
-#### 2.2. Group by and summarise
-
-The `group_by()` function allows to modify the data **group by group** rather than on all observations
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul>
-  <li>Imagine that you are interested in <b>comparing</b></li>
-  <ul>
-    <li>The average sepal width <b>by iris species</b></li>
-    <li>And the average sepal width <b>overall</b></li>
-  </ul>
-</ul>
-
-```{r, eval = FALSE}
-iris_groups <- iris %>% # Let's save our modifications in a new dataset
-```
---
-<p style = "margin-bottom:-1.01cm;"></p>
-```{r, eval = FALSE}
-  mutate(pop_mean = mean(Sepal.Width)) %>% # First compute the mean of all observations
-```
---
-<p style = "margin-bottom:-1.01cm;"></p>
-```{r, eval = FALSE}
-  group_by(Species) %>% # Then group par specie
-```
---
-<p style = "margin-bottom:-1.01cm;"></p>
-```{r, eval = FALSE}
-  mutate(group_mean = mean(Sepal.Width)) # And compute the mean
-```
-
-```{r, echo =F}
-iris_groups <- iris %>% 
-  mutate(pop_mean = mean(Sepal.Width)) %>%
-  group_by(Species) %>%
-  mutate(group_mean = mean(Sepal.Width))
-```
-
---
-
-<p style = "margin-bottom:1.25cm;"></p>
-
- * Let's view our data to see how it went
-
-```{r, eval = F}
-view(iris_groups)
-```
-
----
-
-### 2. The `dplyr` grammar
-
-<center><img src = "view3.png" width = 800/></center>
-
----
-
-### 2. The `dplyr` grammar
-
-#### 2.2. Group by and summarise
-
-<ul>
-  <li>For each observation we now have the <b>average</b> sepal width of its <b>specie</b> and that of the whole <b>population</b></li>
-  <ul>
-    <li>But these results are <b>not conveyed clearly</b> because we still have individual-level info in the data</li>
-    <li>We should keep <b>only</b> the <b>aggregated</b> variables with one row per specie</li>
-  </ul>
-</ul>
-
---
-
-```{r, eval = FALSE}
-iris_groups %>% 
-  select(Species, pop_mean, group_mean) %>% # Select only the variables of interest
-```
---
-<p style = "margin-bottom:-1.01cm;"></p>
-```{r, eval = FALSE}
-  unique() # Drop duplicate rows
-```
---
+#### 1.2. Basic functions
 
 ```{r, echo = F}
-iris_groups %>% 
-  select(Species, pop_mean, group_mean) %>% unique()
+fb <- read.csv("ligue1.csv", encoding = "UTF-8")
 ```
 
---
+```{r, eval = F}
+fb 
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+```
 
-<p style = "margin-bottom:.75cm;"></p>
+```{r, eval = F, highlight=F}
+##     Wk Day       Date  Time          Home  xG Score xG.1          Away Attendance  ...
+## 1    1 Fri 2021-08-06 21:00        Monaco 2.0   1–1  0.3        Nantes       7500  ...
+## 2    1 Sat 2021-08-07 17:00          Lyon 1.4   1–1  0.8         Brest      29018  ...
+## 3    1 Sat 2021-08-07 21:00        Troyes 0.8   1–2  1.2     Paris S-G      15248  ...
+## 4    1 Sun 2021-08-08 13:00        Rennes 0.6   1–1  2.0          Lens      22567  ...
+## 5    1 Sun 2021-08-08 15:00      Bordeaux 0.7   0–2  3.3 Clermont Foot      18748  ...
+## 6    1 Sun 2021-08-08 15:00    Strasbourg 0.4   0–2  0.9        Angers      23250  ...
+## 7    1 Sun 2021-08-08 15:00          Nice 0.8   0–0  0.2         Reims      18030  ...
+## 8    1 Sun 2021-08-08 15:00 Saint-Étienne 2.1   1–1  1.3       Lorient      20461  ...
+## 9    1 Sun 2021-08-08 17:00          Metz 0.7   3–3  1.4         Lille      15551  ...
+ ...  ... ...        ...   ...           ... ...   ...  ...           ...        ...  ...                      
+```
 
-<ul>
-  <li>We actually summarized the data into <b>descriptive statistics</b></li>
-  <ul>
-    <li>This is precisely what the <b>summarise()</b> function is made for</li>
-  </ul>
-</ul>
 
 ---
 
-### 2. The `dplyr` grammar
+### 1. The `dplyr` package
 
-#### 2.2. Group by and summarise
+#### 1.2. Basic functions
 
-<ul>
-  <li>The <b>summarise()</b> function was made to <b>do it all</b> that by itself:</li>
-  <ul>
-    <li><u>Step 1:</u> Indicate at which level you want to aggregate the data by putting the <b>grouping variable</b> in</li>
-  </ul>
-</ul>
-  
-<p style = "margin-left:3.95cm;margin-top:-.5cm;margin-bottom:-.5cm;"><b>group_by()</b></p>
-
-<ul>
-  <ul>
-    <li><u>Step 2:</u> Generate the aggregate variables by specifying <b>which variable</b> you want <b>to aggregate</b> and what</li>
-  </ul>
-</ul>
-
-<p style = "margin-left:3.95cm;margin-top:-.5cm;margin-bottom:-.1cm;"><b>group-level information</b> you want about it <i>(min, max, sum, number of observations, ...)</i></p>
-
-
---
-
-```{r, eval = F}
-iris %>% group_by(Species) %>%
-  summarise(mean_length = mean(Sepal.Length),
-            min_length = min(Sepal.Length),
-            max_length = max(Sepal.Length),
-            sum_width = sum(Sepal.Width),
-            nb_obs = n())
+```{r, eval= F}
+fb %>%
+  select(Home, xG, Score, xG.1, Away)               # Keep/drop certain columns
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
 ```
---
-```{r, echo = F}
-iris %>% 
-  group_by(Species) %>%
-  summarise(mean_length = mean(Sepal.Length),
-            min_length = min(Sepal.Length),
-            max_length = max(Sepal.Length),
-            sum_width = sum(Sepal.Width),
-            nb_obs = n())
+
+```{r, eval = F, highlight=F}
+##              Home  xG Score xG.1          Away
+## 1          Monaco 2.0   1–1  0.3        Nantes
+## 2            Lyon 1.4   1–1  0.8         Brest
+## 3          Troyes 0.8   1–2  1.2     Paris S-G
+## 4          Rennes 0.6   1–1  2.0          Lens
+## 5        Bordeaux 0.7   0–2  3.3 Clermont Foot
+## 6      Strasbourg 0.4   0–2  0.9        Angers
+## 7            Nice 0.8   0–0  0.2         Reims
+## 8   Saint-Étienne 2.1   1–1  1.3       Lorient
+## 9            Metz 0.7   3–3  1.4         Lille
+ ...             ... ...   ...  ...           ...
 ```
 
 ---
 
-### 2. The `dplyr` grammar
+### 1. The `dplyr` package
 
-####  2.2. Group by and summarise
-
-Note that **`group_by()`** generally applies to **all operations until** you apply the **`ungroup()`** function 
-
---
-
-* After computing the average sepal length by species, you may want to get the maximum value of that average:
-
---
+#### 1.2. Basic functions
 
 ```{r, eval = F}
-iris %>%
-  group_by(Species) %>% # Group by species
-  mutate(mean_length = mean(Sepal.Length)) %>% # Compute the mean (by species)
-  select(Species, mean_length) %>% # Select the two variables we're interested in
-  unique() %>% # Drop duplicate row
+fb %>%
+  select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
+  mutate(home_winner = xG > xG.1)                   # Create a new variable
+                                                    #
+                                                    #
+                                                    #
+                                                    #
 ```
 
---
 
-<p style = "margin-bottom:-.80cm;"></p>
+```{r, eval = F, highlight=F}
+##              Home  xG Score xG.1          Away home_winner
+## 1          Monaco 2.0   1–1  0.3        Nantes        TRUE
+## 2            Lyon 1.4   1–1  0.8         Brest        TRUE
+## 3          Troyes 0.8   1–2  1.2     Paris S-G       FALSE
+## 4          Rennes 0.6   1–1  2.0          Lens       FALSE
+## 5        Bordeaux 0.7   0–2  3.3 Clermont Foot       FALSE
+## 6      Strasbourg 0.4   0–2  0.9        Angers       FALSE
+## 7            Nice 0.8   0–0  0.2         Reims        TRUE
+## 8   Saint-Étienne 2.1   1–1  1.3       Lorient        TRUE
+## 9            Metz 0.7   3–3  1.4         Lille       FALSE
+ ...             ... ...   ...  ...           ...         ...
+```
+
+---
+
+### 1. The `dplyr` package
+
+#### 1.2. Basic functions
 
 ```{r, eval = F}
-  mutate(forgot_ungroup = max(mean_length)) %>% # Compute max without ungroup
+fb %>%
+  select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
+  mutate(home_winner = xG > xG.1) %>%               # Create a new variable
+  filter(Home == "Rennes")                          # Keep/drop certain rows 
+                                                    #
+                                                    #
+                                                    #
 ```
 
---
+```{r, eval = F, highlight=F}
+##      Home  xG Score xG.1          Away home_winner
+## 1  Rennes 0.6   1–1  2.0          Lens       FALSE
+## 2  Rennes 0.9   1–0  0.5        Nantes        TRUE
+## 3  Rennes 1.0   0–2  0.5         Reims        TRUE
+## 4  Rennes 2.4   6–0  0.3 Clermont Foot        TRUE
+## 5  Rennes 0.8   2–0  1.4     Paris S-G       FALSE
+## 6  Rennes 1.5   1–0  0.6    Strasbourg        TRUE
+## 7  Rennes 3.8   4–1  1.1          Lyon        TRUE
+## 8  Rennes 3.1   2–0  0.7   Montpellier        TRUE
+## 9  Rennes 0.8   1–2  0.6         Lille        TRUE
+         ... ...   ...  ...           ...         ...
+```
 
-<p style = "margin-bottom:-.80cm;"></p>
+---
+
+### 1. The `dplyr` package
+
+#### 1.2. Basic functions
 
 ```{r, eval = F}
-  ungroup() %>% # Ungroup
-  mutate(did_not_forget = max(mean_length)) # Compute max after ungroup
+fb %>%
+  select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
+  mutate(home_winner = xG > xG.1) %>%               # Create a new variable
+  filter(Home == "Rennes") %>%                      # Keep/drop certain rows
+  arrange(-xG)                                      # Sort rows
+                                                    #
+                                                    #
 ```
---
 
-<p style = "margin-bottom:-1cm;"></p>
+```{r, eval = F, highlight=F}
+##      Home  xG Score xG.1          Away home_winner
+## 1  Rennes 3.8   4–1  1.1          Lyon        TRUE
+## 2  Rennes 3.3   6–0  0.4      Bordeaux        TRUE
+## 3  Rennes 3.3   6–1  0.9          Metz        TRUE
+## 4  Rennes 3.1   2–0  0.7   Montpellier        TRUE
+## 5  Rennes 2.7   2–0  0.3         Brest        TRUE
+## 6  Rennes 2.6   4–1  0.4        Troyes        TRUE
+## 7  Rennes 2.4   6–0  0.3 Clermont Foot        TRUE
+## 8  Rennes 1.9   2–3  2.9        Monaco       FALSE
+## 9  Rennes 1.7   2–0  0.3        Angers        TRUE
+         ... ...   ...  ...           ...         ...
+```
+
+---
+
+### 1. The `dplyr` package
+
+#### 1.2. Basic functions
+
+```{r}
+fb %>%
+  select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
+  mutate(home_winner = xG > xG.1) %>%               # Create a new variable
+  filter(Home == "Rennes") %>%                      # Keep/drop certain rows
+  arrange(-xG) %>%                                  # Sort rows
+  summarise(expected_wins = mean(home_winner),      # Aggregate into statistics
+            expected_goals = sum(xG))               #
+```
+
+---
+
+### 1. The `dplyr` package
+
+#### 1.2. Basic functions
+
+ * Here are two very **handy functions** to use within `mutate()`
+   
+  <p style = "margin-bottom:1cm;"></p>
+
+--
 
 .pull-left[
-```{r, echo = F}
-iris %>%
-  group_by(Species) %>% # Group by species
-  mutate(mean_length = mean(Sepal.Length)) %>% # Compute the mean (by species)
-  select(Species, mean_length) %>% # Select the two variables we're interested in
-  unique() %>% # Drop duplicate row
-  mutate(forgot_ungroup = max(mean_length)) %>% # Compute max without ungroup
-  ungroup() %>% # Ungroup
-  mutate(did_not_forget = max(mean_length)) # Compute max after ungroup
+<center><b>ifelse</b></center>
+
+```{r}
+fb %>%
+  select(Home, Attendance) %>%  
+  mutate(att_bin = ifelse(Attendance > 10000, 
+                          "Large", 
+                          "Low")
+         ) %>% head()
 ```
 ]
 
 --
 
-.right[
-<br>
-#### If you do not ungroup the data, 
-<p style = "margin-bottom:-.75cm;"></p>
-#### the maximum value is computed 
-<p style = "margin-bottom:-.75cm;"></p>
-#### *by* specie and not *across* species.
+.pull-right[
+<center><b>case_when</b></center>
+
+```{r}
+fb %>%
+  select(Home, xG, xG.1, Away) %>%  
+  mutate(xWin = case_when(xG > xG.1 ~ "Home",
+                          xG == xG.1 ~ "Draw",
+                          xG < xG.1 ~ "Away")
+         ) %>% head()
+```
 ]
 
 ---
+
+### 1. The `dplyr` package
+
+#### 1.3. group_by() and summarise()
+
+ * With `group_by()` you can perform **computations separately** for the different **categories of a variable**
+
+--
+
+.pull-left[
+```{r}
+fb %>%
+  select(Wk, Home, xG) %>%
+  mutate(all.xG = mean(xG)) %>%
+  head(10)
+```
+]
+
+--
+
+.pull-right[
+```{r, eval = F}
+fb %>%
+  select(Wk, Home, xG) %>%
+* group_by(Home) %>%
+  mutate(home.xG = mean(xG)) %>%
+  head(6)
+```
+```{r, echo = F}
+fb %>%
+  select(Wk, Home, xG) %>%
+  group_by(Home) %>%
+  mutate(home.xG = mean(xG)) %>%
+  head(6)
+```
+]
+
+---
+
+### 1. The `dplyr` package
+
+#### 1.3. group_by() and summarise()
+
+<ul>
+  <li>It is particularly <b>useful with summarise()</b></li>
+  <ul>
+    <li>summarise keeps the grouping variable</li>
+    <li>and computes <b>statistics for each category</b></li>
+  </ul>
+</ul>
+
+--
+
+.pull-left[
+
+```{r}
+fb %>%
+  group_by(Wk) %>%
+  summarise(n = n(),
+            tot_xG = sum(xG)+sum(xG.1),
+            avg_WG = tot_xG/n) %>%
+  head(4)
+```
+
+
+]
+
+--
+
+
+.pull-right[
+
+<p style = "margin-top:-6.3em"></p>
+
+<center><b>mutate() \(\neq\) summarise()</b></center>
+
+<ul>
+  <li><b>mutate()</b> takes an operation that converts:</li>
+  <ul>
+    <li><b>A vector into another vector</b></li>
+  </ul>
+  <li><b>summarise()</b> takes an operation that converts:</li>
+  <ul>
+    <li><b>A vector into a value</b></li>
+  </ul>
+</ul>
+]
+
+--
+
+
+.pull-right[
+
+<p style = "margin-top:-15.5em"></p>
+
+<center><b>Ungrouping</b></center>
+
+<ul>
+  <li><b>group_by()</b> applies to all subsequent operations</li>
+  <li>To cancel its effect you must <b>ungroup()</b> the data</li>
+</ul>
+
+```{r, eval = F}
+fb %>% 
+  group_by(Wk) %>% 
+  mutate(test = mean(xG)) %>% 
+* ungroup() %>%
+  ...
+```
+]
+
+---
+
+class: inverse, hide-logo
 
 ### Practice
 
-**1) Import** `starbucks.csv` using the following command and **see what's wrong**
+#### 1) Start from the `fb` dataset and keep only the variables `Home`, `Score` and `Away`
 
-```{r, eval = F}
-starbucks <- read.csv("YOUR_DIRECTORY/starbucks.csv")
+--
+
+#### 2) Use the `separate()` function from `tidyr` to split the `Score` variable into `home_score` and `away_score`
+
+```{r}
+data.frame(x = "a_b") %>% 
+  separate(x, c("x", "y"), "_")
 ```
 
-<center><i>Your directory must look like "C:/Users/...", <b>make sure to use / instead of \</b></i></center>
+--
+
+#### 3) Convert these two variables into numeric vectors
 
 --
 
-<p style = "margin-bottom:1cm;"></p>
-
-**2) Set** the `sep` and `encoding` **arguments** of `read.csv` function to import the data **correctly**
+#### 4) Create a variable named `winner` that takes the values `Home`, `Draw` and `Away` depending on the score
 
 --
 
-<p style = "margin-bottom:1cm;"></p>
-
-**3)** Use `summarise()` to **compute** for each **beverage category** the average number of **calories** and the number of different **declinations** *(there is 1 row per declination)*
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-**4)** Create a **subset** of the data called `maxcal` containing the **variables** `Beverage_category`, `Beverage_prep`, and `Calories`, for the **10 observations** with the **highest calorie** values
-
-<center><i>You can use the row_number() function which gives the row numbers as a vector</i></center>
+#### 5) Use `group_by()` and `summarise() `to compute the percentage of draws, home wins and away wins
 
 --
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
-#### 1) Import `starbucks.csv` using the following command and see what's wrong
-
-```{r, eval = F}
-read.csv("starbucks.csv") %>% view()
-```
-
-<img src = "view_starbucks.png" width = 600/>
+#### 1) Start from the `fb` dataset and keep only the variables `Home`, `Score` and `Away`
 
 --
 
-#### 2) Set the `sep` and `encoding` arguments of `read.csv` function to import the data correctly
+```{r, eval = F}
+fb %>% 
+* select(Home, Score, Away) %>%
+  head(2)
+```
 
-```{r}
-starbucks <- read.csv("starbucks.csv", sep = ";", encoding = "UTF-8")
-head(starbucks[4:5, 1:5])
+--
+
+```{r, echo = F}
+fb %>% 
+  select(Home, Score, Away) %>%
+  head(2)
+```
+
+--
+
+#### 2) Use the `separate()` function from `tidyr` to split the `Score` variable into `home_score` and `away_score`
+
+--
+
+```{r, eval = F}
+fb %>% 
+  select(Home, Score, Away) %>% 
+* separate(Score, c("home_score", "away_score"), "-") %>%
+  head(2)
+```
+
+--
+
+```{r, echo = F}
+fb %>% 
+  select(Home, Score, Away) %>% 
+  separate(Score, c("home_score", "away_score"), "-") %>%
+  head(2)
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
-#### 3) Use `summarise()` to compute for each beverage category the average number of calories and the number of different declinations (there is 1 row per declination)
+#### 3) Convert these two variables into numeric vectors
 
-```{r}
-starbucks %>%
-  group_by(Beverage_category) %>%
-  summarise(Declinations = n(),
-            Mean_cal = mean(Calories))
+#### 4) Create a variable named `winner` that takes the values `Home`, `Draw` and `Away` depending on the score
+
+--
+
+```{r, eval = F}
+fb %>% 
+  select(Home, Score, Away) %>% 
+  separate(Score, c("home_score", "away_score"), "-") %>%
+* mutate(home_score = as.numeric(home_score),
+*        away_score = as.numeric(away_score),
+*        winner = case_when(home_score < away_score ~ "Away",
+*                           home_score == away_score ~ "Draw",
+*                           home_score > away_score ~ "Home")) %>%
+  head()
+```
+
+--
+
+```{r, echo = F}
+fb %>% 
+  select(Home, Score, Away) %>% 
+  separate(Score, c("home_score", "away_score"), "-") %>%
+  mutate(home_score = as.numeric(home_score),
+         away_score = as.numeric(away_score),
+         winner = case_when(home_score < away_score ~ "Away",
+                            home_score == away_score ~ "Draw",
+                            home_score > away_score ~ "Home")) %>%
+  head()
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
-#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observation with the highest calorie values
+#### 5) Use `group_by()` and `summarise() `to compute the percentage of draws, home wins and away wins
 
-```{r}
-maxcal <- starbucks %>%
-  arrange(-Calories) %>%
-  select(Beverage_category, Beverage_prep, Calories) %>%
-  filter(row_number() <= 10)
+--
 
-maxcal
+```{r, eval = F}
+fb %>% 
+  select(Home, Score, Away) %>% 
+  separate(Score, c("home_score", "away_score"), "-") %>%
+  mutate(home_score = as.numeric(home_score),
+         away_score = as.numeric(away_score),
+         winner = case_when(home_score < away_score ~ "Away",
+                            home_score == away_score ~ "Draw",
+                            home_score > away_score ~ "Home")) %>%
+* group_by(winner) %>%
+* summarise(pct = 100 * (n() / nrow(fb)))
+```
+
+--
+
+```{r, echo = F}
+fb %>% 
+  select(Home, Score, Away) %>% 
+  separate(Score, c("home_score", "away_score"), "-") %>%
+  mutate(home_score = as.numeric(home_score),
+         away_score = as.numeric(away_score),
+         winner = case_when(home_score < away_score ~ "Away",
+                            home_score == away_score ~ "Draw",
+                            home_score > away_score ~ "Home")) %>%
+  group_by(winner) %>%
+  summarise(pct = 100 * (n() / nrow(fb)))
 ```
 
 ---
 
-### 2. The `dplyr` grammar
+<h3>Overview</h3>
 
-#### 2.3. Merge and append data
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The dplyr package &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Packages</li>
+    <li>1.2. Basic functions</li>
+    <li>1.3. group_by() and summarise()</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Merge and reshape</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Merge and append data</li>
+    <li>2.2. Reshape data</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. A few words on learning R</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. When it doesn't work the way you want</li>
+    <li>3.2. Where to find help</li>
+    <li>3.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The dplyr package &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Packages</li>
+    <li>1.2. Basic functions</li>
+    <li>1.3. group_by() and summarise()</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Merge and reshape</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Merge and append data</li>
+    <li>2.2. Reshape data</li>
+  </ul>
+</ul>
+]
+
+---
+
+### 2. Merge and reshape
+
+#### 2.1. Merge and append data
 
 <ul>
   <li>Research projects often imply to <b>combine data</b> from different sources</li>
   <ul>
-    <li>To <b>add observations</b> (append rows)</li>
-    <li>To <b>add variables</b> (merge columns)</li>
+    <li>Either to <b>add observations</b> (append rows)</li>
+    <li>Either to <b>add variables</b> (merge columns)</li>
   </ul>
 </ul>
 
@@ -1175,9 +1162,9 @@ maxcal
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.3. Merge and append data
+#### 2.1. Merge and append data
 
 <ul>
   <li>Research projects often imply to <b>combine data</b> from different sources</li>
@@ -1192,9 +1179,9 @@ maxcal
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.3. Merge and append data
+#### 2.1. Merge and append data
 
 <ul>
   <li>Research projects often imply to <b>combine data</b> from different sources</li>
@@ -1209,9 +1196,9 @@ maxcal
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.3. Merge and append data: The `bind_rows()` function
+#### 2.1. Merge and append data: The `bind_rows()` function
 
 --
 .pull-left[
@@ -1246,9 +1233,9 @@ attainment
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.3. Merge and append data: `*_join()` functions
+#### 2.1. Merge and append data: `*_join()` functions
 
 --
 
@@ -1275,7 +1262,7 @@ kable(tibble(Function = c('A %>% left_join(B, by = "X")',
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
 <center><h4> &#9888; <i>Beware of NAs!</i> &#9888; </h4></center>
 
@@ -1304,9 +1291,9 @@ attainment %>% full_join(read.csv("spending.csv"), by = "country")
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.3. Merge and append data: example
+#### 2.1. Merge and append data: example
 
 ```{r, eval = F}
 attainment %>% left_join(read.csv("spending.csv"), by = "country")
@@ -1331,9 +1318,9 @@ attainment %>% right_join(read.csv("spending.csv"), by = "country")
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.4. Reshape data
+#### 2.2. Reshape data
 
 <p style = "margin-bottom:1cm;"></p>
 
@@ -1375,9 +1362,9 @@ kable(attainment %>%
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.4. Reshape data: From wide to long with pivot_longer()
+#### 2.2. Reshape data: From wide to long with pivot_longer()
 
 <p style = "margin-bottom:1cm;"></p>
 
@@ -1395,9 +1382,11 @@ wide
 
 --
 
-<p style = "margin-bottom:1cm;"></p>
+<p style = "margin-bottom:1.5cm;"></p>
 
 <i> &#10140; Pivoting to <b>long format</b> can be seen as putting <b>variables on top of each other</b> rather side to side </i>
+
+<p style = "margin-bottom:1.25cm;"></p>
 
 --
 
@@ -1408,9 +1397,9 @@ wide
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.4. Reshape data: From wide to long with pivot_longer()
+#### 2.2. Reshape data: From wide to long with pivot_longer()
 
 <p style = "margin-bottom:1cm;"></p>
 
@@ -1446,9 +1435,9 @@ long
 
 ---
 
-### 2. The `dplyr` grammar
+### 2. Merge and reshape
 
-#### 2.4. Reshape data: From long to wide with pivot_wider()
+#### 2.2. Reshape data: From long to wide with pivot_wider()
 
 --
 
@@ -1489,64 +1478,533 @@ wide
 ```
 
 ---
+class: inverse, hide-logo
 
-<h3>Overview</h3>
+### Practice
 
-<p style = "margin-bottom:2cm;">
-
-#### 1. Datasets &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. What is a dataset
- * 1.2. Import and eyeball data
- * 1.3. Subset data
- 
-#### 2. The dplyr grammar &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Basic functions
- * 2.2. Group by and summarise
- * 2.3. Merge and append data
- * 2.4. Reshape data
- 
-#### 3. Wrap up!
-
----
-
-### 3. Wrap up!
-
-#### Read data
-
-```{r, eval = F}
-starbucks <- read.csv("C:/User/Documents/folder/starbucks.csv", sep = ";", encoding = "UTF-8")
-```
-
-<center><b><i>&#10140; Make sure to use / and not \</i></b></center>
+#### 1) From the `fb` dataset, create a variable `league` equal to `"ligue1"` and a variable `season` equal to `"2021-2022"` and save this new data in an object named `full_fb`
 
 --
 
-#### Chaining operations
+#### 2) In data.zip you will find the rest of the data for the seasons 2019-2020 to 2021-2022 for the league 1, the bundesliga and the premier league. Append all these data to `full_fb`. Make sure to create the variables `league` and `season` in each data set before appending.
+
+--
+
+#### 3) Use the `separate` function from `tidyr` to extract the number of goals scored by the home and away team
+
+--
+
+#### 4) Convert these variables as numeric and create a variable equal to the sum of the goals from the two teams
+
+--
+
+#### 5) Summarise your data into the total number of goals score per league/season
+
+--
+
+#### 6) Reshape your data such that you have 1 row per league and 1 column per season
+
+--
+
+<center><h3><i>You've got 10 minutes!</i></h3></center>
+
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
+---
+class: inverse, hide-logo
+
+### Solution
+
+#### 1) From the `fb` dataset, create a variable `league` equal to `"ligue1"` and a variable `season` equal to `"2021-2022"` and save this new data in an object named `full_fb`
+
+--
 
 ```{r}
-starbucks %>%
-  arrange(-Calories) %>%
-  select(Beverage_category, Beverage_prep, Calories) %>%
-  filter(row_number() <= 3)
+full_fb <- fb %>% mutate(league = "ligue1", season = "2021-2022")
 ```
 
-<p style = "margin-bottom:.8cm;"></p>
-<center><b><i>&#10140; Make sure to view your data at each step</i></b></center>
+--
+
+#### 2) In data.zip you will find the rest of the data for the seasons 2019-2020 to 2021-2022 for the league 1, the bundesliga and the premier league. Append all these data to `full_fb`. Make sure to create the variables `league` and `season` in each data set before appending.
+
+--
+
+```{r}
+full_fb <- full_fb %>%
+  bind_rows(read.csv("ligue1_2021.csv") %>% mutate(league = "ligue1", season = "2020-2021")) %>%
+  bind_rows(read.csv("ligue1_1920.csv") %>% mutate(league = "ligue1", season = "2019-2020")) %>%
+  bind_rows(read.csv("preml_2122.csv") %>% mutate(league = "preml", season = "2021-2022")) %>%
+  bind_rows(read.csv("preml_2021.csv") %>% mutate(league = "preml", season = "2020-2021")) %>%
+  bind_rows(read.csv("preml_1920.csv") %>% mutate(league = "preml", season = "2019-2020")) %>%
+  bind_rows(read.csv("bundes_2122.csv") %>% mutate(league = "bundes", season = "2021-2022")) %>%
+  bind_rows(read.csv("bundes_2021.csv") %>% mutate(league = "bundes", season = "2020-2021")) %>%
+  bind_rows(read.csv("bundes_1920.csv") %>% mutate(league = "bundes", season = "2019-2020"))
+```
+
+---
+class: inverse, hide-logo
+
+### Solution
+
+#### 3) Use the `separate` function from `tidyr` to extract the number of goals scored by the home and away team
+
+--
+
+```{r}
+full_fb <- full_fb %>%
+  separate(Score, c("home_score", "away_score"), "-") 
+```
+
+--
+
+#### 4) Convert these variables as numeric and create a variable equal to the sum of the goals from the two teams
+
+--
+
+```{r}
+full_fb <- full_fb %>%
+  mutate(home_score = as.numeric(home_score),
+         away_score = as.numeric(away_score),
+         goals = home_score + away_score) 
+```
+
+--
+
+#### 5) Summarise your data into the total number of goals score per league/season
+
+--
+
+```{r}
+full_fb <- full_fb %>%
+  group_by(league, season) %>%
+  summarise(goals = sum(goals))
+```
+
+---
+class: inverse, hide-logo
+
+### Solution
+
+#### 6) Reshape your data such that you have 1 row per league and 1 column per season
+
+--
+
+```{r}
+full_fb %>%
+  pivot_wider(names_from = "season", values_from = "goals")
+```
 
 ---
 
-### 3. Wrap up!
+<h3>Overview</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The dplyr package &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Packages</li>
+    <li>1.2. Basic functions</li>
+    <li>1.3. group_by() and summarise()</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Merge and reshape &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Merge and append data</li>
+    <li>2.2. Reshape data</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. A few words on learning R</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. When it doesn't work the way you want</li>
+    <li>3.2. Where to find help</li>
+    <li>3.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The dplyr package &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Packages</li>
+    <li>1.2. Basic functions</li>
+    <li>1.3. group_by() and summarise()</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Merge and reshape &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Merge and append data</li>
+    <li>2.2. Reshape data</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. A few words on learning R</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. When it doesn't work the way you want</li>
+    <li>3.2. Where to find help</li>
+    <li>3.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+]
+
+---
+
+### 3. A few words on learning R
+
+#### 3.1. When it doesn't work the way you want
+
+<ul>
+  <li>When things do not work the way you want, <b>NAs are the usual suspects</b></li>
+  <ul>
+    <li>For instance, this is how the mean function reacts to NAs:</li>
+  </ul>
+</ul>
+ 
+--
+
+```{r}
+mean(c(1, 2, NA))
+```
+--
+```{r}
+mean(c(1, 2, NA), na.rm = T)
+```
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+<ul>
+  <li>You should systematically <b>check for NAs!</b></li>
+</ul>
+
+--
+ 
+```{r}
+is.na(c(1, 2, NA))
+```
+
+---
+
+### 3. A few words on learning R
+
+#### 3.1. When it doesn't work the way you want
+
+<ul>
+  <li><b>Don't pipe blindfolded!</b></li>
+  <ul>
+    <li><b>Check</b> that each command does what it's expected to do</li>
+    <li>View or print your data <b>at each step</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+fb %>% 
+  select(Home, Score, Away) %>%
+  head(1)
+```
+
+--
+
+```{r, echo = F}
+fb %>% 
+  select(Home, Score, Away) %>%
+  head(1)
+```
+
+--
+
+```{r, eval = F}
+fb %>% 
+  select(Home, Score, Away) %>% 
+  separate(Score, c("home_score", "away_score"), "-") %>%
+  head(1)
+```
+
+--
+
+```{r, echo = F}
+fb %>% 
+  select(Home, Score, Away) %>% 
+  separate(Score, c("home_score", "away_score"), "-") %>%
+  head(1)
+```
+
+---
+
+### 3. A few words on learning R
+
+#### 3.2. Where to find help
+
+<ul>
+  <li>Oftentimes things don't work either because:</li>
+  <ul>
+    <li><b>You don't understand</b> a function's argument</li>
+    <li>Or <b>you don't know</b> that there exists an argument that you should use</li>
+  </ul>
+</ul>
+
+--
+
+<ul>
+  <li>This is precisely what <b>help files</b> are made for</li>
+  <ul>
+    <li>Every function has a help file, just enter <b>?</b> and the name of your <b>function</b> in the console</li>
+    <li>The help file will <b>pop up in the Help tab</b> of R studio</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+ 
+```{r, eval = F}
+?paste
+```
+
+--
+
+<center>
+<img src = "paste_help.png"/>
+</center>
+
+---
+
+### 3. A few words on learning R
+
+#### 3.2. Where to find help
+
+<ul>
+  <li>Search on the internet!</li>
+  <ul>
+    <li>Your question is for sure already asked and answered on <a href = "https://stackoverflow.com/">stackoverflow</a></li>
+  </ul>
+</ul>
+ 
+--
+
+<center>
+<img src = "ask_google.png" width = 750 />
+</center>
+
+---
+
+### 3. A few words on learning R
+
+#### 3.3. When it doesn't work at all
+
+ * Sometimes R breaks and returns an <b>error</b> (usually kind of cryptic)
+
+--
+
+```{r, error = TRUE}
+read.csv("C:\Users\Documents\R")
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ol>
+  <li>Look for <b>keywords</b> that might help you understand where it comes from</li>
+  <li>Paste in on <b>Google</b> with the name of your command</li>
+</ol>
+
+--
+
+<center>
+<img src = "error.png" width = 750 />
+</center>
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The dplyr package &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Packages</li>
+    <li>1.2. Basic functions</li>
+    <li>1.3. group_by() and summarise()</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Merge and reshape &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Merge and append data</li>
+    <li>2.2. Reshape data</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. A few words on learning R &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. When it doesn't work the way you want</li>
+    <li>3.2. Where to find help</li>
+    <li>3.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:2.25cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
+
+---
+
+### 4. Wrap up!
+
+#### 1. Packages
+
+```{r, eval = F}
+library(dplyr)
+```
+
+--
 
 <p style = "margin-bottom:1.5cm;"></p>
 
+#### 2. Main dplyr functions
+
+.left-column[
 ```{r, echo = F}
 kable(tibble(Function = c("mutate()", "select()", "filter()", 
-                    "arrange()", "group_by()", "summarise()", 
-                    "bind_rows()", "left/right/inner/full_join()", "pivot_longer/wider()"),
+                    "arrange()", "group_by()", "summarise()"),
        Meaning = c("Modify or create a variable", "Keep a subset of variables", "Keep a subset of observations",
-                   "Sort the data", "Group the data", "Summarizes variables into 1 observation per group",
-                   "Append data", "Merge data", "Reshape data")),
-      caption = "<b>Important functions of the dplyr grammar</b>")
+                   "Sort the data", "Group the data", "Summarizes variables into 1 observation per group")),
+      caption = "")
 ```
+]
+
+--
+
+.right-column[
+<img style = "margin-top:0cm; margin-left:1.5cm;" src = "pipe.png" width = "180"/>
+]
+
+---
+
+### 4. Wrap up!
+
+#### 3. Merge data
+
+```{r}
+a <- data.frame(x = c(1, 2, 3), y = c("a", "b", "c"))
+b <- data.frame(x = c(4, 5, 6), y = c("d", "e", "f"))
+c <- data.frame(x = 1:6, z = c("alpha", "bravo", "charlie", "delta", "echo", "foxtrot"))
+```
+
+--
+
+```{r, eval = F}
+a %>% bind_rows(b) %>% left_join(c, by = "x")
+```
+
+```{r, echo = F}
+a %>% 
+  bind_rows(b) %>% 
+  left_join(c, by = "x") %>%
+  kable(., caption = "")
+```
+
+---
+
+### 4. Wrap up!
+
+#### 4. Reshape data
+
+```{r, echo = F}
+kable(attainment %>% 
+        inner_join(read.csv("spending.csv") %>%
+                     select(-year), 
+                   by = "country"), 
+      caption = "")
+```
+
+--
+
+<p style = margin-bottom:1.25cm;"></p>
+
+```{r, eval = F}
+data %>% pivot_longer(c(share_tertiary, share_gdp), names_to = "Variable", values_to = "Value")
+```
+
+<p style = margin-bottom:1.25cm;"></p>
+
+--
+
+```{r, echo = F}
+kable(attainment %>% 
+        inner_join(read.csv("spending.csv") %>% 
+                     select(-year), 
+                   by = "country") %>%
+        pivot_longer(c(share_tertiary, share_gdp), 
+                     names_to = "Variable", 
+                     values_to = "Value"), 
+      caption = "")
+```
+
+---
+
+### For next time
+
+<p style = margin-bottom:4cm;"></p>
+
+<center><b><u>Install the R packages needed for Part I of the course:</u></b></center>
+
+<p style = margin-bottom:1cm;"></p>
+
+<center><b>ggplot2</b></center>
+<p style = margin-bottom:.15cm;"></p>
+<center><b>rmarkdown</b></center>
+<p style = margin-bottom:.15cm;"></p>
+<center><b>knitr</b></center>
+<p style = margin-bottom:.15cm;"></p>
+<center><b>DT</b></center>
+

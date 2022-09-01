@@ -1,0 +1,381 @@
+"Wk","Day","Date","Time","Home","xG","Score","xG.1","Away","Attendance","Venue","Referee","Match.Report","Notes"
+1,"Sat","2020-09-12","12:30 (13:30)","Fulham",0.2,"0-3",1.8,"Arsenal",NA,"Craven Cottage","Chris Kavanagh","Match Report",NA
+1,"Sat","2020-09-12","15:00 (16:00)","Crystal Palace",0.7,"1-0",0.8,"Southampton",NA,"Selhurst Park","Jonathan Moss","Match Report",NA
+1,"Sat","2020-09-12","17:30 (18:30)","Liverpool",3.3,"4-3",0.6,"Leeds United",NA,"Anfield","Michael Oliver","Match Report",NA
+1,"Sat","2020-09-12","20:00 (21:00)","West Ham",1.1,"0-2",1.5,"Newcastle Utd",NA,"London Stadium","Stuart Attwell","Match Report",NA
+1,"Sun","2020-09-13","14:00 (15:00)","West Brom",0.5,"0-3",2.2,"Leicester City",NA,"The Hawthorns","Anthony Taylor","Match Report",NA
+1,"Sun","2020-09-13","16:30 (17:30)","Tottenham",1,"0-1",1.4,"Everton",NA,"Tottenham Hotspur Stadium","Martin Atkinson","Match Report",NA
+1,"Mon","2020-09-14","18:00 (19:00)","Sheffield Utd",0.6,"0-2",1.1,"Wolves",NA,"Bramall Lane","Mike Dean","Match Report",NA
+1,"Mon","2020-09-14","20:15 (21:15)","Brighton",1.4,"1-3",1.2,"Chelsea",NA,"The American Express Community Stadium","Craig Pawson","Match Report",NA
+2,"Sat","2020-09-19","12:30 (13:30)","Everton",3.4,"5-2",0.3,"West Brom",NA,"Goodison Park","Mike Dean","Match Report",NA
+2,"Sat","2020-09-19","15:00 (16:00)","Leeds United",1.7,"4-3",1.8,"Fulham",NA,"Elland Road","Anthony Taylor","Match Report",NA
+2,"Sat","2020-09-19","17:30 (18:30)","Manchester Utd",1.1,"1-3",1.6,"Crystal Palace",NA,"Old Trafford","Martin Atkinson","Match Report",NA
+2,"Sat","2020-09-19","20:00 (21:00)","Arsenal",1.4,"2-1",1.9,"West Ham",NA,"Emirates Stadium","Michael Oliver","Match Report",NA
+2,"Sun","2020-09-20","12:00 (13:00)","Southampton",1.5,"2-5",2.5,"Tottenham",NA,"St. Mary's Stadium","David Coote","Match Report",NA
+2,"Sun","2020-09-20","14:00 (15:00)","Newcastle Utd",0.5,"0-3",1.6,"Brighton",NA,"St. James' Park","Kevin Friend","Match Report",NA
+2,"Sun","2020-09-20","16:30 (17:30)","Chelsea",1,"0-2",2.6,"Liverpool",NA,"Stamford Bridge","Paul Tierney","Match Report",NA
+2,"Sun","2020-09-20","19:00 (20:00)","Leicester City",1.4,"4-2",1.9,"Burnley",NA,"King Power Stadium","Lee Mason","Match Report",NA
+2,"Mon","2020-09-21","18:00 (19:00)","Aston Villa",1,"1-0",0.9,"Sheffield Utd",NA,"Villa Park","Graham Scott","Match Report",NA
+2,"Mon","2020-09-21","20:15 (21:15)","Wolves",1,"1-3",1.9,"Manchester City",NA,"Molineux Stadium","Andre Marriner","Match Report",NA
+3,"Sat","2020-09-26","12:30 (13:30)","Brighton",2.4,"2-3",1.1,"Manchester Utd",NA,"The American Express Community Stadium","Chris Kavanagh","Match Report",NA
+3,"Sat","2020-09-26","15:00 (16:00)","Crystal Palace",0.4,"1-2",2,"Everton",NA,"Selhurst Park","Kevin Friend","Match Report",NA
+3,"Sat","2020-09-26","17:30 (18:30)","West Brom",1,"3-3",2.2,"Chelsea",NA,"The Hawthorns","Jonathan Moss","Match Report",NA
+3,"Sat","2020-09-26","20:00 (21:00)","Burnley",0.5,"0-1",0.6,"Southampton",NA,"Turf Moor","Andre Marriner","Match Report",NA
+3,"Sun","2020-09-27","12:00 (13:00)","Sheffield Utd",1.6,"0-1",1.6,"Leeds United",NA,"Bramall Lane","Paul Tierney","Match Report",NA
+3,"Sun","2020-09-27","14:00 (15:00)","Tottenham",2.3,"1-1",1,"Newcastle Utd",NA,"Tottenham Hotspur Stadium","Peter Bankes","Match Report",NA
+3,"Sun","2020-09-27","16:30 (17:30)","Manchester City",0.9,"2-5",2.6,"Leicester City",NA,"Etihad Stadium","Michael Oliver","Match Report",NA
+3,"Sun","2020-09-27","19:00 (20:00)","West Ham",1.6,"4-0",0.5,"Wolves",NA,"London Stadium","Martin Atkinson","Match Report",NA
+3,"Mon","2020-09-28","17:45 (18:45)","Fulham",0.7,"0-3",1.6,"Aston Villa",NA,"Craven Cottage","Stuart Attwell","Match Report",NA
+3,"Mon","2020-09-28","20:00 (21:00)","Liverpool",3.2,"3-1",1.2,"Arsenal",NA,"Anfield","Craig Pawson","Match Report",NA
+4,"Sat","2020-10-03","12:30 (13:30)","Chelsea",2.5,"4-0",0.1,"Crystal Palace",NA,"Stamford Bridge","Michael Oliver","Match Report",NA
+4,"Sat","2020-10-03","15:00 (16:00)","Everton",1.8,"4-2",1.2,"Brighton",NA,"Goodison Park","Simon Hooper","Match Report",NA
+4,"Sat","2020-10-03","17:30 (18:30)","Leeds United",1.7,"1-1",1.5,"Manchester City",NA,"Elland Road","Mike Dean","Match Report",NA
+4,"Sat","2020-10-03","20:00 (21:00)","Newcastle Utd",2,"3-1",0.6,"Burnley",NA,"St. James' Park","David Coote","Match Report",NA
+4,"Sun","2020-10-04","12:00 (13:00)","Leicester City",0.4,"0-3",1.6,"West Ham",NA,"King Power Stadium","Andy Madley","Match Report",NA
+4,"Sun","2020-10-04","12:00 (13:00)","Southampton",1.2,"2-0",0.1,"West Brom",NA,"St. Mary's Stadium","Chris Kavanagh","Match Report",NA
+4,"Sun","2020-10-04","14:00 (15:00)","Arsenal",0.4,"2-1",0.2,"Sheffield Utd",NA,"Emirates Stadium","Lee Mason","Match Report",NA
+4,"Sun","2020-10-04","14:00 (15:00)","Wolves",1.2,"1-0",0.7,"Fulham",NA,"Molineux Stadium","Darren England","Match Report",NA
+4,"Sun","2020-10-04","16:30 (17:30)","Manchester Utd",0.9,"1-6",3.8,"Tottenham",NA,"Old Trafford","Anthony Taylor","Match Report",NA
+4,"Sun","2020-10-04","19:15 (20:15)","Aston Villa",3.9,"7-2",1.8,"Liverpool",NA,"Villa Park","Martin Atkinson","Match Report",NA
+5,"Sat","2020-10-17","12:30 (13:30)","Everton",1.3,"2-2",2.2,"Liverpool",NA,"Goodison Park","Michael Oliver","Match Report",NA
+5,"Sat","2020-10-17","15:00 (16:00)","Chelsea",2,"3-3",2.2,"Southampton",NA,"Stamford Bridge","Peter Bankes","Match Report",NA
+5,"Sat","2020-10-17","17:30 (18:30)","Manchester City",1.5,"1-0",0.9,"Arsenal",NA,"Etihad Stadium","Chris Kavanagh","Match Report",NA
+5,"Sat","2020-10-17","20:00 (21:00)","Newcastle Utd",0.5,"1-4",2.7,"Manchester Utd",NA,"St. James' Park","Craig Pawson","Match Report",NA
+5,"Sun","2020-10-18","12:00 (13:00)","Sheffield Utd",1.5,"1-1",1.7,"Fulham",NA,"Bramall Lane","Andre Marriner","Match Report",NA
+5,"Sun","2020-10-18","14:00 (15:00)","Crystal Palace",0.8,"1-1",1.1,"Brighton",NA,"Selhurst Park","Stuart Attwell","Match Report",NA
+5,"Sun","2020-10-18","16:30 (17:30)","Tottenham",1.2,"3-3",2.1,"West Ham",NA,"Tottenham Hotspur Stadium","Paul Tierney","Match Report",NA
+5,"Sun","2020-10-18","19:15 (20:15)","Leicester City",0.5,"0-1",0.6,"Aston Villa",NA,"King Power Stadium","Jonathan Moss","Match Report",NA
+5,"Mon","2020-10-19","17:30 (18:30)","West Brom",1,"0-0",1.1,"Burnley",NA,"The Hawthorns","Anthony Taylor","Match Report",NA
+5,"Mon","2020-10-19","20:00 (21:00)","Leeds United",1.6,"0-1",0.5,"Wolves",NA,"Elland Road","David Coote","Match Report",NA
+6,"Fri","2020-10-23","20:00 (21:00)","Aston Villa",1.2,"0-3",3.6,"Leeds United",NA,"Villa Park","Paul Tierney","Match Report",NA
+6,"Sat","2020-10-24","12:30 (13:30)","West Ham",0.5,"1-1",1.1,"Manchester City",NA,"London Stadium","Anthony Taylor","Match Report",NA
+6,"Sat","2020-10-24","15:00 (16:00)","Fulham",1.1,"1-2",2.6,"Crystal Palace",NA,"Craven Cottage","Graham Scott","Match Report",NA
+6,"Sat","2020-10-24","17:30 (18:30)","Manchester Utd",0.7,"0-0",0.2,"Chelsea",NA,"Old Trafford","Martin Atkinson","Match Report",NA
+6,"Sat","2020-10-24","20:00 (21:00)","Liverpool",2.5,"2-1",1.5,"Sheffield Utd",NA,"Anfield","Mike Dean","Match Report",NA
+6,"Sun","2020-10-25","14:00 (15:00)","Southampton",0.7,"2-0",0.4,"Everton",NA,"St. Mary's Stadium","Kevin Friend","Match Report",NA
+6,"Sun","2020-10-25","16:30 (17:30)","Wolves",0.7,"1-1",0.2,"Newcastle Utd",NA,"Molineux Stadium","Lee Mason","Match Report",NA
+6,"Sun","2020-10-25","19:15 (20:15)","Arsenal",0.9,"0-1",1.2,"Leicester City",NA,"Emirates Stadium","Craig Pawson","Match Report",NA
+6,"Mon","2020-10-26","17:30 (18:30)","Brighton",0.7,"1-1",0.6,"West Brom",NA,"The American Express Community Stadium","Jonathan Moss","Match Report",NA
+6,"Mon","2020-10-26","20:00 (21:00)","Burnley",0.6,"0-1",0.8,"Tottenham",NA,"Turf Moor","Michael Oliver","Match Report",NA
+7,"Fri","2020-10-30","20:00 (21:00)","Wolves",1.3,"2-0",0.6,"Crystal Palace",NA,"Molineux Stadium","Martin Atkinson","Match Report",NA
+7,"Sat","2020-10-31","12:30 (13:30)","Sheffield Utd",0.5,"0-1",1.5,"Manchester City",NA,"Bramall Lane","Michael Oliver","Match Report",NA
+7,"Sat","2020-10-31","15:00 (16:00)","Burnley",0.4,"0-3",1.4,"Chelsea",NA,"Turf Moor","David Coote","Match Report",NA
+7,"Sat","2020-10-31","17:30 (18:30)","Liverpool",1.8,"2-1",0.5,"West Ham",NA,"Anfield","Kevin Friend","Match Report",NA
+7,"Sun","2020-11-01","12:00 (13:00)","Aston Villa",1.8,"3-4",0.7,"Southampton",NA,"Villa Park","Darren England","Match Report",NA
+7,"Sun","2020-11-01","14:00 (15:00)","Newcastle Utd",2.5,"2-1",1.2,"Everton",NA,"St. James' Park","Stuart Attwell","Match Report",NA
+7,"Sun","2020-11-01","16:30 (17:30)","Manchester Utd",0.3,"0-1",1.1,"Arsenal",NA,"Old Trafford","Mike Dean","Match Report",NA
+7,"Sun","2020-11-01","19:15 (20:15)","Tottenham",1.8,"2-1",0.4,"Brighton",NA,"Tottenham Hotspur Stadium","Graham Scott","Match Report",NA
+7,"Mon","2020-11-02","17:30 (18:30)","Fulham",1.5,"2-0",0.5,"West Brom",NA,"Craven Cottage","Simon Hooper","Match Report",NA
+7,"Mon","2020-11-02","20:00 (21:00)","Leeds United",1,"1-4",3.5,"Leicester City",NA,"Elland Road","Andre Marriner","Match Report",NA
+8,"Fri","2020-11-06","17:30 (18:30)","Brighton",1.3,"0-0",0.3,"Burnley",NA,"The American Express Community Stadium","Mike Dean","Match Report",NA
+8,"Fri","2020-11-06","20:00 (21:00)","Southampton",0.9,"2-0",0.5,"Newcastle Utd",NA,"St. Mary's Stadium","Peter Bankes","Match Report",NA
+8,"Sat","2020-11-07","12:30 (13:30)","Everton",0.6,"1-3",1.6,"Manchester Utd",NA,"Goodison Park","Paul Tierney","Match Report",NA
+8,"Sat","2020-11-07","15:00 (16:00)","Crystal Palace",0.9,"4-1",0.8,"Leeds United",NA,"Selhurst Park","Chris Kavanagh","Match Report",NA
+8,"Sat","2020-11-07","17:30 (18:30)","Chelsea",2.7,"4-1",0.6,"Sheffield Utd",NA,"Stamford Bridge","Jonathan Moss","Match Report",NA
+8,"Sat","2020-11-07","20:00 (21:00)","West Ham",1.3,"1-0",1.6,"Fulham",NA,"London Stadium","Robert Jones","Match Report",NA
+8,"Sun","2020-11-08","12:00 (13:00)","West Brom",0.8,"0-1",1.6,"Tottenham",NA,"The Hawthorns","Andy Madley","Match Report",NA
+8,"Sun","2020-11-08","14:00 (15:00)","Leicester City",1.9,"1-0",0.5,"Wolves",NA,"King Power Stadium","Anthony Taylor","Match Report",NA
+8,"Sun","2020-11-08","16:30 (17:30)","Manchester City",1.6,"1-1",1.4,"Liverpool",NA,"Etihad Stadium","Craig Pawson","Match Report",NA
+8,"Sun","2020-11-08","19:15 (20:15)","Arsenal",1.5,"0-3",1.7,"Aston Villa",NA,"Emirates Stadium","Martin Atkinson","Match Report",NA
+9,"Sat","2020-11-21","12:30 (13:30)","Newcastle Utd",0.6,"0-2",1.6,"Chelsea",NA,"St. James' Park","Craig Pawson","Match Report",NA
+9,"Sat","2020-11-21","15:00 (16:00)","Aston Villa",1.5,"1-2",1.3,"Brighton",NA,"Villa Park","Michael Oliver","Match Report",NA
+9,"Sat","2020-11-21","17:30 (18:30)","Tottenham",0.7,"2-0",1.3,"Manchester City",NA,"Tottenham Hotspur Stadium","Mike Dean","Match Report",NA
+9,"Sat","2020-11-21","20:00 (21:00)","Manchester Utd",2.5,"1-0",0.6,"West Brom",NA,"Old Trafford","David Coote","Match Report",NA
+9,"Sun","2020-11-22","12:00 (13:00)","Fulham",2,"2-3",1.6,"Everton",NA,"Craven Cottage","Andy Madley","Match Report",NA
+9,"Sun","2020-11-22","14:00 (15:00)","Sheffield Utd",0.7,"0-1",2.2,"West Ham",NA,"Bramall Lane","Martin Atkinson","Match Report",NA
+9,"Sun","2020-11-22","16:30 (17:30)","Leeds United",2.5,"0-0",0.9,"Arsenal",NA,"Elland Road","Anthony Taylor","Match Report",NA
+9,"Sun","2020-11-22","19:15 (20:15)","Liverpool",3.7,"3-0",1.3,"Leicester City",NA,"Anfield","Chris Kavanagh","Match Report",NA
+9,"Mon","2020-11-23","17:30 (18:30)","Burnley",1.6,"1-0",1.4,"Crystal Palace",NA,"Turf Moor","Kevin Friend","Match Report",NA
+9,"Mon","2020-11-23","20:00 (21:00)","Wolves",1.9,"1-1",1.5,"Southampton",NA,"Molineux Stadium","Andre Marriner","Match Report",NA
+10,"Fri","2020-11-27","20:00 (21:00)","Crystal Palace",1,"0-2",1.5,"Newcastle Utd",NA,"Selhurst Park","Graham Scott","Match Report",NA
+10,"Sat","2020-11-28","12:30 (13:30)","Brighton",2.1,"1-1",0.5,"Liverpool",NA,"The American Express Community Stadium","Stuart Attwell","Match Report",NA
+10,"Sat","2020-11-28","15:00 (16:00)","Manchester City",2.8,"5-0",0.4,"Burnley",NA,"Etihad Stadium","Lee Mason","Match Report",NA
+10,"Sat","2020-11-28","17:30 (18:30)","Everton",1.6,"0-1",2.9,"Leeds United",NA,"Goodison Park","Chris Kavanagh","Match Report",NA
+10,"Sat","2020-11-28","20:00 (21:00)","West Brom",1.3,"1-0",2.7,"Sheffield Utd",NA,"The Hawthorns","Mike Dean","Match Report",NA
+10,"Sun","2020-11-29","14:00 (15:00)","Southampton",0.4,"2-3",2.3,"Manchester Utd",NA,"St. Mary's Stadium","Jonathan Moss","Match Report",NA
+10,"Sun","2020-11-29","16:30 (17:30)","Chelsea",1,"0-0",0.2,"Tottenham",NA,"Stamford Bridge","Paul Tierney","Match Report",NA
+10,"Sun","2020-11-29","19:15 (20:15)","Arsenal",1.2,"1-2",1.4,"Wolves",NA,"Emirates Stadium","Michael Oliver","Match Report",NA
+10,"Mon","2020-11-30","17:30 (18:30)","Leicester City",0.9,"1-2",1.8,"Fulham",NA,"King Power Stadium","Simon Hooper","Match Report",NA
+10,"Mon","2020-11-30","20:00 (21:00)","West Ham",0.6,"2-1",2.6,"Aston Villa",NA,"London Stadium","Peter Bankes","Match Report",NA
+11,"Sat","2020-12-05","12:30 (13:30)","Burnley",0.8,"1-1",1.7,"Everton",NA,"Turf Moor","Anthony Taylor","Match Report",NA
+11,"Sat","2020-12-05","15:00 (16:00)","Manchester City",3,"2-0",0.2,"Fulham",NA,"Etihad Stadium","Jonathan Moss","Match Report",NA
+11,"Sat","2020-12-05","17:30 (18:30)","West Ham",2.2,"1-3",1.9,"Manchester Utd",2000,"London Stadium","Andre Marriner","Match Report",NA
+11,"Sat","2020-12-05","20:00 (21:00)","Chelsea",3.7,"3-1",1.3,"Leeds United",2000,"Stamford Bridge","Kevin Friend","Match Report",NA
+11,"Sun","2020-12-06","12:00 (13:00)","West Brom",0.8,"1-5",1.8,"Crystal Palace",NA,"The Hawthorns","Paul Tierney","Match Report",NA
+11,"Sun","2020-12-06","14:15 (15:15)","Sheffield Utd",0.3,"1-2",1.5,"Leicester City",NA,"Bramall Lane","Stuart Attwell","Match Report",NA
+11,"Sun","2020-12-06","16:30 (17:30)","Tottenham",0.5,"2-0",0.8,"Arsenal",2000,"Tottenham Hotspur Stadium","Martin Atkinson","Match Report",NA
+11,"Sun","2020-12-06","19:15 (20:15)","Liverpool",1.2,"4-0",0.5,"Wolves",2000,"Anfield","Craig Pawson","Match Report",NA
+11,"Mon","2020-12-07","20:00 (21:00)","Brighton",2.1,"1-2",1.1,"Southampton",2000,"The American Express Community Stadium","David Coote","Match Report",NA
+12,"Fri","2020-12-11","20:00 (21:00)","Leeds United",1.8,"1-2",1.9,"West Ham",NA,"Elland Road","Michael Oliver","Match Report",NA
+12,"Sat","2020-12-12","12:30 (13:30)","Wolves",1.2,"0-1",1.1,"Aston Villa",NA,"Molineux Stadium","Mike Dean","Match Report",NA
+12,"Sat","2020-12-12","15:00 (16:00)","Newcastle Utd",1.1,"2-1",0.6,"West Brom",NA,"St. James' Park","Darren England","Match Report",NA
+12,"Sat","2020-12-12","17:30 (18:30)","Manchester Utd",1,"0-0",1.2,"Manchester City",NA,"Old Trafford","Chris Kavanagh","Match Report",NA
+12,"Sat","2020-12-12","20:00 (21:00)","Everton",1.3,"1-0",0.9,"Chelsea",2000,"Goodison Park","Jonathan Moss","Match Report",NA
+12,"Sun","2020-12-13","12:00 (13:00)","Southampton",1.4,"3-0",0.4,"Sheffield Utd",2000,"St. Mary's Stadium","Andy Madley","Match Report",NA
+12,"Sun","2020-12-13","14:15 (15:15)","Crystal Palace",1.2,"1-1",1.1,"Tottenham",2000,"Selhurst Park","Kevin Friend","Match Report",NA
+12,"Sun","2020-12-13","16:30 (17:30)","Fulham",1.5,"1-1",2.1,"Liverpool",2000,"Craven Cottage","Andre Marriner","Match Report",NA
+12,"Sun","2020-12-13","19:15 (20:15)","Leicester City",1.7,"3-0",1.1,"Brighton",NA,"King Power Stadium","Martin Atkinson","Match Report",NA
+12,"Sun","2020-12-13","19:15 (20:15)","Arsenal",1.5,"0-1",0.9,"Burnley",2000,"Emirates Stadium","Graham Scott","Match Report",NA
+13,"Tue","2020-12-15","18:00 (19:00)","Wolves",0.5,"2-1",1.3,"Chelsea",NA,"Molineux Stadium","Stuart Attwell","Match Report",NA
+13,"Tue","2020-12-15","20:00 (21:00)","Manchester City",1.9,"1-1",0.3,"West Brom",NA,"Etihad Stadium","Peter Bankes","Match Report",NA
+13,"Wed","2020-12-16","18:00 (19:00)","Leeds United",2.8,"5-2",0.9,"Newcastle Utd",NA,"Elland Road","Simon Hooper","Match Report",NA
+13,"Wed","2020-12-16","18:00 (19:00)","Arsenal",0.7,"1-1",1.1,"Southampton",NA,"Emirates Stadium","Paul Tierney","Match Report",NA
+13,"Wed","2020-12-16","18:00 (19:00)","Leicester City",0.7,"0-2",1.2,"Everton",NA,"King Power Stadium","Lee Mason","Match Report",NA
+13,"Wed","2020-12-16","20:00 (21:00)","Liverpool",1.2,"2-1",1.3,"Tottenham",2000,"Anfield","Anthony Taylor","Match Report",NA
+13,"Wed","2020-12-16","20:00 (21:00)","West Ham",0.3,"1-1",0.9,"Crystal Palace",NA,"London Stadium","David Coote","Match Report",NA
+13,"Wed","2020-12-16","20:00 (21:00)","Fulham",0.8,"0-0",0.6,"Brighton",NA,"Craven Cottage","Robert Jones","Match Report",NA
+13,"Thu","2020-12-17","18:00 (19:00)","Aston Villa",2,"0-0",0.4,"Burnley",NA,"Villa Park","Craig Pawson","Match Report",NA
+13,"Thu","2020-12-17","20:00 (21:00)","Sheffield Utd",1.6,"2-3",2,"Manchester Utd",NA,"Bramall Lane","Michael Oliver","Match Report",NA
+14,"Sat","2020-12-19","12:30 (13:30)","Crystal Palace",0.3,"0-7",2.1,"Liverpool",NA,"Selhurst Park","Jonathan Moss","Match Report",NA
+14,"Sat","2020-12-19","15:00 (16:00)","Southampton",1,"0-1",1.1,"Manchester City",NA,"St. Mary's Stadium","Mike Dean","Match Report",NA
+14,"Sat","2020-12-19","17:30 (18:30)","Everton",0.8,"2-1",1.4,"Arsenal",NA,"Goodison Park","Andre Marriner","Match Report",NA
+14,"Sat","2020-12-19","20:00 (21:00)","Newcastle Utd",1.4,"1-1",0.7,"Fulham",NA,"St. James' Park","Graham Scott","Match Report",NA
+14,"Sun","2020-12-20","12:00 (13:00)","Brighton",2.6,"1-1",0.7,"Sheffield Utd",NA,"The American Express Community Stadium","Peter Bankes","Match Report",NA
+14,"Sun","2020-12-20","14:15 (15:15)","Tottenham",1.1,"0-2",1.5,"Leicester City",NA,"Tottenham Hotspur Stadium","Craig Pawson","Match Report",NA
+14,"Sun","2020-12-20","16:30 (17:30)","Manchester Utd",4,"6-2",1.7,"Leeds United",NA,"Old Trafford","Anthony Taylor","Match Report",NA
+14,"Sun","2020-12-20","19:15 (20:15)","West Brom",0,"0-3",2.3,"Aston Villa",NA,"The Hawthorns","Martin Atkinson","Match Report",NA
+14,"Mon","2020-12-21","17:30 (18:30)","Burnley",1.8,"2-1",1.4,"Wolves",NA,"Turf Moor","Lee Mason","Match Report",NA
+14,"Mon","2020-12-21","20:00 (21:00)","Chelsea",2.1,"3-0",0.5,"West Ham",NA,"Stamford Bridge","Chris Kavanagh","Match Report",NA
+15,"Sat","2020-12-26","12:30 (13:30)","Leicester City",1.2,"2-2",2.2,"Manchester Utd",NA,"King Power Stadium","Mike Dean","Match Report",NA
+15,"Sat","2020-12-26","15:00 (16:00)","Fulham",0.9,"0-0",0.1,"Southampton",NA,"Craven Cottage","Darren England","Match Report",NA
+15,"Sat","2020-12-26","15:00 (16:00)","Aston Villa",3.5,"3-0",1.1,"Crystal Palace",NA,"Villa Park","Anthony Taylor","Match Report",NA
+15,"Sat","2020-12-26","17:30 (18:30)","Arsenal",2.1,"3-1",2.3,"Chelsea",NA,"Emirates Stadium","Michael Oliver","Match Report",NA
+15,"Sat","2020-12-26","20:00 (21:00)","Sheffield Utd",1.2,"0-1",0.7,"Everton",NA,"Bramall Lane","David Coote","Match Report",NA
+15,"Sat","2020-12-26","20:00 (21:00)","Manchester City",1.8,"2-0",0.3,"Newcastle Utd",NA,"Etihad Stadium","Andre Marriner","Match Report",NA
+15,"Sun","2020-12-27","12:00 (13:00)","Leeds United",1.8,"1-0",1.1,"Burnley",NA,"Elland Road","Robert Jones","Match Report",NA
+15,"Sun","2020-12-27","14:15 (15:15)","West Ham",1.2,"2-2",1.2,"Brighton",NA,"London Stadium","Simon Hooper","Match Report",NA
+15,"Sun","2020-12-27","16:30 (17:30)","Liverpool",1.6,"1-1",0.5,"West Brom",2000,"Anfield","Kevin Friend","Match Report",NA
+15,"Sun","2020-12-27","19:15 (20:15)","Wolves",1,"1-1",0.4,"Tottenham",NA,"Molineux Stadium","Paul Tierney","Match Report",NA
+16,"Mon","2020-12-28","15:00 (16:00)","Crystal Palace",0.5,"1-1",1.8,"Leicester City",NA,"Selhurst Park","Graham Scott","Match Report",NA
+16,"Mon","2020-12-28","17:30 (18:30)","Chelsea",1.4,"1-1",0.8,"Aston Villa",NA,"Stamford Bridge","Stuart Attwell","Match Report",NA
+16,"Tue","2020-12-29","18:00 (19:00)","Burnley",0.8,"1-0",0.4,"Sheffield Utd",NA,"Turf Moor","Chris Kavanagh","Match Report",NA
+16,"Tue","2020-12-29","18:00 (19:00)","West Brom",0.6,"0-5",0.9,"Leeds United",NA,"The Hawthorns","Lee Mason","Match Report",NA
+16,"Tue","2020-12-29","18:00 (19:00)","Brighton",0.8,"0-1",1.2,"Arsenal",NA,"The American Express Community Stadium","Martin Atkinson","Match Report",NA
+16,"Tue","2020-12-29","18:00 (19:00)","Southampton",0.5,"0-0",0.9,"West Ham",NA,"St. Mary's Stadium","Andy Madley","Match Report",NA
+16,"Tue","2020-12-29","20:00 (21:00)","Manchester Utd",1.3,"1-0",0.4,"Wolves",NA,"Old Trafford","Jonathan Moss","Match Report",NA
+16,"Wed","2020-12-30","20:00 (21:00)","Newcastle Utd",0.3,"0-0",1.1,"Liverpool",NA,"St. James' Park","Paul Tierney","Match Report",NA
+17,"Fri","2021-01-01","17:30 (18:30)","Everton",0.3,"0-1",1.3,"West Ham",NA,"Goodison Park","Kevin Friend","Match Report",NA
+17,"Fri","2021-01-01","20:00 (21:00)","Manchester Utd",1.9,"2-1",1.6,"Aston Villa",NA,"Old Trafford","Michael Oliver","Match Report",NA
+17,"Sat","2021-01-02","12:30 (13:30)","Tottenham",2.6,"3-0",1,"Leeds United",NA,"Tottenham Hotspur Stadium","David Coote","Match Report",NA
+17,"Sat","2021-01-02","15:00 (16:00)","Crystal Palace",0.6,"2-0",0.3,"Sheffield Utd",NA,"Selhurst Park","Stuart Attwell","Match Report",NA
+17,"Sat","2021-01-02","17:30 (18:30)","Brighton",1.7,"3-3",1.7,"Wolves",NA,"The American Express Community Stadium","Andy Madley","Match Report",NA
+17,"Sat","2021-01-02","20:00 (21:00)","West Brom",0.4,"0-4",3.3,"Arsenal",NA,"The Hawthorns","Martin Atkinson","Match Report",NA
+17,"Sun","2021-01-03","14:15 (15:15)","Newcastle Utd",0.2,"1-2",0.9,"Leicester City",NA,"St. James' Park","Robert Jones","Match Report",NA
+17,"Sun","2021-01-03","16:30 (17:30)","Chelsea",0.8,"1-3",2.4,"Manchester City",NA,"Stamford Bridge","Anthony Taylor","Match Report",NA
+17,"Mon","2021-01-04","20:00 (21:00)","Southampton",0.6,"1-0",1.1,"Liverpool",NA,"St. Mary's Stadium","Andre Marriner","Match Report",NA
+18,"Tue","2021-01-12","18:00 (19:00)","Sheffield Utd",1.8,"1-0",0.5,"Newcastle Utd",NA,"Bramall Lane","Andy Madley","Match Report",NA
+1,"Tue","2021-01-12","20:15 (21:15)","Burnley",0.9,"0-1",1.2,"Manchester Utd",NA,"Turf Moor","Kevin Friend","Match Report",NA
+18,"Tue","2021-01-12","20:15 (21:15)","Wolves",1,"1-2",0.6,"Everton",NA,"Molineux Stadium","Martin Atkinson","Match Report",NA
+18,"Wed","2021-01-13","18:00 (19:00)","Manchester City",2.6,"1-0",0.2,"Brighton",NA,"Etihad Stadium","Darren England","Match Report",NA
+16,"Wed","2021-01-13","20:15 (21:15)","Tottenham",2.3,"1-1",0.9,"Fulham",NA,"Tottenham Hotspur Stadium","Paul Tierney","Match Report",NA
+18,"Thu","2021-01-14","20:00 (21:00)","Arsenal",0.6,"0-0",0.9,"Crystal Palace",NA,"Emirates Stadium","Andre Marriner","Match Report",NA
+19,"Sat","2021-01-16","12:30 (13:30)","Wolves",2.2,"2-3",2.3,"West Brom",NA,"Molineux Stadium","Michael Oliver","Match Report",NA
+19,"Sat","2021-01-16","15:00 (16:00)","Leeds United",0.3,"0-1",1.3,"Brighton",NA,"Elland Road","Kevin Friend","Match Report",NA
+19,"Sat","2021-01-16","15:00 (16:00)","West Ham",1.7,"1-0",0.5,"Burnley",NA,"London Stadium","Chris Kavanagh","Match Report",NA
+19,"Sat","2021-01-16","17:30 (18:30)","Fulham",0.8,"0-1",1.5,"Chelsea",NA,"Craven Cottage","Peter Bankes","Match Report",NA
+19,"Sat","2021-01-16","20:00 (21:00)","Leicester City",2.1,"2-0",0.8,"Southampton",NA,"King Power Stadium","Stuart Attwell","Match Report",NA
+19,"Sun","2021-01-17","14:00 (15:00)","Sheffield Utd",0.7,"1-3",1.2,"Tottenham",NA,"Bramall Lane","Andre Marriner","Match Report",NA
+19,"Sun","2021-01-17","16:30 (17:30)","Liverpool",1.7,"0-0",0.9,"Manchester Utd",NA,"Anfield","Paul Tierney","Match Report",NA
+19,"Sun","2021-01-17","19:15 (20:15)","Manchester City",0.9,"4-0",0,"Crystal Palace",NA,"Etihad Stadium","Lee Mason","Match Report",NA
+19,"Mon","2021-01-18","20:00 (21:00)","Arsenal",2.8,"3-0",0.2,"Newcastle Utd",NA,"Emirates Stadium","David Coote","Match Report",NA
+18,"Tue","2021-01-19","18:00 (19:00)","West Ham",1.3,"2-1",0.4,"West Brom",NA,"London Stadium","Graham Scott","Match Report",NA
+18,"Tue","2021-01-19","20:15 (21:15)","Leicester City",1.2,"2-0",0.8,"Chelsea",NA,"King Power Stadium","Craig Pawson","Match Report",NA
+1,"Wed","2021-01-20","18:00 (19:00)","Manchester City",4.3,"2-0",0.8,"Aston Villa",NA,"Etihad Stadium","Jonathan Moss","Match Report",NA
+18,"Wed","2021-01-20","20:15 (21:15)","Fulham",0.9,"1-2",1.2,"Manchester Utd",NA,"Craven Cottage","Martin Atkinson","Match Report",NA
+18,"Thu","2021-01-21","20:00 (21:00)","Liverpool",2.3,"0-1",1.4,"Burnley",NA,"Anfield","Mike Dean","Match Report",NA
+11,"Sat","2021-01-23","20:00 (21:00)","Aston Villa",1.8,"2-0",0.6,"Newcastle Utd",NA,"Villa Park","Simon Hooper","Match Report",NA
+20,"Tue","2021-01-26","18:00 (19:00)","Newcastle Utd",1.4,"1-2",0.9,"Leeds United",NA,"St. James' Park","Anthony Taylor","Match Report",NA
+20,"Tue","2021-01-26","18:00 (19:00)","Crystal Palace",0.5,"2-3",3,"West Ham",NA,"Selhurst Park","Stuart Attwell","Match Report",NA
+20,"Tue","2021-01-26","20:15 (21:15)","Southampton",1.2,"1-3",2,"Arsenal",NA,"St. Mary's Stadium","Kevin Friend","Match Report",NA
+20,"Tue","2021-01-26","20:15 (21:15)","West Brom",0.4,"0-5",2,"Manchester City",NA,"The Hawthorns","Chris Kavanagh","Match Report",NA
+20,"Wed","2021-01-27","18:00 (19:00)","Burnley",0.5,"3-2",2.1,"Aston Villa",NA,"Turf Moor","Paul Tierney","Match Report",NA
+20,"Wed","2021-01-27","18:00 (19:00)","Chelsea",0.8,"0-0",0.4,"Wolves",NA,"Stamford Bridge","Andy Madley","Match Report",NA
+20,"Wed","2021-01-27","19:30 (20:30)","Brighton",2,"0-0",1,"Fulham",NA,"The American Express Community Stadium","Craig Pawson","Match Report",NA
+20,"Wed","2021-01-27","20:15 (21:15)","Everton",0.6,"1-1",1.1,"Leicester City",NA,"Goodison Park","Mike Dean","Match Report",NA
+20,"Wed","2021-01-27","20:15 (21:15)","Manchester Utd",1.7,"1-2",1,"Sheffield Utd",NA,"Old Trafford","Peter Bankes","Match Report",NA
+20,"Thu","2021-01-28","20:00 (21:00)","Tottenham",0.2,"1-3",2.1,"Liverpool",NA,"Tottenham Hotspur Stadium","Martin Atkinson","Match Report",NA
+21,"Sat","2021-01-30","12:30 (13:30)","Everton",1,"0-2",1.8,"Newcastle Utd",NA,"Goodison Park","Stuart Attwell","Match Report",NA
+21,"Sat","2021-01-30","15:00 (16:00)","West Brom",0.6,"2-2",1.8,"Fulham",NA,"The Hawthorns","Anthony Taylor","Match Report",NA
+21,"Sat","2021-01-30","15:00 (16:00)","Manchester City",1.2,"1-0",0.2,"Sheffield Utd",NA,"Etihad Stadium","David Coote","Match Report",NA
+21,"Sat","2021-01-30","15:00 (16:00)","Crystal Palace",0.8,"1-0",0.4,"Wolves",NA,"Selhurst Park","Simon Hooper","Match Report",NA
+21,"Sat","2021-01-30","17:30 (18:30)","Arsenal",1.1,"0-0",1.5,"Manchester Utd",NA,"Emirates Stadium","Michael Oliver","Match Report",NA
+21,"Sat","2021-01-30","20:00 (21:00)","Southampton",1.7,"0-1",0.5,"Aston Villa",NA,"St. Mary's Stadium","Lee Mason","Match Report",NA
+21,"Sun","2021-01-31","12:00 (13:00)","Chelsea",1.3,"2-0",0.2,"Burnley",NA,"Stamford Bridge","Graham Scott","Match Report",NA
+21,"Sun","2021-01-31","14:00 (15:00)","Leicester City",1.9,"1-3",1.8,"Leeds United",NA,"King Power Stadium","Chris Kavanagh","Match Report",NA
+21,"Sun","2021-01-31","16:30 (17:30)","West Ham",1,"1-3",1.9,"Liverpool",NA,"London Stadium","Jonathan Moss","Match Report",NA
+21,"Sun","2021-01-31","19:15 (20:15)","Brighton",1.9,"1-0",0.5,"Tottenham",NA,"The American Express Community Stadium","Peter Bankes","Match Report",NA
+22,"Tue","2021-02-02","18:00 (19:00)","Wolves",1.5,"2-1",0.6,"Arsenal",NA,"Molineux Stadium","Craig Pawson","Match Report",NA
+22,"Tue","2021-02-02","18:00 (19:00)","Sheffield Utd",1.1,"2-1",1.5,"West Brom",NA,"Bramall Lane","Paul Tierney","Match Report",NA
+22,"Tue","2021-02-02","20:15 (21:15)","Manchester Utd",3.7,"9-0",0.5,"Southampton",NA,"Old Trafford","Mike Dean","Match Report",NA
+22,"Tue","2021-02-02","20:15 (21:15)","Newcastle Utd",1.8,"1-2",0.9,"Crystal Palace",NA,"St. James' Park","Darren England","Match Report",NA
+22,"Wed","2021-02-03","18:00 (19:00)","Burnley",0.1,"0-2",2.6,"Manchester City",NA,"Turf Moor","Martin Atkinson","Match Report",NA
+22,"Wed","2021-02-03","18:00 (19:00)","Fulham",0.7,"0-2",1.1,"Leicester City",NA,"Craven Cottage","Robert Jones","Match Report",NA
+22,"Wed","2021-02-03","19:30 (20:30)","Leeds United",0.9,"1-2",1.8,"Everton",NA,"Elland Road","Michael Oliver","Match Report",NA
+22,"Wed","2021-02-03","20:15 (21:15)","Liverpool",0.7,"0-1",1.1,"Brighton",NA,"Anfield","Kevin Friend","Match Report",NA
+22,"Wed","2021-02-03","20:15 (21:15)","Aston Villa",0.7,"1-3",1.5,"West Ham",NA,"Villa Park","Andy Madley","Match Report",NA
+22,"Thu","2021-02-04","20:00 (21:00)","Tottenham",0.3,"0-1",2.2,"Chelsea",NA,"Tottenham Hotspur Stadium","Andre Marriner","Match Report",NA
+23,"Sat","2021-02-06","12:30 (13:30)","Aston Villa",1.1,"1-0",1.1,"Arsenal",NA,"Villa Park","Chris Kavanagh","Match Report",NA
+23,"Sat","2021-02-06","15:00 (16:00)","Newcastle Utd",0.8,"3-2",1.4,"Southampton",NA,"St. James' Park","Craig Pawson","Match Report",NA
+23,"Sat","2021-02-06","15:00 (16:00)","Burnley",2.1,"1-1",0.6,"Brighton",NA,"Turf Moor","Anthony Taylor","Match Report",NA
+23,"Sat","2021-02-06","17:30 (18:30)","Fulham",1.4,"0-0",0.8,"West Ham",NA,"Craven Cottage","Mike Dean","Match Report",NA
+23,"Sat","2021-02-06","20:00 (21:00)","Manchester Utd",1.4,"3-3",1.1,"Everton",NA,"Old Trafford","Jonathan Moss","Match Report",NA
+23,"Sun","2021-02-07","12:00 (13:00)","Tottenham",1.5,"2-0",0.4,"West Brom",NA,"Tottenham Hotspur Stadium","Stuart Attwell","Match Report",NA
+23,"Sun","2021-02-07","14:00 (15:00)","Wolves",1.9,"0-0",0.7,"Leicester City",NA,"Molineux Stadium","Martin Atkinson","Match Report",NA
+23,"Sun","2021-02-07","16:30 (17:30)","Liverpool",1.3,"1-4",3.1,"Manchester City",NA,"Anfield","Michael Oliver","Match Report",NA
+23,"Sun","2021-02-07","19:15 (20:15)","Sheffield Utd",0.4,"1-2",1.4,"Chelsea",NA,"Bramall Lane","Kevin Friend","Match Report",NA
+23,"Mon","2021-02-08","20:00 (21:00)","Leeds United",2.8,"2-0",0.5,"Crystal Palace",NA,"Elland Road","Andre Marriner","Match Report",NA
+24,"Sat","2021-02-13","12:30 (13:30)","Leicester City",2.6,"3-1",1.8,"Liverpool",NA,"King Power Stadium","Anthony Taylor","Match Report",NA
+24,"Sat","2021-02-13","15:00 (16:00)","Crystal Palace",0.6,"0-3",1.3,"Burnley",NA,"Selhurst Park","Michael Oliver","Match Report",NA
+24,"Sat","2021-02-13","17:30 (18:30)","Manchester City",2.9,"3-0",0.6,"Tottenham",NA,"Etihad Stadium","Paul Tierney","Match Report",NA
+24,"Sat","2021-02-13","20:00 (21:00)","Brighton",1.7,"0-0",0.1,"Aston Villa",NA,"The American Express Community Stadium","Darren England","Match Report",NA
+24,"Sun","2021-02-14","12:00 (13:00)","Southampton",0.7,"1-2",1.1,"Wolves",NA,"St. Mary's Stadium","Graham Scott","Match Report",NA
+24,"Sun","2021-02-14","14:00 (15:00)","West Brom",1.1,"1-1",0.4,"Manchester Utd",NA,"The Hawthorns","Craig Pawson","Match Report",NA
+24,"Sun","2021-02-14","16:30 (17:30)","Arsenal",2.4,"4-2",0.7,"Leeds United",NA,"Emirates Stadium","Stuart Attwell","Match Report",NA
+24,"Sun","2021-02-14","19:00 (20:00)","Everton",0.3,"0-2",2.7,"Fulham",NA,"Goodison Park","Andy Madley","Match Report",NA
+24,"Mon","2021-02-15","18:00 (19:00)","West Ham",1.9,"3-0",0.7,"Sheffield Utd",NA,"London Stadium","Simon Hooper","Match Report",NA
+24,"Mon","2021-02-15","20:00 (21:00)","Chelsea",2,"2-0",0.7,"Newcastle Utd",NA,"Stamford Bridge","Peter Bankes","Match Report",NA
+17,"Wed","2021-02-17","18:00 (19:00)","Burnley",1.4,"1-1",0.5,"Fulham",NA,"Turf Moor","Jonathan Moss","Match Report",NA
+16,"Wed","2021-02-17","20:15 (21:15)","Everton",1,"1-3",1.5,"Manchester City",NA,"Goodison Park","Andre Marriner","Match Report",NA
+25,"Fri","2021-02-19","20:00 (21:00)","Wolves",0.8,"1-0",1.4,"Leeds United",NA,"Molineux Stadium","David Coote","Match Report",NA
+25,"Sat","2021-02-20","12:30 (13:30)","Southampton",0.5,"1-1",1.2,"Chelsea",NA,"St. Mary's Stadium","Anthony Taylor","Match Report",NA
+25,"Sat","2021-02-20","15:00 (16:00)","Burnley",0.4,"0-0",1,"West Brom",NA,"Turf Moor","Mike Dean","Match Report",NA
+25,"Sat","2021-02-20","17:30 (18:30)","Liverpool",1.7,"0-2",1.5,"Everton",NA,"Anfield","Chris Kavanagh","Match Report",NA
+25,"Sat","2021-02-20","20:00 (21:00)","Fulham",1.1,"1-0",0.5,"Sheffield Utd",NA,"Craven Cottage","Martin Atkinson","Match Report",NA
+25,"Sun","2021-02-21","12:00 (13:00)","West Ham",1.1,"2-1",1.2,"Tottenham",NA,"London Stadium","Craig Pawson","Match Report",NA
+25,"Sun","2021-02-21","14:05 (15:05)","Aston Villa",1.2,"1-2",1.2,"Leicester City",NA,"Villa Park","Michael Oliver","Match Report",NA
+25,"Sun","2021-02-21","16:30 (17:30)","Arsenal",0.3,"0-1",2,"Manchester City",NA,"Emirates Stadium","Jonathan Moss","Match Report",NA
+25,"Sun","2021-02-21","19:00 (20:00)","Manchester Utd",1.8,"3-1",0.5,"Newcastle Utd",NA,"Old Trafford","Paul Tierney","Match Report",NA
+25,"Mon","2021-02-22","20:00 (21:00)","Brighton",2.6,"1-2",0.2,"Crystal Palace",NA,"The American Express Community Stadium","Kevin Friend","Match Report",NA
+18,"Tue","2021-02-23","18:00 (19:00)","Leeds United",1.3,"3-0",0.7,"Southampton",NA,"Elland Road","Andre Marriner","Match Report",NA
+26,"Sat","2021-02-27","12:30 (13:30)","Manchester City",0.6,"2-1",1.6,"West Ham",NA,"Etihad Stadium","Michael Oliver","Match Report",NA
+26,"Sat","2021-02-27","15:00 (16:00)","West Brom",0.5,"1-0",2.6,"Brighton",NA,"The Hawthorns","Lee Mason","Match Report",NA
+26,"Sat","2021-02-27","17:30 (18:30)","Leeds United",0.7,"0-1",0.9,"Aston Villa",NA,"Elland Road","Peter Bankes","Match Report",NA
+26,"Sat","2021-02-27","20:00 (21:00)","Newcastle Utd",1.5,"1-1",1,"Wolves",NA,"St. James' Park","Mike Dean","Match Report",NA
+26,"Sun","2021-02-28","12:00 (13:00)","Crystal Palace",0.1,"0-0",1,"Fulham",NA,"Selhurst Park","Anthony Taylor","Match Report",NA
+26,"Sun","2021-02-28","12:00 (13:00)","Leicester City",0.5,"1-3",2.2,"Arsenal",NA,"King Power Stadium","Paul Tierney","Match Report",NA
+26,"Sun","2021-02-28","14:00 (15:00)","Tottenham",2.2,"4-0",0.5,"Burnley",NA,"Tottenham Hotspur Stadium","Kevin Friend","Match Report",NA
+26,"Sun","2021-02-28","16:30 (17:30)","Chelsea",1.1,"0-0",0.5,"Manchester Utd",NA,"Stamford Bridge","Stuart Attwell","Match Report",NA
+26,"Sun","2021-02-28","19:15 (20:15)","Sheffield Utd",0.6,"0-2",2.9,"Liverpool",NA,"Bramall Lane","Jonathan Moss","Match Report",NA
+26,"Mon","2021-03-01","20:00 (21:00)","Everton",1.6,"1-0",1,"Southampton",NA,"Goodison Park","Martin Atkinson","Match Report",NA
+29,"Tue","2021-03-02","20:00 (21:00)","Manchester City",2.3,"4-1",0.4,"Wolves",NA,"Etihad Stadium","Chris Kavanagh","Match Report",NA
+29,"Wed","2021-03-03","18:00 (19:00)","Burnley",1.5,"1-1",1.3,"Leicester City",NA,"Turf Moor","Andy Madley","Match Report",NA
+29,"Wed","2021-03-03","18:00 (19:00)","Sheffield Utd",1,"1-0",1.6,"Aston Villa",NA,"Bramall Lane","Robert Jones","Match Report",NA
+29,"Wed","2021-03-03","20:15 (21:15)","Crystal Palace",0.8,"0-0",0.9,"Manchester Utd",NA,"Selhurst Park","Andre Marriner","Match Report",NA
+29,"Thu","2021-03-04","18:00 (19:00)","West Brom",1,"0-1",1.2,"Everton",NA,"The Hawthorns","Darren England","Match Report",NA
+33,"Thu","2021-03-04","18:00 (19:00)","Fulham",0.8,"0-1",1.4,"Tottenham",NA,"Craven Cottage","David Coote","Match Report",NA
+29,"Thu","2021-03-04","20:15 (21:15)","Liverpool",0.3,"0-1",1,"Chelsea",NA,"Anfield","Martin Atkinson","Match Report",NA
+27,"Sat","2021-03-06","12:30 (13:30)","Burnley",1.5,"1-1",2.4,"Arsenal",NA,"Turf Moor","Andre Marriner","Match Report",NA
+27,"Sat","2021-03-06","15:00 (16:00)","Sheffield Utd",0.7,"0-2",1.6,"Southampton",NA,"Bramall Lane","Paul Tierney","Match Report",NA
+27,"Sat","2021-03-06","17:30 (18:30)","Aston Villa",0.6,"0-0",1.7,"Wolves",NA,"Villa Park","Andy Madley","Match Report",NA
+27,"Sat","2021-03-06","20:00 (21:00)","Brighton",1,"1-2",1.1,"Leicester City",NA,"The American Express Community Stadium","Michael Oliver","Match Report",NA
+27,"Sun","2021-03-07","12:00 (13:00)","West Brom",1,"0-0",0.4,"Newcastle Utd",NA,"The Hawthorns","Martin Atkinson","Match Report",NA
+27,"Sun","2021-03-07","14:00 (15:00)","Liverpool",1,"0-1",1.1,"Fulham",NA,"Anfield","Kevin Friend","Match Report",NA
+27,"Sun","2021-03-07","16:30 (17:30)","Manchester City",1.5,"0-2",1.6,"Manchester Utd",NA,"Etihad Stadium","Anthony Taylor","Match Report",NA
+27,"Sun","2021-03-07","19:15 (20:15)","Tottenham",2.7,"4-1",0.3,"Crystal Palace",NA,"Tottenham Hotspur Stadium","Stuart Attwell","Match Report",NA
+27,"Mon","2021-03-08","18:00 (19:00)","Chelsea",2.9,"2-0",0.3,"Everton",NA,"Stamford Bridge","David Coote","Match Report",NA
+27,"Mon","2021-03-08","20:00 (21:00)","West Ham",1.9,"2-0",1.7,"Leeds United",NA,"London Stadium","Mike Dean","Match Report",NA
+33,"Wed","2021-03-10","18:00 (19:00)","Manchester City",2.7,"5-2",1.8,"Southampton",NA,"Etihad Stadium","Jonathan Moss","Match Report",NA
+28,"Fri","2021-03-12","20:00 (21:00)","Newcastle Utd",1.1,"1-1",0.7,"Aston Villa",NA,"St. James' Park","Paul Tierney","Match Report",NA
+28,"Sat","2021-03-13","12:30 (13:30)","Leeds United",0.4,"0-0",1.4,"Chelsea",NA,"Elland Road","Kevin Friend","Match Report",NA
+28,"Sat","2021-03-13","15:00 (16:00)","Crystal Palace",1.3,"1-0",0.8,"West Brom",NA,"Selhurst Park","Simon Hooper","Match Report",NA
+28,"Sat","2021-03-13","17:30 (18:30)","Everton",1.6,"1-2",1.4,"Burnley",NA,"Goodison Park","Jonathan Moss","Match Report",NA
+28,"Sat","2021-03-13","20:00 (21:00)","Fulham",0.3,"0-3",2.3,"Manchester City",NA,"Craven Cottage","Andre Marriner","Match Report",NA
+28,"Sun","2021-03-14","12:00 (13:00)","Southampton",1,"1-2",0.9,"Brighton",NA,"St. Mary's Stadium","Stuart Attwell","Match Report",NA
+28,"Sun","2021-03-14","14:00 (15:00)","Leicester City",4,"5-0",0.1,"Sheffield Utd",NA,"King Power Stadium","Peter Bankes","Match Report",NA
+28,"Sun","2021-03-14","16:30 (17:30)","Arsenal",1.7,"2-1",0.6,"Tottenham",NA,"Emirates Stadium","Michael Oliver","Match Report",NA
+28,"Sun","2021-03-14","19:15 (20:15)","Manchester Utd",1.2,"1-0",0.6,"West Ham",NA,"Old Trafford","Martin Atkinson","Match Report",NA
+28,"Mon","2021-03-15","20:00 (21:00)","Wolves",0.8,"0-1",1.1,"Liverpool",NA,"Molineux Stadium","Craig Pawson","Match Report",NA
+29,"Fri","2021-03-19","20:00 (21:00)","Fulham",1.4,"1-2",1.5,"Leeds United",NA,"Craven Cottage","David Coote","Match Report",NA
+29,"Sat","2021-03-20","20:00 (21:00)","Brighton",1.2,"3-0",0.1,"Newcastle Utd",NA,"The American Express Community Stadium","Anthony Taylor","Match Report",NA
+29,"Sun","2021-03-21","15:00 (16:00)","West Ham",2.3,"3-3",1.7,"Arsenal",NA,"London Stadium","Jonathan Moss","Match Report",NA
+18,"Sun","2021-03-21","19:30 (20:30)","Aston Villa",0.5,"0-2",2.2,"Tottenham",NA,"Villa Park","Mike Dean","Match Report",NA
+30,"Sat","2021-04-03","12:30 (13:30)","Chelsea",2.4,"2-5",1.9,"West Brom",NA,"Stamford Bridge","David Coote","Match Report",NA
+30,"Sat","2021-04-03","15:00 (16:00)","Leeds United",2.5,"2-1",1,"Sheffield Utd",NA,"Elland Road","Graham Scott","Match Report",NA
+30,"Sat","2021-04-03","17:30 (18:30)","Leicester City",0.4,"0-2",2.3,"Manchester City",NA,"King Power Stadium","Anthony Taylor","Match Report",NA
+30,"Sat","2021-04-03","20:00 (21:00)","Arsenal",0.3,"0-3",2.2,"Liverpool",NA,"Emirates Stadium","Stuart Attwell","Match Report",NA
+30,"Sun","2021-04-04","12:00 (13:00)","Southampton",1.9,"3-2",1.8,"Burnley",NA,"St. Mary's Stadium","Andre Marriner","Match Report",NA
+30,"Sun","2021-04-04","14:05 (15:05)","Newcastle Utd",2.7,"2-2",1.7,"Tottenham",NA,"St. James' Park","Craig Pawson","Match Report",NA
+30,"Sun","2021-04-04","16:30 (17:30)","Aston Villa",1.6,"3-1",1.7,"Fulham",NA,"Villa Park","Andy Madley","Match Report",NA
+30,"Sun","2021-04-04","19:30 (20:30)","Manchester Utd",1.8,"2-1",1.1,"Brighton",NA,"Old Trafford","Mike Dean","Match Report",NA
+30,"Mon","2021-04-05","18:00 (19:00)","Everton",2.7,"1-1",0.8,"Crystal Palace",NA,"Goodison Park","Kevin Friend","Match Report",NA
+30,"Mon","2021-04-05","20:15 (21:15)","Wolves",2.5,"2-3",1.2,"West Ham",NA,"Molineux Stadium","Michael Oliver","Match Report",NA
+31,"Fri","2021-04-09","20:00 (21:00)","Fulham",0.9,"0-1",0.4,"Wolves",NA,"Craven Cottage","Jonathan Moss","Match Report",NA
+31,"Sat","2021-04-10","12:30 (13:30)","Manchester City",2.4,"1-2",0.3,"Leeds United",NA,"Etihad Stadium","Andre Marriner","Match Report",NA
+31,"Sat","2021-04-10","15:00 (16:00)","Liverpool",2.5,"2-1",1,"Aston Villa",NA,"Anfield","Paul Tierney","Match Report",NA
+31,"Sat","2021-04-10","17:30 (18:30)","Crystal Palace",0.1,"1-4",2.5,"Chelsea",NA,"Selhurst Park","Michael Oliver","Match Report",NA
+31,"Sun","2021-04-11","12:00 (13:00)","Burnley",1.8,"1-2",1.2,"Newcastle Utd",NA,"Turf Moor","Anthony Taylor","Match Report",NA
+31,"Sun","2021-04-11","14:05 (15:05)","West Ham",1.1,"3-2",0.9,"Leicester City",NA,"London Stadium","Mike Dean","Match Report",NA
+31,"Sun","2021-04-11","16:30 (17:30)","Tottenham",1,"1-3",1.9,"Manchester Utd",NA,"Tottenham Hotspur Stadium","Chris Kavanagh","Match Report",NA
+31,"Sun","2021-04-11","19:00 (20:00)","Sheffield Utd",0.5,"0-3",2.2,"Arsenal",NA,"Bramall Lane","Peter Bankes","Match Report",NA
+31,"Mon","2021-04-12","18:00 (19:00)","West Brom",2.9,"3-0",2.1,"Southampton",NA,"The Hawthorns","Simon Hooper","Match Report",NA
+31,"Mon","2021-04-12","20:15 (21:15)","Brighton",1.2,"0-0",0.4,"Everton",NA,"The American Express Community Stadium","Darren England","Match Report",NA
+32,"Fri","2021-04-16","20:00 (21:00)","Everton",2.3,"2-2",1.2,"Tottenham",NA,"Goodison Park","Michael Oliver","Match Report",NA
+32,"Sat","2021-04-17","12:30 (13:30)","Newcastle Utd",1.8,"3-2",1.5,"West Ham",NA,"St. James' Park","Kevin Friend","Match Report",NA
+32,"Sat","2021-04-17","20:15 (21:15)","Wolves",1.4,"1-0",0.5,"Sheffield Utd",NA,"Molineux Stadium","Robert Jones","Match Report",NA
+32,"Sun","2021-04-18","13:30 (14:30)","Arsenal",2.9,"1-1",0.9,"Fulham",NA,"Emirates Stadium","Craig Pawson","Match Report",NA
+32,"Sun","2021-04-18","16:00 (17:00)","Manchester Utd",2.8,"3-1",0.4,"Burnley",NA,"Old Trafford","Jonathan Moss","Match Report",NA
+32,"Mon","2021-04-19","20:00 (21:00)","Leeds United",1.8,"1-1",2.3,"Liverpool",NA,"Elland Road","Anthony Taylor","Match Report",NA
+32,"Tue","2021-04-20","20:15 (21:15)","Chelsea",1,"0-0",0.7,"Brighton",NA,"Stamford Bridge","Stuart Attwell","Match Report",NA
+29,"Wed","2021-04-21","18:00 (19:00)","Tottenham",1.8,"2-1",0.8,"Southampton",NA,"Tottenham Hotspur Stadium","David Coote","Match Report",NA
+32,"Wed","2021-04-21","20:15 (21:15)","Aston Villa",0.7,"1-2",1.4,"Manchester City",NA,"Villa Park","Peter Bankes","Match Report",NA
+32,"Thu","2021-04-22","20:00 (21:00)","Leicester City",2.3,"3-0",0.4,"West Brom",NA,"King Power Stadium","Andy Madley","Match Report",NA
+33,"Fri","2021-04-23","20:00 (21:00)","Arsenal",0.9,"0-1",0.8,"Everton",NA,"Emirates Stadium","Jonathan Moss","Match Report",NA
+33,"Sat","2021-04-24","12:30 (13:30)","Liverpool",1.9,"1-1",1.2,"Newcastle Utd",NA,"Anfield","Andre Marriner","Match Report",NA
+33,"Sat","2021-04-24","17:30 (18:30)","West Ham",0.4,"0-1",2.2,"Chelsea",NA,"London Stadium","Chris Kavanagh","Match Report",NA
+33,"Sat","2021-04-24","20:00 (21:00)","Sheffield Utd",0.8,"1-0",2.2,"Brighton",NA,"Bramall Lane","Kevin Friend","Match Report",NA
+33,"Sun","2021-04-25","12:00 (13:00)","Wolves",0.3,"0-4",2.1,"Burnley",NA,"Molineux Stadium","Darren England","Match Report",NA
+33,"Sun","2021-04-25","14:00 (15:00)","Leeds United",0.4,"0-0",1.3,"Manchester Utd",NA,"Elland Road","Craig Pawson","Match Report",NA
+33,"Sun","2021-04-25","19:00 (20:00)","Aston Villa",2.3,"2-2",1.4,"West Brom",NA,"Villa Park","Stuart Attwell","Match Report",NA
+33,"Mon","2021-04-26","20:00 (21:00)","Leicester City",1.1,"2-1",0.6,"Crystal Palace",NA,"King Power Stadium","Graham Scott","Match Report",NA
+34,"Fri","2021-04-30","20:00 (21:00)","Southampton",1.1,"1-1",1.7,"Leicester City",NA,"St. Mary's Stadium","Robert Jones","Match Report",NA
+34,"Sat","2021-05-01","12:30 (13:30)","Crystal Palace",0.8,"0-2",2.1,"Manchester City",NA,"Selhurst Park","David Coote","Match Report",NA
+34,"Sat","2021-05-01","15:00 (16:00)","Brighton",2.6,"2-0",0.8,"Leeds United",NA,"The American Express Community Stadium","Chris Kavanagh","Match Report",NA
+34,"Sat","2021-05-01","17:30 (18:30)","Chelsea",1.9,"2-0",0.3,"Fulham",NA,"Stamford Bridge","Kevin Friend","Match Report",NA
+34,"Sat","2021-05-01","20:00 (21:00)","Everton",1.2,"1-2",1.9,"Aston Villa",NA,"Goodison Park","Simon Hooper","Match Report",NA
+34,"Sun","2021-05-02","14:00 (15:00)","Newcastle Utd",0.2,"0-2",1.9,"Arsenal",NA,"St. James' Park","Mike Dean","Match Report",NA
+34,"Sun","2021-05-02","19:15 (20:15)","Tottenham",2,"4-0",0.5,"Sheffield Utd",NA,"Tottenham Hotspur Stadium","Andre Marriner","Match Report",NA
+34,"Mon","2021-05-03","18:00 (19:00)","West Brom",1.4,"1-1",1.4,"Wolves",NA,"The Hawthorns","Paul Tierney","Match Report",NA
+34,"Mon","2021-05-03","20:15 (21:15)","Burnley",1.8,"1-2",1.8,"West Ham",NA,"Turf Moor","Anthony Taylor","Match Report",NA
+35,"Fri","2021-05-07","20:00 (21:00)","Leicester City",2.3,"2-4",2.6,"Newcastle Utd",NA,"King Power Stadium","Darren England","Match Report",NA
+35,"Sat","2021-05-08","12:30 (13:30)","Leeds United",2.6,"3-1",1,"Tottenham",NA,"Elland Road","Michael Oliver","Match Report",NA
+35,"Sat","2021-05-08","15:00 (16:00)","Sheffield Utd",0.7,"0-2",2.1,"Crystal Palace",NA,"Bramall Lane","Simon Hooper","Match Report",NA
+35,"Sat","2021-05-08","17:30 (18:30)","Manchester City",2.2,"1-2",0.8,"Chelsea",NA,"Etihad Stadium","Anthony Taylor","Match Report",NA
+35,"Sat","2021-05-08","20:15 (21:15)","Liverpool",2.2,"2-0",1.3,"Southampton",NA,"Anfield","Kevin Friend","Match Report",NA
+35,"Sun","2021-05-09","12:00 (13:00)","Wolves",1.2,"2-1",0.4,"Brighton",NA,"Molineux Stadium","Jonathan Moss","Match Report",NA
+35,"Sun","2021-05-09","14:05 (15:05)","Aston Villa",0.5,"1-3",1.8,"Manchester Utd",NA,"Villa Park","Chris Kavanagh","Match Report",NA
+35,"Sun","2021-05-09","16:30 (17:30)","West Ham",1.1,"0-1",1.7,"Everton",NA,"London Stadium","Stuart Attwell","Match Report",NA
+35,"Sun","2021-05-09","19:00 (20:00)","Arsenal",0.9,"3-1",1.3,"West Brom",NA,"Emirates Stadium","Peter Bankes","Match Report",NA
+35,"Mon","2021-05-10","20:00 (21:00)","Fulham",0.9,"0-2",2,"Burnley",NA,"Craven Cottage","David Coote","Match Report",NA
+36,"Tue","2021-05-11","18:00 (19:00)","Manchester Utd",0.4,"1-2",0.7,"Leicester City",NA,"Old Trafford","Craig Pawson","Match Report",NA
+32,"Tue","2021-05-11","20:15 (21:15)","Southampton",1.3,"3-1",1.5,"Crystal Palace",NA,"St. Mary's Stadium","Andy Madley","Match Report",NA
+36,"Wed","2021-05-12","20:15 (21:15)","Chelsea",2.1,"0-1",0.8,"Arsenal",NA,"Stamford Bridge","Andre Marriner","Match Report",NA
+19,"Thu","2021-05-13","18:00 (19:00)","Aston Villa",0.7,"0-0",1.1,"Everton",NA,"Villa Park","Martin Atkinson","Match Report",NA
+34,"Thu","2021-05-13","20:15 (21:15)","Manchester Utd",2,"2-4",2.6,"Liverpool",NA,"Old Trafford","Anthony Taylor","Match Report",NA
+36,"Fri","2021-05-14","20:00 (21:00)","Newcastle Utd",2.2,"3-4",1.3,"Manchester City",NA,"St. James' Park","Kevin Friend","Match Report",NA
+36,"Sat","2021-05-15","12:30 (13:30)","Burnley",1.5,"0-4",2.3,"Leeds United",NA,"Turf Moor","Graham Scott","Match Report",NA
+36,"Sat","2021-05-15","15:00 (16:00)","Southampton",1.9,"3-1",1.1,"Fulham",NA,"St. Mary's Stadium","Craig Pawson","Match Report",NA
+36,"Sat","2021-05-15","20:00 (21:00)","Brighton",0.9,"1-1",1.1,"West Ham",NA,"The American Express Community Stadium","Andre Marriner","Match Report",NA
+36,"Sun","2021-05-16","12:00 (13:00)","Crystal Palace",1.6,"3-2",1.3,"Aston Villa",NA,"Selhurst Park","David Coote","Match Report",NA
+36,"Sun","2021-05-16","14:05 (15:05)","Tottenham",3,"2-0",1.2,"Wolves",NA,"Tottenham Hotspur Stadium","Martin Atkinson","Match Report",NA
+36,"Sun","2021-05-16","16:30 (17:30)","West Brom",0.8,"1-2",2.4,"Liverpool",NA,"The Hawthorns","Mike Dean","Match Report",NA
+36,"Sun","2021-05-16","19:00 (20:00)","Everton",1.3,"0-1",1.6,"Sheffield Utd",NA,"Goodison Park","Jonathan Moss","Match Report",NA
+37,"Tue","2021-05-18","18:00 (19:00)","Manchester Utd",1.1,"1-1",0.8,"Fulham",10000,"Old Trafford","Lee Mason","Match Report",NA
+37,"Tue","2021-05-18","18:00 (19:00)","Southampton",1.1,"0-2",1.3,"Leeds United",8000,"St. Mary's Stadium","Peter Bankes","Match Report",NA
+37,"Tue","2021-05-18","19:00 (20:00)","Brighton",1.4,"3-2",1,"Manchester City",7945,"The American Express Community Stadium","Stuart Attwell","Match Report",NA
+37,"Tue","2021-05-18","20:15 (21:15)","Chelsea",2.8,"2-1",0.9,"Leicester City",8000,"Stamford Bridge","Mike Dean","Match Report",NA
+37,"Wed","2021-05-19","18:00 (19:00)","Tottenham",1.1,"1-2",2,"Aston Villa",10000,"Tottenham Hotspur Stadium","Craig Pawson","Match Report",NA
+37,"Wed","2021-05-19","18:00 (19:00)","Everton",0.7,"1-0",0.5,"Wolves",4988,"Goodison Park","Andy Madley","Match Report",NA
+37,"Wed","2021-05-19","18:00 (19:00)","Newcastle Utd",1.5,"1-0",0.8,"Sheffield Utd",10000,"St. James' Park","Robert Jones","Match Report",NA
+37,"Wed","2021-05-19","19:00 (20:00)","Crystal Palace",1,"1-3",1.3,"Arsenal",6500,"Selhurst Park","Anthony Taylor","Match Report",NA
+37,"Wed","2021-05-19","20:15 (21:15)","Burnley",0.7,"0-3",2.9,"Liverpool",3387,"Turf Moor","Chris Kavanagh","Match Report",NA
+37,"Wed","2021-05-19","20:15 (21:15)","West Brom",1.1,"1-3",3.7,"West Ham",5371,"The Hawthorns","Michael Oliver","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Leicester City",1.9,"2-4",1.9,"Tottenham",8000,"King Power Stadium","Anthony Taylor","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Manchester City",2.6,"5-0",1.2,"Everton",10000,"Etihad Stadium","Michael Oliver","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Liverpool",1.8,"2-0",0.7,"Crystal Palace",9901,"Anfield","Craig Pawson","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Sheffield Utd",0.6,"1-0",1,"Burnley",5000,"Bramall Lane","Kevin Friend","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Wolves",0.9,"1-2",1.7,"Manchester Utd",4500,"Molineux Stadium","Mike Dean","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Arsenal",1.1,"2-0",0.4,"Brighton",10000,"Emirates Stadium","Jonathan Moss","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Leeds United",2,"3-1",1.7,"West Brom",8000,"Elland Road","David Coote","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Fulham",0.9,"0-2",1.2,"Newcastle Utd",2000,"Craven Cottage","Chris Kavanagh","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","Aston Villa",1,"2-1",2.4,"Chelsea",10000,"Villa Park","Stuart Attwell","Match Report",NA
+38,"Sun","2021-05-23","16:00 (17:00)","West Ham",1.6,"3-0",1.5,"Southampton",10000,"London Stadium","Martin Atkinson","Match Report",NA

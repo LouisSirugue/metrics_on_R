@@ -1,0 +1,307 @@
+"Wk","Day","Date","Time","Home","xG","Score","xG.1","Away","Attendance","Venue","Referee","Match.Report","Notes"
+1,"Fri","2020-09-18","20:30","Bayern Munich",5.1,"8-0",0.2,"Schalke 04",NA,"Allianz Arena","Felix Zwayer","Match Report",NA
+1,"Sat","2020-09-19","15:30","Köln",2.1,"2-3",3.1,"Hoffenheim",NA,"RheinEnergieSTADION","Daniel Siebert","Match Report",NA
+1,"Sat","2020-09-19","15:30","Stuttgart",3.1,"2-3",2,"Freiburg",7123,"Mercedes-Benz Arena","Benjamin Cortus","Match Report",NA
+1,"Sat","2020-09-19","15:30","Eint Frankfurt",1.6,"1-1",1,"Arminia",6500,"Commerzbank-Arena","Benjamin Brand","Match Report",NA
+1,"Sat","2020-09-19","15:30","Union Berlin",1.3,"1-3",1.1,"Augsburg",4600,"Stadion An der Alten Försterei","Marco Fritz","Match Report",NA
+1,"Sat","2020-09-19","15:30","Werder Bremen",1,"1-4",2.1,"Hertha BSC",8400,"Weserstadion","Sascha Stegemann","Match Report",NA
+1,"Sat","2020-09-19","18:30","Dortmund",1.6,"3-0",0.6,"M'Gladbach",9300,"Signal Iduna Park","Felix Brych","Match Report",NA
+1,"Sun","2020-09-20","15:30","RB Leipzig",2.8,"3-1",1.2,"Mainz 05",8500,"Red Bull Arena","Manuel Gräfe","Match Report",NA
+1,"Sun","2020-09-20","18:00","Wolfsburg",1,"0-0",0.7,"Leverkusen",NA,"Volkswagen Arena","Sven Jablonski","Match Report",NA
+2,"Fri","2020-09-25","20:30","Hertha BSC",1.1,"1-3",1.7,"Eint Frankfurt",4000,"Olympiastadion Berlin","Bastian Dankert","Match Report",NA
+2,"Sat","2020-09-26","15:30","Arminia",0.2,"1-0",0.9,"Köln",5460,"SchücoArena","Patrick Ittrich","Match Report",NA
+2,"Sat","2020-09-26","15:30","Mainz 05",1.2,"1-4",2.7,"Stuttgart",3403,"Opel Arena","Daniel Schlager","Match Report",NA
+2,"Sat","2020-09-26","15:30","M'Gladbach",1.3,"1-1",0.9,"Union Berlin",10383,"Stadion im Borussia-Park","Tobias Stieler","Match Report",NA
+2,"Sat","2020-09-26","15:30","Leverkusen",0.8,"1-1",0.8,"RB Leipzig",6042,"BayArena","Harm Osmers","Match Report",NA
+2,"Sat","2020-09-26","15:30","Augsburg",1,"2-0",1.7,"Dortmund",6000,"WWK Arena","Martin Petersen","Match Report",NA
+2,"Sat","2020-09-26","18:30","Schalke 04",1.2,"1-3",2.4,"Werder Bremen",NA,"Veltins-Arena","Markus Schmidt","Match Report",NA
+2,"Sun","2020-09-27","15:30","Hoffenheim",4,"4-1",1.6,"Bayern Munich",NA,"PreZero Arena","Benjamin Brand","Match Report",NA
+2,"Sun","2020-09-27","18:00","Freiburg",1.5,"1-1",0.6,"Wolfsburg",3200,"Schwarzwald-Stadion","Sören Storks","Match Report",NA
+3,"Fri","2020-10-02","20:30","Union Berlin",1.9,"4-0",0.2,"Mainz 05",4400,"Stadion An der Alten Försterei","Sascha Stegemann","Match Report",NA
+3,"Sat","2020-10-03","15:30","Eint Frankfurt",2.6,"2-1",0.5,"Hoffenheim",8000,"Commerzbank-Arena","Manuel Gräfe","Match Report",NA
+3,"Sat","2020-10-03","15:30","Köln",0.8,"1-3",2.2,"M'Gladbach",300,"RheinEnergieSTADION","Marco Fritz","Match Report",NA
+3,"Sat","2020-10-03","15:30","Dortmund",3.1,"4-0",0.6,"Freiburg",11500,"Signal Iduna Park","Guido Winkmann","Match Report",NA
+3,"Sat","2020-10-03","15:30","Werder Bremen",0.4,"1-0",0.9,"Arminia",300,"Weserstadion","Robert Schröder","Match Report",NA
+3,"Sat","2020-10-03","15:30","Stuttgart",0.8,"1-1",1.4,"Leverkusen",9500,"Mercedes-Benz Arena","Robert Hartmann","Match Report",NA
+3,"Sat","2020-10-03","18:30","RB Leipzig",3.2,"4-0",0.1,"Schalke 04",8500,"Red Bull Arena","Florian Badstübner","Match Report",NA
+3,"Sun","2020-10-04","15:30","Wolfsburg",1.2,"0-0",0.9,"Augsburg",4632,"Volkswagen Arena","Felix Zwayer","Match Report",NA
+3,"Sun","2020-10-04","18:00","Bayern Munich",3.8,"4-3",1.4,"Hertha BSC",NA,"Allianz Arena","Benjamin Cortus","Match Report",NA
+4,"Sat","2020-10-17","15:30","Freiburg",1,"1-1",1.6,"Werder Bremen",NA,"Schwarzwald-Stadion","Christian Dingert","Match Report",NA
+4,"Sat","2020-10-17","15:30","Hertha BSC",1.2,"0-2",0.8,"Stuttgart",4000,"Olympiastadion Berlin","Harm Osmers","Match Report",NA
+4,"Sat","2020-10-17","15:30","Augsburg",0.7,"0-2",1.7,"RB Leipzig",NA,"WWK Arena","Felix Brych","Match Report",NA
+4,"Sat","2020-10-17","15:30","Mainz 05",0.3,"0-1",0.5,"Leverkusen",250,"Opel Arena","Bastian Dankert","Match Report",NA
+4,"Sat","2020-10-17","15:30","Hoffenheim",1,"0-1",2.4,"Dortmund",6030,"PreZero Arena","Sascha Stegemann","Match Report",NA
+4,"Sat","2020-10-17","18:30","Arminia",1.4,"1-4",2.6,"Bayern Munich",NA,"SchücoArena","Daniel Siebert","Match Report",NA
+4,"Sat","2020-10-17","20:30","M'Gladbach",1.6,"1-1",1.2,"Wolfsburg",300,"Stadion im Borussia-Park","Daniel Schlager","Match Report",NA
+4,"Sun","2020-10-18","15:30","Köln",1.1,"1-1",2.1,"Eint Frankfurt",300,"RheinEnergieSTADION","Sven Jablonski","Match Report",NA
+4,"Sun","2020-10-18","18:00","Schalke 04",0.3,"1-1",0.9,"Union Berlin",300,"Veltins-Arena","Patrick Ittrich","Match Report",NA
+5,"Fri","2020-10-23","20:30","Stuttgart",0.7,"1-1",2.2,"Köln",NA,"Mercedes-Benz Arena","Guido Winkmann","Match Report",NA
+5,"Sat","2020-10-24","15:30","RB Leipzig",2.3,"2-1",0.9,"Hertha BSC",999,"Red Bull Arena","Tobias Stieler","Match Report",NA
+5,"Sat","2020-10-24","15:30","Mainz 05",1.7,"2-3",2.9,"M'Gladbach",100,"Opel Arena","Frank Willenborg","Match Report",NA
+5,"Sat","2020-10-24","15:30","Bayern Munich",3.4,"5-0",0.5,"Eint Frankfurt",NA,"Allianz Arena","Markus Schmidt","Match Report",NA
+5,"Sat","2020-10-24","15:30","Union Berlin",1.3,"1-1",0.4,"Freiburg",4500,"Stadion An der Alten Försterei","Robert Schröder","Match Report",NA
+5,"Sat","2020-10-24","18:30","Dortmund",1.5,"3-0",0.2,"Schalke 04",300,"Signal Iduna Park","Felix Zwayer","Match Report",NA
+5,"Sun","2020-10-25","15:30","Wolfsburg",2.1,"2-1",0.4,"Arminia",4519,"Volkswagen Arena","Manuel Gräfe","Match Report",NA
+5,"Sun","2020-10-25","18:00","Werder Bremen",0.3,"1-1",1.2,"Hoffenheim",NA,"Weserstadion","Daniel Schlager","Match Report",NA
+5,"Mon","2020-10-26","20:30","Leverkusen",2.8,"3-1",0.4,"Augsburg",NA,"BayArena","Sören Storks","Match Report",NA
+6,"Fri","2020-10-30","20:30","Schalke 04",0.5,"1-1",1.6,"Stuttgart",NA,"Veltins-Arena","Benjamin Brand","Match Report",NA
+6,"Sat","2020-10-31","15:30","Augsburg",2,"3-1",0.8,"Mainz 05",NA,"WWK Arena","Marco Fritz","Match Report",NA
+6,"Sat","2020-10-31","15:30","Arminia",0.2,"0-2",2.7,"Dortmund",NA,"SchücoArena","Bastian Dankert","Match Report",NA
+6,"Sat","2020-10-31","15:30","Eint Frankfurt",2,"1-1",0.9,"Werder Bremen",NA,"Commerzbank-Arena","Felix Brych","Match Report",NA
+6,"Sat","2020-10-31","15:30","Köln",1,"1-2",1,"Bayern Munich",NA,"RheinEnergieSTADION","Frank Willenborg","Match Report",NA
+6,"Sat","2020-10-31","18:30","M'Gladbach",0.5,"1-0",0.9,"RB Leipzig",NA,"Stadion im Borussia-Park","Daniel Siebert","Match Report",NA
+6,"Sun","2020-11-01","15:30","Freiburg",1.1,"2-4",1.5,"Leverkusen",NA,"Schwarzwald-Stadion","Benjamin Cortus","Match Report",NA
+6,"Sun","2020-11-01","18:00","Hertha BSC",1.2,"1-1",0.5,"Wolfsburg",NA,"Olympiastadion Berlin","Martin Petersen","Match Report",NA
+6,"Mon","2020-11-02","20:30","Hoffenheim",1.3,"1-3",4,"Union Berlin",NA,"PreZero Arena","Robert Hartmann","Match Report",NA
+7,"Fri","2020-11-06","20:30","Werder Bremen",1.7,"1-1",0.4,"Köln",NA,"Weserstadion","Florian Badstübner","Match Report",NA
+7,"Sat","2020-11-07","15:30","Stuttgart",2.3,"2-2",2.4,"Eint Frankfurt",NA,"Mercedes-Benz Arena","Sascha Stegemann","Match Report",NA
+7,"Sat","2020-11-07","15:30","Union Berlin",2.1,"5-0",0.3,"Arminia",NA,"Stadion An der Alten Försterei","Matthias Jöllenbeck","Match Report",NA
+7,"Sat","2020-11-07","15:30","Augsburg",0.7,"0-3",2.4,"Hertha BSC",NA,"WWK Arena","Frank Willenborg","Match Report",NA
+7,"Sat","2020-11-07","15:30","RB Leipzig",2,"3-0",1,"Freiburg",NA,"Red Bull Arena","Felix Zwayer","Match Report",NA
+7,"Sat","2020-11-07","15:30","Mainz 05",3.1,"2-2",1.7,"Schalke 04",NA,"Opel Arena","Patrick Ittrich","Match Report",NA
+7,"Sat","2020-11-07","18:30","Dortmund",2,"2-3",1.1,"Bayern Munich",NA,"Signal Iduna Park","Manuel Gräfe","Match Report",NA
+7,"Sun","2020-11-08","15:30","Wolfsburg",2,"2-1",2,"Hoffenheim",NA,"Volkswagen Arena","Sven Jablonski","Match Report",NA
+7,"Sun","2020-11-08","18:00","Leverkusen",1.6,"4-3",2.5,"M'Gladbach",NA,"BayArena","Harm Osmers","Match Report",NA
+8,"Sat","2020-11-21","15:30","M'Gladbach",2,"1-1",0.7,"Augsburg",NA,"Stadion im Borussia-Park","Markus Schmidt","Match Report",NA
+8,"Sat","2020-11-21","15:30","Bayern Munich",1.2,"1-1",1.4,"Werder Bremen",NA,"Allianz Arena","Guido Winkmann","Match Report",NA
+8,"Sat","2020-11-21","15:30","Arminia",0,"1-2",1.5,"Leverkusen",NA,"SchücoArena","Felix Brych","Match Report",NA
+8,"Sat","2020-11-21","15:30","Hoffenheim",1.9,"3-3",2.1,"Stuttgart",NA,"PreZero Arena","Daniel Siebert","Match Report",NA
+8,"Sat","2020-11-21","15:30","Schalke 04",0.9,"0-2",2.1,"Wolfsburg",NA,"Veltins-Arena","Marco Fritz","Match Report",NA
+8,"Sat","2020-11-21","18:30","Eint Frankfurt",1.1,"1-1",0.9,"RB Leipzig",NA,"Commerzbank-Arena","Sören Storks","Match Report",NA
+8,"Sat","2020-11-21","20:30","Hertha BSC",1.3,"2-5",3.5,"Dortmund",NA,"Olympiastadion Berlin","Bastian Dankert","Match Report",NA
+8,"Sun","2020-11-22","15:30","Freiburg",2.2,"1-3",2.8,"Mainz 05",NA,"Schwarzwald-Stadion","Martin Petersen","Match Report",NA
+8,"Sun","2020-11-22","18:00","Köln",0.7,"1-2",1.9,"Union Berlin",NA,"RheinEnergieSTADION","Tobias Stieler","Match Report",NA
+9,"Fri","2020-11-27","20:30","Wolfsburg",1.8,"5-3",1,"Werder Bremen",NA,"Volkswagen Arena","Christian Dingert","Match Report",NA
+9,"Sat","2020-11-28","15:30","Union Berlin",2.8,"3-3",2,"Eint Frankfurt",NA,"Stadion An der Alten Försterei","Tobias Reichel","Match Report",NA
+9,"Sat","2020-11-28","15:30","Dortmund",2.9,"1-2",1.6,"Köln",NA,"Signal Iduna Park","Benjamin Brand","Match Report",NA
+9,"Sat","2020-11-28","15:30","RB Leipzig",2.3,"2-1",1.3,"Arminia",NA,"Red Bull Arena","Robert Hartmann","Match Report",NA
+9,"Sat","2020-11-28","15:30","Stuttgart",1.8,"1-3",1,"Bayern Munich",NA,"Mercedes-Benz Arena","Harm Osmers","Match Report",NA
+9,"Sat","2020-11-28","15:30","Augsburg",0.4,"1-1",0.8,"Freiburg",NA,"WWK Arena","Robert Schröder","Match Report",NA
+9,"Sat","2020-11-28","18:30","M'Gladbach",3.1,"4-1",1,"Schalke 04",NA,"Stadion im Borussia-Park","Manuel Gräfe","Match Report",NA
+9,"Sun","2020-11-29","15:30","Leverkusen",0.7,"0-0",0.4,"Hertha BSC",NA,"BayArena","Daniel Schlager","Match Report",NA
+9,"Sun","2020-11-29","18:00","Mainz 05",1.4,"1-1",1,"Hoffenheim",NA,"Opel Arena","Sascha Stegemann","Match Report",NA
+10,"Fri","2020-12-04","20:30","Hertha BSC",0.7,"3-1",0.3,"Union Berlin",NA,"Olympiastadion Berlin","Felix Brych","Match Report",NA
+10,"Sat","2020-12-05","15:30","Köln",0.7,"2-2",1.6,"Wolfsburg",NA,"RheinEnergieSTADION","Sven Jablonski","Match Report",NA
+10,"Sat","2020-12-05","15:30","Eint Frankfurt",0.8,"1-1",1.2,"Dortmund",NA,"Commerzbank-Arena","Guido Winkmann","Match Report",NA
+10,"Sat","2020-12-05","15:30","Freiburg",3.3,"2-2",1.3,"M'Gladbach",NA,"Schwarzwald-Stadion","Tobias Stieler","Match Report",NA
+10,"Sat","2020-12-05","15:30","Arminia",0.8,"2-1",2,"Mainz 05",NA,"SchücoArena","Marco Fritz","Match Report",NA
+10,"Sat","2020-12-05","18:30","Bayern Munich",1.2,"3-3",1.5,"RB Leipzig",NA,"Allianz Arena","Daniel Siebert","Match Report",NA
+10,"Sun","2020-12-06","15:30","Werder Bremen",0.8,"1-2",2.3,"Stuttgart",NA,"Weserstadion","Frank Willenborg","Match Report",NA
+10,"Sun","2020-12-06","18:00","Schalke 04",1.3,"0-3",2.5,"Leverkusen",NA,"Veltins-Arena","Benjamin Cortus","Match Report",NA
+10,"Mon","2020-12-07","20:30","Hoffenheim",1.4,"3-1",0.9,"Augsburg",NA,"PreZero Arena","Florian Badstübner","Match Report",NA
+11,"Fri","2020-12-11","20:30","Wolfsburg",2.8,"2-1",1.5,"Eint Frankfurt",NA,"Volkswagen Arena","Markus Schmidt","Match Report",NA
+11,"Sat","2020-12-12","15:30","RB Leipzig",2.7,"2-0",0.4,"Werder Bremen",NA,"Red Bull Arena","Sören Storks","Match Report",NA
+11,"Sat","2020-12-12","15:30","M'Gladbach",1.4,"1-1",0.5,"Hertha BSC",NA,"Stadion im Borussia-Park","Robert Hartmann","Match Report",NA
+11,"Sat","2020-12-12","15:30","Mainz 05",1.7,"0-1",1,"Köln",NA,"Opel Arena","Felix Zwayer","Match Report",NA
+11,"Sat","2020-12-12","15:30","Freiburg",2.7,"2-0",0.2,"Arminia",NA,"Schwarzwald-Stadion","Harm Osmers","Match Report",NA
+11,"Sat","2020-12-12","15:30","Dortmund",0.9,"1-5",3.9,"Stuttgart",NA,"Signal Iduna Park","Christian Dingert","Match Report",NA
+11,"Sat","2020-12-12","18:30","Union Berlin",1.3,"1-1",0.9,"Bayern Munich",NA,"Stadion An der Alten Försterei","Bastian Dankert","Match Report",NA
+11,"Sun","2020-12-13","15:30","Augsburg",1,"2-2",1.9,"Schalke 04",NA,"WWK Arena","Manuel Gräfe","Match Report",NA
+11,"Sun","2020-12-13","18:00","Leverkusen",2.3,"4-1",1.6,"Hoffenheim",NA,"BayArena","Martin Petersen","Match Report",NA
+12,"Tue","2020-12-15","18:30","Eint Frankfurt",2.2,"3-3",1.6,"M'Gladbach",NA,"Commerzbank-Arena","Benjamin Cortus","Match Report",NA
+12,"Tue","2020-12-15","20:30","Stuttgart",1.7,"2-2",0.8,"Union Berlin",NA,"Mercedes-Benz Arena","Sascha Stegemann","Match Report",NA
+12,"Tue","2020-12-15","20:30","Hertha BSC",0.6,"0-0",0.5,"Mainz 05",NA,"Olympiastadion Berlin","Matthias Jöllenbeck","Match Report",NA
+12,"Tue","2020-12-15","20:30","Werder Bremen",0.2,"1-2",2.8,"Dortmund",NA,"Weserstadion","Robert Schröder","Match Report",NA
+12,"Wed","2020-12-16","18:30","Schalke 04",0.4,"0-2",1.4,"Freiburg",NA,"Veltins-Arena","Sven Jablonski","Match Report",NA
+12,"Wed","2020-12-16","20:30","Bayern Munich",2,"2-1",1.1,"Wolfsburg",NA,"Allianz Arena","Marco Fritz","Match Report",NA
+12,"Wed","2020-12-16","20:30","Hoffenheim",0.8,"0-1",0.3,"RB Leipzig",NA,"PreZero Arena","Daniel Schlager","Match Report",NA
+12,"Wed","2020-12-16","20:30","Arminia",0.8,"0-1",0.6,"Augsburg",NA,"SchücoArena","Patrick Ittrich","Match Report",NA
+12,"Wed","2020-12-16","20:30","Köln",0.6,"0-4",1.4,"Leverkusen",NA,"RheinEnergieSTADION","Tobias Stieler","Match Report",NA
+13,"Fri","2020-12-18","20:30","Union Berlin",1.1,"2-1",1.7,"Dortmund",NA,"Stadion An der Alten Försterei","Harm Osmers","Match Report",NA
+13,"Sat","2020-12-19","15:30","M'Gladbach",1.8,"1-2",1.8,"Hoffenheim",NA,"Stadion im Borussia-Park","Frank Willenborg","Match Report",NA
+13,"Sat","2020-12-19","15:30","RB Leipzig",2.2,"0-0",0.5,"Köln",NA,"Red Bull Arena","Felix Brych","Match Report",NA
+13,"Sat","2020-12-19","15:30","Schalke 04",0.6,"0-1",0.7,"Arminia",NA,"Veltins-Arena","Bastian Dankert","Match Report",NA
+13,"Sat","2020-12-19","15:30","Mainz 05",0.5,"0-1",0.9,"Werder Bremen",NA,"Opel Arena","Guido Winkmann","Match Report",NA
+13,"Sat","2020-12-19","15:30","Augsburg",2,"0-2",1.3,"Eint Frankfurt",NA,"WWK Arena","Daniel Siebert","Match Report",NA
+13,"Sat","2020-12-19","18:30","Leverkusen",0.3,"1-2",1.3,"Bayern Munich",NA,"BayArena","Felix Zwayer","Match Report",NA
+13,"Sun","2020-12-20","15:30","Freiburg",2.8,"4-1",1.8,"Hertha BSC",NA,"Schwarzwald-Stadion","Tobias Reichel","Match Report",NA
+13,"Sun","2020-12-20","18:00","Wolfsburg",1.8,"1-0",1.7,"Stuttgart",NA,"Volkswagen Arena","Florian Badstübner","Match Report",NA
+14,"Sat","2021-01-02","15:30","Arminia",0.2,"0-1",2.7,"M'Gladbach",NA,"SchücoArena","Sascha Stegemann","Match Report",NA
+14,"Sat","2021-01-02","15:30","Eint Frankfurt",1.4,"2-1",0.7,"Leverkusen",NA,"Commerzbank-Arena","Felix Brych","Match Report",NA
+14,"Sat","2021-01-02","15:30","Werder Bremen",1,"0-2",0.8,"Union Berlin",NA,"Weserstadion","Tobias Stieler","Match Report",NA
+14,"Sat","2021-01-02","15:30","Köln",0.5,"0-1",1.3,"Augsburg",NA,"RheinEnergieSTADION","Sören Storks","Match Report",NA
+14,"Sat","2021-01-02","15:30","Hoffenheim",1.2,"1-3",1.9,"Freiburg",NA,"PreZero Arena","Robert Hartmann","Match Report",NA
+14,"Sat","2021-01-02","18:30","Hertha BSC",2.3,"3-0",0.9,"Schalke 04",NA,"Olympiastadion Berlin","Sven Jablonski","Match Report",NA
+14,"Sat","2021-01-02","20:30","Stuttgart",1.1,"0-1",3.2,"RB Leipzig",NA,"Mercedes-Benz Arena","Christian Dingert","Match Report",NA
+14,"Sun","2021-01-03","15:30","Dortmund",1.8,"2-0",1.6,"Wolfsburg",NA,"Signal Iduna Park","Manuel Gräfe","Match Report",NA
+14,"Sun","2021-01-03","18:00","Bayern Munich",3.5,"5-2",1.5,"Mainz 05",NA,"Allianz Arena","Markus Schmidt","Match Report",NA
+15,"Fri","2021-01-08","20:30","M'Gladbach",1.3,"3-2",1.4,"Bayern Munich",NA,"Stadion im Borussia-Park","Harm Osmers","Match Report",NA
+15,"Sat","2021-01-09","15:30","Schalke 04",2,"4-0",2.4,"Hoffenheim",NA,"Veltins-Arena","Felix Zwayer","Match Report",NA
+15,"Sat","2021-01-09","15:30","Freiburg",2.9,"5-0",0.2,"Köln",NA,"Schwarzwald-Stadion","Robert Schröder","Match Report",NA
+15,"Sat","2021-01-09","15:30","Union Berlin",1.4,"2-2",1.8,"Wolfsburg",NA,"Stadion An der Alten Försterei","Patrick Ittrich","Match Report",NA
+15,"Sat","2021-01-09","15:30","Mainz 05",1.2,"0-2",2.3,"Eint Frankfurt",NA,"Opel Arena","Bastian Dankert","Match Report",NA
+15,"Sat","2021-01-09","15:30","Leverkusen",0.8,"1-1",0.4,"Werder Bremen",NA,"BayArena","Benjamin Cortus","Match Report",NA
+15,"Sat","2021-01-09","18:30","RB Leipzig",1,"1-3",2.2,"Dortmund",NA,"Red Bull Arena","Daniel Siebert","Match Report",NA
+15,"Sun","2021-01-10","15:30","Augsburg",1,"1-4",4,"Stuttgart",NA,"WWK Arena","Daniel Schlager","Match Report",NA
+15,"Sun","2021-01-10","18:00","Arminia",0.8,"1-0",0.8,"Hertha BSC",NA,"SchücoArena","Guido Winkmann","Match Report",NA
+16,"Fri","2021-01-15","20:30","Union Berlin",1.3,"1-0",1.2,"Leverkusen",NA,"Stadion An der Alten Försterei","Florian Badstübner","Match Report",NA
+16,"Sat","2021-01-16","15:30","Köln",0.4,"0-0",0.9,"Hertha BSC",NA,"RheinEnergieSTADION","Frank Willenborg","Match Report",NA
+16,"Sat","2021-01-16","15:30","Dortmund",2.4,"1-1",0.8,"Mainz 05",NA,"Signal Iduna Park","Sven Jablonski","Match Report",NA
+16,"Sat","2021-01-16","15:30","Werder Bremen",1.2,"2-0",0.5,"Augsburg",NA,"Weserstadion","Sascha Stegemann","Match Report",NA
+16,"Sat","2021-01-16","15:30","Hoffenheim",0.7,"0-0",0.8,"Arminia",NA,"PreZero Arena","Marco Fritz","Match Report",NA
+16,"Sat","2021-01-16","15:30","Wolfsburg",1.2,"2-2",2.1,"RB Leipzig",NA,"Volkswagen Arena","Tobias Stieler","Match Report",NA
+16,"Sat","2021-01-16","18:30","Stuttgart",2,"2-2",1.5,"M'Gladbach",NA,"Mercedes-Benz Arena","Felix Brych","Match Report",NA
+16,"Sun","2021-01-17","15:30","Bayern Munich",2.7,"2-1",1,"Freiburg",NA,"Allianz Arena","Christian Dingert","Match Report",NA
+16,"Sun","2021-01-17","18:00","Eint Frankfurt",1.7,"3-1",0.2,"Schalke 04",NA,"Commerzbank-Arena","Manuel Gräfe","Match Report",NA
+17,"Tue","2021-01-19","18:30","M'Gladbach",0.8,"1-0",1.1,"Werder Bremen",NA,"Stadion im Borussia-Park","Martin Petersen","Match Report",NA
+17,"Tue","2021-01-19","20:30","Leverkusen",1.8,"2-1",2.1,"Dortmund",NA,"BayArena","Felix Zwayer","Match Report",NA
+17,"Tue","2021-01-19","20:30","Mainz 05",0.4,"0-2",1.1,"Wolfsburg",NA,"Opel Arena","Sören Storks","Match Report",NA
+17,"Tue","2021-01-19","20:30","Hertha BSC",1.4,"0-3",1.3,"Hoffenheim",NA,"Olympiastadion Berlin","Harm Osmers","Match Report",NA
+17,"Wed","2021-01-20","18:30","Schalke 04",1.4,"1-2",1.6,"Köln",NA,"Veltins-Arena","Daniel Siebert","Match Report",NA
+17,"Wed","2021-01-20","20:30","Arminia",2.2,"3-0",0.9,"Stuttgart",NA,"SchücoArena","Robert Hartmann","Match Report",NA
+17,"Wed","2021-01-20","20:30","Augsburg",1.2,"0-1",2,"Bayern Munich",NA,"WWK Arena","Matthias Jöllenbeck","Match Report",NA
+17,"Wed","2021-01-20","20:30","Freiburg",0.7,"2-2",1.4,"Eint Frankfurt",NA,"Schwarzwald-Stadion","Guido Winkmann","Match Report",NA
+17,"Wed","2021-01-20","20:30","RB Leipzig",1.4,"1-0",0.3,"Union Berlin",NA,"Red Bull Arena","Markus Schmidt","Match Report",NA
+18,"Fri","2021-01-22","20:30","M'Gladbach",1.8,"4-2",1.2,"Dortmund",NA,"Stadion im Borussia-Park","Manuel Gräfe","Match Report",NA
+18,"Sat","2021-01-23","15:30","Arminia",0.6,"1-5",2.4,"Eint Frankfurt",NA,"SchücoArena","Robert Schröder","Match Report",NA
+18,"Sat","2021-01-23","15:30","Leverkusen",1,"0-1",1.1,"Wolfsburg",NA,"BayArena","Marco Fritz","Match Report",NA
+18,"Sat","2021-01-23","15:30","Freiburg",1.2,"2-1",2.5,"Stuttgart",NA,"Schwarzwald-Stadion","Tobias Stieler","Match Report",NA
+18,"Sat","2021-01-23","15:30","Augsburg",1,"2-1",1.5,"Union Berlin",NA,"WWK Arena","Felix Brych","Match Report",NA
+18,"Sat","2021-01-23","15:30","Mainz 05",1.6,"3-2",1.4,"RB Leipzig",NA,"Opel Arena","Christian Dingert","Match Report",NA
+18,"Sat","2021-01-23","18:30","Hertha BSC",1.9,"1-4",1.5,"Werder Bremen",NA,"Olympiastadion Berlin","Daniel Schlager","Match Report",NA
+18,"Sun","2021-01-24","15:30","Schalke 04",0.7,"0-4",3.1,"Bayern Munich",NA,"Veltins-Arena","Sascha Stegemann","Match Report",NA
+18,"Sun","2021-01-24","18:00","Hoffenheim",2.2,"3-0",2,"Köln",NA,"PreZero Arena","Sven Jablonski","Match Report",NA
+19,"Fri","2021-01-29","20:30","Stuttgart",1,"2-0",0.5,"Mainz 05",NA,"Mercedes-Benz Arena","Frank Willenborg","Match Report",NA
+19,"Sat","2021-01-30","15:30","Bayern Munich",2,"4-1",2.1,"Hoffenheim",NA,"Allianz Arena","Benjamin Cortus","Match Report",NA
+19,"Sat","2021-01-30","15:30","Werder Bremen",0.7,"1-1",0.3,"Schalke 04",NA,"Weserstadion","Sören Storks","Match Report",NA
+19,"Sat","2021-01-30","15:30","Eint Frankfurt",2.3,"3-1",0.5,"Hertha BSC",NA,"Commerzbank-Arena","Florian Badstübner","Match Report",NA
+19,"Sat","2021-01-30","15:30","Union Berlin",0.5,"1-1",0.9,"M'Gladbach",NA,"Stadion An der Alten Försterei","Bastian Dankert","Match Report",NA
+19,"Sat","2021-01-30","15:30","Dortmund",1.9,"3-1",0.5,"Augsburg",NA,"Signal Iduna Park","Patrick Ittrich","Match Report",NA
+19,"Sat","2021-01-30","18:30","RB Leipzig",1.7,"1-0",0.5,"Leverkusen",NA,"Red Bull Arena","Harm Osmers","Match Report",NA
+19,"Sun","2021-01-31","15:30","Köln",1.7,"3-1",1.5,"Arminia",NA,"RheinEnergieSTADION","Felix Zwayer","Match Report",NA
+19,"Sun","2021-01-31","18:00","Wolfsburg",2.3,"3-0",0.7,"Freiburg",NA,"Volkswagen Arena","Tobias Reichel","Match Report",NA
+20,"Fri","2021-02-05","20:00","Hertha BSC",1.4,"0-1",2.4,"Bayern Munich",NA,"Olympiastadion Berlin","Robert Schröder","Match Report",NA
+20,"Sat","2021-02-06","15:30","Schalke 04",0.2,"0-3",2.1,"RB Leipzig",NA,"Veltins-Arena","Martin Petersen","Match Report",NA
+20,"Sat","2021-02-06","15:30","Augsburg",0.6,"0-2",2.3,"Wolfsburg",NA,"WWK Arena","Robert Hartmann","Match Report",NA
+20,"Sat","2021-02-06","15:30","Mainz 05",1.9,"1-0",0.8,"Union Berlin",NA,"Opel Arena","Sascha Stegemann","Match Report",NA
+20,"Sat","2021-02-06","15:30","Freiburg",0.2,"2-1",1.5,"Dortmund",NA,"Schwarzwald-Stadion","Felix Brych","Match Report",NA
+20,"Sat","2021-02-06","15:30","Leverkusen",3.9,"5-2",1.5,"Stuttgart",NA,"BayArena","Sven Jablonski","Match Report",NA
+20,"Sat","2021-02-06","18:30","M'Gladbach",0.8,"1-2",0.5,"Köln",NA,"Stadion im Borussia-Park","Christian Dingert","Match Report",NA
+20,"Sun","2021-02-07","15:30","Hoffenheim",0.9,"1-3",1,"Eint Frankfurt",NA,"PreZero Arena","Daniel Siebert","Match Report",NA
+21,"Fri","2021-02-12","20:30","RB Leipzig",2.9,"2-1",0.9,"Augsburg",NA,"Red Bull Arena","Felix Zwayer","Match Report",NA
+21,"Sat","2021-02-13","15:30","Werder Bremen",0.7,"0-0",0.8,"Freiburg",NA,"Weserstadion","Manuel Gräfe","Match Report",NA
+21,"Sat","2021-02-13","15:30","Leverkusen",1.3,"2-2",2.5,"Mainz 05",NA,"BayArena","Guido Winkmann","Match Report",NA
+21,"Sat","2021-02-13","15:30","Stuttgart",1.3,"1-1",1.4,"Hertha BSC",NA,"Mercedes-Benz Arena","Harm Osmers","Match Report",NA
+21,"Sat","2021-02-13","15:30","Dortmund",1.7,"2-2",2.6,"Hoffenheim",NA,"Signal Iduna Park","Bastian Dankert","Match Report",NA
+21,"Sat","2021-02-13","18:30","Union Berlin",2.3,"0-0",0.4,"Schalke 04",NA,"Stadion An der Alten Försterei","Daniel Schlager","Match Report",NA
+21,"Sun","2021-02-14","15:30","Eint Frankfurt",2,"2-0",0.4,"Köln",NA,"Commerzbank-Arena","Frank Willenborg","Match Report",NA
+21,"Sun","2021-02-14","18:00","Wolfsburg",0.8,"0-0",0.6,"M'Gladbach",NA,"Volkswagen Arena","Tobias Stieler","Match Report",NA
+21,"Mon","2021-02-15","20:30","Bayern Munich",2.1,"3-3",1.2,"Arminia",NA,"Allianz Arena","Florian Badstübner","Match Report",NA
+22,"Fri","2021-02-19","20:30","Arminia",0.6,"0-3",1.1,"Wolfsburg",NA,"SchücoArena","Felix Brych","Match Report",NA
+22,"Sat","2021-02-20","15:30","Freiburg",0.4,"0-1",1.2,"Union Berlin",NA,"Schwarzwald-Stadion","Sören Storks","Match Report",NA
+22,"Sat","2021-02-20","15:30","Eint Frankfurt",1.1,"2-1",2,"Bayern Munich",NA,"Commerzbank-Arena","Sascha Stegemann","Match Report",NA
+22,"Sat","2021-02-20","15:30","Köln",0.7,"0-1",0.5,"Stuttgart",NA,"RheinEnergieSTADION","Benjamin Cortus","Match Report",NA
+22,"Sat","2021-02-20","15:30","M'Gladbach",0.8,"1-2",0.7,"Mainz 05",NA,"Stadion im Borussia-Park","Markus Schmidt","Match Report",NA
+22,"Sat","2021-02-20","18:30","Schalke 04",0.8,"0-4",1.7,"Dortmund",NA,"Veltins-Arena","Daniel Siebert","Match Report",NA
+22,"Sun","2021-02-21","13:30","Augsburg",1.5,"1-1",0.5,"Leverkusen",NA,"WWK Arena","Christian Dingert","Match Report",NA
+22,"Sun","2021-02-21","15:30","Hertha BSC",0.6,"0-3",1,"RB Leipzig",NA,"Olympiastadion Berlin","Sven Jablonski","Match Report",NA
+22,"Sun","2021-02-21","18:00","Hoffenheim",1.7,"4-0",0.1,"Werder Bremen",NA,"PreZero Arena","Robert Schröder","Match Report",NA
+23,"Fri","2021-02-26","20:30","Werder Bremen",1,"2-1",0.9,"Eint Frankfurt",NA,"Weserstadion","Robert Hartmann","Match Report",NA
+23,"Sat","2021-02-27","15:30","Wolfsburg",0.5,"2-0",1.2,"Hertha BSC",NA,"Volkswagen Arena","Bastian Dankert","Match Report",NA
+23,"Sat","2021-02-27","15:30","Stuttgart",2.5,"5-1",1.5,"Schalke 04",NA,"Mercedes-Benz Arena","Guido Winkmann","Match Report",NA
+23,"Sat","2021-02-27","15:30","Bayern Munich",2.1,"5-1",1,"Köln",NA,"Allianz Arena","Martin Petersen","Match Report",NA
+23,"Sat","2021-02-27","15:30","Dortmund",3.6,"3-0",0.6,"Arminia",NA,"Signal Iduna Park","Tobias Reichel","Match Report",NA
+23,"Sat","2021-02-27","18:30","RB Leipzig",1.8,"3-2",1.3,"M'Gladbach",NA,"Red Bull Arena","Manuel Gräfe","Match Report",NA
+23,"Sun","2021-02-28","13:30","Union Berlin",1,"1-1",1.3,"Hoffenheim",NA,"Stadion An der Alten Försterei","Tobias Stieler","Match Report",NA
+23,"Sun","2021-02-28","15:30","Mainz 05",0.6,"0-1",1.6,"Augsburg",NA,"Opel Arena","Daniel Schlager","Match Report",NA
+23,"Sun","2021-02-28","18:00","Leverkusen",1.6,"1-2",1.4,"Freiburg",NA,"BayArena","Felix Zwayer","Match Report",NA
+24,"Fri","2021-03-05","20:30","Schalke 04",0.2,"0-0",1.1,"Mainz 05",NA,"Veltins-Arena","Felix Brych","Match Report",NA
+24,"Sat","2021-03-06","15:30","Freiburg",0.1,"0-3",1.8,"RB Leipzig",NA,"Schwarzwald-Stadion","Guido Winkmann","Match Report",NA
+24,"Sat","2021-03-06","15:30","M'Gladbach",0.6,"0-1",1.5,"Leverkusen",NA,"Stadion im Borussia-Park","Daniel Siebert","Match Report",NA
+24,"Sat","2021-03-06","15:30","Hertha BSC",2.3,"2-1",0.4,"Augsburg",NA,"Olympiastadion Berlin","Florian Badstübner","Match Report",NA
+24,"Sat","2021-03-06","15:30","Hoffenheim",1.1,"2-1",1.9,"Wolfsburg",NA,"PreZero Arena","Markus Schmidt","Match Report",NA
+24,"Sat","2021-03-06","15:30","Eint Frankfurt",1.6,"1-1",0.5,"Stuttgart",NA,"Commerzbank-Arena","Robert Schröder","Match Report",NA
+24,"Sat","2021-03-06","18:30","Bayern Munich",2.9,"4-2",0.6,"Dortmund",NA,"Allianz Arena","Marco Fritz","Match Report",NA
+24,"Sun","2021-03-07","15:30","Köln",1.6,"1-1",1.3,"Werder Bremen",NA,"RheinEnergieSTADION","Matthias Jöllenbeck","Match Report",NA
+24,"Sun","2021-03-07","18:00","Arminia",0.5,"0-0",0.8,"Union Berlin",NA,"SchücoArena","Harm Osmers","Match Report",NA
+20,"Wed","2021-03-10","18:30","Arminia",2.6,"0-2",1.5,"Werder Bremen",NA,"SchücoArena","Markus Schmidt","Match Report",NA
+25,"Fri","2021-03-12","20:30","Augsburg",1.6,"3-1",3,"M'Gladbach",NA,"WWK Arena","Sven Jablonski","Match Report",NA
+25,"Sat","2021-03-13","15:30","Mainz 05",1.7,"1-0",0.9,"Freiburg",NA,"Opel Arena","Benjamin Cortus","Match Report",NA
+25,"Sat","2021-03-13","15:30","Union Berlin",2.3,"2-1",1.3,"Köln",NA,"Stadion An der Alten Försterei","Deniz Aytekin","Match Report",NA
+25,"Sat","2021-03-13","15:30","Werder Bremen",1.2,"1-3",3,"Bayern Munich",NA,"Weserstadion","Manuel Gräfe","Match Report",NA
+25,"Sat","2021-03-13","15:30","Wolfsburg",1.7,"5-0",0.2,"Schalke 04",NA,"Volkswagen Arena","Sören Storks","Match Report",NA
+25,"Sat","2021-03-13","18:30","Dortmund",1.4,"2-0",0.4,"Hertha BSC",NA,"Signal Iduna Park","Martin Petersen","Match Report",NA
+25,"Sun","2021-03-14","13:30","Leverkusen",2.5,"1-2",1.5,"Arminia",NA,"BayArena","Sascha Stegemann","Match Report",NA
+25,"Sun","2021-03-14","15:30","RB Leipzig",1.8,"1-1",1,"Eint Frankfurt",NA,"Red Bull Arena","Felix Zwayer","Match Report",NA
+25,"Sun","2021-03-14","18:00","Stuttgart",0.8,"2-0",1.1,"Hoffenheim",NA,"Mercedes-Benz Arena","Christian Dingert","Match Report",NA
+26,"Fri","2021-03-19","20:30","Arminia",0.3,"0-1",2.8,"RB Leipzig",NA,"SchücoArena","Frank Willenborg","Match Report",NA
+26,"Sat","2021-03-20","15:30","Köln",1.4,"2-2",1.8,"Dortmund",NA,"RheinEnergieSTADION","Daniel Siebert","Match Report",NA
+26,"Sat","2021-03-20","15:30","Eint Frankfurt",2.4,"5-2",2.8,"Union Berlin",NA,"Commerzbank-Arena","Markus Schmidt","Match Report",NA
+26,"Sat","2021-03-20","15:30","Bayern Munich",2.2,"4-0",0.8,"Stuttgart",NA,"Allianz Arena","Daniel Schlager","Match Report",NA
+26,"Sat","2021-03-20","15:30","Werder Bremen",0.7,"1-2",1.6,"Wolfsburg",NA,"Weserstadion","Robert Schröder","Match Report",NA
+26,"Sat","2021-03-20","18:30","Schalke 04",0.2,"0-3",2.4,"M'Gladbach",NA,"Veltins-Arena","Tobias Stieler","Match Report",NA
+26,"Sun","2021-03-21","13:30","Hoffenheim",1.3,"1-2",3.5,"Mainz 05",NA,"PreZero Arena","Marco Fritz","Match Report",NA
+26,"Sun","2021-03-21","15:30","Hertha BSC",1.9,"3-0",1.9,"Leverkusen",NA,"Olympiastadion Berlin","Felix Brych","Match Report",NA
+26,"Sun","2021-03-21","18:00","Freiburg",1.4,"2-0",1,"Augsburg",NA,"Schwarzwald-Stadion","Bastian Dankert","Match Report",NA
+27,"Sat","2021-04-03","15:30","Wolfsburg",0.8,"1-0",1.2,"Köln",NA,"Volkswagen Arena","Robert Hartmann","Match Report",NA
+27,"Sat","2021-04-03","15:30","Leverkusen",0.7,"2-1",0.6,"Schalke 04",NA,"BayArena","Sven Jablonski","Match Report",NA
+27,"Sat","2021-04-03","15:30","Mainz 05",1.8,"1-1",0.5,"Arminia",NA,"Opel Arena","Deniz Aytekin","Match Report",NA
+27,"Sat","2021-04-03","15:30","Augsburg",0.6,"2-1",1,"Hoffenheim",NA,"WWK Arena","Guido Winkmann","Match Report",NA
+27,"Sat","2021-04-03","15:30","Dortmund",1.7,"1-2",1.4,"Eint Frankfurt",NA,"Signal Iduna Park","Manuel Gräfe","Match Report",NA
+27,"Sat","2021-04-03","18:30","RB Leipzig",0.7,"0-1",0.6,"Bayern Munich",NA,"Red Bull Arena","Daniel Siebert","Match Report",NA
+27,"Sat","2021-04-03","20:30","M'Gladbach",1.9,"2-1",1.7,"Freiburg",NA,"Stadion im Borussia-Park","Christian Dingert","Match Report",NA
+27,"Sun","2021-04-04","15:30","Stuttgart",0.8,"1-0",0.6,"Werder Bremen",NA,"Mercedes-Benz Arena","Felix Zwayer","Match Report",NA
+27,"Sun","2021-04-04","18:00","Union Berlin",0.5,"1-1",0.9,"Hertha BSC",NA,"Stadion An der Alten Försterei","Sascha Stegemann","Match Report",NA
+28,"Fri","2021-04-09","20:30","Arminia",1.4,"1-0",0.6,"Freiburg",NA,"SchücoArena","Martin Petersen","Match Report",NA
+28,"Sat","2021-04-10","15:30","Hertha BSC",1.6,"2-2",1.3,"M'Gladbach",NA,"Olympiastadion Berlin","Patrick Ittrich","Match Report",NA
+28,"Sat","2021-04-10","15:30","Bayern Munich",1,"1-1",1.1,"Union Berlin",NA,"Allianz Arena","Tobias Stieler","Match Report",NA
+28,"Sat","2021-04-10","15:30","Werder Bremen",1.4,"1-4",1.6,"RB Leipzig",NA,"Weserstadion","Florian Badstübner","Match Report",NA
+28,"Sat","2021-04-10","15:30","Eint Frankfurt",1.6,"4-3",1.8,"Wolfsburg",NA,"Commerzbank-Arena","Marco Fritz","Match Report",NA
+28,"Sat","2021-04-10","18:30","Stuttgart",1.4,"2-3",1.3,"Dortmund",NA,"Mercedes-Benz Arena","Robert Schröder","Match Report",NA
+28,"Sun","2021-04-11","15:30","Schalke 04",0.7,"1-0",0.9,"Augsburg",NA,"Veltins-Arena","Harm Osmers","Match Report",NA
+28,"Sun","2021-04-11","18:00","Köln",2.5,"2-3",1.7,"Mainz 05",NA,"RheinEnergieSTADION","Felix Brych","Match Report",NA
+28,"Mon","2021-04-12","20:30","Hoffenheim",0.1,"0-0",0.6,"Leverkusen",NA,"PreZero Arena","Matthias Jöllenbeck","Match Report",NA
+29,"Fri","2021-04-16","20:30","RB Leipzig",1.3,"0-0",0.2,"Hoffenheim",NA,"Red Bull Arena","Manuel Gräfe","Match Report",NA
+29,"Sat","2021-04-17","15:30","Union Berlin",1.4,"2-1",0.7,"Stuttgart",NA,"Stadion An der Alten Försterei","Benjamin Cortus","Match Report",NA
+29,"Sat","2021-04-17","15:30","Wolfsburg",1.2,"2-3",2.1,"Bayern Munich",NA,"Volkswagen Arena","Felix Zwayer","Match Report",NA
+29,"Sat","2021-04-17","15:30","Freiburg",2,"4-0",0.7,"Schalke 04",NA,"Schwarzwald-Stadion","Tobias Reichel","Match Report",NA
+29,"Sat","2021-04-17","15:30","Augsburg",0.6,"0-0",0.7,"Arminia",NA,"WWK Arena","Markus Schmidt","Match Report",NA
+29,"Sat","2021-04-17","15:30","M'Gladbach",2.1,"4-0",0.9,"Eint Frankfurt",NA,"Stadion im Borussia-Park","Deniz Aytekin","Match Report",NA
+29,"Sat","2021-04-17","18:30","Leverkusen",1.8,"3-0",1.2,"Köln",NA,"BayArena","Sören Storks","Match Report",NA
+29,"Sun","2021-04-18","15:30","Dortmund",2.9,"4-1",0.9,"Werder Bremen",NA,"Signal Iduna Park","Bastian Dankert","Match Report",NA
+30,"Tue","2021-04-20","18:30","Köln",0.7,"2-1",2.5,"RB Leipzig",NA,"RheinEnergieSTADION","Frank Willenborg","Match Report",NA
+30,"Tue","2021-04-20","20:30","Eint Frankfurt",1.1,"2-0",1.6,"Augsburg",NA,"Commerzbank-Arena","Robert Schröder","Match Report",NA
+30,"Tue","2021-04-20","20:30","Arminia",1.9,"1-0",0.3,"Schalke 04",NA,"SchücoArena","Christian Dingert","Match Report",NA
+30,"Tue","2021-04-20","20:30","Bayern Munich",1.7,"2-0",0.4,"Leverkusen",NA,"Allianz Arena","Guido Winkmann","Match Report",NA
+30,"Wed","2021-04-21","20:30","Dortmund",4.3,"2-0",0.3,"Union Berlin",NA,"Signal Iduna Park","Daniel Schlager","Match Report",NA
+30,"Wed","2021-04-21","20:30","Werder Bremen",1.1,"0-1",1.5,"Mainz 05",NA,"Weserstadion","Marco Fritz","Match Report",NA
+30,"Wed","2021-04-21","20:30","Hoffenheim",2.1,"3-2",0.9,"M'Gladbach",NA,"PreZero Arena","Daniel Siebert","Match Report",NA
+30,"Wed","2021-04-21","20:30","Stuttgart",2,"1-3",1.5,"Wolfsburg",NA,"Mercedes-Benz Arena","Felix Brych","Match Report",NA
+31,"Fri","2021-04-23","20:30","Augsburg",1.6,"2-3",1.3,"Köln",NA,"WWK Arena","Martin Petersen","Match Report",NA
+31,"Sat","2021-04-24","15:30","Mainz 05",0.5,"2-1",1.7,"Bayern Munich",NA,"Opel Arena","Harm Osmers","Match Report",NA
+31,"Sat","2021-04-24","15:30","Union Berlin",1.9,"3-1",0.7,"Werder Bremen",NA,"Stadion An der Alten Försterei","Patrick Ittrich","Match Report",NA
+31,"Sat","2021-04-24","15:30","Freiburg",1.8,"1-1",1.6,"Hoffenheim",NA,"Schwarzwald-Stadion","Manuel Gräfe","Match Report",NA
+31,"Sat","2021-04-24","15:30","Wolfsburg",1.2,"0-2",1.3,"Dortmund",NA,"Volkswagen Arena","Tobias Stieler","Match Report",NA
+31,"Sat","2021-04-24","18:30","Leverkusen",2.2,"3-1",2.4,"Eint Frankfurt",NA,"BayArena","Felix Zwayer","Match Report",NA
+31,"Sun","2021-04-25","15:30","RB Leipzig",4.2,"2-0",0.2,"Stuttgart",NA,"Red Bull Arena","Deniz Aytekin","Match Report",NA
+31,"Sun","2021-04-25","18:00","M'Gladbach",3.7,"5-0",0.7,"Arminia",NA,"Stadion im Borussia-Park","Robert Hartmann","Match Report",NA
+29,"Mon","2021-05-03","18:00","Mainz 05",1.9,"1-1",1.5,"Hertha BSC",NA,"SchücoArena","Sascha Stegemann","Match Report",NA
+30,"Thu","2021-05-06","18:30","Hertha BSC",1.5,"3-0",1,"Freiburg",NA,"Olympiastadion Berlin","Benjamin Cortus","Match Report",NA
+32,"Fri","2021-05-07","20:30","Stuttgart",1.3,"2-1",2.1,"Augsburg",NA,"Mercedes-Benz Arena","Manuel Gräfe","Match Report",NA
+32,"Sat","2021-05-08","15:30","Werder Bremen",0.6,"0-0",1.3,"Leverkusen",NA,"Weserstadion","Markus Schmidt","Match Report",NA
+32,"Sat","2021-05-08","15:30","Wolfsburg",1.8,"3-0",0.5,"Union Berlin",NA,"Volkswagen Arena","Sven Jablonski","Match Report",NA
+32,"Sat","2021-05-08","15:30","Hoffenheim",1.4,"4-2",0.9,"Schalke 04",NA,"PreZero Arena","Guido Winkmann","Match Report",NA
+32,"Sat","2021-05-08","15:30","Dortmund",2.2,"3-2",1.9,"RB Leipzig",NA,"Signal Iduna Park","Daniel Siebert","Match Report",NA
+32,"Sat","2021-05-08","18:30","Bayern Munich",3.3,"6-0",1.2,"M'Gladbach",NA,"Allianz Arena","Tobias Stieler","Match Report",NA
+32,"Sun","2021-05-09","13:30","Köln",1.8,"1-4",2.6,"Freiburg",NA,"RheinEnergieSTADION","Marco Fritz","Match Report",NA
+32,"Sun","2021-05-09","15:30","Eint Frankfurt",0.9,"1-1",0.4,"Mainz 05",NA,"Commerzbank-Arena","Felix Brych","Match Report",NA
+32,"Sun","2021-05-09","18:00","Hertha BSC",0.8,"0-0",0.5,"Arminia",NA,"Olympiastadion Berlin","Bastian Dankert","Match Report",NA
+31,"Wed","2021-05-12","18:00","Schalke 04",1.3,"1-2",1.9,"Hertha BSC",NA,"Veltins-Arena","Markus Schmidt","Match Report",NA
+33,"Sat","2021-05-15","15:30","Hertha BSC",0.2,"0-0",1.4,"Köln",NA,"Olympiastadion Berlin","Deniz Aytekin","Match Report",NA
+33,"Sat","2021-05-15","15:30","Freiburg",1.4,"2-2",3.4,"Bayern Munich",NA,"Schwarzwald-Stadion","Florian Badstübner","Match Report",NA
+33,"Sat","2021-05-15","15:30","M'Gladbach",0.6,"1-2",0.7,"Stuttgart",NA,"Stadion im Borussia-Park","Sascha Stegemann","Match Report",NA
+33,"Sat","2021-05-15","15:30","Arminia",1.8,"1-1",1.4,"Hoffenheim",NA,"SchücoArena","Daniel Schlager","Match Report",NA
+33,"Sat","2021-05-15","15:30","Augsburg",1.6,"2-0",1.2,"Werder Bremen",NA,"WWK Arena","Robert Schröder","Match Report",NA
+33,"Sat","2021-05-15","15:30","Leverkusen",1.3,"1-1",1.5,"Union Berlin",NA,"BayArena","Patrick Ittrich","Match Report",NA
+33,"Sat","2021-05-15","15:30","Schalke 04",2.8,"4-3",2.6,"Eint Frankfurt",NA,"Veltins-Arena","Sven Jablonski","Match Report",NA
+33,"Sun","2021-05-16","18:00","Mainz 05",1.3,"1-3",1.9,"Dortmund",NA,"Opel Arena","Harm Osmers","Match Report",NA
+33,"Sun","2021-05-16","20:30","RB Leipzig",2,"2-2",1,"Wolfsburg",NA,"Red Bull Arena","Felix Zwayer","Match Report",NA
+34,"Sat","2021-05-22","15:30","Bayern Munich",4.1,"5-2",1.5,"Augsburg",250,"Allianz Arena","Markus Schmidt","Match Report",NA
+34,"Sat","2021-05-22","15:30","Stuttgart",1,"0-2",1.6,"Arminia",NA,"Mercedes-Benz Arena","Tobias Stieler","Match Report",NA
+34,"Sat","2021-05-22","15:30","Eint Frankfurt",1.9,"3-1",0.9,"Freiburg",NA,"Commerzbank-Arena","Christian Dingert","Match Report",NA
+34,"Sat","2021-05-22","15:30","Hoffenheim",2.6,"2-1",1.5,"Hertha BSC",100,"PreZero Arena","Frank Willenborg","Match Report",NA
+34,"Sat","2021-05-22","15:30","Werder Bremen",2.1,"2-4",2,"M'Gladbach",100,"Weserstadion","Felix Brych","Match Report",NA
+34,"Sat","2021-05-22","15:30","Union Berlin",0.9,"2-1",2.6,"RB Leipzig",2000,"Stadion An der Alten Försterei","Guido Winkmann","Match Report",NA
+34,"Sat","2021-05-22","15:30","Dortmund",1.3,"3-1",1.8,"Leverkusen",NA,"Signal Iduna Park","Manuel Gräfe","Match Report",NA
+34,"Sat","2021-05-22","15:30","Köln",2.2,"1-0",0.5,"Schalke 04",NA,"RheinEnergieSTADION","Daniel Siebert","Match Report",NA
+34,"Sat","2021-05-22","15:30","Wolfsburg",1.4,"2-3",2.6,"Mainz 05",NA,"Volkswagen Arena","Bastian Dankert","Match Report",NA
