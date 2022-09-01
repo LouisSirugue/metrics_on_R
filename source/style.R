@@ -1,5 +1,5 @@
 
-lapply(c("tidyverse", "ggthemes", "kableExtra"), library, character.only = TRUE)
+lapply(c("tidyverse", "ggthemes", "kableExtra", "countdown"), library, character.only = TRUE)
 
 color_names <- c("dark-blue-gray", "light-blue-gray", "solid-blue", "light-blue")
 color_hex <- c("#014D64", "#00A2D9", "#6794A7", "#86D7F2")

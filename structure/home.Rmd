@@ -2,6 +2,9 @@
 title: 'Introduction to Econometrics<br> & <img src = "rstudio_logo.png" width = "40"> Programming'
 author: "PSL - CPES 2"
 date: "Louis Sirugue"
+params:
+  dark: false
+  update_functions: false
 output: 
   html_document:
     theme: cosmo
@@ -12,17 +15,13 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r, echo = F}
-dark_theme <- F
-```
-
 ```{r setup, include = F}
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
 lapply(c("tidyverse", "kableExtra"), library, character.only = T)
 root <- "https://louissirugue.github.io/metrics_on_R/"
 ```
 
-```{css, echo = F, eval = !dark_theme}
+```{css, echo = F, eval = !params$dark}
 .share-box {
   width: 40px;
   height: 40px;
@@ -40,7 +39,7 @@ root <- "https://louissirugue.github.io/metrics_on_R/"
 }
 ```
 
-```{css, echo = F, eval = dark_theme}
+```{css, echo = F, eval = params$dark}
 body{background-color:#201914;filter:invert(1)}
 
 .share-box {
@@ -61,13 +60,13 @@ body{background-color:#201914;filter:invert(1)}
 ```
 
 ```{r, echo = F}
-dark <- ifelse(dark_theme, "_dark", "")
-astre <- ifelse(dark_theme, "sun", "moon")
+dark <- ifelse(params$dark, "_dark", "")
+astre <- ifelse(params$dark, "sun", "moon")
 ```
 
 ````{=html}
 ```{r, echo=FALSE, results='asis'}
-writeLines(paste0('<div class = "share-box" style ="margin-top:-13em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/metrics_on_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
+writeLines(paste0('<div class = "share-box" style ="margin-top:-13em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/metrics_on_R/home', ifelse(params$dark, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
 xfun::file_string('astre.html')
 ```
 ````
@@ -112,8 +111,8 @@ s1 <- data.frame(a = c(" ",
                        paste0("[html](", root, "lecture5/slides", dark, ".html) - [pdf](", root, "lecture5/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture6/slides", dark, ".html) - [pdf](", root, "lecture6/slides", dark, ".pdf)"),
                        "html - pdf",
-                       paste0("[html](", root, "lecture8/slides", dark, ".html) - [pdf](", root, "lecture7/slides", dark, ".pdf)"),
-                       paste0("[html](", root, "lecture9/slides", dark, ".html) - [pdf](", root, "lecture8/slides", dark, ".pdf)"),
+                       "html - pdf",
+                       "html - pdf",
                        "html - pdf",
                        "html - pdf",
                        "html - pdf",
@@ -123,7 +122,7 @@ s1 <- data.frame(a = c(" ",
                  
                  
                  d = c("Quizzes", 
-                       "[Quiz 1](https://sirugue.shinyapps.io/quiz1/)",
+                       "Quiz 1",
                        "Quiz 2",
                        "Quiz 3",
                        " ", " ", 
@@ -136,15 +135,15 @@ s1 <- data.frame(a = c(" ",
                        " "),
                  
                  e = c("Data", 
-                       " ", 
+                       paste0("[data](", root, "lecture1/data.zip)"),
                        " ", 
                        paste0("[data](", root, "lecture3/data.zip)"),
                        paste0("[data](", root, "lecture4/data.zip)"),
-                       " ",
+                       paste0("[data](", root, "lecture5/data.zip)"),
                        paste0("[data](", root, "lecture6/data.zip)"),
                        " ",
-                       paste0("[data](", root, "lecture8/data.zip)"),
-                       paste0("[data](", root, "lecture9/data.zip)"),
+                       " ",
+                       " ",
                        " ",
                        " ",
                        " ",
@@ -163,6 +162,83 @@ kable(s1, col.names = NULL, align = "llcccc") %>%
   pack_rows("Part 1: Introduction to R programming", 2, 8) %>%
   pack_rows("\nPart 2: Introduction to Econometrics", 9, 16) 
 ```
+
+<br>
+
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/rstudio.pdf"><img style = "margin-left:7cm;margin-top:2.3cm;" src = "../cheatsheets/rstudio.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/baser.pdf"><img style = "margin-left:-1.45cm;margin-top:-2.3cm;" src = "../cheatsheets/baser.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/readr.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;"  src = "../cheatsheets/readr.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/dplyr.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/dplyr.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/ggplot.pdf"><img  style = "margin-top:2.3cm;margin-left:-1.45cm;"src = "../cheatsheets/ggplot.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/rmarkdown.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/rmarkdown.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/latex.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/latex.png" width = "100"/></a>
+
+<!---
+
+<h4>Functions glossary</h4>
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, echo = F, eval = params$update_functions, results = "hide"}
+library(readxl)
+
+functions <- read_xlsx("functions.xlsx")
+
+# Get the last R documentation version of each package
+packages <- functions %>% select(package) %>% unique()
+version <- lapply(packages$package, function(a) {
+  return(gsub('^.*versionsArray":\\["|".*$', '', 
+              paste(readLines(paste0('https://www.rdocumentation.org/packages/',  a)), collapse = "")))
+})
+
+# Get the alias of each function
+lapply(packages$package, require, character.only = TRUE)
+alias <- lapply(functions$`function`, function(a) {
+  hf <- as.character(help(a))
+  keep <- grepl(paste0(functions %>% filter(`function` == a) %>% pull(package), "/help"), hf)
+  return(gsub("^.*/", "", hf[keep]))
+})
+
+# Form URL
+functions <- functions %>%
+  left_join(packages %>% mutate(version = unlist(as.character(version)))) %>%
+  mutate(alias = unlist(alias)) %>%
+  # Manual modifications
+  mutate(alias = ifelse(`function` %in% c("n", "log", "scale_x_discrete", 
+                                          "element_rect", "element_line", "rel"), 
+                        `function`, alias),
+         alias = ifelse(`function` == "scale_y_discrete", "scale_x_discrete", alias),
+         alias = ifelse(`function` == "scale_color_manual", "scale_colour_manual", alias),
+         alias = ifelse(`function` == "scale_color_gradient", "scale_colour_gradient", alias),
+         alias = ifelse(alias == "reorder.factor", "reorder.default", alias),
+         version = ifelse(`function` %in% c("scale_color_manual", "geom_text", "geom_histogram"), 
+                          "0.9.1", version),
+         version = ifelse(`function` %in% c("element_rect", "element_line", "rel"), 
+                          "2.1.0", version))%>%
+  filter(`function` != "rename") %>%
+  # Now form urls
+  mutate(doc = paste0("https://www.rdocumentation.org/packages/", package, 
+                      "/versions/", version, 
+                      "/topics/", alias))
+
+write.csv(functions, "processed_functions.csv", row.names = F)
+```
+
+
+```{r, echo = F}
+library(DT)
+datatable(read.csv("processed_functions.csv") %>% 
+              mutate(doc = paste0('<a href = "', doc, '">', alias, '</a>'),
+                     lecture = paste("Lecture", lecture)) %>%
+              rename(`function` = function., documentation = doc) %>%
+              select(lecture, `function`, package, documentation), 
+          escape = F, rownames = F, options = list(pageLength = 5), 
+          class = list(stripe = FALSE)) %>% 
+  formatStyle(c("lecture", "function", "package", "documentation"), 
+              backgroundColor = "#DFE6EB")
+```
+
+--->
 
 <h3> II. Spring semester </h3>
 
@@ -193,18 +269,18 @@ kable(s2, col.names = NULL, align = "llccc") %>%
 
 ```{r}
 ex <- data.frame(a = c(" ", 
-                       "Homework", "Final exam", 
+                       "Homework", 
                        "Research project"),
                  
                  b = c("Guidelines", 
-                       "html - pdf","html - pdf",
+                       "html - pdf",
                        paste0("[html](", root, "project/example.html) - pdf")),
                        
                  c = c("Grading",
-                       "html - pdf","html- pdf",
-                       paste0("[html](", root, "project/grading.html) - pdf")),
+                       "html - pdf",
+                       "html - pdf"),
                  d = c("Data", 
-                       "data",  "data", 
+                       "data", 
                        paste0("[data](", root, "project/data.zip)")))
                  
 kable(ex, col.names = NULL, align = "lccc")  %>%
@@ -215,7 +291,7 @@ kable(ex, col.names = NULL, align = "lccc")  %>%
   column_spec(3, width_max = "7em", width = "7em", width_min = "7em") %>%
   column_spec(4, width_max = "5em", width = "5em", width_min = "5em") %>%
   kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
-  pack_rows("Semester 1", 2, 3) %>% pack_rows("\nSemester 2", 4, 4) 
+  pack_rows("Semester 1", 2, 2) %>% pack_rows("\nSemester 2", 3, 3) 
 ```
 
 <br><br><br><br>
@@ -225,8 +301,8 @@ kable(ex, col.names = NULL, align = "lccc")  %>%
 <br><br>
 
 ```{r, include = F}
-roman <- c("I.", "II.", "III.", "IV.", "V.", "VI.", "VII.", "VIII.", "IX.")
-           #"X.", "XI.", "XII.", "XIII.", "XIV.")
+roman <- c("I.", "II.", "III.", "IV.", "V.", "VI.", "VII.")
+           #"VIII.", "IX.""X.", "XI.", "XII.", "XIII.", "XIV.")
 
 slides <- tibble(x = NA_character_, type = NA_character_, 
                  link = NA_character_, bullet = NA_character_,
@@ -248,20 +324,24 @@ for (i in 1:length(roman)) {
     
     lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
     
-    if (i == 5) {
-      fourticks <- lecture %>%
+    fourticks <- lecture %>%
         mutate(row = row_number()) %>%
-        filter(grepl("^````", x)) %>%
+        filter(grepl("^````", x))
+    
+    if (nrow(fourticks) > 0) {
+      
+      fourticks <- fourticks %>%
         mutate(x = rep(1:(nrow(.)/2), each = 2),
                group = ifelse(row_number() %% 2, "start", "stop")) %>%
         pivot_wider(names_from = "group", values_from = "row")
       
-      for (j in 1:nrow(fourticks)) {
+      for (j in nrow(fourticks):1) {
         lecture <- lecture %>%
           filter(!row_number() %in% fourticks$start[j]:fourticks$stop[j])
       }
-    }    
-    
+      
+    }
+
     slides <- slides %>%
       bind_rows(tibble(x = paste(roman[i], gsub('title: \"|\"', "", lecture$x[2])),
                        type = "title",
@@ -292,7 +372,7 @@ for (i in 1:length(roman)) {
                   ungroup() %>%
                   mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
                          link = paste0(root, "lecture", i, "/slides", 
-                                       ifelse(dark_theme, "_dark", ""), ".html#", slide),
+                                       ifelse(params$dark, "_dark", ""), ".html#", slide),
                          last = ifelse(row_number() == n(), "title", last)) %>%
                   select(x, type, link, bullet, last, n))
   }
@@ -400,7 +480,7 @@ During the first semester, the emphasis will successively be put on R Programmin
 
 <h3> II. Practical matters </h3>
 
-<indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in R programming or Statistics. Lectures will take place at Campus Jourdan - Room *TBA*, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
+<indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in R programming or Statistics. Lectures will take place at Campus Jourdan - Room 5, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
 
 Please make sure to download and install both R and R studio before the first lecture and to bring your laptop with you at each class.  
 
@@ -624,6 +704,8 @@ This course is inspired by:
  
 <br><br><br><br>
 
+<!---
+
 #### Archives
 
 <br>
@@ -651,3 +733,5 @@ kable(archives, col.names = NULL, align = "lccc")  %>%
 <p style = "margin-bottom:30cm;">
 
 <br><br><br><br>
+
+--->
