@@ -123,7 +123,7 @@ s1 <- data.frame(a = c(" ",
                  
                  d = c("Quizzes", 
                        "[Quiz 1](https://sirugue.shinyapps.io/quiz1/)",
-                       "Quiz 2",
+                       "[Quiz 2](https://sirugue.shinyapps.io/quiz2/)",
                        "Quiz 3",
                        " ", " ", 
                        " ", " ", 
@@ -162,6 +162,31 @@ kable(s1, col.names = NULL, align = "llcccc") %>%
   pack_rows("Part 1: Introduction to R programming", 2, 8) %>%
   pack_rows("\nPart 2: Introduction to Econometrics", 9, 16) 
 ```
+<br>
+```{r}
+exs1 <- data.frame(a = c(" ", 
+                       "Homework"),
+                 
+                 b = c("Guidelines", 
+                       paste0("[html](", root, "homework/guidelines.html) - [pdf](", root, "homework/guidelines.pdf)")),
+                       
+                 c = c("Source",
+                       paste0("[Rmd](", root, "homework/homework.zip)")),
+                 
+                 d = c("Data", 
+                       paste0("[data](https://www.aeaweb.org/articles?id=10.1257/aer.20130360)")))
+                 
+kable(exs1, col.names = NULL, align = "lccc")  %>%
+  #add_header_above(c("Semester 1" = 3)) %>%
+  row_spec(1, font_size = 17) %>%
+  column_spec(1, width_max = "24em", width = "24em", width_min = "20em") %>%
+  column_spec(2, width_max = "5em", width = "5em", width_min = "5em") %>%
+  column_spec(3, width_max = "5em", width = "5em", width_min = "4em") %>%
+  column_spec(4, width_max = "5em", width = "5em", width_min = "3em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
+  pack_rows("Exams", 2, 2)
+```
+
 
 <br>
 
@@ -265,33 +290,29 @@ kable(s2, col.names = NULL, align = "llccc") %>%
   pack_rows("Guidelines and refreshers", 2, 4) 
 ```
 
-<h3> III. Exams </h3>
+<br>
 
 ```{r}
-ex <- data.frame(a = c(" ", 
-                       "Homework", 
+exs2 <- data.frame(a = c(" ",  
                        "Research project"),
                  
                  b = c("Guidelines", 
-                       "html - pdf",
                        paste0("[html](", root, "project/example.html) - pdf")),
                        
                  c = c("Grading",
-                       "html - pdf",
                        "html - pdf"),
                  d = c("Data", 
-                       "data", 
                        paste0("[data](", root, "project/data.zip)")))
-                 
-kable(ex, col.names = NULL, align = "lccc")  %>%
+
+kable(exs2, col.names = NULL, align = "lccc")  %>%
   #add_header_above(c("Semester 1" = 3)) %>%
-  row_spec(1, font_size = 16) %>%
+  row_spec(1, font_size = 17) %>%
   column_spec(1, width_max = "21em", width = "21em", width_min = "21em") %>%
   column_spec(2, width_max = "7em", width = "7em", width_min = "7em") %>%
   column_spec(3, width_max = "7em", width = "7em", width_min = "7em") %>%
   column_spec(4, width_max = "5em", width = "5em", width_min = "5em") %>%
   kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
-  pack_rows("Semester 1", 2, 2) %>% pack_rows("\nSemester 2", 3, 3) 
+  pack_rows("Exams", 2, 2) 
 ```
 
 <br><br><br><br>
