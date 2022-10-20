@@ -75,13 +75,17 @@ xfun::file_string('astre.html')
 
 ### {.tabset}
 
-#### Material
+#### Material {.tabset}
 
-<h3> I. Fall semester </h3>
+<p style = "margin-bottom:.5cm;">
+
+##### Fall semester
+
+<br>
 
 ```{r}
 s1 <- data.frame(a = c(" ", 
-                       paste("Lecture", 1:15)),
+                       paste("Lecture", 1:14)),
                  
                  b = c(" ",
                        paste("Introduction to", "R"),
@@ -100,8 +104,7 @@ s1 <- data.frame(a = c(" ",
                        "Interpretation",
                        "Applications in academic research",
                        
-                       "Maps and geolocalized data", 
-                       "Final Exam"),
+                       "Maps and geolocalized data"),
                  
                  c = c("Slides", 
                        paste0("[html](", root, "lecture1/slides", dark, ".html) - [pdf](", root, "lecture1/slides", dark, ".pdf)"),
@@ -110,15 +113,14 @@ s1 <- data.frame(a = c(" ",
                        paste0("[html](", root, "lecture4/slides", dark, ".html) - [pdf](", root, "lecture4/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture5/slides", dark, ".html) - [pdf](", root, "lecture5/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture6/slides", dark, ".html) - [pdf](", root, "lecture6/slides", dark, ".pdf)"),
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf"),
+                       paste0("[html](", root, "lecture7/homework", dark, ".html) - [pdf](", root, "lecture7/homework", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture8/slides", dark, ".html) - [pdf](", root, "lecture8/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture9/slides", dark, ".html) - [pdf](", root, "lecture9/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture10/slides", dark, ".html) - [pdf](", root, "lecture10/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture11/slides", dark, ".html) - [pdf](", root, "lecture11/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture12/slides", dark, ".html) - [pdf](", root, "lecture12/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture13/slides", dark, ".html) - [pdf](", root, "lecture13/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture14/slides", dark, ".html) - [pdf](", root, "lecture14/slides", dark, ".pdf)")),
                  
                  
                  d = c("Quizzes", 
@@ -131,8 +133,7 @@ s1 <- data.frame(a = c(" ",
                        "Quiz 5", 
                        "Quiz 6",
                        " ", " ", 
-                       " ", " ", 
-                       " "),
+                       " ", " "),
                  
                  e = c("Data", 
                        paste0("[data](", root, "lecture1/data.zip)"),
@@ -141,15 +142,14 @@ s1 <- data.frame(a = c(" ",
                        paste0("[data](", root, "lecture4/data.zip)"),
                        paste0("[data](", root, "lecture5/data.zip)"),
                        paste0("[data](", root, "lecture6/data.zip)"),
+                       paste0("[data](", root, "lecture7/data.zip)"),
+                       paste0("[data](", root, "lecture8/data.zip)"),
+                       paste0("[data](", root, "lecture9/data.zip)"),
+                       paste0("[data](", root, "lecture10/data.zip)"),
                        " ",
                        " ",
-                       " ",
-                       " ",
-                       " ",
-                       " ",
-                       " ",
-                       " ",
-                       " "))
+                       paste0("[data](", root, "lecture13/data.zip)"),
+                       paste0("[data](", root, "lecture14/data.zip)")))
 
 kable(s1, col.names = NULL, align = "llcccc") %>%
   row_spec(1, font_size = 17)  %>%
@@ -160,7 +160,7 @@ kable(s1, col.names = NULL, align = "llcccc") %>%
   column_spec(5, width_max = "5em", width = "5em", width_min = "3em") %>%
   kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>%
   pack_rows("Part 1: Introduction to R programming", 2, 8) %>%
-  pack_rows("\nPart 2: Introduction to Econometrics", 9, 16) 
+  pack_rows("\nPart 2: Introduction to Econometrics", 9, 15) 
 ```
 <br>
 ```{r}
@@ -187,16 +187,80 @@ kable(exs1, col.names = NULL, align = "lccc")  %>%
   pack_rows("Exams", 2, 2)
 ```
 
+<br><br><br><br><br>
+
+##### Spring semester
 
 <br>
 
-<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/rstudio.pdf"><img style = "margin-left:7cm;margin-top:2.3cm;" src = "../cheatsheets/rstudio.png" width = "100"/></a>
+```{r}
+s2 <- data.frame(a = c(" ", paste("Lecture", 16:18)),
+                 b = c(" ", "How to conduct a research project", "Refresher: R Programming", 
+                       "Refresher: Econometrics"),
+                 c = c("Slides", 
+                       "html - pdf",
+                       "html - pdf",
+                       "html - pdf"),
+                 d = c("Data",
+                       "data",
+                       "data",
+                       "data"))
+
+kable(s2, col.names = NULL, align = "llccc") %>%
+  row_spec(1, font_size = 17) %>%
+  column_spec(1, width_max = "8em", width = "8em", width_min = "6em") %>%
+  column_spec(2, width_max = "21em", width = "21em", width_min = "21em") %>%
+  column_spec(3, width_max = "5em", width = "5em", width_min = "5em") %>%
+  column_spec(4, width_max = "5em", width = "5em", width_min = "4em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
+  pack_rows("Guidelines and refreshers", 2, 4) 
+```
+
+<br>
+
+```{r}
+exs2 <- data.frame(a = c(" ",  
+                       "Research project"),
+                 
+                 b = c("Guidelines", 
+                       paste0("[html](", root, "project/example.html) - pdf")),
+                       
+                 c = c("Grading",
+                       "html - pdf"),
+                 d = c("Data", 
+                       paste0("[data](", root, "project/data.zip)")))
+
+kable(exs2, col.names = NULL, align = "lccc")  %>%
+  #add_header_above(c("Semester 1" = 3)) %>%
+  row_spec(1, font_size = 17) %>%
+  column_spec(1, width_max = "21em", width = "21em", width_min = "21em") %>%
+  column_spec(2, width_max = "7em", width = "7em", width_min = "7em") %>%
+  column_spec(3, width_max = "7em", width = "7em", width_min = "7em") %>%
+  column_spec(4, width_max = "5em", width = "5em", width_min = "5em") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
+  pack_rows("Exams", 2, 2) 
+```
+
+<br><br><br><br><br>
+
+##### Cheatsheets
+
+<br><br>
+
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/rstudio.pdf"><img style = "margin-left:5cm;margin-top:2.3cm;" src = "../cheatsheets/rstudio.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/baser.pdf"><img style = "margin-left:-1.45cm;margin-top:-2.3cm;" src = "../cheatsheets/baser.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/readr.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;"  src = "../cheatsheets/readr.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/dplyr.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/dplyr.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/ggplot.pdf"><img  style = "margin-top:2.3cm;margin-left:-1.45cm;"src = "../cheatsheets/ggplot.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/rmarkdown.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/rmarkdown.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/latex.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/latex.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/moments.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/moments.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/tidyr.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/tidyr.png" width = "100"/></a>
+<br>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/regex.pdf"><img style = "margin-left:6.32cm;margin-top:-.77cm;" src = "../cheatsheets/regex.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/cartography.pdf"><img src = "../cheatsheets/cartography.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/sf.pdf"><img src = "../cheatsheets/sf.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/strings.pdf"><img src = "../cheatsheets/strings.png" width = "100"/></a>
 
 <!---
 
@@ -265,65 +329,17 @@ datatable(read.csv("processed_functions.csv") %>%
 
 --->
 
-<h3> II. Spring semester </h3>
+#### Contents {.tabset}
 
-```{r}
-s2 <- data.frame(a = c(" ", paste("Lecture", 16:18)),
-                 b = c(" ", "How to conduct a research project", "Refresher: R Programming", 
-                       "Refresher: Econometrics"),
-                 c = c("Slides", 
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf"),
-                 d = c("Data",
-                       "data",
-                       "data",
-                       "data"))
+<p style = "margin-bottom:.5cm;">
 
-kable(s2, col.names = NULL, align = "llccc") %>%
-  row_spec(1, font_size = 17) %>%
-  column_spec(1, width_max = "8em", width = "8em", width_min = "6em") %>%
-  column_spec(2, width_max = "21em", width = "21em", width_min = "21em") %>%
-  column_spec(3, width_max = "5em", width = "5em", width_min = "5em") %>%
-  column_spec(4, width_max = "5em", width = "5em", width_min = "4em") %>%
-  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
-  pack_rows("Guidelines and refreshers", 2, 4) 
-```
-
-<br>
-
-```{r}
-exs2 <- data.frame(a = c(" ",  
-                       "Research project"),
-                 
-                 b = c("Guidelines", 
-                       paste0("[html](", root, "project/example.html) - pdf")),
-                       
-                 c = c("Grading",
-                       "html - pdf"),
-                 d = c("Data", 
-                       paste0("[data](", root, "project/data.zip)")))
-
-kable(exs2, col.names = NULL, align = "lccc")  %>%
-  #add_header_above(c("Semester 1" = 3)) %>%
-  row_spec(1, font_size = 17) %>%
-  column_spec(1, width_max = "21em", width = "21em", width_min = "21em") %>%
-  column_spec(2, width_max = "7em", width = "7em", width_min = "7em") %>%
-  column_spec(3, width_max = "7em", width = "7em", width_min = "7em") %>%
-  column_spec(4, width_max = "5em", width = "5em", width_min = "5em") %>%
-  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>% 
-  pack_rows("Exams", 2, 2) 
-```
-
-<br><br><br><br>
-
-#### Contents
+##### Fall semester
 
 <br><br>
 
 ```{r, include = F}
-roman <- c("I.", "II.", "III.", "IV.", "V.", "VI.", "VII.")
-           #"VIII.", "IX.""X.", "XI.", "XII.", "XIII.", "XIV.")
+roman <- c("I.", "II.", "III.", "IV.", "V.", "VI.", "VII.",
+           "VIII.", "IX.", "X.", "XI.", "XII.", "XIII.", "XIV.")
 
 slides <- tibble(x = NA_character_, type = NA_character_, 
                  link = NA_character_, bullet = NA_character_,
@@ -335,7 +351,7 @@ for (i in 1:length(roman)) {
     slides <- slides %>%
       bind_rows(tibble(x = "VII. Homework correction", 
                        type = "title", 
-                       link = NA_character_, 
+                       link = paste0(root, "lecture7/homework.html"), 
                        bullet = "item",
                        last = "title",
                        n = NA))
@@ -400,8 +416,18 @@ for (i in 1:length(roman)) {
 }
 slides <- slides %>% mutate(x = gsub("`", "", x))
 
-htmlcode <- ""
+
+htmlcode <- '<div class="row">'
+
 for (i in 1:nrow(slides)) {
+  
+  if (grepl("^I\\.", slides$x[i])) {
+    htmlcode <- paste0(htmlcode, '<div class="column" style = "margin-left:2cm;">')
+  }
+  
+  if (grepl("^VIII\\.", slides$x[i])) {
+    htmlcode <- paste0(htmlcode, '<br><br></div><div class="column" style = "margin-left:-2cm;">')
+  }
   
   # Open level 1
   if (slides$type[i] == "title") {
@@ -410,7 +436,8 @@ for (i in 1:nrow(slides)) {
                          slides$link[i], '">', slides$x[i], '</a></summary>')
     }
     if (slides$bullet[i] == "item") {
-      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li>', slides$x[i], '</li></ul><p style = "margin-bottom:.75cm;"></p>')
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</li></ul><p style = "margin-bottom:.75cm;"></p>')
     }
   }
   
@@ -440,7 +467,9 @@ for (i in 1:nrow(slides)) {
   
   # Close level 1
   if (slides$last[i] == "title") {htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>')}
+
 }
+htmlcode <- paste0(htmlcode, '</div></div>')
 
 #toc <- read.csv("toc.csv", sep = ";")
 #
@@ -489,17 +518,36 @@ xfun::file_string('toc.html')
 ```
 ````
 
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+##### Spring semester
+
+<br>
+
+```{r}
+
+```
+
+
 <br><br><br><br>
 
-#### Syllabus
+#### Syllabus {.tabset}
 
-<h3> I. Course description </h3>
+<p style = "margin-bottom:.5cm;">
+
+##### Course description
+
+<br>
 
 <blockquote style =  "font-size: 12.5pt !important;"><i><p style = "margin-left:1cm;"></p>The objective of this course is to provide you with the necessary statistical and data visualization tools to perform well-structured and meaningful data analyses for your own research projects. By the end of this course you should be able to produce relevant statistics and compelling graphics to include in your future reports, presentations, or research projects. To this end, this course combines notions of R programming, basic Statistics, and introductory Econometrics.</i></blockquote>
 
 During the first semester, the emphasis will successively be put on R Programming and Econometrics. Still, all along the course bridges will be built between these two dimensions of data analysis. The second semester will be dedicated to a research project. You will have to carry out an original data analysis by applying the tools covered in class during the first semester to your own research question. For your soon-acquired programming and data analysis skills to be easily valuated on an online CV or as a writing sample, you will learn how to make your final project look like [this document](https://louissirugue.github.io/metrics_on_R/project/example.html).
 
-<h3> II. Practical matters </h3>
+<p style = "margin-bottom:.75cm;"></p>
+
+<center><span style = "font-size:15pt;"><b>Practical matters</b></span></center>  
+
+<p style = "margin-bottom:.75cm;"></p>
 
 <indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in R programming or Statistics. Lectures will take place at Campus Jourdan - Room 5, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
 
@@ -510,9 +558,17 @@ Please make sure to download and install both R and R studio before the first le
 
 Don't hesitate to send me an email if you're already facing issues at that stage.
 
-<h3> III. Grading system </h3>
+<br><br><br>
 
-<h4> a) First semester </h4>
+##### Grading system 
+
+<br>
+
+<p style = "margin-bottom:.75cm;"></p>
+
+<center><span style = "font-size:15pt;"><b>Fall semester</b></span></center>  
+
+<p style = "margin-bottom:.75cm;"></p>
 
 The grading of the first semester will be based on:  
 
@@ -532,9 +588,11 @@ The **homework** is a set of exercises related to the first five lectures of the
 
 The **final exam** will be a paper exam in classroom. You are allowed to bring a cheatsheet with you to the exam as long as it is handwritten and standing on a single A4 (21cm x 29.7cm) page, i.e., *recto* only. Cheatsheets that do not comply with these rules will be confiscated. Beyond that, standard examination rules apply. 
 
-<p style = "margin-bottom:.75cm;"></p>
+<p style = "margin-bottom:1.5cm;"></p>
 
-<h4> b) Second semester </h4>
+<center><span style = "font-size:15pt;"><b>Spring semester</b></span></center>  
+
+<p style = "margin-bottom:.75cm;"></p>
 
 The grading of the second semester grade will be entirely based on your research project that you will carry out all along the semester. Research projects must be done by groups of two, so both members of a pair will have the same grade. You will be evaluated three times, at three different stages of the research process:
 
@@ -546,7 +604,11 @@ The grading of the second semester grade will be entirely based on your research
 
 As the first three lectures of the second semester will be refreshers on the notions seen during the first semester, you will have some time to come up with your own research question and to find relevant data to test your hypotheses empirically (you will be guided on where and how to look for data). Then, in each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc.  until your final presentation.  [Here](https://louissirugue.github.io/data-analysis-course/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the [homepage](https://louissirugue.github.io/data-analysis-course/home.html). You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
 
-<h3> IV. Schedule </h3>
+<br><br><br><br>
+
+##### Schedule
+
+<br>
 
 <p style = "margin-bottom:.75cm;"></p>
 
@@ -711,7 +773,11 @@ kable(s2, col.names = NULL, align = "lccl")  %>%
 
 ***
 
-<h3> V. References </h3>
+<br><br><br><br>
+
+##### References
+
+<br>
 
 This course is inspired by:
 
