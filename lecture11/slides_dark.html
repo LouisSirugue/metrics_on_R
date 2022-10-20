@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Causality</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Causality
+## Lecture 11
+### <br>Louis SIRUGUE
+### CPES 2 - Fall 2022
+
+---
+
+
+&lt;style type="text/css"&gt;
+body{background-color:black;filter:invert(1)}
+&lt;/style&gt;
+
+
+
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 35%;} &lt;/style&gt;
+
+### Quick reminder
+
+#### Data generating process
+
+&lt;ul&gt;
+  &lt;li&gt;In practice we estimate coefficients on a &lt;b&gt;given realization of a data generating process&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So the &lt;b&gt;true coefficient&lt;/b&gt; is &lt;b&gt;unobserved&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But our &lt;b&gt;estimation&lt;/b&gt; is &lt;b&gt;informative&lt;/b&gt; on the values the true coefficient is likely to take&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+    
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-2-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+
+.right-column[
+&lt;p style = "margin-bottom:3cm"&gt;&lt;/p&gt;
+`$$\frac{\hat{\beta}-\beta}{\text{SD}(\hat{\beta})} \sim \mathcal{N}(0, 1)$$`
+]
+
+---
+
+### Quick reminder
+
+#### Confidence interval
+
+&lt;ul&gt;
+  &lt;li&gt;This allows to infer a &lt;b&gt;confidence interval:&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\hat{\beta}\pm t(\text{df})_{1-\frac{\alpha}{2}}\times\text{se}(\hat{\beta})$$`
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Where \(t(\text{df})_{1-\frac{\alpha}{2}}\) is the value from a &lt;b&gt;Student \(t\) distribution&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With the relevant number of &lt;b&gt;degrees of freedom&lt;/b&gt; \(\text{df}\) (n - #parameters)&lt;/li&gt;
+    &lt;li&gt;And the desired &lt;b&gt;confidence level&lt;/b&gt; \(1-\alpha\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;And where \(\text{se}(\hat{\beta})\) denotes the &lt;b&gt;standard error&lt;/b&gt; of \(\hat{\beta}\):&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\text{se}(\hat{\beta}) = \sqrt{\widehat{\text{Var}(\hat{\beta})}} = \sqrt{\frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{(n-\#\text{parameters})\sum_{i = 1}^n(x_i-\bar{x})^2}}$$`
+
+---
+
+### Quick reminder
+
+#### P-value
+
+&lt;ul&gt;
+  &lt;li&gt;It also allows to &lt;b&gt;test&lt;/b&gt; how likely is \(\beta\) to be &lt;b&gt;different from a given value:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If the &lt;b&gt;p-value&lt;/b&gt; &lt; 5%, we can &lt;b&gt;reject&lt;/b&gt; that \(\beta\) equals the &lt;b&gt;hypothesized value&lt;/b&gt; at the 95% confidence level&lt;/li&gt;
+    &lt;li&gt;This threshold, very common in Economics, implies that we have 1 chance out of 20 to be wrong&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+linearHypothesis(lm(ige ~ gini, ggcurve), "gini = 0")
+```
+
+```
+## Linear hypothesis test
+## 
+## Hypothesis:
+## gini = 0
+## 
+## Model 1: restricted model
+## Model 2: ige ~ gini
+## 
+##   Res.Df     RSS Df Sum of Sq      F   Pr(&gt;F)   
+## 1     21 0.46733                                
+## 2     20 0.26883  1    0.1985 14.767 0.001016 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+---
+
+&lt;h3&gt;Today: Causality&lt;/h3&gt;
+
+--
+
+&lt;p style = "margin-bottom:4.25cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Main sources of bias&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Omitted variables&lt;/li&gt;
+    &lt;li&gt;1.2. Functional form&lt;/li&gt;
+    &lt;li&gt;1.3. Selection bias&lt;/li&gt;
+    &lt;li&gt;1.4. Measurement error&lt;/li&gt;
+    &lt;li&gt;1.5. Simultaneity&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Randomized control trials&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Introduction to RCTs&lt;/li&gt;
+    &lt;li&gt;2.2. Types of randomization&lt;/li&gt;
+    &lt;li&gt;2.3. Multiple testing&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:.65cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;3. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Today: Causality&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4.25cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Main sources of bias&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Omitted variables&lt;/li&gt;
+    &lt;li&gt;1.2. Functional form&lt;/li&gt;
+    &lt;li&gt;1.3. Selection bias&lt;/li&gt;
+    &lt;li&gt;1.4. Measurement error&lt;/li&gt;
+    &lt;li&gt;1.5. Simultaneity&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;Consider the following regression:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Where \(\text{Earnings}_i\) denotes individuals' annual labor earnings&lt;/li&gt;
+    &lt;li&gt;And \(\text{Education}_i\) stands for individuals' number of years of education&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+`$$\text{Earnings}_i = \alpha + \beta \times \text{Education}_i + \varepsilon_i$$`
+    
+--
+
+
+
+    
+
+
+    
+
+```r
+summary(lm(Earnings ~ Education, sim_dat))$coefficients
+```
+
+```
+##             Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept) 7514.800  2994.3060  2.509697 1.209949e-02
+## Education   2643.312   205.2692 12.877294 1.220064e-37
+```
+  
+--
+    
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Taking \(\hat{\beta}\) at face value, the &lt;b&gt;"expected returns"&lt;/b&gt; from an additional year of education amount to $2,643/year&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But if we were to enforce an additional year of education for randomly selected individuals, would they earn $2,643 more than they would have earned otherwise?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; The answer is &lt;b&gt;no&lt;/b&gt;, because the estimated effect is &lt;b&gt;not causal!&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+    
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;The estimated relationship could be partly driven by some &lt;b&gt;confounding factors:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Maybe &lt;b&gt;more skilled&lt;/b&gt; individuals both &lt;b&gt;study longer&lt;/b&gt; and &lt;b&gt;earn more&lt;/b&gt; because they are skilled&lt;/li&gt;
+    &lt;li&gt;But with or without more education they would still earn more because they are skilled&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+    
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The ability variable acts as a &lt;b&gt;confounding factor&lt;/b&gt; because it is correlated with both \(x\) and \(y\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This would also be the case of parental socio-economic status and many other variables&lt;/li&gt;
+    &lt;li&gt;We need to put these variables in the regression as &lt;b&gt;control variables&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+  
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+    
+--
+    
+`$$\text{Earnings}_i = \alpha + \beta_1\times \text{Education}_i + \beta_2\times\text{Skills}_i  + \varepsilon_i$$`
+    
+
+    
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;According to you, would the estimated effect of education be higher or lower in this regression?&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; If skills is indeed &lt;b&gt;positively correlated with both&lt;/b&gt; education and earnings, the new coefficient would be &lt;b&gt;lower&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;Remember that &lt;b&gt;controlling&lt;/b&gt; for a variable can be viewed as:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-7-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;Remember that &lt;b&gt;controlling&lt;/b&gt; for a variable can be viewed as:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Allowing the &lt;b&gt;intercept&lt;/b&gt; to &lt;b&gt;vary&lt;/b&gt; with that variable&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-8-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;Remember that &lt;b&gt;controlling&lt;/b&gt; for a variable can be viewed as:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Allowing the &lt;b&gt;intercept&lt;/b&gt; to &lt;b&gt;vary&lt;/b&gt; with that variable&lt;/li&gt;
+    &lt;li&gt;Keeping this &lt;b&gt;variable constant&lt;/b&gt; as we move along the \(x\)-axis&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-9-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;In that case the &lt;b&gt;confounding&lt;/b&gt; variable &lt;b&gt;no longer affects&lt;/b&gt; our relationship of interest&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It fixes the fact that more skilled individuals tend to have both higher education and earnings&lt;/li&gt;
+    &lt;li&gt;Such that the &lt;b&gt;relationship&lt;/b&gt; between education and earnings is &lt;b&gt;net of the effect of skills&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;But &lt;b&gt;we are never able to control for all&lt;/b&gt; potential confounding factors&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can almost always think of variables that may affect both \(x\) and \(y\) but that are not in the data&lt;/li&gt;
+    &lt;li&gt;Resulting in what is called the &lt;b&gt;omitted variable bias&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;In that case you should either:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Use causal identification Econometrics techniques (not covered in this course, except RCT)&lt;/li&gt;
+    &lt;li&gt;Acknowledge that your estimated effect is not causal with the phrase &lt;i&gt;&lt;b&gt;"ceteris paribus"&lt;/b&gt;&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;i&gt;Ceteris paribus&lt;/i&gt; means &lt;b&gt;"Everything else equal"&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We use these sentences to indicate that our &lt;b&gt;estimation is correct under the hypothesis that&lt;/b&gt; when our \(x\) of interest moves, &lt;b&gt;no confounding factor&lt;/b&gt; affecting \(y\) moves with it&lt;/li&gt;
+    &lt;li&gt;Indeed, if there is no other variable varying with \(x\) and \(y\), our regression doesn't need more controls&lt;/li&gt;
+    &lt;li&gt;We know this assumption is &lt;b&gt;not correct&lt;/b&gt;, but it is &lt;b&gt;important to be transparent and clear&lt;/b&gt; about what the coefficient means&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+&lt;ul&gt;
+  &lt;li&gt;Now consider the following relationship between years of education and earnings&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+&lt;ul&gt;
+  &lt;li&gt;Now consider the following relationship between years of education and earnings&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can fit a regression line as we usually do&lt;/li&gt;
+    &lt;li&gt;But would that be an appropriate estimation?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+&lt;ul&gt;
+  &lt;li&gt;We must capture the &lt;b&gt;non-linearity&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The relationship cannot be correctly captured by a straight line&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+`$$\text{Earnings}_i = \alpha + \beta_1\times \text{Education}_i + \varepsilon_i$$`
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+&lt;ul&gt;
+  &lt;li&gt;We must capture the &lt;b&gt;non-linearity&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The relationship cannot be correctly captured by a straight line&lt;/li&gt;
+    &lt;li&gt;It has the shape of a &lt;b&gt;polynomial of degree 2&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+`$$\text{Earnings}_i = \alpha + \beta_1\times \text{Education}_i + \color{SkyBlue}{\beta_2\times\text{Education}^2_i}  + \varepsilon_i$$`
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Given the previous graph, what would be the signs of \(\hat{\beta}_1\) and \(\hat{\beta}_2\)?&lt;/li&gt;
+&lt;/ul&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+&lt;ul&gt;
+  &lt;li&gt;We must capture the &lt;b&gt;non-linearity&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The relationship cannot be correctly captured by a straight line&lt;/li&gt;
+    &lt;li&gt;It has the shape of a &lt;b&gt;polynomial of degree 2&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+`$$\text{Earnings}_i = \alpha + \beta_1\times \text{Education}_i + \color{SkyBlue}{\beta_2\times\text{Education}^2_i}  + \varepsilon_i$$`
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Given the previous graph, what would be the signs of \(\hat{\beta}_1\) and \(\hat{\beta}_2\)?&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;\(\hat{\beta}_1\) would be positive because the relationship is increasing&lt;/li&gt;
+    &lt;li&gt;\(\hat{\beta}_2\) would be negative because the relationship is concave&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Polynomial functional forms are easy to handle in R&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You can &lt;b&gt;square the dependent variable and add it&lt;/b&gt; in lm()&lt;/li&gt;
+    &lt;li&gt;geom_smooth() also allows to plot a polynomial fit&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+
+```r
+ggplot(quadratic, aes(x = Education, y = Earnings)) + geom_point() +
+  geom_smooth(method = "lm")
+```
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+
+```r
+ggplot(quadratic, aes(x = Education, y = Earnings)) + geom_point() +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2))
+```
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;But functional form is not only about polynomial degrees:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Interactions&lt;/li&gt;
+    &lt;li&gt;Logs&lt;/li&gt;
+    &lt;li&gt;Discretization&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.3. Selection bias
+
+&lt;ul&gt;
+  &lt;li&gt;Now remember the example on high-school grades and job application acceptance&lt;/i&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We plotted the &lt;b&gt;grades&lt;/b&gt; of individuals on the \(x\)-axis&lt;/i&gt;
+    &lt;li&gt;And &lt;b&gt;whether&lt;/b&gt; or not &lt;b&gt;they got the job&lt;/b&gt; on the \(y\)-axis&lt;/i&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.left-column[
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-17-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.right-column[
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We estimated that a &lt;b&gt;1 unit&lt;/b&gt; increase in Grade (/20) would &lt;b&gt;increase the probability&lt;/b&gt; to be accepted by about &lt;b&gt;a third&lt;/b&gt; on expectation, &lt;b&gt;ceteris paribus&lt;/b&gt;&lt;/i&gt;
+  &lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Is this estimation relevant?&lt;/i&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Look at the support of \(x\)&lt;/i&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+]
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.3. Selection bias
+
+&lt;ul&gt;
+  &lt;li&gt;The fact that almost all grades range between 13 and 17 hints at a &lt;b&gt;selection problem:&lt;/b&gt;&lt;/i&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Individuals with very &lt;b&gt;low grade won't apply&lt;/b&gt; to the position because &lt;b&gt;they know they will be rejected&lt;/b&gt;&lt;/i&gt;
+    &lt;li&gt;Individuals with very &lt;b&gt;high grade won't apply&lt;/b&gt; to the position because &lt;b&gt;they apply to better positions&lt;/b&gt;&lt;/i&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.left-column[
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-18-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.right-column[
+
+
+&lt;ul&gt;
+  &lt;li&gt;Had these individuals applied, the estimated effect would be lower&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Our coefficient is specific to a non-representative sample&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Issue of &lt;b&gt;external validity&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The interpretation only holds in our specific setting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+] 
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.3. Selection bias
+
+&lt;ul&gt;
+  &lt;li&gt;Such &lt;b&gt;selection problems&lt;/b&gt; are very common &lt;b&gt;threats to causality&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;What is the impact of going to a better neighborhood on your children outcomes?&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Those who move may be different from those who stay: &lt;b&gt;self-selection issue&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Here it is not that the sample is not representative of the population, but that &lt;b&gt;the outcomes of those who stayed are different from the outcomes those who moved would have had, if they had stayed&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This related to the notion of &lt;b&gt;counterfactual&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If those who moved were comparable to those who stayed, it would be valid to use the outcome of those who stayed as the counterfactual outcome of those who moved&lt;/li&gt;
+    &lt;li&gt;But because of selection movers are not comparable to stayers so we don't have a credible counterfactual&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The notion of counterfactual is key to answer many questions:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;What is the impact of an immigrant inflow on the labor market outcomes of locals?&lt;/li&gt;
+    &lt;li&gt;We need to know how the labor market outcomes of locals would have evolved absent the immigrant inflow but we do not observe this situation&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Another way of obtaining &lt;b&gt;biased estimates&lt;/b&gt; is to have a &lt;b&gt;dependent variable measured with errors&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance if you want to measure the effect of cognitive skills but you only have IQ scores&lt;/li&gt;
+    &lt;li&gt;IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;It seems reasonable to assume that the measurement error follows a normal distribution:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-19-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Another way of obtaining &lt;b&gt;biased estimates&lt;/b&gt; is to have a &lt;b&gt;dependent variable measured with errors&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance if you want to measure the effect of cognitive skills but you only have IQ scores&lt;/li&gt;
+    &lt;li&gt;IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It seems reasonable to assume that the measurement error follows a normal distribution:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Individuals &lt;b&gt;usually&lt;/b&gt; perform &lt;b&gt;close to their average&lt;/b&gt; performance&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-20-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Another way of obtaining &lt;b&gt;biased estimates&lt;/b&gt; is to have a &lt;b&gt;dependent variable measured with errors&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance if you want to measure the effect of cognitive skills but you only have IQ scores&lt;/li&gt;
+    &lt;li&gt;IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It seems reasonable to assume that the measurement error follows a normal distribution:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Individuals &lt;b&gt;usually&lt;/b&gt; perform &lt;b&gt;close to their average&lt;/b&gt; performance&lt;/li&gt;
+    &lt;li&gt;And &lt;b&gt;larger deviations&lt;/b&gt; are more &lt;b&gt;rare&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-21-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;center&gt;Denote \(x\) the IQ variable&lt;/center&gt;
+
+`$$x \sim \mathcal{N}(100,\, 15^2)$$`
+]
+
+.pull-right[
+
+&lt;center&gt;Denote \(\eta\) the measurement error&lt;/center&gt;
+
+`$$\eta \sim \mathcal{N}(0,\, 1)$$`
+]
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * The true relationship is 
+
+`$$y = \alpha + \beta x + \varepsilon$$`
+
+--
+
+ * But we only observe
+ 
+`$$\tilde{x} = x + \eta$$`
+
+--
+
+* So we can only estimate:
+ 
+`$$y = \alpha + \beta \tilde{x} + \varepsilon \,\,\, \Longleftrightarrow \,\,\, y = \alpha + \beta (x + \eta) + \varepsilon$$`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; Let's &lt;b&gt;use simulations&lt;/b&gt; to see how it may affect our estimation&lt;/i&gt;&lt;/center&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;We can start by &lt;b&gt;generating a relationship&lt;/b&gt; without measurement error&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$y_i = 1 + 2 x_i + \varepsilon_i,\, \text{with}\, \varepsilon \sim \mathcal{N}(0,\, 1)$$`
+
+
+```r
+dat &lt;- tibble(x = rnorm(1000, 100, 15),
+              y = 1 + (2 * x) + rnorm(1000, 0, 1))
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;ul&gt;
+  &lt;li&gt;Estimate the &lt;b&gt;unbiased&lt;/b&gt; relationship&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+lm(y ~ x, dat)$coefficient
+```
+
+```
+## (Intercept)           x 
+##    0.824755    2.001394
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+Is it just random chance or is `\(\hat{\beta}\)` downward biased? &amp;#10140;
+]
+
+.pull-right[
+&lt;ul&gt;
+  &lt;li&gt;And &lt;b&gt;with measurement error&lt;/b&gt; \(\eta \sim \mathcal{N}(0,\, 1)\)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+dat &lt;- dat %&gt;% 
+  mutate(noisy_x = x + rnorm(1000, 0, 1))
+
+lm(y ~ noisy_x, dat)$coefficient
+```
+
+```
+## (Intercept)     noisy_x 
+##    1.995596    1.990358
+```
+]
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+# Vector of standard deviations from 0 to 20
+sd_noise &lt;- 0:20
+
+#
+#
+
+#
+#
+  
+#
+#
+  
+#
+#
+  
+# 
+#
+#
+```
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+# Vector of standard deviations from 0 to 20
+sd_noise &lt;- 0:20
+
+# Empty vector for beta...
+beta &lt;- c()
+
+#
+#
+  
+#
+#
+  
+#
+#
+  
+# 
+#
+#
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+# Vector of standard deviations from 0 to 20
+sd_noise &lt;- 0:20
+
+# Empty vector for beta...
+beta &lt;- c()
+
+# ... to be filled in a loop
+for (i in sd_noise) {
+  
+  #
+  #
+  
+  #
+  #
+  
+  # 
+  #
+}
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+# Vector of standard deviations from 0 to 20
+sd_noise &lt;- 0:20
+
+# Empty vector for beta...
+beta &lt;- c()
+
+# ... to be filled in a loop
+for (i in sd_noise) {
+  
+  # Generate noisy x with corresponding SD(eta)
+  dat_i &lt;- dat %&gt;% mutate(noisy_x = x + rnorm(1000, 0, i))
+  
+  #
+  #
+  
+  # 
+  #
+}
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+# Vector of standard deviations from 0 to 20
+sd_noise &lt;- 0:20
+
+# Empty vector for beta...
+beta &lt;- c()
+
+# ... to be filled in a loop
+for (i in sd_noise) {
+  
+  # Generate noisy x with corresponding SD(eta)
+  dat_i &lt;- dat %&gt;% mutate(noisy_x = x + rnorm(1000, 0, i))
+  
+  # Estimate the regression
+  beta_i &lt;- lm(y ~ noisy_x, dat_i)$coefficient[2]
+  
+  # 
+  #
+}
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+# Vector of standard deviations from 0 to 20
+sd_noise &lt;- 0:20
+
+# Empty vector for beta...
+beta &lt;- c()
+
+# ... to be filled in a loop
+for (i in sd_noise) {
+  
+  # Generate noisy x with corresponding SD(eta)
+  dat_i &lt;- dat %&gt;% mutate(noisy_x = x + rnorm(1000, 0, i))
+  
+  # Estimate the regression
+  beta_i &lt;- lm(y ~ noisy_x, dat_i)$coefficient[2]
+  
+  # Store the coefficient
+  beta &lt;- c(beta, beta_i)
+}
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;We can then plot the \(\hat{\beta}\) for each value of \(\text{SD}(\eta)\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-31-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;We can then plot the \(\hat{\beta}\) for each value of \(\text{SD}(\eta)\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It is clear that the &lt;b&gt;measurement error&lt;/b&gt; puts a &lt;b&gt;downward pressure&lt;/b&gt; on our estimate&lt;/li&gt;
+    &lt;li&gt;And that the &lt;b&gt;noisier&lt;/b&gt; the measure of \(x\) the &lt;b&gt;larger&lt;/b&gt; the &lt;b&gt;bias&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-32-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;And this phenomenon can easily be shown &lt;b&gt;mathematically:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}(\tilde{x},\, y)}{\text{Var}(\tilde{x})}$$`
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+--
+
+`$$\hat{\beta} = \frac{\text{Cov}(x + \eta,\, y)}{\text{Var}(x + \eta)}$$`
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+--
+
+`$$\hat{\beta} = \frac{\text{Cov}(x,\, y) + \text{Cov}(\eta,\, y)}{\text{Var}(x) + \text{Var}(\eta) + 2\text{Cov}(x,\, \eta)}$$`
+
+--
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+`$$\hat{\beta} = \frac{\text{Cov}(x,\, y)}{\text{Var}(x) + \text{Var}(\eta)}$$`
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;And this phenomenon can easily be shown &lt;b&gt;mathematically:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The extra term in the denominator puts a &lt;b&gt;downward pressure&lt;/b&gt; on our estimate&lt;/li&gt;
+    &lt;li&gt;And the bias is &lt;b&gt;increasing in the amplitude of the &lt;b&gt;measurement error&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}(\tilde{x},\, y)}{\text{Var}(\tilde{x})}$$`
+
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}(x + \eta,\, y)}{\text{Var}(x + \eta)}$$`
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}(x,\, y) + \text{Cov}(\eta,\, y)}{\text{Var}(x) + \text{Var}(\eta) + 2\text{Cov}(x,\, \eta)}$$`
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}(x,\, y)}{\text{Var}(x) + \color{SkyBlue}{\text{Var}(\eta)}}$$`
+---
+    
+### 1. Main sources of bias
+
+#### 1.5. Simultaneity
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;So far&lt;/b&gt; we considered relationships whose &lt;b&gt;directions&lt;/b&gt; were quite &lt;b&gt;unambiguous&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Education &amp;#10140; Earnings, and not the opposite&lt;/li&gt;
+    &lt;li&gt;High-school grades &amp;#10140; Job acceptance, and not the opposite&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;But now consider the relationship between &lt;b&gt;crime rate and police coverage&lt;/b&gt; intensity&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;What is the direction&lt;/b&gt; of the relationship?&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It's likely that more crime would cause a positive response in police activity&lt;/li&gt;
+    &lt;li&gt;But also that police activity would deter crime&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;There is no easily solution to that problem apart from:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Working out a &lt;b&gt;theoretical model&lt;/b&gt; sorting this issue beforehand&lt;/li&gt;
+    &lt;li&gt;Or &lt;b&gt;designing an RCT&lt;/b&gt; that cuts one of the two channels&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+&lt;h3&gt;Overview: Causality&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4.25cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Main sources of bias &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Omitted variables&lt;/li&gt;
+    &lt;li&gt;1.2. Functional form&lt;/li&gt;
+    &lt;li&gt;1.3. Selection bias&lt;/li&gt;
+    &lt;li&gt;1.4. Measurement error&lt;/li&gt;
+    &lt;li&gt;1.5. Simultaneity&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Randomized control trials&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Introduction to RCTs&lt;/li&gt;
+    &lt;li&gt;2.2. Types of randomization&lt;/li&gt;
+    &lt;li&gt;2.3. Multiple testing&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:.65cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;3. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Overview: Causality&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4.25cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Main sources of bias &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Omitted variables&lt;/li&gt;
+    &lt;li&gt;1.2. Functional form&lt;/li&gt;
+    &lt;li&gt;1.3. Selection bias&lt;/li&gt;
+    &lt;li&gt;1.4. Measurement error&lt;/li&gt;
+    &lt;li&gt;1.5. Simultaneity&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Randomized control trials&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Introduction to RCTs&lt;/li&gt;
+    &lt;li&gt;2.2. Types of randomization&lt;/li&gt;
+    &lt;li&gt;2.3. Multiple testing&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+]
+
+---
+
+### 2. Randomized control trials
+
+#### 2.1. Introduction to RCTs
+
+&lt;ul&gt;
+  &lt;li&gt;A Randomized Controlled Trial (RCT) is a type of &lt;b&gt;experiment&lt;/b&gt; in which the thing we want to know the impact of (called the treatment) is &lt;b&gt;randomly allocated&lt;/b&gt; in the population&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It is a way to obtain causality from randomness&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.85cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;RCTs are very powerful tools to &lt;b&gt;sort out issues of:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Omitted variables&lt;/li&gt;
+    &lt;li&gt;Selection bias&lt;/li&gt;
+    &lt;li&gt;Simultaneity&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.85cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This method is particularly used to &lt;b&gt;identify causal relationships&lt;/b&gt; in:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Medicine&lt;/li&gt;
+    &lt;li&gt;Psychology&lt;/li&gt;
+    &lt;li&gt;Economics&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;But how does randomness help obtaining causality?&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 2. Randomized control trials
+
+#### 2.1. Introduction to RCTs
+
+&lt;ul&gt;
+  &lt;li&gt;Consider estimating the &lt;b&gt;effect of vitamin&lt;/b&gt;  supplements intake&lt;b&gt; on health&lt;/b&gt; &lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Comparing health outcomes of vitamin &lt;b&gt;consumers vs. non-consumers&lt;/b&gt;, the effect &lt;b&gt;won't be causal&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Vitamins consumers might be &lt;b&gt;richer&lt;/b&gt; and &lt;b&gt;more healthy in general&lt;/b&gt; for other reasons than vitamin intake&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Randomization&lt;/b&gt; allows to &lt;b&gt;solve&lt;/b&gt; this selection &lt;b&gt;bias&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If you take two groups randomly, they would have the &lt;b&gt;same characteristics&lt;/b&gt; on expectation&lt;/li&gt;
+    &lt;li&gt;And thus they would be perfectly &lt;b&gt;comparable&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+Take for instance the `asec_2020.csv` dataset we've been working with:
+
+
+```r
+asec_2020 %&gt;% 
+  summarise(Earnings = mean(Earnings), Hours = mean(Hours),
+            Black = mean(Race == "Black"), Asian = mean(Race == "Asian"),
+            Other = mean(Race == "Other"), Female = mean(Sex == "Female"))
+```
+
+```
+##   Earnings    Hours     Black     Asian      Other    Female
+## 1 62132.37 39.54742 0.1062391 0.0703805 0.03764611 0.4809749
+```
+
+
+---
+
+### 2. Randomized control trials
+
+#### 2.1. Introduction to RCTs
+
+&lt;ul&gt;
+  &lt;li&gt;Let's compare the &lt;b&gt;average characteristics&lt;/b&gt; for two &lt;b&gt;randomly selected groups:&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ 
+--
+
+
+```r
+asec_2020 %&gt;%
+* mutate(Group = ifelse(rnorm(n(), 0, 1) &gt; 0, "Treatment", "Control")) %&gt;%
+  group_by(Group) %&gt;%
+  summarise(n = n(),
+            Earnings = mean(Earnings),
+            Female = 100 * mean(Sex == "Female"),
+            Black = 100 * mean(Race == "Black"),
+            Asian = 100 * mean(Race == "Asian"),
+            Other = 100 * mean(Race == "Other"),
+            Hours = mean(Hours))
+```
+ 
+--
+
+
+```
+## # A tibble: 2 x 8
+##   Group         n Earnings Female Black Asian Other Hours
+##   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Control   32195   62234.   48.2  10.7  7.02  3.80  39.5
+## 2 Treatment 32141   62030.   48.0  10.5  7.05  3.73  39.6
+```
+
+---
+
+### 2. Randomized control trials
+
+#### 2.1. Introduction to RCTs
+
+&lt;ul&gt;
+  &lt;li&gt;Their average &lt;b&gt;characteristics&lt;/b&gt; are very close!&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;On expectation&lt;/b&gt; their average characteristics are &lt;b&gt;the same&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;And just as the two randomly selected populations are comparable in terms of their observable characteristics&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;On expectation they are also &lt;b&gt;comparable&lt;/b&gt; in terms of their &lt;b&gt;unobservable characteristics!&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Randomization, if properly conducted, thus solves the problem of omitted variable bias&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;center&gt;&lt;h4&gt;&lt;i&gt;If we assign a treatment to Group 1, Group 2 would then be a valid counterfactual to estimate a causal effect!&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But &lt;b&gt;RCTs are not immune&lt;/b&gt; to every problem:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If individuals &lt;b&gt;self-select&lt;/b&gt; in participating to the experiment their would be a selection bias&lt;/li&gt;
+    &lt;li&gt;Even without self-selection, if the population among which treatment is randomized is not &lt;b&gt;representative&lt;/b&gt; there is a problem of external validity&lt;/li&gt;
+    &lt;li&gt;For the RCT to work, individuals should &lt;b&gt;comply&lt;/b&gt; with the treatment allocation&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;sample&lt;/b&gt; must be &lt;b&gt;sufficiently large&lt;/b&gt; for the average characteristics across groups to be close enough to their expected value&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+&lt;ul&gt;
+  &lt;li&gt;To some extent their are ways to deal with these problems&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Notably we can &lt;b&gt;adjust the way the treatment is randomized&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For instance if we want to ensure that a characteristic is well balanced among the two groups, we can &lt;b&gt;randomize within categories of this variable&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We don't give the treatment randomly hoping that we'll obtain the same % of females in both groups&lt;/li&gt;
+    &lt;li&gt;We assign the treatment randomly among females and among males separately&lt;/li&gt;
+    &lt;li&gt;This is called &lt;b&gt;randomizing by block&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;i&gt;Note that this only works with observable characteristics!&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+asec_2020 %&gt;%
+* group_by(Sex) %&gt;% # Randomize treatment by sex
+  mutate(Group = ifelse(rnorm(n(), 0, 1) &gt; 0, 1, 0)) %&gt;%
+  ungroup() %&gt;% group_by(Group) %&gt;%
+  summarise(...)
+```
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+&lt;ul&gt;
+  &lt;li&gt;What if you want to estimate the impact of &lt;b&gt;calorie intake&lt;/b&gt; at the &lt;b&gt;10am break&lt;/b&gt; on &lt;b&gt;pupils grades&lt;/b&gt;&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Find a school to run your experiment&lt;/li&gt;
+    &lt;li&gt;Take the list of pupils and randomly allocate them to treatment and control group&lt;/li&gt;
+    &lt;li&gt;Provide families with treated pupils a snack for the 10am break every school day&lt;/li&gt;
+    &lt;li&gt;Do that for a few month and collect the data on the grades of both groups&lt;/li&gt;
+    &lt;li&gt;Compute the difference in average grade for the treated and the control group&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;If the 10am snack has a &lt;b&gt;positive effect:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This causal identification framework should ensure the correct estimation of that effect&lt;/li&gt;
+    &lt;li&gt;Right?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But what about &lt;b&gt;non-compliance?&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It is likely that during the 10am break, treated children share their snack with their untreated friends&lt;/li&gt;
+    &lt;li&gt;How would that &lt;b&gt;affect our estimation?&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+&lt;ul&gt;
+  &lt;li&gt;While the observed effect would be positive under full compliance, &lt;b&gt;under treatment sharing:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-37-1.png" width="31%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+&lt;ul&gt;
+  &lt;li&gt;While the observed effect would be positive under full compliance, &lt;b&gt;under treatment sharing:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Treated children&lt;/b&gt; would have &lt;b&gt;lower grades&lt;/b&gt; because they would benefit from less calories&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="31%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+&lt;ul&gt;
+  &lt;li&gt;While the observed effect would be positive under full compliance, &lt;b&gt;under treatment sharing:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Treated children&lt;/b&gt; would have &lt;b&gt;lower grades&lt;/b&gt; because they would benefit from less calories&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Untreated children&lt;/b&gt; would have &lt;b&gt;higher grades&lt;/b&gt; because they would benefit from less calories&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-39-1.png" width="31%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+
+&lt;ul&gt;
+  &lt;li&gt;Thus &lt;b&gt;non-compliance&lt;/b&gt; can bias our estimation&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;There would be a &lt;b&gt;downward bias&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;And our estimation &lt;b&gt;wouldn't be causal&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+--
+
+&lt;ul&gt;
+  &lt;li&gt;One solution to that problem is to &lt;b&gt;randomize by cluster&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Children cannot share their snack with children from other schools&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+--
+
+&lt;ul&gt;
+  &lt;li&gt;We must &lt;b&gt;treat at the school level&lt;/b&gt; instead of the child level&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A treated unit is a school where some/all children are treated&lt;/li&gt;
+    &lt;li&gt;An untreated school is a school where no child is treated&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+--
+
+&lt;center&gt;
+&lt;i&gt;Beware that in terms of inference, computing standard errors the usual way&lt;br&gt;
+while the treatment is at a broader observational level than the outcome&lt;/br&gt;
+would give fallaciously low standard errors, which would need to be corrected&lt;/i&gt;
+&lt;/center&gt;
+
+
+---
+
+### 2. Randomized control trials
+
+#### 2.3. Multiple testing
+
+&lt;ul&gt;
+  &lt;li&gt;Another inference issue that RCTs can be subject to is &lt;b&gt;multiple testing&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If you conduct an RCT you might be tempted to exploit the causal framework to test a myriad of effects&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
+--
+
+&lt;ul&gt;
+  &lt;li&gt;You randomize your treatment and you compare the averages of many outcomes between treated and untreated individuals&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You would be tempted to &lt;b&gt;conclude&lt;/b&gt; that there is a &lt;b&gt;significant effect&lt;/b&gt; for &lt;b&gt;every variable&lt;/b&gt; whose corresponding &lt;b&gt;p-value &lt; .05&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But &lt;b&gt;you cannot do that!&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The probability to have a p-value lower than .05 just by chance for one test is indeed 5%&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But if you do &lt;b&gt;multiple tests&lt;/b&gt; in a row, the &lt;b&gt;probability&lt;/b&gt; to have a &lt;b&gt;p-value lower than .05&lt;/b&gt; for a null true effect among these multiple tests is &lt;b&gt;greater than 5%&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The greater the number of tests, the higher the probability to get a significant result just by chance&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
+--
+
+&lt;center&gt;&lt;h4&gt;This is what we call &lt;i&gt;multiple testing&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+
+---
+
+### 2. Randomized control trials
+
+#### 2.3. Multiple testing
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-40-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### 2. Randomized control trials
+
+#### 2.3. Multiple testing
+
+ * There are many ways to correct for multiple testing
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The simplest one is called the &lt;b&gt;Bonferroni&lt;/b&gt; correction&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It consists in &lt;b&gt;multiplying the p-value by the number of tests&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But it also leads to a large &lt;b&gt;loss of power&lt;/b&gt; (the probability to find an effect when there is indeed an effect decreases a lot)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;There are more sophisticated ways to deal with the problem, which can be categorized into two approaches&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Family Wise Error Rate&lt;/b&gt;: Control the probability that there is at least one true assumption rejected&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;False Discovery Rate&lt;/b&gt;: Control the share of true assumptions among rejected assumptions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; We won't cover these methods in this course but keep the multiple testing issue in mind when you encounter a long series of statistical tests&lt;/i&gt;&lt;/center&gt;
+
+---
+
+&lt;h3&gt;Overview: Causality&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4.25cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Main sources of bias &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Omitted variables&lt;/li&gt;
+    &lt;li&gt;1.2. Functional form&lt;/li&gt;
+    &lt;li&gt;1.3. Selection bias&lt;/li&gt;
+    &lt;li&gt;1.4. Measurement error&lt;/li&gt;
+    &lt;li&gt;1.5. Simultaneity&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Randomized control trials &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Introduction to RCTs&lt;/li&gt;
+    &lt;li&gt;2.2. Types of randomization&lt;/li&gt;
+    &lt;li&gt;2.3. Multiple testing&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:.65cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;3. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+### 3. Wrap up!
+
+#### Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;If a third &lt;b&gt;variable&lt;/b&gt; is correlated with both \(x\) and \(y\), it would &lt;b&gt;bias the relationship&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We must then &lt;b&gt;control&lt;/b&gt; for such variables&lt;/li&gt;
+    &lt;li&gt;And if we can't we must acknowledge that our estimate is not causal with &lt;i&gt;&lt;b&gt;'ceteris paribus'&lt;/b&gt;&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-41-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Wrap up!
+
+#### Functional form
+
+&lt;ul&gt;
+  &lt;li&gt;Not capture the &lt;b&gt;right functional&lt;/b&gt; form correctly might also lead to biased estimations:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Polynomial order, interactions, logs, discretization matter&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Visualizing the relationship&lt;/b&gt; is key&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-42-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Wrap up!
+
+#### Selection bias
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Self-selection&lt;/b&gt; is also a common threat to causality&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;What is the impact of going to a better neighborhood on your children outcomes?&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We cannot just regress children outcomes on a mobility dummy&lt;/li&gt;
+    &lt;li&gt;Individuals who move may be different from those who stay: &lt;b&gt;self-selection issue&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Here it is not that the sample is not representative of the population, but that &lt;b&gt;the outcomes of those who stayed are different from the outcomes those who moved would have had, if they had stayed&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+#### Simultaneity
+
+
+&lt;ul&gt;
+  &lt;li&gt;Consider the relationship between &lt;b&gt;crime&lt;/b&gt; rate and &lt;b&gt;police coverage&lt;/b&gt; intensity&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;What is the &lt;b&gt;direction of the relationship?&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We cannot just regress crime rate on police intensity&lt;/li&gt;
+    &lt;li&gt;It's likely that more crime would cause a positive response in police activity&lt;/li&gt;
+    &lt;li&gt;And also that police activity would deter crime&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 3. Wrap up!
+
+#### Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Measurement error&lt;/b&gt; in the independent variable also induces a bias&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The resulting estimation would mechanically be &lt;b&gt;downward biased&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;noisier&lt;/b&gt; the measure, the &lt;b&gt;larger the bias&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-43-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Wrap up!
+
+#### Randomized Controlled Trials
+
+&lt;ul&gt;
+  &lt;li&gt;A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is &lt;b&gt;randomly allocated&lt;/b&gt; in the population&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The two &lt;b&gt;groups&lt;/b&gt; would then have the same characteristics on expectation, and would be &lt;b&gt;comparable&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;It is a way to obtain &lt;b&gt;causality&lt;/b&gt; from randomness&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;RCTs are very &lt;b&gt;powerful tools&lt;/b&gt; to sort out issues of:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Omitted variables&lt;/li&gt;
+    &lt;li&gt;Selection bias&lt;/li&gt;
+    &lt;li&gt;Simultaneity&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But RCTs are &lt;b&gt;not immune&lt;/b&gt; to every problem:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The sample must be representative and large enough&lt;/li&gt;
+    &lt;li&gt;Participants should comply with their treatment status&lt;/li&gt;
+    &lt;li&gt;Independent variables must not be noisy measures of the variable of interest&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 0;
+ width: 10px;
+  height: 10px;
+   background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #F3F5F7, 
+              -4px -4px 6px #D8DEE3;
+}
+
+.logo:active {
+  box-shadow: inset 4px 4px 6px #F3F5F7, 
+              inset -4px -4px 6px #D8DEE3
+}
+
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"><a href = "https://louissirugue.github.io/metrics_on_R/home_dark.html"><p style = "margin-left:-.55cm;margin-top:-.55cm;width:53px"> <img src = "../source/home2.png"> </p> </a></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

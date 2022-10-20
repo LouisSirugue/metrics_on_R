@@ -1,22 +1,31 @@
 ---
-title: "Causality and randomness"
-subtitle: "Lecture 9"
+title: "Causality"
+subtitle: "Lecture 11"
 author: "<br>Louis SIRUGUE"
-date: "`r format(Sys.time(), '%m/%Y')`"
+date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
-  xaringan::moon_reader: 
+  xaringan::moon_reader:  
     css: 
         - xaringan-themer.css
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
 ---
+
+```{css, echo = F, eval = params$dark}
+body{background-color:black;filter:invert(1)}
+```
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../source/style.R"))
@@ -29,398 +38,678 @@ set.seed(1)
 
 <style> .left-column {width: 65%;} .right-column {width: 35%;} </style>
 
-### Last time we saw
+### Quick reminder
+
+#### Data generating process
+
+<ul>
+  <li>In practice we estimate coefficients on a <b>given realization of a data generating process</b></li>
+  <ul>
+    <li>So the <b>true coefficient</b> is <b>unobserved</b></li>
+    <li>But our <b>estimation</b> is <b>informative</b> on the values the true coefficient is likely to take</li>
+  </ul>
+</ul>
+
+    
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height = 4, out.width = "90%", fig.align='left'}
+library(car)
+ggcurve <- read.csv("ggcurve.csv")
+
+beta <- c()
+for (i in 1:1000) {
+  beta <- c(beta, lm(y ~ x, tibble(x = rnorm(1000, 4, 5),
+                                   e = rnorm(1000, 0, 1),
+                                   y = -2 + (.4 * x) + e))$coefficients[2])
+}
+
+distrib <- tibble(beta = beta,
+                  beta_demean_temp = beta - .2,
+                  beta_demean = beta - .4,
+                  beta_norm_temp = beta_demean / .3,
+                  beta_norm = beta_demean / sd(beta))
+
+norm_dt <- tibble(x = seq(-3, 3, .001),
+                  y = (exp(-(x^2)/2)/sqrt(2*pi)))
+
+ggplot(distrib, aes(x = beta_norm)) + 
+  geom_line(data = norm_dt, aes(x = x, y = y), color = "black",
+            size = 1.2, linetype = "dashed")  + 
+  geom_density(fill = "#6794A7", color = "#014D64", alpha = .6) +
+  theme(axis.title = element_blank())
+```
+]
+
+
+.right-column[
+<p style = "margin-bottom:3cm"></p>
+$$\frac{\hat{\beta}-\beta}{\text{SD}(\hat{\beta})} \sim \mathcal{N}(0, 1)$$
+]
+
+---
+
+### Quick reminder
+
+#### Confidence interval
+
+<ul>
+  <li>This allows to infer a <b>confidence interval:</b></li>
+</ul>
+
+$$\hat{\beta}\pm t(\text{df})_{1-\frac{\alpha}{2}}\times\text{se}(\hat{\beta})$$
+
+<p style = "margin-bottom:1.5cm;"></p>
 
 --
 
+<ul>
+  <li>Where \(t(\text{df})_{1-\frac{\alpha}{2}}\) is the value from a <b>Student \(t\) distribution</b></li>
+  <ul>
+    <li>With the relevant number of <b>degrees of freedom</b> \(\text{df}\) (n - #parameters)</li>
+    <li>And the desired <b>confidence level</b> \(1-\alpha\)</li>
+  </ul>
+</ul>
 
-#### 1) An OLS regression with a binary dependant variable is called a *linear probability model*
+<p style = "margin-bottom:1.5cm;"></p>
 
-$$1\{y_i = \text{Accepted}\} = \hat{\alpha} + \hat{\beta} \times \text{Grade}_i + \hat{\varepsilon_i}$$
+--
 
-<p style = "margin-bottom:1cm;">
+<ul>
+  <li>And where \(\text{se}(\hat{\beta})\) denotes the <b>standard error</b> of \(\hat{\beta}\):</li>
+</ul>
+
+$$\text{se}(\hat{\beta}) = \sqrt{\widehat{\text{Var}(\hat{\beta})}} = \sqrt{\frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{(n-\#\text{parameters})\sum_{i = 1}^n(x_i-\bar{x})^2}}$$
+
+---
+
+### Quick reminder
+
+#### P-value
+
+<ul>
+  <li>It also allows to <b>test</b> how likely is \(\beta\) to be <b>different from a given value:</b></li>
+  <ul>
+    <li>If the <b>p-value</b> < 5%, we can <b>reject</b> that \(\beta\) equals the <b>hypothesized value</b> at the 95% confidence level</li>
+    <li>This threshold, very common in Economics, implies that we have 1 chance out of 20 to be wrong</li>
+  </ul>
+</ul>
+
+--
+
+```{r}
+linearHypothesis(lm(ige ~ gini, ggcurve), "gini = 0")
+```
+
+---
+
+<h3>Today: Causality</h3>
+
+--
+
+<p style = "margin-bottom:4.25cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Main sources of bias</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Omitted variables</li>
+    <li>1.2. Functional form</li>
+    <li>1.3. Selection bias</li>
+    <li>1.4. Measurement error</li>
+    <li>1.5. Simultaneity</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>2. Randomized control trials</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to RCTs</li>
+    <li>2.2. Types of randomization</li>
+    <li>2.3. Multiple testing</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:.65cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Today: Causality</h3>
+
+<p style = "margin-bottom:4.25cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Main sources of bias</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Omitted variables</li>
+    <li>1.2. Functional form</li>
+    <li>1.3. Selection bias</li>
+    <li>1.4. Measurement error</li>
+    <li>1.5. Simultaneity</li>
+  </ul>
+</ul>
+
+]
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+<ul>
+  <li>Consider the following regression:</li>
+  <ul>
+    <li>Where \(\text{Earnings}_i\) denotes individuals' annual labor earnings</li>
+    <li>And \(\text{Education}_i\) stands for individuals' number of years of education</li>
+  </ul>
+</ul>
+  
+$$\text{Earnings}_i = \alpha + \beta \times \text{Education}_i + \varepsilon_i$$
+    
+--
+
+```{r, echo = F}
+asec_2020 <- read.csv("asec_2020.csv") # To delete ultimately
+```
+
+    
+```{r, echo = F}
+sim_dat <- tibble(Earnings = rlnorm(10000, log(18000), log(5))) %>%
+  arrange(Earnings) %>%
+  arrange(row_number() + rnorm(10000, 1000, 15000)) %>%
+  mutate(pct = row_number()/n(),
+         Education = case_when(pct <= .05 ~ 8,
+                               pct > .05 & pct <= .09 ~ 9,
+                               pct > .09 & pct <= .17 ~ 10,
+                               pct > .17 & pct <= .23 ~ 11,
+                               pct > .23 & pct <= .38 ~ 12,
+                               pct > .38 & pct <= .44 ~ 13,
+                               pct > .44 & pct <= .51 ~ 14,
+                               pct > .51 & pct <= .71 ~ 15,
+                               pct > .71 & pct <= .75 ~ 16,
+                               pct > .75 & pct <= .78 ~ 17,
+                               pct > .78 & pct <= .88 ~ 18,
+                               pct > .88 & pct <= .92 ~ 19,
+                               pct > .92 & pct <= .94 ~ 20,
+                               pct > .94 & pct <= .97 ~ 21,
+                               pct > .97 & pct <= 99 ~ 22,
+                               pct > .99 ~ 23)) %>%
+  filter(Earnings < 500000)
+```
+
+    
+```{r}
+summary(lm(Earnings ~ Education, sim_dat))$coefficients
+```
+  
+--
+    
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Taking \(\hat{\beta}\) at face value, the <b>"expected returns"</b> from an additional year of education amount to $2,643/year</li>
+  <ul>
+    <li>But if we were to enforce an additional year of education for randomly selected individuals, would they earn $2,643 more than they would have earned otherwise?</li>
+  </ul>
+</ul>
+
+--
+
+<center><i>&#10140; The answer is <b>no</b>, because the estimated effect is <b>not causal!</b></i></center>
+    
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+<ul>
+  <li>The estimated relationship could be partly driven by some <b>confounding factors:</b></li>
+  <ul>
+    <li>Maybe <b>more skilled</b> individuals both <b>study longer</b> and <b>earn more</b> because they are skilled</li>
+    <li>But with or without more education they would still earn more because they are skilled</li>
+  </ul>
+</ul>
+    
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>The ability variable acts as a <b>confounding factor</b> because it is correlated with both \(x\) and \(y\)</li>
+  <ul>
+    <li>This would also be the case of parental socio-economic status and many other variables</li>
+    <li>We need to put these variables in the regression as <b>control variables</b></li>
+  </ul>
+</ul>
+  
+<p style = "margin-bottom:1.25cm;"></p>
+    
+--
+    
+$$\text{Earnings}_i = \alpha + \beta_1\times \text{Education}_i + \beta_2\times\text{Skills}_i  + \varepsilon_i$$
+    
+
+    
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>According to you, would the estimated effect of education be higher or lower in this regression?</li>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><i>&#10140; If skills is indeed <b>positively correlated with both</b> education and earnings, the new coefficient would be <b>lower</b></i></center>
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+<ul>
+  <li>Remember that <b>controlling</b> for a variable can be viewed as:</li>
+  <ul>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+illuedu <- tibble(Education = rnorm(1000, 0, 1),
+                  Skills = rep(c("High", "Low"), each = 500)) %>%
+  mutate(Education = ifelse(Skills == "High", Education + .75, Education),
+         Earnings = ifelse(Skills == "High", 
+                           1 + Education + rnorm(500, 0, 1),
+                           Education + rnorm(500, 0, 1))) 
+
+ggplot(illuedu, aes(x = Education, y = Earnings)) + 
+  geom_smooth(method = "lm", se = F, color  = "black", alpha = .7) +
+  geom_point(alpha = .4, aes(color = Skills)) + 
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "right",
+        legend.direction = "vertical")
+```
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+<ul>
+  <li>Remember that <b>controlling</b> for a variable can be viewed as:</li>
+  <ul>
+    <li>Allowing the <b>intercept</b> to <b>vary</b> with that variable</li>
+    <li></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+coefs <- lm(Earnings ~ Education + Skills, illuedu)$coefficients
+min_high <- min(illuedu[illuedu$Skills == "High", "Education"])
+max_high <- max(illuedu[illuedu$Skills == "High", "Education"])
+min_low <- min(illuedu[illuedu$Skills == "Low", "Education"])
+max_low <- max(illuedu[illuedu$Skills == "Low", "Education"])
+
+ggplot(illuedu) + 
+  geom_point(alpha = .4, aes(x = Education, y = Earnings, color = Skills)) + 
+  geom_segment(aes(x = min_high,
+                   xend =max_high,
+                   y = coefs[1] + coefs[2] * min_high,
+                   yend = coefs[1] + coefs[2] * max_high), color = "#014D64", alpha = .7) +
+  geom_segment(aes(x = min_low,
+                   xend =max_low,
+                   y = coefs[1] + coefs[3] + (coefs[2] * min_low),
+                   yend = coefs[1] + coefs[3] + (coefs[2] * max_low)), color = "#00A2D9", alpha = .7) +
+  geom_smooth(aes(x = Education, y = Earnings), method = "lm", se = F, color  = "black", alpha = .7) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "right",
+        legend.direction = "vertical")
+```
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+<ul>
+  <li>Remember that <b>controlling</b> for a variable can be viewed as:</li>
+  <ul>
+    <li>Allowing the <b>intercept</b> to <b>vary</b> with that variable</li>
+    <li>Keeping this <b>variable constant</b> as we move along the \(x\)-axis</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+illuedu <- illuedu %>%
+  group_by(Skills) %>%
+  mutate(Education = Education - mean(Education),
+         Earnings = Earnings - mean(Earnings))
+
+coefs <- lm(Earnings ~ Education + Skills, illuedu)$coefficients
+min_high <- min(illuedu[illuedu$Skills == "High", "Education"])
+max_high <- max(illuedu[illuedu$Skills == "High", "Education"])
+min_low <- min(illuedu[illuedu$Skills == "Low", "Education"])
+max_low <- max(illuedu[illuedu$Skills == "Low", "Education"])
+
+ggplot(illuedu) + 
+  geom_point(alpha = .4, aes(x = Education, y = Earnings, color = Skills)) + 
+  geom_segment(aes(x = min_high,
+                   xend =max_high,
+                   y = coefs[1] + coefs[2] * min_high,
+                   yend = coefs[1] + coefs[2] * max_high), color = "#014D64", alpha = .7) +
+  geom_segment(aes(x = min_low,
+                   xend =max_low,
+                   y = coefs[1] + coefs[3] + (coefs[2] * min_low),
+                   yend = coefs[1] + coefs[3] + (coefs[2] * max_low)), color = "#00A2D9", alpha = .7) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "right",
+        legend.direction = "vertical")
+```
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+<ul>
+  <li>In that case the <b>confounding</b> variable <b>no longer affects</b> our relationship of interest</li>
+  <ul>
+    <li>It fixes the fact that more skilled individuals tend to have both higher education and earnings</li>
+    <li>Such that the <b>relationship</b> between education and earnings is <b>net of the effect of skills</b></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+ggplot(illuedu) + 
+  geom_point(alpha = .4, aes(x = Education, y = Earnings, color = Skills)) + 
+  geom_segment(aes(x = min_high,
+                   xend =max_high,
+                   y = coefs[1] + coefs[2] * min_high,
+                   yend = coefs[1] + coefs[2] * max_high), color = "#014D64") +
+  geom_segment(aes(x = min_low,
+                   xend =max_low,
+                   y = coefs[1] + coefs[3] + (coefs[2] * min_low),
+                   yend = coefs[1] + coefs[3] + (coefs[2] * max_low)), color = "#00A2D9") +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "right",
+        legend.direction = "vertical")
+```
+
+---
+
+### 1. Main sources of bias
+
+#### 1.1. Omitted variable bias
+
+<ul>
+  <li>But <b>we are never able to control for all</b> potential confounding factors</li>
+  <ul>
+    <li>We can almost always think of variables that may affect both \(x\) and \(y\) but that are not in the data</li>
+    <li>Resulting in what is called the <b>omitted variable bias</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+<ul>
+  <li>In that case you should either:</li>
+  <ul>
+    <li>Use causal identification Econometrics techniques (not covered in this course, except RCT)</li>
+    <li>Acknowledge that your estimated effect is not causal with the phrase <i><b>"ceteris paribus"</b></i></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+<ul>
+  <li><i>Ceteris paribus</i> means <b>"Everything else equal"</b></li>
+  <ul>
+    <li>We use these sentences to indicate that our <b>estimation is correct under the hypothesis that</b> when our \(x\) of interest moves, <b>no confounding factor</b> affecting \(y\) moves with it</li>
+    <li>Indeed, if there is no other variable varying with \(x\) and \(y\), our regression doesn't need more controls</li>
+    <li>We know this assumption is <b>not correct</b>, but it is <b>important to be transparent and clear</b> about what the coefficient means</li>
+  </ul>
+</ul>
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+<ul>
+  <li>Now consider the following relationship between years of education and earnings</li>
+  <ul>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+quadratic <- tibble(Education = runif(1000, 24, 60),
+                    Earnings = -2800 + (200 * Education) - (2*Education*Education) + rnorm(1000, 0, 200))
+
+ggplot(quadratic, aes(x = Education, y = Earnings)) +
+  geom_point(alpha = .5, color = "#014D64") +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank())
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+<ul>
+  <li>Now consider the following relationship between years of education and earnings</li>
+  <ul>
+    <li>We can fit a regression line as we usually do</li>
+    <li>But would that be an appropriate estimation?</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+ggplot(quadratic, aes(x = Education, y = Earnings)) +
+  geom_point(alpha = .5, color = "#014D64") +
+  geom_smooth(method = "lm", se = F, color  = "black", alpha = .7) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank())
+```
+
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+<ul>
+  <li>We must capture the <b>non-linearity</b></li>
+  <ul>
+    <li>The relationship cannot be correctly captured by a straight line</li>
+    <li></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:.75cm;"></p>
+
+$$\text{Earnings}_i = \alpha + \beta_1\times \text{Education}_i + \varepsilon_i$$
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+<ul>
+  <li>We must capture the <b>non-linearity</b></li>
+  <ul>
+    <li>The relationship cannot be correctly captured by a straight line</li>
+    <li>It has the shape of a <b>polynomial of degree 2</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:.75cm;"></p>
+
+$$\text{Earnings}_i = \alpha + \beta_1\times \text{Education}_i + \color{SkyBlue}{\beta_2\times\text{Education}^2_i}  + \varepsilon_i$$
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>Given the previous graph, what would be the signs of \(\hat{\beta}_1\) and \(\hat{\beta}_2\)?</li>
+</ul>
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+<ul>
+  <li>We must capture the <b>non-linearity</b></li>
+  <ul>
+    <li>The relationship cannot be correctly captured by a straight line</li>
+    <li>It has the shape of a <b>polynomial of degree 2</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:.75cm;"></p>
+
+$$\text{Earnings}_i = \alpha + \beta_1\times \text{Education}_i + \color{SkyBlue}{\beta_2\times\text{Education}^2_i}  + \varepsilon_i$$
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>Given the previous graph, what would be the signs of \(\hat{\beta}_1\) and \(\hat{\beta}_2\)?</li>
+  <ul>
+    <li>\(\hat{\beta}_1\) would be positive because the relationship is increasing</li>
+    <li>\(\hat{\beta}_2\) would be negative because the relationship is concave</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+<ul>
+  <li>Polynomial functional forms are easy to handle in R</li>
+  <ul>
+    <li>You can <b>square the dependent variable and add it</b> in lm()</li>
+    <li>geom_smooth() also allows to plot a polynomial fit</li>
+  </ul>
+</ul>
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+```{r, eval = F}
+ggplot(quadratic, aes(x = Education, y = Earnings)) + geom_point() +
+  geom_smooth(method = "lm")
+```
 
 .left-column[
 
-```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "85%"}
+```{r echo = F, fig.width = 8, fig.height = 4, out.width = "100%"}
+ggplot(quadratic, aes(x = Education, y = Earnings)) +
+  geom_point(alpha = .5, color = "#014D64") +
+  geom_smooth(method = "lm",
+              se = F, color  = "black", alpha = .7) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank())
+```
+]
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.2. Functional form
+
+```{r, eval = F}
+ggplot(quadratic, aes(x = Education, y = Earnings)) + geom_point() +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2))
+```
+
+.left-column[
+
+```{r echo = F, fig.width = 8, fig.height = 4, out.width = "100%"}
+ggplot(quadratic, aes(x = Education, y = Earnings)) +
+  geom_point(alpha = .5, color = "#014D64") +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2),
+              se = F, color  = "black", alpha = .7) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank())
+```
+]
+
+--
+
+.right-column[
+
+<p style = "margin-bottom:2cm;"></p>
+<ul>
+  <li>But functional form is not only about polynomial degrees:</li>
+  <ul>
+    <li>Interactions</li>
+    <li>Logs</li>
+    <li>Discretization</li>
+    <li>...</li>
+  </ul>
+</ul>
+]
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.3. Selection bias
+
+<ul>
+  <li>Now remember the example on high-school grades and job application acceptance</i>
+  <ul>
+    <li>We plotted the <b>grades</b> of individuals on the \(x\)-axis</i>
+    <li>And <b>whether</b> or not <b>they got the job</b> on the \(y\)-axis</i>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+.left-column[
+<p style = "margin-bottom:-1cm;"></p>
+```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width = "90%"}
 data_bin <- tibble(x = rnorm(1000, 15, 1), 
                    noisy_x = x + runif(1000, -1, 1),
                    y = ifelse(noisy_x > mean(x), 1, 0))
 
-ggplot(data_bin, aes(x = x, y = y)) +
-  geom_point(alpha = .1, color = "#014D64") + xlab("Grade") +
-  geom_smooth(method = "lm", se = F, color = "#014D64") +
-  scale_y_continuous(name = "", limits = c(-.5, 1.5), breaks = 0:1)
-```
-
-]
-
-.right-column[
-
-<p style = "margin-bottom:1cm;">
-
- * $\hat{\beta}$ indicates by how much the probability that $y$ equals 1 would increase on expectation for a 1 point increase in $x$
-
-<p style = "margin-bottom:1cm;">
-
- * But linear probability models can lead to probabilities that are lower than 0 and greater than 1
- 
-]
-
----
-
-### Last time we saw
-
-#### 2) An OLS regression with a binary independent variable:
-
-$$\text{Height}_i = \hat{\alpha} + \hat{\beta} \times 1\{x_i = \text{Male}\} + \hat{\varepsilon_i}$$
-
-.left-column[
-
-```{r, echo = F, fig.width = 6, fig.height = 4, out.width = "85%"}
-data_binx <- tibble(x = rep(c(0, 1), each = 500), 
-                    y = c(rnorm(500, 165, 10), rnorm(500, 175, 10)))
-
-ggplot(data_binx, aes(x = as.factor(x), y = y)) +
-  ylab("Height") +
-  scale_x_discrete(name = "1{Sex[i] = Male}", labels = 0:1) +
-  geom_point(data = data_binx %>% mutate(x =x +1), aes(x = x, y = y), alpha = .1, color = "#014D64") +
-  geom_boxplot(alpha = .1, width = .1, color = "#014D64") + 
-  geom_smooth(data = data_binx %>% mutate(x =x +1), aes(x = x, y = y), method = "lm", se = F, color = "#014D64")
-```
-
-]
-
-.right-column[
-
-<p style = "margin-bottom:2cm;">
-
- * $\hat{\alpha}$ indicates the average value of $y$ when $x$ is equal to 0, i.e., for the reference category
-
-<p style = "margin-bottom:1cm;">
-
- * $\hat{\beta}$ indicates the difference between the average value of $y$ for the two groups
- 
-]
-
----
-
-### Last time we saw
-
-#### 3) An OLS regression with an independant variable with more than 2 categories
-
-$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1} 1\{\text{Race}_i = \text{Black}\} + \hat{\beta_2} 1\{\text{Race}_i = \text{Asian}\} + \hat{\beta_3} 1\{\text{Race}_i = \text{Other}\} + \hat{\varepsilon_i}$$
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-  * It should be specified as a sum of binary variables, omitting the category we want as a reference
-
-<p style = "margin-bottom:1cm;"></p>
-
-```{r, echo = F}
-asec_2020 <- read.csv("asec_2020.csv")
-```
-
-```{r}
-summary(lm(Earnings ~ relevel(as.factor(Race), "White"), asec_2020))$coefficients[, c(1, 2, 4)]
-```
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul><ul>
-<li>\(\hat{\alpha}\) is the average earnings for the reference category </li>
-<li>Coefficients are <i>relative</i> to the reference category</li>
-</ul></ul>
-
----
-
-### Last time we saw
-
-#### 4) Interactions allow to estimate how the coefficient of a given variable varies depending on the value of a third variable
-
-$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1}\text{Hours}_i  + \hat{\beta_2}1\{\text{Sex}_i = \text{Male}\} + \hat{\beta_3}\text{Hours}_i \times 1\{\text{Sex}_i = \text{Male}\} + \hat{\varepsilon_i}$$
-
---
-
-<p style = "margin-bottom:1.75cm;"></p>
-
-<ul>
-  <li><b>It captures the difference between males and females in their expected returns to working an additional hour 
-  per week</b> </li>
-  <ul>
-    <li>With \(\hat{\beta_3} > 0\): working an additional hour matters more if you are a male</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<ul>
-  <li><b>Or equivalently, by how much the effect of being a male varies for an additional hour of work per week</b> </li>
-  <ul>
-    <li>With \(\hat{\beta_3} > 0\): being a male matters more if you work an additional hour</li>
-  </ul>
-</ul>
-
---
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<ul>
-  <li>Note that the expected returns to working an additional hour per week is:</li>
-  <ul>
-    <li>\(\hat{\beta_1}\) for females</li>
-    <li>\(\hat{\beta_1} + \hat{\beta_3}\) for males</li>
-  </ul>
-</ul>
-
----
-
-### Last time we saw
-
-#### 5) Non-linearities
-
-.pull-left[
-
- * Log vs. level
- 
- <p style = "margin-bottom:1.5cm;"></p>
-
-```{r, echo = F}
-kable(tibble(` ` = c("x", "log(x)"),
-             y = c("\\(\\hat{\\beta}\\) is the unit increase in \\(y\\) due\n to a 1 unit increase in \\(x\\)",
-                   "\\(\\hat{\\beta}\\div 100\\) is the unit increase in \\(y\\) due\n to a 1% increase in \\(x\\)"),
-             `log(y)` = c("\\(\\hat{\\beta}\\times 100\\) is the % increase in \\(y\\) due\n to a 1 unit increase in \\(x\\)",
-                   "\\(\\hat{\\beta}\\) is the % increase in \\(y\\) due\n to a 1% increase in \\(x\\)")),
-      caption = "Interpretation of the regression coefficient", align = "ccc") %>%
-  column_spec(1, bold = T) %>%
-  column_spec(c(2, 3), width = "10em")
-```
-
-]
-
---
-
-.pull-right[
-
- * Polynomials
- 
-$$\text{Wage}_i = -2644 +  192 \times \text{Age}_i -2 \times\text{Age}_i^2 + \hat{\varepsilon}_i$$
-
- <p style = "margin-bottom:.75cm;"></p>
- 
-```{r, echo = F, fig.width = 6, fig.height = 4, out.width = "100%"}
-quadratic <- tibble(Age = runif(1000, 24, 60),
-                    Wage = -2800 + (200 * Age) - (2*Age*Age) + rnorm(1000, 0, 200))
-
-ggplot(quadratic, aes(x = Age, y = Wage)) +
-  geom_point(alpha = .5, color = "#014D64") +
-  geom_smooth(method = 'lm', formula = y ~ poly(x, 2), se = F, color = "#014D64")
-```
-
-]
-
----
-
-### Today: Causality and randomness
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Causality
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Omitted variable bias
- * 1.2. Selection bias and counterfactual
-
-#### 2. Randomness
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data Generating Process & Random variables
- * 2.2. Theoretical vs. empirical moments
- * 2.3. $\beta$ vs. $\hat{\beta}$
-
-#### 3. Causality from randomness
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Randomized Controlled Trials
- * 3.2. Types of randomization
- * 3.3. Multiple testing
-
-#### 4. Wrap up!
-
----
-
-### Today: Causality and randomness
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Causality
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Omitted variable bias
- * 1.2. Selection bias and counterfactual
-
----
-
-### 1. Causality
-
-#### 1.1. Omitted variable bias
-
-* Consider the following regression
-  
-$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta}1\{\text{Sex}_i = \text{Male}\} + \hat{\varepsilon_i}$$
-    
---
-    
-```{r}
-summary(lm(Earnings ~ Sex, asec_2020))$coefficients
-```
-  
---
-    
-<p style = "margin-bottom:1.25cm;"></p>
-  
-  * Taking $\hat{\beta}$ at face value, the *'expected returns'* to being a male amount to $21,612.33 in annual earnings
-
---
-
-<ul>
-  <li>What do you think about this estimation? </li>
-  <ul>
-    <li>Can we say that the estimated effect is causal?</li>
-    <li>What could bias our estimation?</li>
-  </ul>
-</ul>
-    
----
-
-### 1. Causality
-
-#### 1.1. Omitted variable bias
-
-<ul>
-  <li>The relationship could be impacted by many variables</li>
-  <ul>
-    <li>For instance, inflated by the fact that males tend to both be better paid and work part-time less often</li>
-  </ul>
-</ul>
-    
---
-
-<ul>
-  <li>The variable for hours of work here acts as a <b>confounding factor</b> because it is correlated to both \(x\) and \(y\)</li>
-  <ul>
-    <li>We need to put it as a control variable</li>
-  </ul>
-</ul>
-  
-<p style = "margin-bottom:1.25cm;"></p>
-    
---
-    
-$$\text{Earnings}_i = \hat{\alpha} + \hat{\beta_1}1\{\text{Sex}_i = \text{Male}\} + \hat{\beta_2}\text{Hours}_i  + \hat{\varepsilon_i}$$
-    
---
-    
-<p style = "margin-bottom:1.25cm;"></p>
-    
-```{r}
-summary(lm(Earnings ~ Sex + Hours, asec_2020))$coefficients
-```
-  
----
-    
-### 1. Causality
-
-#### 1.1. Omitted variable bias
-    
-<ul>
-  <li>The coefficient of the variable Sex drops from 21,612.33 in the univariate regression to 13,794.39 when including sex in the regression</li>
-  <ul>
-    <li>Why?</li>
-  </ul>
-</ul>
-    
-<p style = "margin-bottom:1.25cm;"></p>
-    
---
-
-<ul>
-  <li>Part of the estimated effect of sex on earnings was due to the fact that men tend to work more hours per week</li>
-  <ul>
-    <li>This effect is now captured by the coefficient associated to the variable for hours of work</li>
-  </ul>
-</ul>
-    
-<p style = "margin-bottom:1.25cm;"></p>
-    
---
-    
-<ul>
-  <li>There are plenty of omitted factors that could influence our estimates</li>
-  <ul>
-    <li>How would the coefficients change if we were to control for having an executive position?</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.75cm;"></p>
-
-<center><h4><i> &#10140; We cannot consider this effect as causal! </i></h4></center>
-    
----
-    
-### 1. Causality
-
-#### 1.1. Omitted variable bias
-
- * When interpreting coefficients, you should be unambiguous about what the estimation actually means
- 
---
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<ul>
-  <li>Here we would say that <i>''controlling for the number of hours worked per week, being a male relative to a female is associated with a $13,794.39 increase in annual earnings on average, <b>everything else equal</b>''</i>.</li>
-  <ul>
-    <li>Everything else equal (or <i>ceteris paribus</i>), means that the coefficient we estimate should be interpreted as the effect of \(x\) on \(y\) if everything else would remain constant when varying \(x\)</li>
-  </ul>
-</ul>
-
---
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<ul>
-  <li>Being a male relative to a female is also likely to be associated with an increase in the probability to have an executive position</li>
-  <ul>
-    <li>But having an executive position would also increase the expected annual earnings</li>
-    <li>So when we say <i>ceteris paribus</i>, we say that the effect we estimate is attributable to the Sex variable <i>assuming that when the Sex variable changes other factors remain constant</i></li>
-  </ul>
-</ul>
-
---
-
-<p style = "margin-bottom:.75cm;"></p>
- 
-<ul>
-  <li>We know this assumption is not correct &#10140; we should mention it not because we believe it is the case but to be clear about what the coefficient means</li>
-</ul>
-
----
-    
-### 1. Causality
-
-#### 1.2. Selection bias and counterfactual
-
-<ul>
-  <li>Omitted variable bias is a common problem</i>
-  <ul>
-    <li>But estimations can be biased for many other reasons</i>
-  </ul>
-</ul>
-
---
-
- * Remember the example about candidates to a position from last time:
-
-.left-column[
-
-```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width = "80%"}
 ggplot(data_bin, aes(x = x, y = y)) +
   geom_point(alpha = .2, color = "#014D64") + xlab("Grade") +
   geom_smooth(method = "lm", se = F, color = "#014D64") +
@@ -435,12 +724,14 @@ ggplot(data_bin, aes(x = x, y = y)) +
 
 <p style = "margin-bottom:-.25cm;"></p>
 
-* We estimated that having a 1 unit increase in Grade (/20) would increase the probability to be accepted by about a third on expectation, *ceteris paribus*
+<ul>
+  <li>We estimated that a <b>1 unit</b> increase in Grade (/20) would <b>increase the probability</b> to be accepted by about <b>a third</b> on expectation, <b>ceteris paribus</b></i>
+  </ul>
 
 <ul>
-  <li>What do you think about this effect?</i>
+  <li>Is this estimation relevant?</i>
   <ul>
-    <li>Look at the support of the \(x\) variable</i>
+    <li>Look at the support of \(x\)</i>
   </ul>
 </ul>
  
@@ -448,52 +739,55 @@ ggplot(data_bin, aes(x = x, y = y)) +
 
 ---
     
-### 1. Causality
+### 1. Main sources of bias
 
-#### 1.2. Selection bias and counterfactual
+#### 1.3. Selection bias
 
 <ul>
-  <li>The fact that grades range from 12 to 18 hints at a selection problem:</i>
+  <li>The fact that almost all grades range between 13 and 17 hints at a <b>selection problem:</b></i>
   <ul>
-    <li>Individuals with very low grade won't apply to the position because they know they will be rejected</i>
-    <li>Individuals with very high grade won't apply to the position because they apply to better positions</i>
+    <li>Individuals with very <b>low grade won't apply</b> to the position because <b>they know they will be rejected</b></i>
+    <li>Individuals with very <b>high grade won't apply</b> to the position because <b>they apply to better positions</b></i>
   </ul>
 </ul>
 
 --
 
-.left-column[
+<p style = "margin-bottom:1cm;"></p>
 
-```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width = "80%"}
+.left-column[
+<p style = "margin-bottom:-1cm;"></p>
+```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width = "90%"}
 data_bin2 <- data_bin %>%
   mutate(Observation = "Observed")%>%
   bind_rows(data_bin %>%
               mutate(x = ifelse(y == 0, x - 2, x + 2),
                      Observation = "Unobserved"))
 
-ggplot(data_bin2, aes(x = x, y = y)) +
+selec_plot <- ggplot(data_bin2, aes(x = x, y = y)) +
   geom_smooth(method = "lm", se = F, color = "black", linetype = "dashed") +
   geom_smooth(data = data_bin, aes(x = x, y = y), method = "lm", se = F, color = "#014D64") +
   geom_point(alpha = .1, aes(x = x, y = y, color = Observation)) + xlab("Grade") +
   scale_y_continuous(name = "", limits = c(-.5, 1.5), breaks = 0:1) +
   guides(color = guide_legend(override.aes = list(alpha = 1) ) )
+
+selec_plot
 ```
 
 ]
 
 .right-column[
 
-<p style = "margin-bottom:-.25cm;"></p>
 
 <ul>
   <li>Had these individuals applied, the estimated effect would be lower</li>
 </ul>
 
 <ul>
-  <li>Here the estimated coefficient is specific to a sample which is not representative of the whole population</li>
+  <li>Our coefficient is specific to a non-representative sample</li>
   <ul>
     <li>Issue of <b>external validity</b></li>
-    <li>The interpretation only holds in our specific setting, we cannot extrapolate</li>
+    <li>The interpretation only holds in our specific setting</li>
   </ul>
 </ul>
  
@@ -501,15 +795,17 @@ ggplot(data_bin2, aes(x = x, y = y)) +
 
 ---
     
-### 1. Causality
+### 1. Main sources of bias
 
-#### 1.2. Selection bias and counterfactual
+#### 1.3. Selection bias
 
-  * Such selection problems are very common threats to causality
+<ul>
+  <li>Such <b>selection problems</b> are very common <b>threats to causality</b></li>
+</ul>
 
 --
 
-<p style = "margin-bottom:.5cm;"></p>
+<p style = "margin-bottom:.75cm;"></p>
 
 <ul>
   <li>What is the impact of going to a better neighborhood on your children outcomes?</li>
@@ -521,22 +817,22 @@ ggplot(data_bin2, aes(x = x, y = y)) +
 
 --
 
-<p style = "margin-bottom:.5cm;"></p>
+<p style = "margin-bottom:.75cm;"></p>
 
 <ul>
   <li>This related to the notion of <b>counterfactual</b></li>
   <ul>
-    <li>If those who moved were comparable to those who stayed, it would be valid to use the outcome of those who stayed as the counterfactual outcome of those who moved, i.e., the outcome they would have if they had stayed</li>
-    <li>But because of selection we do not have a credible counterfactual</li>
+    <li>If those who moved were comparable to those who stayed, it would be valid to use the outcome of those who stayed as the counterfactual outcome of those who moved</li>
+    <li>But because of selection movers are not comparable to stayers so we don't have a credible counterfactual</li>
   </ul>
 </ul>
 
 --
 
-<p style = "margin-bottom:.5cm;"></p>
+<p style = "margin-bottom:.75cm;"></p>
 
 <ul>
-  <li>The notion of counterfactual is key to answer many questions</li>
+  <li>The notion of counterfactual is key to answer many questions:</li>
   <ul>
     <li>What is the impact of an immigrant inflow on the labor market outcomes of locals?</li>
     <li>We need to know how the labor market outcomes of locals would have evolved absent the immigrant inflow but we do not observe this situation</li>
@@ -544,587 +840,712 @@ ggplot(data_bin2, aes(x = x, y = y)) +
 </ul>
 
 ---
+    
+### 1. Main sources of bias
 
-### Overview
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Causality &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Omitted variable bias
- * 1.2. Selection bias and counterfactual
-
-#### 2. Randomness
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data Generating Process & Random variables
- * 2.2. Theoretical vs. empirical moments
- * 2.3. $\beta$ vs. $\hat{\beta}$
-
-#### 3. Causality from randomness
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Randomized Controlled Trials
- * 3.2. Types of randomization
- * 3.3. Multiple testing
-
-#### 4. Wrap up!
-
----
-
-### Overview
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Causality &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Omitted variable bias
- * 1.2. Selection bias and counterfactual
-
-#### 2. Randomness
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data Generating Process & Random variables
- * 2.2. Theoretical vs. empirical moments
- * 2.3. $\beta$ vs. $\hat{\beta}$
-
----
-
-### 2. Randomness
-
-#### 2.1. Data Generating Process & Random variables
-
- * So far in practice we have used many variables such as age, sex, earnings, etc.
-  * But when we were working on theory we referred to these variable $x$ and $y$
-
---
-
-<p style = "margin-bottom:1.75cm;"></p>
-
- * In Statistics and Econometrics these $x$ and $y$ we manipulate are called random variables
-  * These variables can take values according to a data generating process (DGP)
-  * The data generating process is the mechanism that causes the data to be the way we observe it
-
---
-
-<p style = "margin-bottom:1.75cm;"></p>
-
- * For instance your grades can be seen as a random variable
-  * Which takes given values according to an unknown data generating process
-  * The DGP probably depends on how much effort you exert, on your background, on many environmental factors, ...
-
----
-
-### 2. Randomness
-
-#### 2.1. Data Generating Process & Random variables
+#### 1.4. Measurement error
 
 <ul>
-  <li>Consider for instance the outcome of two dice as a random variable</li>
+  <li>Another way of obtaining <b>biased estimates</b> is to have a <b>dependent variable measured with errors</b></li>
   <ul>
-    <li>Contrarily to the variables we usually study, we know the DGP of this one</li>
+    <li>For instance if you want to measure the effect of cognitive skills but you only have IQ scores</li>
+    <li>IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent</li>
   </ul>
 </ul>
 
 --
 
- * The DGP causes our random variable to take the following values with the following probabilities:
+<ul>
+  <li>It seems reasonable to assume that the measurement error follows a normal distribution:</li>
+  <ul>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
 
-.pull-left[
+```{r, echo = F, fig.width = 6, fig.height = 3, out.width = "50%"}
+stud_dt <- tibble(x = seq(-3, 3, .001),
+                  y100 = dt(x, 100),
+                  y3000 = dt(x, 3000))
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 - 1/36 (&#x2680;&#x2680;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 - 2/36 (&#x2680;&#x2681; - &#x2681;&#x2680;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 - 3/36 (&#x2680;&#x2682; - &#x2682;&#x2680; - &#x2681;&#x2681;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5 - 4/36 (&#x2681;&#x2682; - &#x2682;&#x2681; - &#x2681;&#x2683; - &#x2683;&#x2681;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6 - 5/36 (&#x2682;&#x2682; - &#x2681;&#x2683; - &#x2683;&#x2681; - &#x2684;&#x2680; - &#x2680;&#x2684;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7 - 6/36 (&#x2682;&#x2683; - &#x2683;&#x2682; - &#x2684;&#x2681; - &#x2681;&#x2684; - &#x2680;&#x2685; - &#x2685;&#x2680;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8 - 5/36 (&#x2683;&#x2683; - &#x2684;&#x2682; - &#x2682;&#x2684; - &#x2685;&#x2681; - &#x2681;&#x2685;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9 - 4/36 (&#x2683;&#x2684; - &#x2684;&#x2683; - &#x2685;&#x2682; - &#x2682;&#x2685;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 - 3/36 (&#x2685;&#x2683; - &#x2683;&#x2685; - &#x2684;&#x2684;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11 - 2/36 (&#x2685;&#x2684; - &#x2684;&#x2685;)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12 - 1/36 (&#x2685;&#x2685;)  
-
-]
-
-.pull-right[
-```{r, echo = F, fig.width = 6, fig.height = 4, out.width = "100%"}
-tibble(Outcome = 2:12,
-       Probability = c(1:6, 5, 4, 3, 2, 1)/36) %>%
-  ggplot(., aes(x = Outcome, y = Probability)) +
-  geom_bar(stat = "identity", fill = "#6794A7", color = "#014D64", alpha = .5, width = 1) +
-  scale_x_continuous(breaks = 2:12)
+ggplot() + 
+  geom_line(data = stud_dt %>%
+         mutate(zero = 0, n = row_number()) %>%
+         pivot_longer(c(zero, y3000), values_to = "y", names_to = "osef") %>%
+         group_by(n) %>%
+         mutate(`Prob:` = max(y)), 
+       aes(x = x, y = y, group = n, color = `Prob:`)) +
+  geom_line(data = stud_dt, 
+            aes(x = x, y = y3000), 
+            color = "#014D64", alpha = .1) +
+  scale_color_gradient(low = "#DFE6EB", high = "#014D64", 
+                       breaks = c(min(stud_dt$y3000), max(stud_dt$y3000)), 
+                       labels = c("", "")) + 
+  theme(axis.title = element_blank(),
+        legend.position = "right",
+        legend.direction = "vertical",
+        axis.text = element_blank(),
+        axis.ticks = element_blank())
 ```
 
-]
 ---
+    
+### 1. Main sources of bias
 
-### 2. Randomness
-
-#### 2.2. Theoretical vs. empirical moments
-
- * Because we know the data generating process of our random variable, we can compute its expected value:
- 
-$$\begin{align} \text{E}\left[X\right] = \frac{(2\times1) + (3\times2) + (4\times3) + (5\times4) + (6\times5) + (7\times6)}{36} +\\ \frac{(8\times5) + (9\times4) + (10\times3) + (11\times2) + (12\times1)}{36} = \frac{252}{36} = 7\end{align}$$
-
---
-
-<p style = "margin-bottom:1.25cm;"></p>
+#### 1.4. Measurement error
 
 <ul>
-  <li>Note that we talk about <b>expected value</b> for the <b>theoretical moment</b> of the distribution, while we talk about the <b>mean value</b> for its <b>empirical counterpart</b></li>
+  <li>Another way of obtaining <b>biased estimates</b> is to have a <b>dependent variable measured with errors</b></li>
   <ul>
-    <li>For a given number of draws the mean won't necessarily be exactly 7</li>
-    <li>But if we were to do infinitely many draws, the mean would converge towards 7</li>
+    <li>For instance if you want to measure the effect of cognitive skills but you only have IQ scores</li>
+    <li>IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent</li>
   </ul>
 </ul>
 
---
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-<center><h4><i>Let's try it out!</i></h4></center>
-
----
-
-### 2. Randomness
-
-#### 2.2. Theoretical vs. empirical moments
-
 <ul>
-  <li>We can simulate the data generating process by:</b></li>
+  <li>It seems reasonable to assume that the measurement error follows a normal distribution:</li>
   <ul>
-    <li>Storing every possible outcome in a vector</li>
-    <li>Randomly picking outcomes from this vector with the function sample()</li>
+    <li>Individuals <b>usually</b> perform <b>close to their average</b> performance</li>
+    <li></li>
   </ul>
 </ul>
 
---
-
-```{r}
-outcomes <- c(2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 
-              6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 
-              9, 9, 9, 9, 10, 10, 10, 11, 11, 12)
-
-sample(outcomes, 10, replace = T)
+```{r, echo = F, fig.width = 6, fig.height = 3, out.width = "50%"}
+ggplot() + 
+  geom_line(data = stud_dt %>%
+         mutate(zero = 0, n = row_number()) %>%
+         pivot_longer(c(zero, y3000), values_to = "y", names_to = "osef") %>%
+         group_by(n) %>%
+         mutate(`Prob:` = max(y)) %>%
+                  filter(x > -.8 & x < .8), 
+       aes(x = x, y = y, group = n, color = `Prob:`)) +
+  geom_line(data = stud_dt, 
+            aes(x = x, y = y3000), 
+            color = "#014D64", alpha = .1) +
+  scale_color_gradient(low = "#DFE6EB", high = "#014D64", 
+                       breaks = c(min(stud_dt$y3000), max(stud_dt$y3000)), 
+                       labels = c("", "")) + 
+  theme(axis.title = element_blank(),
+        legend.position = "right",
+        legend.direction = "vertical",
+        axis.text = element_blank(),
+        axis.ticks = element_blank())
 ```
 
---
+---
+    
+### 1. Main sources of bias
 
- * The `replace` argument of the sample() function allows to indicate whether we want each randomly drawn value to be *'replaced'* before the next draw or removed from the vector 
+#### 1.4. Measurement error
 
+<ul>
+  <li>Another way of obtaining <b>biased estimates</b> is to have a <b>dependent variable measured with errors</b></li>
+  <ul>
+    <li>For instance if you want to measure the effect of cognitive skills but you only have IQ scores</li>
+    <li>IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent</li>
+  </ul>
+</ul>
+
+<ul>
+  <li>It seems reasonable to assume that the measurement error follows a normal distribution:</li>
+  <ul>
+    <li>Individuals <b>usually</b> perform <b>close to their average</b> performance</li>
+    <li>And <b>larger deviations</b> are more <b>rare</b></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 6, fig.height = 3, out.width = "50%"}
+ggplot() + 
+  geom_line(data = stud_dt %>%
+         mutate(zero = 0, n = row_number()) %>%
+         pivot_longer(c(zero, y3000), values_to = "y", names_to = "osef") %>%
+         group_by(n) %>%
+         mutate(`Prob:` = max(y)) %>%
+                  filter(x < -.8 | x > .8), 
+       aes(x = x, y = y, group = n, color = `Prob:`)) +
+  geom_line(data = stud_dt, 
+            aes(x = x, y = y3000), 
+            color = "#014D64", alpha = .1) +
+  scale_color_gradient(low = "#DFE6EB", high = "#014D64", 
+                       breaks = c(min(stud_dt$y3000), max(stud_dt$y3000)), 
+                       labels = c("", "")) + 
+  theme(axis.title = element_blank(),
+        legend.position = "right",
+        legend.direction = "vertical",
+        axis.text = element_blank(),
+        axis.ticks = element_blank())
+```
+
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
 
 <p style = "margin-bottom:1cm;"></p>
 
-<center><h4><i>Let's have a look at the distribution of outcomes for different numbers of draws</i></h4></center>
-
----
-
-### 2. Randomness
-
-#### 2.2. Theoretical vs. empirical moments
-
-```{r, echo = F, fig.width = 8, fig.height = 3, out.width = "85%"}
-simulations <- tibble(
-  Values = c(sample(outcomes, 10, replace = T), sample(outcomes, 50, replace = T),
-             sample(outcomes, 1000, replace = T)),
-  Draws = c(rep("10 Draws", 10), rep("50 Draws", 50), rep("1000 Draws", 1000)),
-  Order = c(rep(1, 10), rep(2, 50), rep(3, 1000))
-) 
-
-ggplot(simulations, aes(x = Values)) + 
-  geom_bar(stat = "count", fill = "#6794A7", color = "#014D64", alpha = .5, width = 1) + 
-  facet_wrap(~reorder(Draws, Order), scales = "free_y", nrow = 1) +
-  scale_x_continuous(breaks = 2:12)
-```
-
-<ul>
-  <li>The larger the number of draws the closer the mean to the expected value (here 5.2, 7.06, and 6.95)</li>
-  <ul>
-    <li>If we were to roll two dice infinitely many times the mean would converge towards its expected value</li>
-    <li>This is what we call the <i>Law of Large Numbers</i> (LLN)</li>
-  </ul>
-</ul>
-
----
-
-### 2. Randomness
-
-#### 2.2. Theoretical vs. empirical moments
-
-<ul>
-  <li>In this respect, we can view the mean as an estimation of the expected value</li>
-  <ul>
-    <li>So just like we computed a standard error to get a sense of how far \(\hat{\beta}\) is likely to be from the true \(\beta\)...</li>
-    <li>... we can compute a standard error to get a sense of how far \(\overline{X}\) is likely to be from \(\text{E}\left[X\right]\)</li>
-  </ul>
-</ul>
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-* The formula of the standard error writes:
-
-$$SE(\overline{X}) = \frac{SD(X)}{\sqrt{N}}$$
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-* And the reasoning for the 95% confidence interval is the same as with $\hat{\beta}$
-
-$$\text{Pr}\left[\overline{X} - t_{97.5\%}\times\text{se}(\overline{X})\leq \text{E}\left[X\right] \leq\overline{X} + t_{97.5\%}\times\text{se}(\overline{X})\right] = 95\%$$
-
---
-
-<ul><ul>
-<li>With \(t_{97.5\%}\) computed from a student t distribution with N-1 degrees of freedom</li>
-</ul></ul>
- 
----
-
-### 2. Randomness
-
-#### 2.2. Theoretical vs. empirical moments
-
- * Just like the mean that we compute empirically is an estimate of the first moment of the distribution,
-  * the variance that we compute empirically is an estimate of the second moment of the distribution
-
---
-
 .pull-left[
 
-.pull-left[
+<center>Denote \(x\) the IQ variable</center>
 
-<p style = "margin-bottom:4cm;"></p>
-
-<b>First moment:</b>  
-
-<p style = "margin-bottom:3.5cm;"></p>
-
-<b>Second moment:</b>
-
+$$x \sim \mathcal{N}(100,\, 15^2)$$
 ]
 
 .pull-right[
 
-<center><h4>Theoretical moment</h4></center>
+<center>Denote \(\eta\) the measurement error</center>
 
-$$\text{E}(X_{\text{discrete}}) = \sum_{i=1}^{k}x_ip_i$$
-
-$$\text{E}(X_{\text{continuous}}) = \int_{\text{R}}xf(x)dx$$
-
-<p style = "margin-bottom:2cm;"></p>
-
-$$\text{Var}(X) = \text{E}\left[(X - \text{E}(X))^2\right] \equiv \sigma^2$$
-
+$$\eta \sim \mathcal{N}(0,\, 1)$$
 ]
 
-]
+--
 
-.pull-right[
+<p style = "margin-bottom:1cm;"></p>
 
-<center><h4>Empirical moment</h4></center>
+ * The true relationship is 
 
-<p style = "margin-bottom:1.9cm;"></p>
+$$y = \alpha + \beta x + \varepsilon$$
 
-$$\overline{X} = \frac{1}{N}\sum_{i=1}^Nx_i$$
+--
 
-<p style = "margin-bottom:2.25cm;"></p>
+ * But we only observe
+ 
+$$\tilde{x} = x + \eta$$
 
-$$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$
+--
 
-]
+* So we can only estimate:
+ 
+$$y = \alpha + \beta \tilde{x} + \varepsilon \,\,\, \Longleftrightarrow \,\,\, y = \alpha + \beta (x + \eta) + \varepsilon$$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><i>&#10140; Let's <b>use simulations</b> to see how it may affect our estimation</i></center>
 
 ---
+    
+### 1. Main sources of bias
 
-### 2. Randomness
-
-#### 2.3. $\beta$ vs. $\hat{\beta}$
+#### 1.4. Measurement error
 
 <ul>
-  <li>The distinction we made between \(\beta\) and \(\hat{\beta}\) is of the same nature</li>
-  <ul>
-    <li>Let's illustrate that with a little simulation exercise</li>
-  </ul>
+  <li>We can start by <b>generating a relationship</b> without measurement error</li>
 </ul>
+
+$$y_i = 1 + 2 x_i + \varepsilon_i,\, \text{with}\, \varepsilon \sim \mathcal{N}(0,\, 1)$$
+
+```{r}
+dat <- tibble(x = rnorm(1000, 100, 15),
+              y = 1 + (2 * x) + rnorm(1000, 0, 1))
+```
 
 --
 
-<ul>
-  <li>The function mvrnorm from the MASS package generates two normally distributed random variables</li>
-  <ul>
-    <li>According to: their <b>covariance</b> and respective <b>expected value</b> and <b>variance</b></li>
-  </ul>
-</ul>
-
---
-
-`data <- mvrnorm(n = #observations, mu = c(E[X1], E[X2]), Sigma = covariance matrix)`
+<p style = "margin-bottom:1cm;"></p>
 
 .pull-left[
+<ul>
+  <li>Estimate the <b>unbiased</b> relationship</li>
+</ul>
 
- * The covariance matrix should be of the form
-
-```{r, echo = F}
-kable(tibble(` ` = c("X1", "X2"),
-             X1 = c("Var(X1)", "Cov(X2, X1)"),
-             X2 = c("Cov(X1, X2)", "Var(X2)")),
-      caption = "Variance-covariance matrix", align = 'ccc') %>%
-  column_spec(1, bold = T)
+```{r}
+lm(y ~ x, dat)$coefficient
 ```
 
-]
+<p style = "margin-bottom:1cm;"></p>
 
---
+Is it just random chance or is $\hat{\beta}$ downward biased? &#10140;
+]
 
 .pull-right[
+<ul>
+  <li>And <b>with measurement error</b> \(\eta \sim \mathcal{N}(0,\, 1)\)</li>
+</ul>
 
- * For instance, with $\text{Var}(X_1) = 1$, $\text{Var}(X_2) = 2$, and $\text{Cov}(X_1, X_2) = .5$:
- 
 ```{r}
-matrix(c(1, .5, .5, 2), nrow = 2)
-```
+dat <- dat %>% 
+  mutate(noisy_x = x + rnorm(1000, 0, 1))
 
+lm(y ~ noisy_x, dat)$coefficient
+```
 ]
 
 ---
+    
+### 1. Main sources of bias
 
-### Practice
+#### 1.4. Measurement error
 
-**1) Use the `mvrnorm` function from the `MASS` package to generate two variables $X$ and $Y$ with:**
- * $N = 1000$
- * $\text{E}\left[X\right] = 5$
- * $\text{E}\left[Y\right] = 30$
- * $\text{Var}(X) = 2$
- * $\text{Var}(Y) = 10$
- * $\text{Cov}(X, Y) = 4$
+<ul>
+  <li>Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)</li>
+</ul>
 
 --
-
-<p style = "margin-bottom:1cm;"></p>
-
-**2) Compute the empirical counterpart of the first and second moments of the joint distribution**
-
---
-
-<p style = "margin-bottom:2cm;"></p>
-
-<center><h3><i>You've got 5 minutes!</i></h3></center>
-
----
-
-### Solution
-
- * Generate the joint distribution
 
 ```{r}
-library(MASS)
-data <- mvrnorm(1000, c(5, 30), matrix(c(2, 4, 4, 10), 2))
-x <- data[, 1]
-y <- data[, 2]
-```
+# Vector of standard deviations from 0 to 20
+sd_noise <- 0:20
 
---
+#
+#
 
- * First empirical moment
- 
-```{r}
-c(mean(x), mean(y))
-```
-
---
-
- * Second empirical moment
-
-```{r}
-matrix(c(var(x), cov(x, y), cov(y, x), var(y)), 2)
-```
-
----
-
-### 2. Randomness
-
-#### 2.3. $\beta$ vs. $\hat{\beta}$
-
- * Because we know the joint DGP of $X$ and $Y$, we do know the actual values of $\alpha$ and $\beta$ from the regression
- 
-$$y_i = \alpha + \beta x_i + \varepsilon_i$$
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-$$\beta = \frac{\text{Cov}(X, Y)}{\text{Var}(X)} = \frac{4}{2} = 2$$
-
-$$\alpha = \text{E}\left[Y\right] - \beta\times\text{E}\left[X\right] = 30 - 2\times5 = 20$$
-
-<p style = "margin-bottom:1cm;"></p>
-
---
-
- * And the coefficients $\hat{\alpha}$ and $\hat{\beta}$ we can compute using observed data are estimates of these true parameters
- 
-```{r}
-summary(lm(y ~ x))$coefficients
-```
-
----
-
-### 2. Randomness
-
-#### 2.3. $\beta$ vs. $\hat{\beta}$
-
- * The higher the number of observations, the closer $\hat{\beta}$ from $\beta$ on expectation:
- 
-```{r, eval = F}
-beta_hat <- function(n){
-  data <- mvrnorm(n, c(5, 30), matrix(c(2, 4, 4, 10), 2))
-  x <- data[, 1]
-  y <- data[, 2]
-  return(summary(lm(y ~ x))$coefficients[2, 1])
-}
-c(beta_hat(10), beta_hat(1000), beta_hat(100000))
-```
-
---
-
-```{r, echo = F}
-beta_hat <- function(n){
-  data <- mvrnorm(n, c(5, 30), matrix(c(2, 4, 4, 10), 2))
-  x <- data[, 1]
-  y <- data[, 2]
-  return(summary(lm(y ~ x))$coefficients[2, 1])
-}
-c(beta_hat(10), beta_hat(1000), beta_hat(100000))
-```
-
---
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-<ul>
-  <li>This is what we call <i>consistency</i></li>
-  <ul>
-    <li>With this DGP the OLS estimator is consistent</li>
-    <li>But this is not always the case</li>
-    <li>You'll see the conditions for that next year</li>
-  </ul>
-</ul>
-
----
-
-### 2. Randomness
-
-#### 2.3. $\beta$ vs. $\hat{\beta}$
-
-<ul>
-  <li>Keep in mind that consistency, unbiasedness, and precision, are very distinct concepts</li>
-  <ul>
-    <li>Consider these 4 cases where we compare the distribution of estimations \(\hat{\beta}\) from 1,000 randomly drawn samples to the true \(\beta\)</li>
-  </ul>
-</ul>
-
---
-
-.left-column[
-
-<p style = "margin-bottom:-.25cm;"></p>
-
-```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "90%"}
-tibble(Estimation = c(rnorm(1000, 2, .1), rnorm(1000, 3, .1), 
-                      rnorm(1000, 2, 1), rnorm(1000, 3, 1)),
-       Precision = rep(c("Precise", "Imprecise"), each = 2000),
-       Biasedness = rep(rep(c("Unbiased", "Biased"), each = 1000), 2)) %>%
-  ggplot(., aes(x = Estimation)) +
-  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) + facet_grid(Precision ~ Biasedness) +
-  geom_vline(xintercept = 2, linetype = "dashed") +
-  scale_x_continuous(limits = c(0, 5))
-```
-]
-
-
---
-
-.right-column[
-
-<p style = "margin-bottom:-.5cm;"></p>
-
-
-<ul>
-  <li>An estimator is <b>unbiased</b> if on expectation it gives the true value we want to estimate</li>
-</ul>
-
-<p style = "margin-bottom:.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>precise</b> if the estimations it provides are close to each other (low variance)</li>
-</ul>
-
-<p style = "margin-bottom:.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>consistent</b> if the larger the sample size the higher the probability that we obtain the true value we want to estimate</li>
-</ul>
-
+#
+#
   
+#
+#
+  
+#
+#
+  
+# 
+#
+#
+```
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)</li>
+</ul>
+
+```{r}
+# Vector of standard deviations from 0 to 20
+sd_noise <- 0:20
+
+# Empty vector for beta...
+beta <- c()
+
+#
+#
+  
+#
+#
+  
+#
+#
+  
+# 
+#
+#
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)</li>
+</ul>
+
+```{r}
+# Vector of standard deviations from 0 to 20
+sd_noise <- 0:20
+
+# Empty vector for beta...
+beta <- c()
+
+# ... to be filled in a loop
+for (i in sd_noise) {
+  
+  #
+  #
+  
+  #
+  #
+  
+  # 
+  #
+}
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)</li>
+</ul>
+
+```{r}
+# Vector of standard deviations from 0 to 20
+sd_noise <- 0:20
+
+# Empty vector for beta...
+beta <- c()
+
+# ... to be filled in a loop
+for (i in sd_noise) {
+  
+  # Generate noisy x with corresponding SD(eta)
+  dat_i <- dat %>% mutate(noisy_x = x + rnorm(1000, 0, i))
+  
+  #
+  #
+  
+  # 
+  #
+}
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)</li>
+</ul>
+
+```{r}
+# Vector of standard deviations from 0 to 20
+sd_noise <- 0:20
+
+# Empty vector for beta...
+beta <- c()
+
+# ... to be filled in a loop
+for (i in sd_noise) {
+  
+  # Generate noisy x with corresponding SD(eta)
+  dat_i <- dat %>% mutate(noisy_x = x + rnorm(1000, 0, i))
+  
+  # Estimate the regression
+  beta_i <- lm(y ~ noisy_x, dat_i)$coefficient[2]
+  
+  # 
+  #
+}
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>Let's have a look at how \(\hat{\beta}\) behaves with an increasingly high \(\text{SD}(\eta)\)</li>
+</ul>
+
+```{r}
+# Vector of standard deviations from 0 to 20
+sd_noise <- 0:20
+
+# Empty vector for beta...
+beta <- c()
+
+# ... to be filled in a loop
+for (i in sd_noise) {
+  
+  # Generate noisy x with corresponding SD(eta)
+  dat_i <- dat %>% mutate(noisy_x = x + rnorm(1000, 0, i))
+  
+  # Estimate the regression
+  beta_i <- lm(y ~ noisy_x, dat_i)$coefficient[2]
+  
+  # Store the coefficient
+  beta <- c(beta, beta_i)
+}
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>We can then plot the \(\hat{\beta}\) for each value of \(\text{SD}(\eta)\)</li>
+  <ul>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+ggplot(tibble(sd_noise = sd_noise, beta = beta), aes(x = sd_noise, y = beta)) + 
+  scale_x_continuous(name = "Standard deviation of the measurement error",
+                     limits = c(0, 20), breaks = seq(0, 20, 5)) +
+  scale_y_continuous(name = "Estimate",
+                     limits = c(.75, 2.05), breaks = seq(.8, 2, .2)) +
+  geom_hline(yintercept = 2, linetype = "dashed")
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>We can then plot the \(\hat{\beta}\) for each value of \(\text{SD}(\eta)\)</li>
+  <ul>
+    <li>It is clear that the <b>measurement error</b> puts a <b>downward pressure</b> on our estimate</li>
+    <li>And that the <b>noisier</b> the measure of \(x\) the <b>larger</b> the <b>bias</b></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+ggplot(tibble(sd_noise = sd_noise, beta = beta), 
+       aes(x = sd_noise, y = beta)) + 
+  scale_x_continuous(name = "Standard deviation of the measurement error",
+                     limits = c(0, 20), breaks = seq(0, 20, 5)) +
+  scale_y_continuous(name = "Estimate",
+                     limits = c(.75, 2.05), breaks = seq(.8, 2, .2)) +
+  geom_hline(yintercept = 2, linetype = "dashed") +
+  geom_point()
+```
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>And this phenomenon can easily be shown <b>mathematically:</b></li>
+  <ul>
+    <li></li>
+    <li></li>
+</ul>
+
+$$\hat{\beta} = \frac{\text{Cov}(\tilde{x},\, y)}{\text{Var}(\tilde{x})}$$
+
+<p style = "margin-bottom:.8cm;"></p>
+
+--
+
+$$\hat{\beta} = \frac{\text{Cov}(x + \eta,\, y)}{\text{Var}(x + \eta)}$$
+
+<p style = "margin-bottom:.8cm;"></p>
+--
+
+$$\hat{\beta} = \frac{\text{Cov}(x,\, y) + \text{Cov}(\eta,\, y)}{\text{Var}(x) + \text{Var}(\eta) + 2\text{Cov}(x,\, \eta)}$$
+
+--
+
+<p style = "margin-bottom:.8cm;"></p>
+$$\hat{\beta} = \frac{\text{Cov}(x,\, y)}{\text{Var}(x) + \text{Var}(\eta)}$$
+
+---
+    
+### 1. Main sources of bias
+
+#### 1.4. Measurement error
+
+<ul>
+  <li>And this phenomenon can easily be shown <b>mathematically:</b></li>
+  <ul>
+    <li>The extra term in the denominator puts a <b>downward pressure</b> on our estimate</li>
+    <li>And the bias is <b>increasing in the amplitude of the <b>measurement error</b></li>
+</ul>
+
+$$\hat{\beta} = \frac{\text{Cov}(\tilde{x},\, y)}{\text{Var}(\tilde{x})}$$
+
+
+<p style = "margin-bottom:.8cm;"></p>
+
+$$\hat{\beta} = \frac{\text{Cov}(x + \eta,\, y)}{\text{Var}(x + \eta)}$$
+
+<p style = "margin-bottom:.8cm;"></p>
+
+$$\hat{\beta} = \frac{\text{Cov}(x,\, y) + \text{Cov}(\eta,\, y)}{\text{Var}(x) + \text{Var}(\eta) + 2\text{Cov}(x,\, \eta)}$$
+
+<p style = "margin-bottom:.8cm;"></p>
+
+$$\hat{\beta} = \frac{\text{Cov}(x,\, y)}{\text{Var}(x) + \color{SkyBlue}{\text{Var}(\eta)}}$$
+---
+    
+### 1. Main sources of bias
+
+#### 1.5. Simultaneity
+
+<ul>
+  <li><b>So far</b> we considered relationships whose <b>directions</b> were quite <b>unambiguous</b></li>
+  <ul>
+    <li>Education &#10140; Earnings, and not the opposite</li>
+    <li>High-school grades &#10140; Job acceptance, and not the opposite</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><i>But now consider the relationship between <b>crime rate and police coverage</b> intensity</i></center>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li><b>What is the direction</b> of the relationship?</li>
+  <ul>
+    <li>It's likely that more crime would cause a positive response in police activity</li>
+    <li>But also that police activity would deter crime</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+<ul>
+  <li>There is no easily solution to that problem apart from:</li>
+  <ul>
+    <li>Working out a <b>theoretical model</b> sorting this issue beforehand</li>
+    <li>Or <b>designing an RCT</b> that cuts one of the two channels</li>
+  </ul>
+</ul>
+
+---
+
+<h3>Overview: Causality</h3>
+
+<p style = "margin-bottom:4.25cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Main sources of bias &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Omitted variables</li>
+    <li>1.2. Functional form</li>
+    <li>1.3. Selection bias</li>
+    <li>1.4. Measurement error</li>
+    <li>1.5. Simultaneity</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>2. Randomized control trials</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to RCTs</li>
+    <li>2.2. Types of randomization</li>
+    <li>2.3. Multiple testing</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:.65cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
 ]
 
 ---
 
-### Overview
+<h3>Overview: Causality</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:4.25cm;"></p>
 
-#### 1. Causality &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Omitted variable bias
- * 1.2. Selection bias and counterfactual
+.pull-left[
 
-#### 2. Randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data Generating Process & Random variables
- * 2.2. Theoretical vs. empirical moments
- * 2.3. $\beta$ vs. $\hat{\beta}$
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Main sources of bias &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Omitted variables</li>
+    <li>1.2. Functional form</li>
+    <li>1.3. Selection bias</li>
+    <li>1.4. Measurement error</li>
+    <li>1.5. Simultaneity</li>
+  </ul>
+</ul>
 
-#### 3. Causality from randomness
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Randomized Controlled Trials
- * 3.2. Types of randomization
- * 3.3. Multiple testing
+]
 
-#### 4. Wrap up!
+.pull-right[
 
----
-
-### Overview
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Causality &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Omitted variable bias
- * 1.2. Selection bias and counterfactual
-
-#### 2. Randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data Generating Process & Random variables
- * 2.2. Theoretical vs. empirical moments
- * 2.3. $\beta$ vs. $\hat{\beta}$
-
-#### 3. Causality from randomness
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Randomized Controlled Trials
- * 3.2. Types of randomization
- * 3.3. Multiple testing
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>2. Randomized control trials</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to RCTs</li>
+    <li>2.2. Types of randomization</li>
+    <li>2.3. Multiple testing</li>
+  </ul>
+</ul>
+ 
+]
 
 ---
 
-### 3. Causality from randomness
+### 2. Randomized control trials
 
-#### 3.1. Randomized Controlled Trials
+#### 2.1. Introduction to RCTs
 
 <ul>
-  <li>A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is randomly allocated in the population</li>
+  <li>A Randomized Controlled Trial (RCT) is a type of <b>experiment</b> in which the thing we want to know the impact of (called the treatment) is <b>randomly allocated</b> in the population</li>
   <ul>
     <li>It is a way to obtain causality from randomness</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:.85cm;"></p>
+
+<ul>
+  <li>RCTs are very powerful tools to <b>sort out issues of:</b></li>
+  <ul>
+    <li>Omitted variables</li>
+    <li>Selection bias</li>
+    <li>Simultaneity</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:.85cm;"></p>
+
+<ul>
+  <li>This method is particularly used to <b>identify causal relationships</b> in:</li>
+  <ul>
+    <li>Medicine</li>
+    <li>Psychology</li>
+    <li>Economics</li>
+    <li>...</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:.75cm;"></p>
+
+--
+
+<center><i><b>But how does randomness help obtaining causality?</b></i></center>
+
+---
+
+### 2. Randomized control trials
+
+#### 2.1. Introduction to RCTs
+
+<ul>
+  <li>Consider estimating the <b>effect of vitamin</b>  supplements intake<b> on health</b> </li>
+  <ul>
+    <li>Comparing health outcomes of vitamin <b>consumers vs. non-consumers</b>, the effect <b>won't be causal</b></li>
+    <li>Vitamins consumers might be <b>richer</b> and <b>more healthy in general</b> for other reasons than vitamin intake</li>
+  </ul>
+</ul>
+
+--
+
+<ul>
+  <li><b>Randomization</b> allows to <b>solve</b> this selection <b>bias</b></li>
+  <ul>
+    <li>If you take two groups randomly, they would have the <b>same characteristics</b> on expectation</li>
+    <li>And thus they would be perfectly <b>comparable</b></li>
   </ul>
 </ul>
 
@@ -1133,48 +1554,63 @@ tibble(Estimation = c(rnorm(1000, 2, .1), rnorm(1000, 3, .1),
 Take for instance the `asec_2020.csv` dataset we've been working with:
 
 ```{r}
-asec_2020 %>% group_by(n()) %>%
-  summarise(`Mean Earnings` = mean(Earnings),
-         `% Female` = 100 * mean(Sex == "Female"),
-         `% Black` = 100 * mean(Race == "Black"),
-         `% Asian` = 100 * mean(Race == "Asian"),
-         `% Other` = 100 * mean(Race == "Other"),
-         `Mean Hours` = mean(Hours))
+asec_2020 %>% 
+  summarise(Earnings = mean(Earnings), Hours = mean(Hours),
+            Black = mean(Race == "Black"), Asian = mean(Race == "Asian"),
+            Other = mean(Race == "Other"), Female = mean(Sex == "Female"))
 ```
 
 
 ---
 
-### 3. Causality from randomness
+### 2. Randomized control trials
 
-#### 3.1. Randomized Controlled Trials
+#### 2.1. Introduction to RCTs
 
- * Let's compare the average characteristics for two randomly selected groups:
+<ul>
+  <li>Let's compare the <b>average characteristics</b> for two <b>randomly selected groups:</b></li>
+</ul>
  
 --
 
-```{r}
+```{r, eval = F}
 asec_2020 %>%
-  mutate(Group = ifelse(rnorm(n(), 0, 1) > 0, 1, 0)) %>%
+* mutate(Group = ifelse(rnorm(n(), 0, 1) > 0, "Treatment", "Control")) %>%
   group_by(Group) %>%
-  summarise(`Mean Earnings` = mean(Earnings),
-            `% Female` = 100 * mean(Sex == "Female"),
-            `% Black` = 100 * mean(Race == "Black"),
-            `% Asian` = 100 * mean(Race == "Asian"),
-            `% Other` = 100 * mean(Race == "Other"),
-            `Mean Hours` = mean(Hours))
+  summarise(n = n(),
+            Earnings = mean(Earnings),
+            Female = 100 * mean(Sex == "Female"),
+            Black = 100 * mean(Race == "Black"),
+            Asian = 100 * mean(Race == "Asian"),
+            Other = 100 * mean(Race == "Other"),
+            Hours = mean(Hours))
+```
+ 
+--
+
+```{r, echo = F}
+asec_2020 %>%
+  mutate(Group = ifelse(rnorm(n(), 0, 1) > 0, "Treatment", "Control")) %>%
+  group_by(Group) %>%
+  summarise(n = n(),
+            Earnings = mean(Earnings),
+            Female = 100 * mean(Sex == "Female"),
+            Black = 100 * mean(Race == "Black"),
+            Asian = 100 * mean(Race == "Asian"),
+            Other = 100 * mean(Race == "Other"),
+            Hours = mean(Hours))
 ```
 
 ---
 
-### 3. Causality from randomness
+### 2. Randomized control trials
 
-#### 3.1. Randomized Controlled Trials
+#### 2.1. Introduction to RCTs
 
 <ul>
-  <li>Their average characteristics are very close!</li>
+  <li>Their average <b>characteristics</b> are very close!</li>
   <ul>
-    <li>On expectation their average characteristics are the same</li>
+    <li><b>On expectation</b> their average characteristics are <b>the same</b></li>
   </ul>
 </ul>
 
@@ -1195,30 +1631,37 @@ asec_2020 %>%
 --
 
 <ul>
-  <li>But RCTs are not immune to every problem:</li>
+  <li>But <b>RCTs are not immune</b> to every problem:</li>
   <ul>
-    <li>If individuals self-select in participating to the experiment their would be a selection bias</li>
-    <li>Even without self-selection, if the population among which treatment is randomized is not representative there is a problem of external validity</li>
-    <li>For the RCT to work, individuals should comply with the treatment allocation</li>
-    <li>The sample must be sufficiently large for the average characteristics across groups to be close enough to their expected value</li>
+    <li>If individuals <b>self-select</b> in participating to the experiment their would be a selection bias</li>
+    <li>Even without self-selection, if the population among which treatment is randomized is not <b>representative</b> there is a problem of external validity</li>
+    <li>For the RCT to work, individuals should <b>comply</b> with the treatment allocation</li>
+    <li>The <b>sample</b> must be <b>sufficiently large</b> for the average characteristics across groups to be close enough to their expected value</li>
     <li>...</li>
   </ul>
 </ul>
 
 ---
 
-### 3. Causality from randomness
+### 2. Randomized control trials
 
-#### 3.2. Types of randomization
+#### 2.2. Types of randomization
 
- * To some extent their are ways to deal with these problems 
+<ul>
+  <li>To some extent their are ways to deal with these problems</li>
+  <ul>
+    <li>Notably we can <b>adjust the way the treatment is randomized</b></li>
+  </ul>
+</ul>
 
 --
+
+<p style = "margin-bottom:1cm;"></p>
 
 <ul>
   <li>For instance if we want to ensure that a characteristic is well balanced among the two groups, we can <b>randomize within categories of this variable</b></li>
   <ul>
-    <li>Instead of giving the treatment randomly and hoping that we will obtain the same % of females in both groups</li>
+    <li>We don't give the treatment randomly hoping that we'll obtain the same % of females in both groups</li>
     <li>We assign the treatment randomly among females and among males separately</li>
     <li>This is called <b>randomizing by block</b></li>
     <li><i>Note that this only works with observable characteristics!</i></li>
@@ -1231,7 +1674,7 @@ asec_2020 %>%
 
 ```{r, eval = F}
 asec_2020 %>%
-  group_by(Sex) %>% # Randomize treatment by sex
+* group_by(Sex) %>% # Randomize treatment by sex
   mutate(Group = ifelse(rnorm(n(), 0, 1) > 0, 1, 0)) %>%
   ungroup() %>% group_by(Group) %>%
   summarise(...)
@@ -1239,94 +1682,212 @@ asec_2020 %>%
 
 ---
 
-### 3. Causality from randomness
+### 2. Randomized control trials
 
-#### 3.2. Types of randomization
+#### 2.2. Types of randomization
 
 <ul>
-  <li>Now imagine that you want to estimate the impact of calory intake at the 10am break on pupils grades</li>
-  <ul>
-    <li>You regularly give a snack to a sample of randomly selected children and a few months later you test whether there is a significant difference between their grades and that of untreated children</li>
-    <li>Do you expect the estimated effect to reflect the actual impact you aim to measure?</li>
-  </ul>
+  <li>What if you want to estimate the impact of <b>calorie intake</b> at the <b>10am break</b> on <b>pupils grades</b></li>
+  <ol>
+    <li>Find a school to run your experiment</li>
+    <li>Take the list of pupils and randomly allocate them to treatment and control group</li>
+    <li>Provide families with treated pupils a snack for the 10am break every school day</li>
+    <li>Do that for a few month and collect the data on the grades of both groups</li>
+    <li>Compute the difference in average grade for the treated and the control group</li>
+  </ol>
 </ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
 
 --
 
 <ul>
-  <li>What if some children shared their snack with untreated children?</li>
+  <li>If the 10am snack has a <b>positive effect:</b></li>
   <ul>
-    <li>These <i>treated children</i> would have <i>less calories</i> and then possibly lower grades than under full compliance</li>
-    <li>And their <i>untreated</i> friends would have <i>more calories</i> than expected and then possibly higher grades</li>
-    <li>Thus, this <b><i>spillover effect</i></b> would tend to fallaciously shrink the observed effect of the treatment</li>
+    <li>This causal identification framework should ensure the correct estimation of that effect</li>
+    <li>Right?</li>
   </ul>
 </ul>
 
+<p style = "margin-bottom:1.25cm;"></p>
+
 --
 
-.left-column[
+<ul>
+  <li>But what about <b>non-compliance?</b></li>
+  <ul>
+    <li>It is likely that during the 10am break, treated children share their snack with their untreated friends</li>
+    <li>How would that <b>affect our estimation?</b></li>
+  </ul>
+</ul>
 
-<p style = "margin-bottom:.75cm;"></p>
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+<ul>
+  <li>While the observed effect would be positive under full compliance, <b>under treatment sharing:</b></li>
+  <ul>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 3.5, fig.height = 4, out.width = "31%"}
+dat <- tibble(Group = rep(c("Control", "Treatment"), each = 200),
+              x = c(runif(200, .95, 1.05), runif(200, 1.95, 2.05)),
+              Grade = round(ifelse(Group == "Treatment", rnorm(200, 15, 2), rnorm(200, 12, 2))), .1) %>%
+  mutate(Grade = ifelse(Grade > 20, 20, Grade))
+
+ggplot(dat) +
+  geom_violin(aes(x = Group, y = Grade), color = "#014D64", fill = "#6794A7", alpha = .5) +
+  geom_boxplot(aes(x = Group, y = Grade), width = .5, color = "#014D64", fill = "#6794A7", alpha = .5) +
+  geom_point(aes(x = x, y = Grade), alpha = .1, color = "#014D64", alpha = .5) +
+  scale_y_continuous(limits = c(5, 20))
+```
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+<ul>
+  <li>While the observed effect would be positive under full compliance, <b>under treatment sharing:</b></li>
+  <ul>
+    <li><b>Treated children</b> would have <b>lower grades</b> because they would benefit from less calories</li>
+    <li></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 3.5, fig.height = 4, out.width = "31%"}
+ggplot(dat %>%
+         mutate(Grade = ifelse(Group == "Treatment", Grade - 1.5, Grade)), 
+       aes(x = Group, y = Grade)) +
+  geom_violin(aes(x = Group, y = Grade), color = "#014D64", fill = "#6794A7", alpha = .5) +
+  geom_boxplot(aes(x = Group, y = Grade), width = .5, color = "#014D64", fill = "#6794A7", alpha = .5) +
+  geom_point(aes(x = x, y = Grade), alpha = .1, color = "#014D64", alpha = .5) +
+  scale_y_continuous(limits = c(5, 20))
+```
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+<ul>
+  <li>While the observed effect would be positive under full compliance, <b>under treatment sharing:</b></li>
+  <ul>
+    <li><b>Treated children</b> would have <b>lower grades</b> because they would benefit from less calories</li>
+    <li><b>Untreated children</b> would have <b>higher grades</b> because they would benefit from less calories</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 3.5, fig.height = 4, out.width = "31%"}
+ggplot(dat %>%
+         mutate(Grade = ifelse(Group == "Treatment", Grade - 1.5, Grade + 1.5)), 
+       aes(x = Group, y = Grade)) +
+  geom_violin(aes(x = Group, y = Grade), color = "#014D64", fill = "#6794A7", alpha = .5) +
+  geom_boxplot(aes(x = Group, y = Grade), width = .5, color = "#014D64", fill = "#6794A7", alpha = .5) +
+  geom_point(aes(x = x, y = Grade), alpha = .1, color = "#014D64", alpha = .5) +
+  scale_y_continuous(limits = c(5, 20))
+```
+
+
+---
+
+### 2. Randomized control trials
+
+#### 2.2. Types of randomization
+
+
+<ul>
+  <li>Thus <b>non-compliance</b> can bias our estimation</li>
+  <ul>
+    <li>There would be a <b>downward bias</b></li>
+    <li>And our estimation <b>wouldn't be causal</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+--
 
 <ul>
   <li>One solution to that problem is to <b>randomize by cluster</b></li>
   <ul>
-    <li>Instead of considering the treatment to be at the child level</li>
-    <li>Consider that the treatment is a the school level</li>
+    <li>Children cannot share their snack with children from other schools</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+--
+
+<ul>
+  <li>We must <b>treat at the school level</b> instead of the child level</li>
+  <ul>
     <li>A treated unit is a school where some/all children are treated</li>
     <li>An untreated school is a school where no child is treated</li>
   </ul>
 </ul>
-]
 
+<p style = "margin-bottom:1.25cm;"></p>
 --
 
-.right-column[
-<center><i>Beware that in terms of inference, computing standard errors the usual way while the treatment is at a broader observational level than the outcome would give fallaciously low standard errors, which would need to be corrected</i></center>
-]
+<center>
+<i>Beware that in terms of inference, computing standard errors the usual way<br>
+while the treatment is at a broader observational level than the outcome</br>
+would give fallaciously low standard errors, which would need to be corrected</i>
+</center>
+
 
 ---
 
-### 3. Causality from randomness
+### 2. Randomized control trials
 
-#### 3.3. Multiple testing
+#### 2.3. Multiple testing
 
 <ul>
-  <li>Another inference issue that RCTs can be subject to is multiple testing</li>
+  <li>Another inference issue that RCTs can be subject to is <b>multiple testing</b></li>
   <ul>
-    <li>If you conduct a well-designed RCT you might be tempted to exploit the causal framework to test a myriad of effects</li>
+    <li>If you conduct an RCT you might be tempted to exploit the causal framework to test a myriad of effects</li>
   </ul>
 </ul>
 
+<p style = "margin-bottom:1.2cm;"></p>
 --
 
 <ul>
   <li>You randomize your treatment and you compare the averages of many outcomes between treated and untreated individuals</li>
   <ul>
-    <li>You would be tempted to conclude that there is a significant effect for every variable whose corresponding p-value is lower that .05</li>
-    <li>But you cannot do that!</li>
+    <li>You would be tempted to <b>conclude</b> that there is a <b>significant effect</b> for <b>every variable</b> whose corresponding <b>p-value < .05</b></li>
+    <li>But <b>you cannot do that!</b></li>
   </ul>
 </ul>
 
+<p style = "margin-bottom:1.2cm;"></p>
 --
 
 <ul>
   <li>The probability to have a p-value lower than .05 just by chance for one test is indeed 5%</li>
   <ul>
-    <li>But if you do multiple tests in a row, the probability to have a p-value lower than .05 among these multiple tests is greater than 5%</li>
-    <li>The greater the number of tests you perform, the higher the probability to get a significant result just by chance</li>
+    <li>But if you do <b>multiple tests</b> in a row, the <b>probability</b> to have a <b>p-value lower than .05</b> for a null true effect among these multiple tests is <b>greater than 5%</b></li>
+    <li>The greater the number of tests, the higher the probability to get a significant result just by chance</li>
   </ul>
 </ul>
 
+<p style = "margin-bottom:1.2cm;"></p>
 --
 
 <center><h4>This is what we call <i>multiple testing</i></h4></center>
 
 ---
 
-### 3. Causality from randomness
+### 2. Randomized control trials
 
-#### 3.3. Multiple testing
+#### 2.3. Multiple testing
  
 ```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "75%"}
 tibble(ntest = 1:50,
@@ -1344,9 +1905,9 @@ tibble(ntest = 1:50,
 
 ---
 
-### 3. Causality from randomness
+### 2. Randomized control trials
 
-#### 3.3. Multiple testing
+#### 2.3. Multiple testing
 
  * There are many ways to correct for multiple testing
 
@@ -1382,241 +1943,216 @@ tibble(ntest = 1:50,
 
 ---
 
-### Overview
+<h3>Overview: Causality</h3>
 
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Causality &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Omitted variable bias
- * 1.2. Selection bias and counterfactual
-
-#### 2. Randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data Generating Process & Random variables
- * 2.2. Theoretical vs. empirical moments
- * 2.3. $\beta$ vs. $\hat{\beta}$
-
-#### 3. Causality from randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Randomized Controlled Trials
- * 3.2. Types of randomization
- * 3.3. Multiple testing
-
-#### 4. Wrap up!
-
----
-
-### 4. Wrap up!
-
-#### Causality 
-
-<p style = "margin-bottom:-.5cm;"></p>
+<p style = "margin-bottom:4.25cm;"></p>
 
 .pull-left[
 
-1) Omitted variable bias
-
-<p style = "margin-bottom:1.5cm;"></p>
-
-<ul>
-  <li>Regressing Earnings on Sex = Male without controls yields \(\hat{\beta} = 21612.33\)</li>
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Main sources of bias &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Omitted variables</li>
+    <li>1.2. Functional form</li>
+    <li>1.3. Selection bias</li>
+    <li>1.4. Measurement error</li>
+    <li>1.5. Simultaneity</li>
+  </ul>
 </ul>
-
-<ul>
-  <li>But controlling for weekly hours we obtain \(\hat{\beta} = 13794.39\)</li>
-</ul>
-
-<p style = "margin-bottom:1.5cm;"></p>
-
-&#10140; Variables that are correlated to both $x$ and $y$ should be controlled for  
-
-&#10140; And the coefficients must unambiguously be interpreted <i>ceteris paribus</i>
 
 ]
 
---
+.pull-right[
 
-.pull-left[
-
-2) Selection bias
-
-<p style = "margin-bottom:-.35cm;"></p>
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>2. Randomized control trials &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to RCTs</li>
+    <li>2.2. Types of randomization</li>
+    <li>2.3. Multiple testing</li>
+  </ul>
+</ul>
  
-```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "100%"}
-ggplot(data_bin2, aes(x = x, y = y)) +
-  geom_smooth(method = "lm", se = F, color = "black", linetype = "dashed") +
-  geom_smooth(data = data_bin, aes(x = x, y = y), method = "lm", se = F, color = "#014D64") +
-  geom_point(alpha = .1, aes(x = x, y = y, color = Observation)) + xlab("Grade") +
-  scale_y_continuous(name = "", limits = c(-.5, 1.5), breaks = 0:1) +
-  guides(color = guide_legend(override.aes = list(alpha = 1) ) )
+<p style = "margin-bottom:.65cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
+]
+
+---
+
+### 3. Wrap up!
+
+#### Omitted variable bias
+
+<ul>
+  <li>If a third <b>variable</b> is correlated with both \(x\) and \(y\), it would <b>bias the relationship</b></li>
+  <ul>
+    <li>We must then <b>control</b> for such variables</li>
+    <li>And if we can't we must acknowledge that our estimate is not causal with <i><b>'ceteris paribus'</b></i></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+illuedu <- tibble(Education = rnorm(1000, 0, 1),
+                  Skills = rep(c("High", "Low"), each = 500)) %>%
+  mutate(Education = ifelse(Skills == "High", Education + .75, Education),
+         Earnings = ifelse(Skills == "High", 
+                           1 + Education + rnorm(500, 0, 1),
+                           Education + rnorm(500, 0, 1))) 
+
+coefs <- lm(Earnings ~ Education + Skills, illuedu)$coefficients
+min_high <- min(illuedu[illuedu$Skills == "High", "Education"])
+max_high <- max(illuedu[illuedu$Skills == "High", "Education"])
+min_low <- min(illuedu[illuedu$Skills == "Low", "Education"])
+max_low <- max(illuedu[illuedu$Skills == "Low", "Education"])
+
+ggplot(illuedu) + 
+  geom_point(alpha = .4, aes(x = Education, y = Earnings, color = Skills)) + 
+  geom_segment(aes(x = min_high,
+                   xend =max_high,
+                   y = coefs[1] + coefs[2] * min_high,
+                   yend = coefs[1] + coefs[2] * max_high), color = "#014D64", alpha = .7) +
+  geom_segment(aes(x = min_low,
+                   xend =max_low,
+                   y = coefs[1] + coefs[3] + (coefs[2] * min_low),
+                   yend = coefs[1] + coefs[3] + (coefs[2] * max_low)), color = "#00A2D9", alpha = .7) +
+  geom_smooth(aes(x = Education, y = Earnings), method = "lm", se = F, color  = "black", alpha = .7) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "right",
+        legend.direction = "vertical")
 ```
 
-<p style = "margin-bottom:-.35cm;"></p>
+---
 
-<ul><ul>
-  <li>Self-selection selection into the population studied causes problems of <b>external validity</b></li>
-  <li>Self-selection into the treatment variable causes problems of <b>counterfactual validity</b></li>
-</ul></ul>
+### 3. Wrap up!
 
-]
+#### Functional form
+
+<ul>
+  <li>Not capture the <b>right functional</b> form correctly might also lead to biased estimations:</li>
+  <ul>
+    <li>Polynomial order, interactions, logs, discretization matter</li>
+    <li><b>Visualizing the relationship</b> is key</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+ggplot(quadratic, aes(x = Education, y = Earnings)) +
+  geom_point(alpha = .5, color = "#014D64") +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2),
+              se = F, color  = "black", alpha = .7) +
+  geom_smooth(method = "lm",
+              se = F, color  = "black", alpha = .7) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank())
+```
 
 ---
 
-### 4. Wrap up!
+### 3. Wrap up!
 
-#### Theoretical vs. empirical moments
+#### Selection bias
+
+<ul>
+  <li><b>Self-selection</b> is also a common threat to causality</li>
+</ul>
+
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul>
+  <li>What is the impact of going to a better neighborhood on your children outcomes?</li>
+  <ul>
+    <li>We cannot just regress children outcomes on a mobility dummy</li>
+    <li>Individuals who move may be different from those who stay: <b>self-selection issue</b></li>
+    <li>Here it is not that the sample is not representative of the population, but that <b>the outcomes of those who stayed are different from the outcomes those who moved would have had, if they had stayed</b></li>
+  </ul>
+</ul>
+
+--
 
 <p style = "margin-bottom:1.25cm;"></p>
 
-.pull-left[
+#### Simultaneity
 
-.pull-left[
-
-<p style = "margin-bottom:4cm;"></p>
-
-<b>First moment:</b>  
-
-<p style = "margin-bottom:3.5cm;"></p>
-
-<b>Second moment:</b>
-
-]
-
-.pull-right[
-
-<center><h4>Theoretical moment</h4></center>
-
-$$\text{E}(X_{\text{discrete}}) = \sum_{i=1}^{k}x_ip_i$$
-
-$$\text{E}(X_{\text{continuous}}) = \int_{\text{R}}xf(x)dx$$
-
-<p style = "margin-bottom:2cm;"></p>
-
-$$\text{Var}(X) = \text{E}\left[(X - \text{E}(X))^2\right] \equiv \sigma^2$$
-
-]
-
-]
-
-.pull-right[
-
-<center><h4>Empirical moment</h4></center>
-
-<p style = "margin-bottom:1.9cm;"></p>
-
-$$\overline{X} = \frac{1}{N}\sum_{i=1}^Nx_i$$
-
-<p style = "margin-bottom:2.25cm;"></p>
-
-$$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$
-
-]
-
----
-
-### 4. Wrap up!
-
-#### $\beta$ vs. $\hat{\beta}$
 
 <ul>
-  <li>Keep in mind that consistency, unbiasedness, and precision, are very distinct concepts</li>
+  <li>Consider the relationship between <b>crime</b> rate and <b>police coverage</b> intensity</li>
+</ul>
+
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul>
+  <li>What is the <b>direction of the relationship?</b></li>
   <ul>
-    <li>Consider these 4 cases where we compare the distribution of estimations \(\hat{\beta}\) from 1,000 randomly drawn samples to the true \(\beta\)</li>
+    <li>We cannot just regress crime rate on police intensity</li>
+    <li>It's likely that more crime would cause a positive response in police activity</li>
+    <li>And also that police activity would deter crime</li>
   </ul>
 </ul>
 
---
+---
 
-.left-column[
+### 3. Wrap up!
 
-<p style = "margin-bottom:-.25cm;"></p>
+#### Measurement error
 
-```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "90%"}
-tibble(Estimation = c(rnorm(1000, 2, .1), rnorm(1000, 3, .1), 
-                      rnorm(1000, 2, 1), rnorm(1000, 3, 1)),
-       Precision = rep(c("Precise", "Imprecise"), each = 2000),
-       Biasedness = rep(rep(c("Unbiased", "Biased"), each = 1000), 2)) %>%
-  ggplot(., aes(x = Estimation)) +
-  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) + facet_grid(Precision ~ Biasedness) +
-  geom_vline(xintercept = 2, linetype = "dashed") +
-  scale_x_continuous(limits = c(0, 5))
+<ul>
+  <li><b>Measurement error</b> in the independent variable also induces a bias</li>
+  <ul>
+    <li>The resulting estimation would mechanically be <b>downward biased</b></li>
+    <li>The <b>noisier</b> the measure, the <b>larger the bias</b></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width = "75%"}
+ggplot(tibble(sd_noise = sd_noise, beta = beta), 
+       aes(x = sd_noise, y = beta)) + 
+  scale_x_continuous(name = "Standard deviation of the measurement error",
+                     limits = c(0, 20), breaks = seq(0, 20, 5)) +
+  scale_y_continuous(name = "Estimate",
+                     limits = c(.75, 2.05), breaks = seq(.8, 2, .2)) +
+  geom_hline(yintercept = 2, linetype = "dashed") +
+  geom_point()
 ```
-]
-
-
---
-
-.right-column[
-
-<p style = "margin-bottom:-.5cm;"></p>
-
-
-<ul>
-  <li>An estimator is <b>unbiased</b> if on expectation it gives the true value we want to estimate</li>
-</ul>
-
-<p style = "margin-bottom:.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>precise</b> if the estimations it provides are close to each other (low variance)</li>
-</ul>
-
-<p style = "margin-bottom:.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>consistent</b> if the larger the sample size the higher the probability that we obtain the true value we want to estimate</li>
-</ul>
-
-  
-]
-
 
 ---
 
-### 4. Wrap up!
+### 3. Wrap up!
 
-#### Randomized controlled trials 
+#### Randomized Controlled Trials
 
 <ul>
-  <li>A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is randomly allocated in the population</li>
+  <li>A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is <b>randomly allocated</b> in the population</li>
   <ul>
-    <li>It is a way to obtain causality from randomness as on expectation two randomly drawn population have the same average observable and unobservable characteristics, which solves the omitted variable bias</li>
+    <li>The two <b>groups</b> would then have the same characteristics on expectation, and would be <b>comparable</b></li>
+    <li>It is a way to obtain <b>causality</b> from randomness</li>
   </ul>
 </ul>
 
 --
 
-.pull-left[
-
-<p style = "margin-bottom:1.75cm;"></p>
+<p style = "margin-bottom:1cm;"></p>
 
 <ul>
-  <li>But RCTs are not immune to every problem:</li>
+  <li>RCTs are very <b>powerful tools</b> to sort out issues of:</li>
   <ul>
-    <li>Self-selection issues can arise</li>
-    <li>The population should be representative for external validity</li>
-    <li>Individuals should comply with the treatment allocation</li>
-    <li>The sample must be sufficiently large</li>
-    <li>...</li>
+    <li>Omitted variables</li>
+    <li>Selection bias</li>
+    <li>Simultaneity</li>
   </ul>
 </ul>
-
-]
 
 --
 
-.pull-right[
+<p style = "margin-bottom:1cm;"></p>
 
 <ul>
-  <li>There are different types of randomization to help dealing with such problems</li>
+  <li>But RCTs are <b>not immune</b> to every problem:</li>
   <ul>
-    <li><b>Randomization by block for small samples:</b> Randomly assign the treatment within groups of individuals whose characteristic should be balanced</li>
-    <li><b>Randomization by cluster for spillovers:</b> If spillovers may occur within given units, consider these units as the observational level for the treatment allocation</li>
+    <li>The sample must be representative and large enough</li>
+    <li>Participants should comply with their treatment status</li>
+    <li>Independent variables must not be noisy measures of the variable of interest</li>
     <li>...</li>
   </ul>
 </ul>
-
-]
-
-
