@@ -1,22 +1,31 @@
 ---
 title: "Applications in academic research"
-subtitle: "Lecture 10"
+subtitle: "Lecture 13"
 author: "<br>Louis SIRUGUE"
-date: "`r format(Sys.time(), '%m/%Y')`"
+date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
-  xaringan::moon_reader: 
+  xaringan::moon_reader:  
     css: 
         - xaringan-themer.css
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
 ---
+
+```{css, echo = F, eval = params$dark}
+body{background-color:black;filter:invert(1)}
+```
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../source/style.R"))
@@ -29,679 +38,252 @@ set.seed(1)
 
 <style> .left-column {width: 65%;} .right-column {width: 35%;} </style>
 
-### Last time we saw
+### Quick reminder
+
+#### Standard interpretations
+
+<ul>
+  <li>When both \(x\) and \(y\) are continuous, the <b>general</b> template for the <b>interpretation</b> of \(\hat{\beta}\) is:</li>
+</ul>
+
+<center><i>"Everything else equal, a 1 [unit] increase in [x] is associated with<br> an [in/de]crease of [beta] [units] in [y] on average."</i></center>
 
 --
-
-#### Causality 
-
-<p style = "margin-bottom:-.5cm;"></p>
-
-.pull-left[
-
-1) Omitted variable bias
 
 <p style = "margin-bottom:1.5cm;"></p>
 
 <ul>
-  <li>Regressing Earnings on Sex = Male without controls yields \(\hat{\beta} = 21612.33\)</li>
+  <li>With a discrete \(x\), the interpretation of the coefficient must be <b>relative to the reference category:</b></li>
 </ul>
 
-<ul>
-  <li>But controlling for weekly hours we obtain \(\hat{\beta} = 13794.39\)</li>
-</ul>
+<center><i>"Everything else equal, belonging to the [x category] is associated with<br> a [beta] [unit] [higher/lower] average [y] relative to the [reference category]."</i></center>
+
+--
 
 <p style = "margin-bottom:1.5cm;"></p>
 
-&#10140; Variables that are correlated to both $x$ and $y$ should be controlled for  
+<ul>
+  <li>With a <b>binary \(y\) variable</b>, the coefficient must be interpreted in <b>percentage points:</b></li>
+</ul>
 
-&#10140; And the coefficients must unambiguously be interpreted <i>ceteris paribus</i>
+<center><i>"Everything else equal, a 1 [unit] increase in [x] is associated with<br> a [beta] percentage point [in/de]crease in the probability that [y equals 1] on average."</i></center>
+
+---
+
+### Quick reminder
+
+#### Interpretations with variable transformation
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+.pull-left[
+<center><b>Standardization</b></center>
+
+<ul>
+  <li>To standardize a variable is to <b>divide it by its SD</b></li>
+  <ul>
+    <li>The variation of a standardized variable should not be <b>interpreted</b> in units but <b>in SD</b></li>
+    <li>For instance if \(x\) and \(y\) are continuous and \(x\) is standardized, the interpretation becomes:</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><i>"Everything else equal, a 1 <b>standard deviation</b> increase in [x] is associated with an [in/de]crease of [beta] [units] in [y] on average."</i></center>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>If both \(x\) and \(y\) are standardized, the slope is the correlation coefficient between \(x\) and \(y\)</li>
+</ul>
 
 ]
 
 --
 
-.pull-left[
+.pull-right[
+<center><b>Log-transformation</b></center>
 
-2) Selection bias
+<ul>
+  <li>The log transformation allows to interpret the coefficient in percentage terms:</li>
+</ul>
 
-<p style = "margin-bottom:-.35cm;"></p>
- 
-```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "100%"}
-data_bin <- tibble(x = rnorm(1000, 15, 1), 
-                   noisy_x = x + runif(1000, -1, 1),
-                   y = ifelse(noisy_x > mean(x), 1, 0))
+<p style = "margin-bottom:1.25cm;"></p>
 
-data_bin2 <- data_bin %>%
-  mutate(Observation = "Observed")%>%
-  bind_rows(data_bin %>%
-              mutate(x = ifelse(y == 0, x - 2, x + 2),
-                     Observation = "Unobserved"))
-
-ggplot(data_bin2, aes(x = x, y = y)) +
-  geom_smooth(method = "lm", se = F, color = "black", linetype = "dashed") +
-  geom_smooth(data = data_bin, aes(x = x, y = y), method = "lm", se = F, color = "#014D64") +
-  geom_point(alpha = .1, aes(x = x, y = y, color = Observation)) + xlab("GPA") +
-  scale_y_continuous(name = "", limits = c(-.5, 1.5), breaks = 0:1) +
-  guides(color = guide_legend(override.aes = list(alpha = 1) ) )
-```
-
-<p style = "margin-bottom:-.35cm;"></p>
-
-<ul><ul>
-  <li>Self-selection selection into the population studied causes problems of <b>external validity</b></li>
-  <li>Self-selection into the treatment variable causes problems of <b>counterfactual validity</b></li>
-</ul></ul>
-
+<table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;font-size: 20px;">
+<caption>Interpretation of the regression coefficient</caption>
+ <thead>
+  <tr style = "background-color: #CCD5D9;">
+   <th style="text-align:center;">   </th>
+   <th style="text-align:center;"> y </th>
+   <th style="text-align:center;"> log(y) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;font-weight: bold;"> x </td>
+   <td style="text-align:center;width: 10em; "> \(\hat{\beta}\) is the unit increase in \(y\) due
+ to a 1 unit increase in \(x\) </td>
+   <td style="text-align:center;width: 10em; "> \(\hat{\beta}\times 100\) is the % increase in \(y\) due
+ to a 1 unit increase in \(x\) </td>
+  </tr>
+  <tr style = "background-color: #CCD5D9;">
+   <td style="text-align:center;font-weight: bold;"> log(x) </td>
+   <td style="text-align:center;width: 10em;"> \(\hat{\beta}\div 100\) is the unit increase in \(y\) due
+ to a 1% increase in \(x\) </td>
+   <td style="text-align:center;width: 10em;"> \(\hat{\beta}\) is the % increase in \(y\) due
+ to a 1% increase in \(x\) </td>
+  </tr>
+</tbody>
+</table>
 ]
 
 ---
 
-### Last time we saw
+### Quick reminder
 
-#### Theoretical vs. empirical moments
+#### Regression table layout
 
-<p style = "margin-bottom:1.25cm;"></p>
+```{css, echo = F}
+.remark-slide table{
+  font-size: 15px;
+  margin: auto;
+  border-top: 0px;
+  border-bottom: 0px;
+}
+
+tr th td{
+  font-size: 15px;
+  margin: auto;
+  border-top: 0px;
+  border-bottom: 0px;
+}
+
+.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
+  background: var(--background-color);
+}
+```
 
 .pull-left[
+```{r, echo = F, results = "asis"}
+data <- tibble(household_income = rlnorm(1000, 10, 1)) %>%
+  mutate(birth_weight = 2200 + 100 * log(household_income) + rnorm(1000, 0, 400)) %>%
+  mutate(Sex = ifelse((birth_weight - mean(birth_weight))/sd(birth_weight) + rnorm(n(), -5, 5) > 0, "Boy", "Girl"),
+         Sex = ifelse(row_number() %in% sample(1:1000, 37, F), NA, Sex))
 
-.pull-left[
-
-<p style = "margin-bottom:4cm;"></p>
-
-<b>First moment:</b>  
-
-<p style = "margin-bottom:3.5cm;"></p>
-
-<b>Second moment:</b>
-
+stargazer(lm(birth_weight ~ household_income, data), 
+          lm(birth_weight ~ household_income + Sex, data), 
+          type = "html", keep.stat = c("n", "rsq"), 
+          covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
+          dep.var.labels = "Birth weight", dep.var.caption = "")
+```
 ]
 
 .pull-right[
 
-<center><h4>Theoretical moment</h4></center>
-
-$$\text{E}(X_{\text{discrete}}) = \sum_{i=1}^{k}x_ip_i$$
-
-$$\text{E}(X_{\text{continuous}}) = \int_{\text{R}}xf(x)dx$$
-
-<p style = "margin-bottom:2cm;"></p>
-
-$$\text{Var}(X) = \text{E}\left[(X - \text{E}(X))^2\right] \equiv \sigma^2$$
+Regression tables often contain multiple regressions:
+<p style = "margin-bottom:.8cm;"></p>
+<ul>
+  <li>With <b>one regression in each column</b></li>
+</ul>
+<p style = "margin-bottom:.8cm;"></p>
+<ul>
+  <li>And one variable in <b>each row</b></li>
+  <ul>
+    <li>With the <b>point estimate</b></li>
+    <li>And a <b>precision measure</b> below</li>
+  </ul>
+</ul>
+<p style = "margin-bottom:.8cm;"></p>
+<ul>
+  <li><b>General info</b> on each model <b>at the bottom</b></li>
+  <ul>
+    <li>Number of observations</li>
+    <li>\(\text{R}^2 = 1 - \frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{\sum_{i = 1}^n(y_i-\bar{y})^2}\)</li>
+  </ul>
+</ul>
+<p style = "margin-bottom:.8cm;"></p>
+<ul>
+  <li>A <b>symbology</b> for the <b>p-value</b> testing whether the coefficient is significantly different from 0 or not</li>
+</ul>
 
 ]
+
+---
+
+<h3>Today: Applications in academic research</h3>
+
+--
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>1. Causal approach (Behaghel et al., 2015)</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Structure</li>
+    <li>1.2. Data</li>
+    <li>1.3. Analysis</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>2. Correlational approach (Chetty et al., 2014)</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Empirical approach</li>
+    <li>2.2. National results</li>
+    <li>2.3. Spatial variations</li>
+    <li>2.4. Correlational analysis</li>
+  </ul>
+</ul>
 
 ]
 
 .pull-right[
-
-<center><h4>Empirical moment</h4></center>
-
-<p style = "margin-bottom:1.9cm;"></p>
-
-$$\overline{X} = \frac{1}{N}\sum_{i=1}^Nx_i$$
-
-<p style = "margin-bottom:2.25cm;"></p>
-
-$$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$
-
-]
-
----
-
-### Today: Catch up and Applications in academic research
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Catch up: Randomness
-<p style = "margin-bottom:-.5cm;">
- * 1.1. $\beta$ vs. $\hat{\beta}$
-
-#### 2. Catch up: Causality from randomness
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Randomized Controlled Trials
- * 2.2. Types of randomization
- * 2.3. Multiple testing
-
-<p style = "margin-bottom:1cm;">
-
-#### 3. Applications in academic research
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Labor market discrimination (Behaghel et al., 2015)
- * 3.2. Intergenerational mobility (Chetty et al., 2014)
-
-#### 4. Wrap up!
-
----
-
-### Today: Catch up and Applications in academic research
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Catch up: Randomness
-<p style = "margin-bottom:-.5cm;">
- * 1.1. $\beta$ vs. $\hat{\beta}$
-
----
-
-### 1. Catch up: Randomness
-
-#### 1.1. $\beta$ vs. $\hat{\beta}$
-
-<ul>
-  <li>Last time we simulated two normally distributed random variables \(X\) and \(Y\) of 1,000 observations according to the following theoretical moments:</i>
-  <ul>
-    <li>\(N = 1000\)</li>
-    <li>\(\text{E}\left[X\right] = 5\)</li>
-    <li>\(\text{E}\left[Y\right] = 30\)</li>
-    <li>\(\text{Var}(X) = 2\)</li>
-    <li>\(\text{Var}(Y) = 10\)</li>
-    <li>\(\text{Cov}(X, Y) = 4\)</li>
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Structural approach (Nerlove, 1963)</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Theoretical modeling</li>
+    <li>3.3. Regression expression</li>
   </ul>
 </ul>
-
+ 
 <p style = "margin-bottom:1cm;"></p>
 
-```{r}
-library(MASS)
-data <- as_tibble(mvrnorm(1000, c(5, 30), matrix(c(2, 4, 4, 10), 2)))
-colnames(data) <- c("x", "y")
-c(mean(data$x), mean(data$y))
-```
-
----
-
-### 1. Catch up: Randomness
-
-#### 1.1. $\beta$ vs. $\hat{\beta}$
-
- * Because we know the joint DGP of $X$ and $Y$, we do know the actual values of $\alpha$ and $\beta$ from the regression
- 
-$$y_i = \alpha + \beta x_i + \varepsilon_i$$
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-$$\beta = \frac{\text{Cov}(X, Y)}{\text{Var}(X)} = \frac{4}{2} = 2$$
-
-$$\alpha = \text{E}\left[Y\right] - \beta\times\text{E}\left[X\right] = 30 - 2\times5 = 20$$
-
-<p style = "margin-bottom:1cm;"></p>
-
---
-
- * And the coefficients $\hat{\alpha}$ and $\hat{\beta}$ we can compute using observed data are estimates of these true parameters
- 
-```{r}
-summary(lm(y ~ x, data))$coefficients
-```
-
----
-
-### 1. Catch up: Randomness
-
-#### 1.1. $\beta$ vs. $\hat{\beta}$
-
- * The higher the number of observations, the closer $\hat{\beta}$ from $\beta$ on expectation:
- 
-```{r, eval = F}
-beta_hat <- function(n){
-  data <- as_tibble(mvrnorm(n, c(5, 30), matrix(c(2, 4, 4, 10), 2)))
-  colnames(data) <- c("x", "y")
-  return(summary(lm(y ~ x, data))$coefficients[2, 1])
-}
-c(beta_hat(10), beta_hat(1000), beta_hat(100000))
-detach("package:MASS", unload = TRUE)
-```
-
---
-
-```{r, echo = F}
-beta_hat <- function(n){
-  data <- as_tibble(mvrnorm(n, c(5, 30), matrix(c(2, 4, 4, 10), 2)))
-  colnames(data) <- c("x", "y")
-  return(summary(lm(y ~ x, data))$coefficients[2, 1])
-}
-c(beta_hat(10), beta_hat(1000), beta_hat(100000))
-detach("package:MASS", unload = TRUE)
-```
-
---
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-<ul>
-  <li>This is what we call <i>consistency</i></li>
-  <ul>
-    <li>With this DGP the OLS estimator is consistent</li>
-    <li>But this is not always the case</li>
-    <li>You'll see the conditions for that next year</li>
-  </ul>
-</ul>
-
----
-
-### 1. Catch up: Randomness
-
-#### 1.1. $\beta$ vs. $\hat{\beta}$
-
-<ul>
-  <li>Keep in mind that consistency, unbiasedness, and precision, are very distinct concepts</li>
-  <ul>
-    <li>Consider these 4 cases where we compare the distribution of estimations \(\hat{\beta}\) from 1,000 randomly drawn samples to the true \(\beta\)</li>
-  </ul>
-</ul>
-
---
-
-.left-column[
-
-<p style = "margin-bottom:-.25cm;"></p>
-
-```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "90%"}
-tibble(Estimation = c(rnorm(1000, 2, .1), rnorm(1000, 3, .1), 
-                      rnorm(1000, 2, 1), rnorm(1000, 3, 1)),
-       Precision = rep(c("Precise", "Imprecise"), each = 2000),
-       Biasedness = rep(rep(c("Unbiased", "Biased"), each = 1000), 2)) %>%
-  ggplot(., aes(x = Estimation)) +
-  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) + facet_grid(Precision ~ Biasedness) +
-  geom_vline(xintercept = 2, linetype = "dashed") +
-  scale_x_continuous(limits = c(0, 5))
-```
-]
-
---
-
-.right-column[
-
-<p style = "margin-bottom:-.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>unbiased</b> if on expectation it gives the true value we want to estimate</li>
-</ul>
-
-<p style = "margin-bottom:.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>precise</b> if the estimations it provides are close to each other (low variance)</li>
-</ul>
-
-<p style = "margin-bottom:.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>consistent</b> if the larger the sample size the higher the probability that we obtain the true value we want to estimate</li>
-</ul>
-  
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 ]
 
 ---
 
-### Overview
+<h3>Today: Applications in academic research</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Catch up: Randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. $\beta$ vs. $\hat{\beta}$
+.pull-left[
 
-#### 2. Catch up: Causality from randomness
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Randomized Controlled Trials
- * 2.2. Types of randomization
- * 2.3. Multiple testing
-
-<p style = "margin-bottom:1cm;">
-
-#### 3. Applications in academic research
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Labor market discrimination (Behaghel et al., 2015)
- * 3.2. Intergenerational mobility (Chetty et al., 2014)
-
-#### 4. Wrap up!
-
----
-
-### Overview
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Catch up: Randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. $\beta$ vs. $\hat{\beta}$
-
-#### 2. Catch up: Causality from randomness
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Randomized Controlled Trials
- * 2.2. Types of randomization
- * 2.3. Multiple testing
-
----
-
-### 2. Causality from randomness
-
-#### 2.1. Randomized Controlled Trials
-
-<ul>
-  <li>A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is randomly allocated in the population</li>
-  <ul>
-    <li>It is a way to obtain causality from randomness</li>
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>1. Causal approach (Behaghel et al., 2015)</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Structure</li>
+    <li>1.2. Data</li>
+    <li>1.3. Analysis</li>
   </ul>
 </ul>
 
---
-
-Take for instance the `asec_2020.csv` dataset we've been working with:
-
-```{r, echo = F}
-asec_2020 <- read.csv("asec_2020.csv")
-```
-
-```{r}
-asec_2020 %>% group_by(n()) %>%
-  summarise(`Mean Earnings` = mean(Earnings),
-         `% Female` = 100 * mean(Sex == "Female"),
-         `% Black` = 100 * mean(Race == "Black"),
-         `% Asian` = 100 * mean(Race == "Asian"),
-         `% Other` = 100 * mean(Race == "Other"),
-         `Mean Hours` = mean(Hours))
-```
-
-
----
-
-### 2. Causality from randomness
-
-#### 2.1. Randomized Controlled Trials
-
- * Let's compare the average characteristics for two randomly selected groups:
- 
---
-
-```{r}
-asec_2020 %>%
-  mutate(Group = ifelse(rnorm(n(), 0, 1) > 0, 1, 0)) %>%
-  group_by(Group) %>%
-  summarise(`Mean Earnings` = mean(Earnings),
-            `% Female` = 100 * mean(Sex == "Female"),
-            `% Black` = 100 * mean(Race == "Black"),
-            `% Asian` = 100 * mean(Race == "Asian"),
-            `% Other` = 100 * mean(Race == "Other"),
-            `Mean Hours` = mean(Hours))
-```
-
----
-
-### 2. Causality from randomness
-
-#### 2.1. Randomized Controlled Trials
-
-<ul>
-  <li>Their average characteristics are very close!</li>
-  <ul>
-    <li>On expectation their average characteristics are the same</li>
-  </ul>
-</ul>
-
---
-
-<ul>
-  <li>And just as the two randomly selected populations are comparable in terms of their observable characteristics</li>
-  <ul>
-    <li>On expectation they are also <b>comparable</b> in terms of their <b>unobservable characteristics!</b></li>
-    <li>Randomization, if properly conducted, thus solves the problem of omitted variable bias</li>
-  </ul>
-</ul>
-
---
-
-<center><h4><i>If we assign a treatment to Group 1, Group 2 would then be a valid counterfactual to estimate a causal effect!</i></h4></center>
-
---
-
-<ul>
-  <li>But RCTs are not immune to every problem:</li>
-  <ul>
-    <li>If individuals self-select in participating to the experiment their would be a selection bias</li>
-    <li>Even without self-selection, if the population among which treatment is randomized is not representative there is a problem of external validity</li>
-    <li>For the RCT to work, individuals should comply with the treatment allocation</li>
-    <li>The sample must be sufficiently large for the average characteristics across groups to be close enough to their expected value</li>
-    <li>...</li>
-  </ul>
-</ul>
-
----
-
-### 2. Causality from randomness
-
-#### 2.2. Types of randomization
-
- * To some extent their are ways to deal with these problems 
-
---
-
-<ul>
-  <li>For instance if we want to ensure that a characteristic is well balanced among the two groups, we can <b>randomize within categories of this variable</b></li>
-  <ul>
-    <li>Instead of giving the treatment randomly and hoping that we will obtain the same % of females in both groups</li>
-    <li>We assign the treatment randomly among females and among males separately</li>
-    <li>This is called <b>randomizing by block</b></li>
-    <li><i>Note that this only works with observable characteristics!</i></li>
-  </ul>
-</ul>
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-```{r, eval = F}
-asec_2020 %>%
-  group_by(Sex) %>% # Randomize treatment by sex
-  mutate(Group = ifelse(rnorm(n(), 0, 1) > 0, 1, 0)) %>%
-  ungroup() %>% group_by(Group) %>%
-  summarise(...)
-```
-
----
-
-### 2. Causality from randomness
-
-#### 2.2. Types of randomization
-
-<ul>
-  <li>Now imagine that you want to estimate the impact of calory intake at the 10am break on pupils grades</li>
-  <ul>
-    <li>You regularly give a snack to a sample of randomly selected children and a few months later you test whether there is a significant difference between their grades and that of untreated children</li>
-    <li>Do you expect the estimated effect to reflect the actual impact you aim to measure?</li>
-  </ul>
-</ul>
-
---
-
-<ul>
-  <li>What if some children shared their snack with untreated children?</li>
-  <ul>
-    <li>These <i>treated children</i> would have <i>less calories</i> and then possibly lower grades than under full compliance</li>
-    <li>And their <i>untreated</i> friends would have <i>more calories</i> than expected and then possibly higher grades</li>
-    <li>Thus, this <b><i>spillover effect</i></b> would tend to fallaciously shrink the observed effect of the treatment</li>
-  </ul>
-</ul>
-
---
-
-.left-column[
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<ul>
-  <li>One solution to that problem is to <b>randomize by cluster</b></li>
-  <ul>
-    <li>Instead of considering the treatment to be at the child level</li>
-    <li>Consider that the treatment is a the school level</li>
-    <li>A treated unit is a school where some/all children are treated</li>
-    <li>An untreated school is a school where no child is treated</li>
-  </ul>
-</ul>
-]
-
---
-
-.right-column[
-<center><i>Beware that in terms of inference, computing standard errors the usual way while the treatment is at a broader observational level than the outcome would give fallaciously low standard errors, which would need to be corrected</i></center>
 ]
 
 ---
 
-### 2. Causality from randomness
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 2.3. Multiple testing
+#### 1.1. Structure
 
-<ul>
-  <li>Another inference issue that RCTs can be subject to is multiple testing</li>
-  <ul>
-    <li>If you conduct a well-designed RCT you might be tempted to exploit the causal framework to test a myriad of effects</li>
-  </ul>
-</ul>
-
---
-
-<ul>
-  <li>You randomize your treatment and you compare the averages of many outcomes between treated and untreated individuals</li>
-  <ul>
-    <li>You would be tempted to conclude that there is a significant effect for every variable whose corresponding p-value is lower that .05</li>
-    <li>But you cannot do that!</li>
-  </ul>
-</ul>
-
---
-
-<ul>
-  <li>The probability to have a p-value lower than .05 just by chance for one test is indeed 5%</li>
-  <ul>
-    <li>But if you do multiple tests in a row, the probability to have a p-value lower than .05 among these multiple tests is greater than 5%</li>
-    <li>The greater the number of tests you perform, the higher the probability to get a significant result just by chance</li>
-  </ul>
-</ul>
-
---
-
-<center><h4>This is what we call <i>multiple testing</i></h4></center>
-
----
-
-### 2. Causality from randomness
-
-#### 2.3. Multiple testing
- 
-```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "75%"}
-tibble(ntest = 1:50,
-       proba = 1 - (.95^ntest)) %>%
-  ggplot(., aes(x = ntest, y = proba)) + 
-  geom_point(alpha = .8, color = "#6794A7") +
-  scale_x_continuous("Number of tests", breaks = c(1, seq(10, 50, 10))) +
-  scale_y_continuous("Probability to find at least\n one significant variable",
-                     limits = 0:1, breaks = c(.05, seq(.2, 1, .2)),
-                     labels = paste0(100*c(.05, seq(.2, 1, .2)), "%")) +
-  geom_segment(x = 1, xend = 1, y = 0, yend = .05, linetype = "dashed") +
-  geom_segment(x = 0, xend = 1, y = .05, yend = .05, linetype = "dashed") 
-```
-
-
----
-
-### 2. Causality from randomness
-
-#### 2.3. Multiple testing
-
- * There are many ways to correct for multiple testing
-
-<p style = "margin-bottom:1.25cm;"></p>
-
---
-
-<ul>
-  <li>The simplest one is called the <b>Bonferroni</b> correction</li>
-  <ul>
-    <li>It consists in <b>multiplying the p-value by the number of tests</b></li>
-    <li>But it also leads to a large <b>loss of power</b> (the probability to find an effect when there is indeed an effect decreases a lot)</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.25cm;"></p>
-
---
-
-<ul>
-  <li>There are more sophisticated ways to deal with the problem, which can be categorized into two approaches</li>
-  <ul>
-    <li><b>Family Wise Error Rate</b>: Control the probability that there is at least one true assumption rejected</li>
-    <li><b>False Discovery Rate</b>: Control the share of true assumptions among rejected assumptions</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.25cm;"></p>
-
---
-
-<center><i>&#10140; We won't cover these methods in this course but keep the multiple testing issue in mind when you encounter a long series of statistical tests</i></center>
-
-
----
-
-### Overview
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Catch up: Randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. $\beta$ vs. $\hat{\beta}$
-
-#### 2. Catch up: Causality from randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Randomized Controlled Trials
- * 2.2. Types of randomization
- * 2.3. Multiple testing
-
-<p style = "margin-bottom:1cm;">
-
-#### 3. Applications in academic research
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Labor market discrimination (Behaghel et al., 2015)
- * 3.2. Intergenerational mobility (Chetty et al., 2014)
-
-#### 4. Wrap up!
-
----
-
-### Overview
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Catch up: Randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. $\beta$ vs. $\hat{\beta}$
-
-#### 2. Catch up: Causality from randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Randomized Controlled Trials
- * 2.2. Types of randomization
- * 2.3. Multiple testing
-
-<p style = "margin-bottom:1cm;">
-
-#### 3. Applications in academic research
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Labor market discrimination (Behaghel et al., 2015)
- * 3.2. Intergenerational mobility (Chetty et al., 2014)
- 
- 
----
-
-### 3. Applications in academic research
-
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
-
- * Research papers always start with an abstract that briefly describes the study:
+ * Research papers always start with an <b>abstract</b> that briefly <b>describes the study:</b>
  
 --
 
@@ -711,15 +293,15 @@ tibble(ntest = 1:50,
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.1. Structure
 
 <p style = "margin-bottom:-.5em;"></p>
 
 .pull-left[
 
-Typical structure of an empirical research paper:
+<b>Typical structure</b> of an empirical research paper:
 
 <p style = "margin-bottom:2em;"></p>
 
@@ -745,7 +327,7 @@ Typical structure of an empirical research paper:
 
 .pull-right[
 
-Structure of Behaghel et al. (2015) is this one:
+<b>Structure of Behaghel et al. (2015)</b> is this one:
 
 <ul>
   <li>Introduction</li>
@@ -774,9 +356,9 @@ Structure of Behaghel et al. (2015) is this one:
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.1. Structure
 
 <p style = "margin-bottom:2em;"></p>
 
@@ -796,9 +378,9 @@ Structure of Behaghel et al. (2015) is this one:
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.2. Data
 
 <p style = "margin-bottom:2em;"></p>
 
@@ -822,15 +404,15 @@ Structure of Behaghel et al. (2015) is this one:
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.2. Data
 
 <p style = "margin-bottom:2em;"></p>
 
-<center><h4>Sample description</h4></center>
+<center><b>Sample description</b></center>
 
-<p style = "margin-bottom:1.5em;"></p>
+<p style = "margin-bottom:1em;"></p>
 
 .left-column[
 
@@ -876,13 +458,18 @@ Structure of Behaghel et al. (2015) is this one:
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.2. Data
 
 * Import the data
 
-```{r}
+```{r, echo = F}
+library(haven)
+data_rct <- read_dta("data_candidates_mainsample.dta")
+```
+
+```{r, eval = F}
 library(haven)
 data_rct <- read_dta("data_candidates_mainsample.dta")
 View(data_rct)
@@ -896,31 +483,33 @@ View(data_rct)
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.2. Data
 
-* Recode the data
+* Subset the data
 
 ```{r, eval = F}
-data_rct <- data_rct %>% filter(!is.na(CVA)) %>%                    # Keep participating firms
-   mutate(treatment = ifelse(CVA == 1, "Treatment", "Control"),     # Recode treatment variable
-          minority = ifelse(ZouI == 1, "Minority", "Majority")) %>% # Recode minority variable
-  rename(interviewed = ENTRETIEN, weight = POIDS_SEL)               # Rename outcome and weight
+data_rct <- data_rct %>% 
+  filter(!is.na(CVA)) %>%                                       # Keep participating firms
+  rename(treatment = CVA, minority = ZouI,                      # Rename variables of interest
+         interview = ENTRETIEN, weight = POIDS_SEL) %>% 
+  select(treatment, minority, interview, weight)                # Select variables of interest
 
-head(data_rct %>% select(treatment, minority, interviewed, weight), 5)
+head(data_rct, 5)
 ```
 
 --
 
 .pull-left[
 ```{r, echo = F}
-data_rct <- data_rct %>% filter(!is.na(CVA)) %>%                    # Keep participating firms
-   mutate(treatment = ifelse(CVA == 1, "Treatment", "Control"),     # Recode treatment variable
-          minority = ifelse(ZouI == 1, "Minority", "Majority")) %>% # Recode minority variable
-  rename(interview = ENTRETIEN, weight = POIDS_SEL)                 # Rename outcome and weight
+data_rct <- data_rct %>% 
+  filter(!is.na(CVA)) %>%                                       # Keep participating firms
+  rename(treatment = CVA, minority = ZouI,                      # Rename variables of interest
+         interview = ENTRETIEN, weight = POIDS_SEL) %>% 
+  select(treatment, minority, interview, weight)                # Select variables of interest
 
-head(data_rct %>% select(treatment, minority, interview, weight), 5)
+head(data_rct, 5)
 ```
 ]
 
@@ -931,56 +520,59 @@ head(data_rct %>% select(treatment, minority, interview, weight), 5)
 
 <p style = "margin-bottom:3.5em;"></p>
 
-<center><i>&#10140; We want to know whether anonymizing resume helped reducing labord market discrimination toward the minority group</i></center>
+<center><i>&#10140; We want to know whether anonymizing resume helped reducing labor market discrimination toward the minority group</i></center>
 
 
 ]
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.3. Analysis
 
 <p style = "margin-bottom:1.5em;"></p>
 
 <ul>
-  <li>Authors use the following notations</li>
+  <li>Authors use the following <b>notations</b></li>
   <ul>
-    <li>\(An\) indicates whether the resume is anonymous</li>
-    <li>\(D\) indicates whether the candidate is from the minority</li>
-    <li>\(Y\) indicates whether the candidate obtained an interview</li>
+    <li>\(An\) indicates whether the resume is <b>anonymous</b></li>
+    <li>\(D\) indicates whether the candidate is from the <b>minority</b></li>
+    <li>\(Y\) indicates whether the candidate obtained an <b>interview</b></li>
   </ul>
 </ul>
 
 --
 
-<p style = "margin-bottom:2.5em;"></p>
+<p style = "margin-bottom:2.75em;"></p>
 
 <ul>
-  <li>The parameter of interest then writes:</li>
+  <li>The <b>parameter of interest</b> then writes:</li>
 </ul>
 
 $$\delta = \underbrace{(\overline{Y}^{An = 1, D = 1} - \overline{Y}^{An = 1, D = 0})}_{\substack{\text{Difference in interview rates}\\ \text{between the majority and the minority}\\ \text{when resumes are anonymized}}} - \underbrace{(\overline{Y}^{An = 0, D = 1} - \overline{Y}^{An = 0, D = 0})}_{\substack{\text{Difference in interview rates}\\ \text{between the majority and the minority}\\ \text{when resumes are } \underline{\text{not}} \text{ anonymized}}}$$
 
 --
 
-<p style = "margin-bottom:2.5em;"></p>
+<p style = "margin-bottom:2.75em;"></p>
 
-<h4>&#10140; What sign do you expect for \(\delta\)?</h4>
+<center><b>&#10140; What sign do you expect for \(\delta\)?</b></center>
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.3. Analysis
 
 ```{r, results='hide'}
-means <- data_rct %>% group_by(treatment, minority) %>%
+means <- data_rct %>% 
+  group_by(treatment, minority) %>%
   summarise(means = weighted.mean(interview, weight))
 ```
 
 --
+
+<p style = "margin-bottom:-.75em;"></p>
 
 ```{r, echo = F}
 kable(means, caption = "")
@@ -988,26 +580,45 @@ kable(means, caption = "")
 
 --
 
-```{r, results = 'hide'}
-means %>%
-  summarise(discrim = means[minority == "Minority"] - means[minority == "Majority"]) %>%
-  summarise(delta = discrim[treatment == "Treatment"] - discrim[treatment == "Control"])
+<p style = "margin-bottom:.8em;"></p>
+
+.pull-left[
+
+```{r, results='hide'}
+means <- means %>% group_by(treatment) %>%
+  summarise(discrim = means[2] - means[1])  
 ```
+
+<p style = "margin-bottom:-.75em;"></p>
+
+```{r, echo = FALSE}
+kable(means, caption = "")
+```
+
+
+]
 
 --
 
-```{r, echo = F}
-means %>%
-  summarise(discrim = means[minority == "Minority"] - means[minority == "Majority"]) %>%
-  summarise(delta = discrim[treatment == "Treatment"] - discrim[treatment == "Control"]) %>%
-  deframe()
+.pull-right[
+
+```{r}
+means$discrim[2] - means$discrim[1]
 ```
+
+<p style = "margin-bottom:1.25em;"></p>
+
+<center><i>The interview rate of the minority is even lower than the majority in the treatment group</i></center>
+
+]
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
-<b>1) Estimate this parameter of interest using a regression</b>
+#### 1) Estimate this parameter of interest using a regression 
 
 *Hint: To apply weights in a regression you can indicate the weighting variable in the* `weights` *argument*
 
@@ -1022,11 +633,11 @@ lm(y ~ x1 + x2 + ..., data, weights = )
 ```{r, eval = F}
 library(tidyverse)
 library(haven)
-data_rct <- read_dta("data_candidates_mainsample.dta") %>%          # read .dta data
-  filter(!is.na(CVA)) %>%                                           # Keep participating firms
-  mutate(treatment = ifelse(CVA == 1, "Treatment", "Control"),      # Recode treatment variable
-         minority = ifelse(ZouI == 1, "Minority", "Majority")) %>%  # Recode minority variable
-  rename(interview = ENTRETIEN, weight = POIDS_SEL)                 # Rename outcome and weight
+data_rct <- read_dta("data_candidates_mainsample.dta") %>%      # read .dta data
+  filter(!is.na(CVA)) %>%                                       # Keep participating firms
+  rename(treatment = CVA, minority = ZouI,                      # Rename variables of interest
+         interview = ENTRETIEN, weight = POIDS_SEL) %>% 
+  select(treatment, minority, interview, weight)                # Select variables of interest
 ```
 
 
@@ -1034,11 +645,27 @@ data_rct <- read_dta("data_candidates_mainsample.dta") %>%          # read .dta 
 
 $$\delta = \underbrace{(\overline{Y}^{An = 1, D = 1} - \overline{Y}^{An = 1, D = 0})}_{\substack{\text{Difference in interview rates}\\ \text{between the majority and the minority}\\ \text{when resumes are anonymized}}} - \underbrace{(\overline{Y}^{An = 0, D = 1} - \overline{Y}^{An = 0, D = 0})}_{\substack{\text{Difference in interview rates}\\ \text{between the majority and the minority}\\ \text{when resumes are } \underline{\text{not}} \text{ anonymized}}}$$
 
+--
+
+`r countdown(minutes = 7, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
+
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
- * To see how the difference in means between the minority and the majority varies between the treatment and the control group, these two variables should be interacted:
+<ul>
+  <li>We want to see how the effect of the minority variable varies with the treatment variable</li>
+  <ul>
+    <li>In the regression framework, this is what interactions allow to capture</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
  
 $$Y_i = \alpha + \beta D_i +\gamma An_i + \delta D_i\times An_i + \varepsilon_i$$
 
@@ -1046,42 +673,136 @@ $$Y_i = \alpha + \beta D_i +\gamma An_i + \delta D_i\times An_i + \varepsilon_i$
 
 ```{r}
 summary(lm(interview ~ minority + treatment + minority*treatment, 
-           data_rct, weights = weight))$coefficients[, c(1, 4)]
+           data_rct, weights = weight))$coefficients
 ```
 
 --
 
+<p style = "margin-bottom:1cm;"></p>
+
 <ul>
   <ul>
-    <li>The constant is the interview rate for individuals in both reference groups (majority/control), and interview rates for each group can be retrieved by adding the relevant coefficients to the constant</li>
-    <li>The coefficient associated with the minority variable is thus the difference in means between the minority and the majority group</li>
-    <li>And the coefficient associated with the interaction is how this difference in means differ between the treatment and the control group</li>
+    <li>\(\alpha\) is the interview rate for individuals in both reference groups (majority/control)</li>
+    <li>\(\beta\) is the difference in means between the minority and the majority in the control group</li>
+    <li>\(\gamma\) is the difference in means between the treatment and the control group for the majority group</li>
+    <li>\(\delta\) is how this difference in means between the minority and the majority differ between the treatment and the control group</li>
   </ul>
 </ul>
 
 ---
 
-### 3. Applications in academic research
+### 1. Causal approach (Behaghel et al., 2015)
 
-#### 3.1. Labor market discrimination (Behaghel et al., 2015)
+#### 1.3. Analysis
 
- * Why the effect is negative?
+<ul>
+  <li>Why the effect is negative?</li>
+</ul>
  
 --
  
 <center><img src = "table7.png" width = "600"/></center>
 
- * Self-selection issue: 
-  * There is a large difference between participating and non-participating firms in how their interview rates differ between the minority and the majority group
-  * Participating firms are not less likely to interview a candidate from the minority group, while it is the case for non-participating firm
-  * The difference in the interview gap between participating and non-participating firms amount to 14pp
+<p style = "margin-bottom:1cm;"></p>
 
+<ul>
+  <li>Compare the <b>interview rates</b> of the <b>control group</b> to those of <b>non-participating firms</b></li>
+  <ul>
+    <li><b>Non-participating firms interview way less the minority</b> compared to the control group</li>
+    <li>Only firms who interview as much from the minority as from the majority entered the program</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:.75cm;"></p>
+
+<center><i><b>&#10140; Selection bias</b></i></center>
 
 ---
 
-### 3. Applications in academic research
+<h3>Overview</h3>
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>1. Causal approach (Behaghel et al., 2015) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Structure</li>
+    <li>1.2. Data</li>
+    <li>1.3. Analysis</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>2. Correlational approach (Chetty et al., 2014)</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Empirical approach</li>
+    <li>2.2. National results</li>
+    <li>2.3. Spatial variations</li>
+    <li>2.4. Correlational analysis</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Structural approach (Nerlove, 1963)</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Theoretical modeling</li>
+    <li>3.3. Regression expression</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>1. Causal approach (Behaghel et al., 2015) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Structure</li>
+    <li>1.2. Data</li>
+    <li>1.3. Analysis</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>2. Correlational approach (Chetty et al., 2014)</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Empirical approach</li>
+    <li>2.2. National results</li>
+    <li>2.3. Spatial variations</li>
+    <li>2.4. Correlational analysis</li>
+  </ul>
+</ul>
+
+]
+
+---
+
+### 2. Correlational approach (Chetty et al., 2014)
+
+#### 2.1. Empirical approach
 
 <p style = "margin-bottom:3em;"></p>
 
@@ -1089,9 +810,9 @@ summary(lm(interview ~ minority + treatment + minority*treatment,
     
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.1. Empirical approach
 
  * How to characterize the joint distribution of parent and child income?
  
@@ -1117,11 +838,11 @@ $$\text{percentile}(y^c_i) = \alpha + \beta_{RRC}\text{percentile}(y^p_i)+\varep
     
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.1. Empirical approach
 
-<p style = "margin-bottom:2em;"></p>
+<p style = "margin-bottom:1.5cm;"></p>
 
 .pull-left[
 
@@ -1156,11 +877,75 @@ $$\begin{align}\beta & = \frac{\text{Cov}(x, y)}{\text{Var}(x)}\\[1em]
   </ul>
 </ul>
 ]
+    
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.1. Empirical approach
+
+<ul>
+  <li>Here is what the fit of the relationship between parents and child income ranks looks like</li>
+  <ul>
+    <li>We can't see much, even at 1% opacity</li>
+    <li>We can't even tell whether or not a linear fit is appropriate</li>
+  </ul>
+</ul>
+
+
+```{r, echo = F, fig.width = 7, fig.height = 3.75, out.width = "65%"}
+chetty <- read.csv("chetty_data.csv")
+
+ggplot(chetty, aes(x = parent_rank, y = child_rank)) + 
+  geom_point(alpha = .01, color = "#014D64") + 
+  geom_smooth(method = "lm", se = F, color = "black") +
+  xlab("Parent rank") + ylab("Child rank")
+```
+
+---
+
+### 2. Correlational approach (Chetty et al., 2014)
+
+#### 2.1. Empirical approach
+
+<ul>
+  <li>So authors compute the average child rank for each parent percentile group</li>
+  <ul>
+    <li>The resulting visual representation is much clearer</li>
+    <li>And it allows to see whether or not a linear specification is appropriate</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 3.75, out.width = "65%"}
+library(readxl)
+cef <- read_xls("online_data_tables.xls", skip = 8, sheet = 2) %>%
+  rename(child_quantile = `...1`) %>%
+  pivot_longer(-child_quantile, names_to = "parent_quantile", values_to = "pct") %>%
+  mutate(parent_quantile = as.numeric(parent_quantile)) %>%
+  group_by(parent_quantile) %>%
+  summarise(mean_child = 100 * mean(child_quantile * pct))
+  
+ggplot(cef, aes(x = parent_quantile, y = mean_child)) + 
+  geom_point(alpha = .8, color = "#014D64") + 
+  geom_smooth(method = "lm", se = F, color = "black") +
+  xlab("Parent rank") + 
+  ylab("Average child rank")
+```
+
+
+---
+
+### 2. Correlational approach (Chetty et al., 2014)
+
+#### 2.2. National results
+
+<center><img src = "rank_cef.png" width = "650"/></center>
+
+---
+
+### 2. Correlational approach (Chetty et al., 2014)
+
+#### 2.2. National results
 
 .left-column[
 <center><img src = "log_cef.png" width = "650"/></center>
@@ -1171,29 +956,156 @@ $$\begin{align}\beta & = \frac{\text{Cov}(x, y)}{\text{Var}(x)}\\[1em]
 <p style = "margin-bottom:6em;"></p>
 
 <ul>
-  <li>The IGE also implies to manage 0 and negative income</li>
+  <li>Authors do the same for the IGE</li>
 </ul>
 
 <p style = "margin-bottom:2em;"></p>
 
 <ul>
-  <li>Which is not the case with the RRC</li>
+  <li>For each parent income percentile:</li>
+  <ul>
+    <li>\(x\): Mean parent log income</li>
+    <li>\(y\): Mean child log income</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:2em;"></p>
+
+<ul>
+  <li>The relationship is non-linear</li>
 </ul>
 ]
 
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.3. Spatial variations
 
-<center><img src = "rank_cef.png" width = "650"/></center>
+<ul>
+  <li>Then authors estimate the rank-rank regression separately for each commuting zone</li>
+</ul>
+
+$$\text{percentile}(y^c_i) = \alpha + \beta_{RRC}\text{percentile}(y^p_i)+\varepsilon_i$$
+
+<p style = "margin-bottom:2cm;"></p>
+
+<ul>
+  <li>From these local estimations they derive <b>two statistics:</b></li>
+</ul>
+
+.pull-left[
+
+<p style = "margin-bottom:1cm;"></p>
+<center><b>Relative mobility:</b> \(\hat\beta_{RRC}\)</center>
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul>
+  <li>The slope of the rank-rank relationship</li>
+  <ul>
+    <li><b>Expected rank increase</b> for a children had their parents been ranked 1 percentile higher</li>
+    <li>The estimated increase indicates where the children would locate in <b>relative terms</b></li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<p style = "margin-bottom:1cm;"></p>
+<center><b>Absolute mobility:</b> \(\widehat{\alpha} + 25\times\hat\beta_{RRC}\)</center>
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul>
+  <li>The fitted value at \(x = 25\)</li>
+  <ul>
+    <li><b>Expected percentile rank</b> for children whose parents locate at the 25<sup>th</sup> percentile</li>
+    <li>The estimated percentile indicates where the children would locate in <b>absolute terms</b></li>
+  </ul>
+</ul>
+]
 
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.3. Spatial variations
+
+<ul>
+  <li>Here is an illustration on the national-level relationship:</li>
+  <ul>
+    <li></li>
+    <li></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 3.75, out.width = "65%"}
+ggplot(cef, aes(x = parent_quantile, y = mean_child)) + 
+  geom_point(alpha = .8, color = "#014D64") + 
+  xlab("Parent rank") + 
+  ylab("Average child rank")
+```
+
+---
+
+### 2. Correlational approach (Chetty et al., 2014)
+
+#### 2.3. Spatial variations
+
+<ul>
+  <li>Here is an illustration on the national-level relationship:</li>
+  <ul>
+    <li>The <b>relative mobility</b> is the slope - the rank-rank correlation</li>
+    <li></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 3.75, out.width = "65%"}
+coefs <- summary(lm(mean_child ~ parent_quantile, cef))$coefficients[, 1]
+
+ggplot(cef, aes(x = parent_quantile, y = mean_child)) + 
+  geom_point(alpha = .8, color = "#014D64") + 
+  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_segment(aes(x = 50, xend = 60, y = coefs[1] + 50*coefs[2], yend = coefs[1] + 50*coefs[2]), linetype = "dashed") + 
+  geom_segment(aes(x = 60, xend = 60, y = coefs[1] + 50*coefs[2], yend = coefs[1] + 60*coefs[2]), linetype = "dashed") + 
+  annotate("text", x = 65, y = coefs[1] + 55*coefs[2], label = 0.34) +
+  xlab("Parent rank") + 
+  ylab("Average child rank")
+```
+
+---
+
+### 2. Correlational approach (Chetty et al., 2014)
+
+#### 2.3. Spatial variations
+
+<ul>
+  <li>Here is an illustration on the national-level relationship:</li>
+  <ul>
+    <li>The <b>relative mobility</b> is the slope - the rank-rank correlation</li>
+    <li>The <b>absolute mobility</b> is the fitted value for x = 25</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 7, fig.height = 3.75, out.width = "65%"}
+ggplot(cef, aes(x = parent_quantile, y = mean_child)) + 
+  geom_point(alpha = .8, color = "#014D64") + 
+  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_segment(aes(x = 50, xend = 60, y = coefs[1] + 50*coefs[2], yend = coefs[1] + 50*coefs[2]), linetype = "dashed") + 
+  geom_segment(aes(x = 60, xend = 60, y = coefs[1] + 50*coefs[2], yend = coefs[1] + 60*coefs[2]), linetype = "dashed") + 
+  annotate("text", x = 65, y = coefs[1] + 55*coefs[2], label = 0.34) +
+  geom_segment(aes(x = 25, xend = 25, y = 32, yend = coefs[1] + 25*coefs[2]), linetype = "dashed") + 
+  geom_segment(aes(x = 1, xend = 25, y = coefs[1] + 25*coefs[2], yend = coefs[1] + 25*coefs[2]), linetype = "dashed") + 
+  annotate("text", x = 4, y = coefs[1] + 25*coefs[2] + 2, label =  round(coefs[1] + 25*coefs[2], 2)) +
+  xlab("Parent rank") + 
+  ylab("Average child rank")
+```
+
+---
+
+### 2. Correlational approach (Chetty et al., 2014)
+
+#### 2.3. Spatial variations
 
 .left-column[
 
@@ -1203,41 +1115,38 @@ $$\begin{align}\beta & = \frac{\text{Cov}(x, y)}{\text{Var}(x)}\\[1em]
 
 .right-column[
 
-Recall:
 
-$$\begin{align}&\text{percentile}(y^c_i) = \\&\hspace{2em}\alpha + \beta_{RRC}\text{percentile}(y^p_i)+\varepsilon_i\end{align}$$
+<p style = "margin-bottom:6em;"></p>
 
-<p style = "margin-bottom:3em;"></p>
+<ul>
+  <li>Authors compute intergenerational persistence in each commuting zone separately</li>
+</ul>
 
-From this equation we can estimate:
+<p style = "margin-bottom:2em;"></p>
 
- * Relative mobility: $\widehat{\beta_{RRC}}$
- * Absolute mobility: $\widehat{\alpha} + 25\times\widehat{\beta_{RRC}}$
-
-
-<p style = "margin-bottom:2.5em;"></p>
-
-And then estimate it separately for each commuting zone
+<ul>
+  <li>And plot the results on a map</li>
+</ul>
 
 ]
 
 
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.3. Spatial variations
 
 <center><img src = "map.png" width = "700"/></center>
 
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.4. Correlational analysis
 
 <ul>
-  <li>Authors then investigate whether local characteristics of commuting zones are related to upward mobility</li>
+  <li>Then they investigate whether local <b>characteristics of commuting zones</b> are related to mobility</li>
   <li>But regressing directly upward mobility on different characteristics would give:</li>
   <ul>
     <li>Lower coefficients for variables with bigger metrics (test scores)</li>
@@ -1250,7 +1159,7 @@ And then estimate it separately for each commuting zone
 <p style = "margin-bottom:1em;"></p>
 
 <ul>
-  <li>So authors standardize their variables for the comparability of their estimates</li>
+  <li>So authors <b>standardize</b> their <b>variables</b> for the comparability of their estimates</li>
 </ul>
 
 <p style = "margin-bottom:2.5em;"></p>
@@ -1261,21 +1170,27 @@ $$\beta = \frac{\text{Cov}(\frac{x}{\text{SD}(x)}, \frac{y}{\text{SD}(y)})}{\tex
 
 --
 
-<p style = "margin-bottom:2.5em;"></p>
+<p style = "margin-bottom:1cm;"></p>
 
+.pull-left[
 <ul>
   <li>To simplify this equation, you need to know that:</li>
   <ul>
-    <li>\(\text{Var}(kX) = k^2\text{Var}(X)\)</li>
-    <li>\(\text{Cov}(k_1X, k_2Y) = k_1k_2\text{Cov}(X, Y)\)</li>
+    <li>\(\text{Var}(aX) = a^2\text{Var}(X)\)</li>
+    <li>\(\text{Cov}(aX, bY) =ab\text{Cov}(X, Y)\)</li>
   </ul>
 </ul>
+]
+
+.pull-right[
+<center><a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/moments.pdf"><img style = "margin-bottom:-.5cm;" src = "moments.png" width = "150"/></a>
+]
 
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.4. Correlational analysis
 
 <p style = "margin-bottom:2em;"></p>
 
@@ -1292,9 +1207,9 @@ $$\begin{align}\beta & = \frac{\text{Cov}(\frac{x}{\text{SD}(x)}, \frac{y}{\text
 
 ---
 
-### 3. Applications in academic research
+### 2. Correlational approach (Chetty et al., 2014)
 
-#### 3.2. Intergenerational mobility (Chetty et al., 2014)
+#### 2.4. Correlational analysis
 
 .left-column[
 <center><img src = "correlates.png" width = "600"/></center>
@@ -1312,119 +1227,310 @@ Note that these coefficients combine:
   <li>A selection effect</li>
 </ul>
 ]
----
-
-### Overview
-
-<p style = "margin-bottom:1.75cm;">
-
-#### 1. Catch up: Randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. $\beta$ vs. $\hat{\beta}$
-
-#### 2. Catch up: Causality from randomness &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Randomized Controlled Trials
- * 2.2. Types of randomization
- * 2.3. Multiple testing
-
-<p style = "margin-bottom:1cm;">
-
-#### 3. Applications in academic research &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Labor market discrimination (Behaghel et al., 2015)
- * 3.2. Intergenerational mobility (Chetty et al., 2014)
-
-#### 4. Wrap up!
 
 ---
 
-### 4. Wrap up!
+<h3>Overview</h3>
 
-#### $\beta$ vs. $\hat{\beta}$
+<p style = "margin-bottom:3cm;"></p>
 
-<ul>
-  <li>Keep in mind that consistency, unbiasedness, and precision, are very distinct concepts</li>
-  <ul>
-    <li>Consider these 4 cases where we compare the distribution of estimations \(\hat{\beta}\) from 1,000 randomly drawn samples to the true \(\beta\)</li>
+.pull-left[
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>1. Causal approach (Behaghel et al., 2015) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Structure</li>
+    <li>1.2. Data</li>
+    <li>1.3. Analysis</li>
   </ul>
 </ul>
 
---
+<p style = "margin-bottom:1cm;"></p>
 
-.left-column[
 
-<p style = "margin-bottom:-.25cm;"></p>
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>2. Correlational approach (Chetty et al., 2014) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Empirical approach</li>
+    <li>2.2. National results</li>
+    <li>2.3. Spatial variations</li>
+    <li>2.4. Correlational analysis</li>
+  </ul>
+</ul>
 
-```{r, echo = F, fig.width = 7, fig.height = 4, out.width = "90%"}
-tibble(Estimation = c(rnorm(1000, 2, .1), rnorm(1000, 3, .1), 
-                      rnorm(1000, 2, 1), rnorm(1000, 3, 1)),
-       Precision = rep(c("Precise", "Imprecise"), each = 2000),
-       Biasedness = rep(rep(c("Unbiased", "Biased"), each = 1000), 2)) %>%
-  ggplot(., aes(x = Estimation)) +
-  geom_density(fill = "#6794A7", color = "#014D64", alpha = .8, bw = .5) + facet_grid(Precision ~ Biasedness) +
-  geom_vline(xintercept = 2, linetype = "dashed") +
-  scale_x_continuous(limits = c(0, 5))
-```
 ]
 
-
---
-
-.right-column[
-
-<p style = "margin-bottom:-.5cm;"></p>
-
-
-<ul>
-  <li>An estimator is <b>unbiased</b> if on expectation it gives the true value we want to estimate</li>
+.pull-right[
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Structural approach (Nerlove, 1963)</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Theoretical modeling</li>
+    <li>3.3. Regression expression</li>
+  </ul>
 </ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
 
-<p style = "margin-bottom:.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>precise</b> if the estimations it provides are close to each other (low variance)</li>
-</ul>
-
-<p style = "margin-bottom:.5cm;"></p>
-
-<ul>
-  <li>An estimator is <b>consistent</b> if the larger the sample size the higher the probability that we obtain the true value we want to estimate</li>
-</ul>
-
-  
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 ]
-
 
 ---
 
-### 4. Wrap up!
+<h3>Overview</h3>
 
-#### Randomized controlled trials 
+<p style = "margin-bottom:3cm;"></p>
 
-<ul>
-  <li>A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is randomly allocated in the population</li>
-  <ul>
-    <li>It is a way to obtain causality from randomness as on expectation two randomly drawn population have the same average observable and unobservable characteristics, which solves the omitted variable bias</li>
+.pull-left[
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>1. Causal approach (Behaghel et al., 2015) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Structure</li>
+    <li>1.2. Data</li>
+    <li>1.3. Analysis</li>
   </ul>
 </ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>2. Correlational approach (Chetty et al., 2014) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Empirical approach</li>
+    <li>2.2. National results</li>
+    <li>2.3. Spatial variations</li>
+    <li>2.4. Correlational analysis</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Structural approach (Nerlove, 1963)</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Theoretical modeling</li>
+    <li>3.3. Regression expression</li>
+  </ul>
+</ul>
+ 
+]
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.1. Motivation
+
+<ul>
+  <li>The <b>structural approach</b> refers to the following methodology:</li>
+  <ol>
+    <li><b>Theoretical modeling</b> of the phenomenon of interest</li>
+    <li><b>Expressing the model</b> parameters <b>as</b> the coefficients of <b>a regression</b></li>
+    <li>Run the corresponding regressions on data to <b>estimate the parameters</b> of the model</li>
+  </ol>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+--
+
+<ul>
+  <li>Structural paper are <b>more and more complex</b> on the theoretical side</li>
+  <ul>
+    <li>The current standards in this literature are beyond the scope of this course</li>
+    <li>So we are going to explore a quite <b>old study</b> for this section</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+--
+
+<ul>
+  <li>Nerlove (1963) studies the <b>returns to scale in the electricity supply industry</b></li>
+  <ul>
+    <li>What is the output elasticity of each input?</li>
+    <li>Are the returns to scale <b>positive or negative?</b></li>
+  </ul>
+</ul>
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.1. Motivation
+
+ * Nerlove (1963) assume the following <b>production function:</b>
+
+$$Y = A L^\lambda K^\kappa F^\varphi u$$
+
+<p style = "margin-bottom:1cm;"></p>
+
+--
+
+ * And the following <b>cost function:</b>
+ 
+$$C = p_LL + p_KK+p_FF$$
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+<center>With:</center>
+
+<p style = "margin-bottom:.5cm;"></p>
+ 
+.pull-left[
+.pull-left[
+<center><b>Inputs</b></center>
+
+$$\begin{align}
+L:& \text{ Labor input}\\
+K:& \text{ Capital input}\\
+F:& \text{ Fuel input}
+\end{align}$$
+]
+.pull-right[
+<center><b>Output elasticities</b></center>
+
+$$\begin{align}
+\lambda:& \text{ OE of labor}\\
+\kappa:& \text{ OE of capital}\\
+\varphi:& \text{ OE of fuel}
+\end{align}$$
+]
+]
+
+.pull-right[
+.pull-left[
+<center><b>Prices</b></center>
+
+$$\begin{align}
+p_L:& \text{ Wage rate}\\
+p_K:& \text{ Price of capital}\\
+p_F:& \text{ Price of fuel}
+\end{align}$$
+]
+.pull-right[
+<center><b>Other parameters</b></center>
+
+$$\begin{align}
+A:& \text{ Total factor}\\
+       & \text{ productivity}\\
+u:& \text{ Efficiency residual}
+\end{align}$$
+]
+]
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.1. Motivation
+
+<ul>
+  <li><b>Theoretically</b> we could <b>estimate</b> the output elasticities <b>directly from the production function</b></li>
+  <ul>
+    <li>The trick is to <b>put everything in log</b> such that the exponents become the parameters of the equation</li>
+    <li>We call this transformation a <b>log-linearization</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+$$\begin{align}
+\log(Y) & = \log\big(A L^\lambda K^\kappa F^\varphi u\big)\\
+ &= \log(A) + \log\big(L^\lambda\big) + \log\big(K^\kappa\big) + \log\big(F^\varphi\big) + \log(u)\\
+ &= \underbrace{\log(A)}_{\text{Constant}} + \lambda\log(L) + \kappa\log(K) + \varphi\log(F) + \underbrace{\log(u)}_{\text{Residuals}}
+\end{align}$$
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+<ul>
+  <li>Regressing log output on the log inputs directly gives the <b>elasticities</b></li>
+  <ul>
+    <li>But Nerlove (1963) does not have access to data on firms' inputs</li>
+    <li>Still, he has <b>data on the price</b> of each input</li>
+    <li>His solution is to derive an expression that allows to <b>estimate the elasticities from the price</b></li>
+  </ul>
+</ul>
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.2. Theoretical modeling
+
+<ul>
+  <li>To <b>simplify</b> algebra, we're going to consider <b>capital and labor only</b></li>
+  <ul>
+    <li>But the principle remains the same</li>
+    <li>We need to <b>solve the model</b> by minimizing the cost constrained by the production function</li>
+  </ul>
+</ul>
+
+$$\begin{cases}
+\text{min } & C = p_LL + p_KK\\
+\text{s.t. } & Y = A L^\lambda K^\kappa  u
+\end{cases} \,\,
+\Longleftrightarrow \,\, \text{min }\,\mathcal{L} = p_LL + p_KK + \mu(Y - A L^\lambda K^\kappa  u)$$
 
 --
 
 .pull-left[
 
-<p style = "margin-bottom:1.75cm;"></p>
+ * Equate partial derivatives to 0
 
-<ul>
-  <li>But RCTs are not immune to every problem:</li>
-  <ul>
-    <li>Self-selection issues can arise</li>
-    <li>The population should be representative for external validity</li>
-    <li>Individuals should comply with the treatment allocation</li>
-    <li>The sample must be sufficiently large</li>
-    <li>...</li>
-  </ul>
-</ul>
+$$\frac{\partial \mathcal{L}}{\partial L} = 0 \Leftrightarrow p_L = \mu A \lambda L^{\lambda-1}K^\kappa  u$$
+$$\frac{\partial \mathcal{L}}{\partial K} = 0 \Leftrightarrow p_K = \mu A \kappa L^\lambda K^{\kappa-1} u$$
+
+$$\frac{\partial \mathcal{L}}{\partial \lambda} = 0 \Leftrightarrow Y = A L^\lambda K^\kappa  u$$
+]
+
+--
+
+.pull-right[
+
+ * Same with $K$ and $L$ as functions of each other
+
+$$\begin{align}
+\frac{p_L}{p_K} & = \frac{\mu A \lambda L^{\lambda-1}K^\kappa  u}{\mu A \kappa L^\lambda K^{\kappa-1} u}\\
+ & = \frac{\lambda L^{\lambda-1}K^\kappa}{\kappa L^\lambda K^{\kappa-1}} = \frac{\lambda K}{\kappa L}
+\end{align}$$
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+.pull-left[
+$$L = K \frac{p_K}{p_L}\frac{\lambda}{\kappa}$$
+]
+.pull-right[
+$$K = L \frac{p_L}{p_K}\frac{\kappa}{\lambda}$$
+]
+]
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.2. Theoretical modeling
+
+
+.pull-left[
+
+ * Express $Y$ as a function of $L$ only and solve for $L$
+
+$$Y = A L^\lambda \bigg(L \frac{p_L}{p_K}\frac{\kappa}{\lambda}\bigg)^\kappa u$$
+
+$$L^{\lambda+\kappa} =\frac{Y}{Au}\frac{1}{\bigg(\frac{p_L}{p_K}\frac{\kappa}{\lambda}\bigg)^\kappa}$$
+
+
+$$ L= \left[\frac{Y}{Au}\frac{1}{\bigg(\frac{p_L}{p_K}\frac{\kappa}{\lambda}\bigg)^\kappa}\right]^{\frac{1}{\lambda + \kappa}} = \bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}\bigg(\frac{p_K}{p_L}\frac{\lambda}{\kappa}\bigg)^\frac{\kappa}{\lambda+\kappa}$$
 
 ]
 
@@ -1432,22 +1538,273 @@ tibble(Estimation = c(rnorm(1000, 2, .1), rnorm(1000, 3, .1),
 
 .pull-right[
 
+ * Same with $K$
+ 
+$$Y = A \bigg(K \frac{p_K}{p_L}\frac{\lambda}{\kappa}\bigg)^\lambda K^\kappa u$$
+$$K^{\lambda+\kappa} =\frac{Y}{Au}\frac{1}{\bigg(\frac{p_K}{p_L}\frac{\lambda}{\kappa}\bigg)^\lambda}$$
+
+
+$$K = \left[\frac{Y}{Au}\frac{1}{\bigg(\frac{p_K}{p_L}\frac{\lambda}{\kappa}\bigg)^\lambda}\right]^{\frac{1}{\lambda + \kappa}}  = \bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}\bigg(\frac{p_L}{p_K}\frac{\kappa}{\lambda}\bigg)^\frac{\lambda}{\lambda+\kappa}$$
+]
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.2. Theoretical modeling
+
+ * Inject $K$ and $L$ back in the cost function and factorize
+
+$$C =p_L\bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}\bigg(\frac{p_K}{p_L}\frac{\lambda}{\kappa}\bigg)^\frac{\kappa}{\lambda+\kappa} + p_K\bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}\bigg(\frac{p_L}{p_K}\frac{\kappa}{\lambda}\bigg)^\frac{\lambda}{\lambda+\kappa}$$
+
+
+--
+
+<p style = "margin-bottom:.8cm;"></p>
+
+$$C =\bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}\left[p_L\bigg(\frac{p_K}{p_L}\frac{\lambda}{\kappa}\bigg)^\frac{\kappa}{\lambda+\kappa} + p_K\bigg(\frac{p_L}{p_K}\frac{\kappa}{\lambda}\bigg)^\frac{\lambda}{\lambda+\kappa}\right]$$
+
+--
+
+<p style = "margin-bottom:.8cm;"></p>
+
+$$C =\bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}\left[p_L^{1 -\frac{\kappa}{\lambda+\kappa}}p_K^{\frac{\kappa}{\lambda+\kappa} }\bigg(\frac{\lambda}{\kappa}\bigg)^\frac{\kappa}{\lambda+\kappa} + p_K^{1 - \frac{\lambda}{\lambda+\kappa}}p_L^{\frac{\lambda}{\lambda+\kappa} }\bigg(\frac{\kappa}{\lambda}\bigg)^\frac{\lambda}{\lambda+\kappa}\right]$$
+
+--
+
+<p style = "margin-bottom:.8cm;"></p>
+
+$$C =\bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}\left[p_L^{\frac{\lambda}{\lambda+\kappa}}p_K^{\frac{\kappa}{\lambda+\kappa} }\bigg(\frac{\lambda}{\kappa}\bigg)^\frac{\kappa}{\lambda+\kappa} + p_K^{\frac{\kappa}{\lambda+\kappa}}p_L^{\frac{\lambda}{\lambda+\kappa} }\bigg(\frac{\kappa}{\lambda}\bigg)^\frac{\lambda}{\lambda+\kappa}\right]$$
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.2. Theoretical modeling
+
+$$C =\bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}\left[p_L^{\frac{\lambda}{\lambda+\kappa}}p_K^{\frac{\kappa}{\lambda+\kappa} }\bigg(\frac{\lambda}{\kappa}\bigg)^\frac{\kappa}{\lambda+\kappa} + p_K^{\frac{\kappa}{\lambda+\kappa}}p_L^{\frac{\lambda}{\lambda+\kappa} }\bigg(\frac{\kappa}{\lambda}\bigg)^\frac{\lambda}{\lambda+\kappa}\right]$$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ 
+$$C =\bigg(\frac{Y}{Au}\bigg)^\frac{1}{\lambda + \kappa}p_L^{\frac{\lambda}{\lambda+\kappa}}p_K^{\frac{\kappa}{\lambda+\kappa} }\left[\bigg(\frac{\lambda}{\kappa}\bigg)^\frac{\kappa}{\lambda+\kappa} +\bigg(\frac{\kappa}{\lambda}\bigg)^\frac{\lambda}{\lambda+\kappa}\right]$$
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+ * Isolate what's constant, each variable, and the residual term:
+
+<p style = "margin-bottom:1cm;"></p>
+
+$$C =\underbrace{\left[\frac{\big(\frac{\lambda}{\kappa}\big)^\kappa +\big(\frac{\kappa}{\lambda}\big)^\lambda}{A}\right]^\frac{1}{\lambda + \kappa}}_{\text{Constant}} \times\underbrace{Y^\frac{1}{\lambda + \kappa}}_{\text{Output}} \times\underbrace{p_L^{\frac{\lambda}{\lambda+\kappa}}}_{\text{Wage}}\times\underbrace{p_K^{\frac{\kappa}{\lambda+\kappa} }}_{\substack{\text{Price of}\\\text{Capital}}}\times\underbrace{u^\frac{1}{\lambda+\kappa}}_{\substack{\text{Residual}\\\text{term}}}$$
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.3. Regression expression
+
 <ul>
-  <li>There are different types of randomization to help dealing with such problems</li>
+  <li>At this stage we can <b>log-linearize the equation:</b></li>
+</ul>
+
+$$C =\underbrace{\left[\frac{\big(\frac{\lambda}{\kappa}\big)^\kappa +\big(\frac{\kappa}{\lambda}\big)^\lambda}{A}\right]^\frac{1}{\lambda + \kappa}}_{\text{Constant}} \times\underbrace{Y^\frac{1}{\lambda + \kappa}}_{\text{Output}} \times\underbrace{p_L^{\frac{\lambda}{\lambda+\kappa}}}_{\text{Wage}}\times\underbrace{p_K^{\frac{\kappa}{\lambda+\kappa} }}_{\substack{\text{Price of}\\\text{Capital}}}\times\underbrace{u^\frac{1}{\lambda+\kappa}}_{\substack{\text{Residual}\\\text{term}}}$$
+
+
+--
+
+<p style = "margin-bottom:.8cm;"></p>
+
+$$\log (C) =\log \Bigg(\left[\frac{\big(\frac{\lambda}{\kappa}\big)^\kappa +\big(\frac{\kappa}{\lambda}\big)^\lambda}{A}\right]^\frac{1}{\lambda + \kappa} \Bigg) + \log \bigg(Y^\frac{1}{\lambda + \kappa}\bigg) + \log \bigg(p_L^{\frac{\lambda}{\lambda+\kappa}}\bigg) + \log \bigg(p_K^{\frac{\kappa}{\lambda+\kappa} }\bigg) + \log \bigg(u^\frac{1}{\lambda+\kappa}\bigg)$$
+--
+
+<p style = "margin-bottom:.8cm;"></p>
+
+$$\log (C) = \underbrace{\log \Bigg(\left[\frac{\big(\frac{\lambda}{\kappa}\big)^\kappa +\big(\frac{\kappa}{\lambda}\big)^\lambda}{A}\right]^\frac{1}{\lambda + \kappa} \Bigg)}_{\alpha}  +  \underbrace{\frac{1}{\lambda + \kappa}}_{\beta}\log(Y) + \underbrace{\frac{\lambda}{\lambda+\kappa}}_{\gamma}\log(p_L) + \underbrace{\frac{\kappa}{\lambda+\kappa}}_{\delta}\log(p_K) + \underbrace{\log \bigg(u^\frac{1}{\lambda+\kappa}\bigg)}_{\varepsilon}$$
+
+---
+
+### 3. Structural approach (Nerlove, 1963)
+
+#### 3.3. Regression expression
+
+<ul>
+  <li>Finally we end up with this <b>regression model:</b></li>
   <ul>
-    <li><b>Randomization by block for small samples:</b> Randomly assign the treatment within groups of individuals whose characteristic should be balanced</li>
-    <li><b>Randomization by cluster for spillovers:</b> If spillovers may occur within given units, consider these units as the observational level for the treatment allocation</li>
-    <li>...</li>
+    <li>Where <b>coefficients</b> are <b>composite</b> objects of the <b>parameters</b> of the structural model</li>
   </ul>
 </ul>
 
+$$\log(C)= \alpha + \beta\log(Y) + \gamma\log(p_L) + \delta\log(p_K) + \varepsilon$$
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+
+<ul>
+  <li>But note that to <b>test for CRS</b>, we don't even need to derive \(\kappa\) and \(\lambda\) explicitely</li>
+</ul>
+
+$$\gamma = \frac{\lambda}{\lambda + \kappa} \,\,\,\, ; \,\,\,\, \delta = \frac{\kappa}{\lambda + \kappa}$$
+
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul>
+  <li>Indeed, the <b>null hypothesis</b> for constant returns to scales writes</li>
+</ul>
+
+$$H_0: \lambda + \kappa = 1 \,\,\,\, \Leftrightarrow \,\,\,\, \frac{\lambda + \kappa}{\lambda + \kappa} = \frac{1}{1} \,\,\,\, \Leftrightarrow \,\,\,\, \frac{\lambda}{\lambda + \kappa} + \frac{\kappa}{\lambda + \kappa} = 1 \,\,\,\, \Leftrightarrow \,\,\,\, \gamma + \delta = 1 $$
+---
+
+class: inverse, hide-logo
+
+### Practice
+
+#### 1) Import the dataset from Nerlove (1963)
+
+```{r}
+library(haven)
+nerlove <- read_dta("nerlove63.dta")
+str(nerlove, give.attr = F)
+```
+
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+#### 2) Estimate the parameters of this regression:
+
+$$\log(C)= \alpha + \beta\log(Y) + \gamma\log(p_L) + \delta\log(p_K) + \varepsilon$$
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+#### 3) Use `linearHypothesis()` from the `car` package to test for CRS
+
+--
+
+`r countdown(minutes = 7, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+#### Estimate the parameters of this regression:
+
+$$\log(C)= \alpha + \beta\log(Y) + \gamma\log(p_L) + \delta\log(p_K) + \varepsilon$$
+
+--
+
+```{r}
+summary(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlove))$coefficients
+```
+
+--
+
+<p style = "margin-bottom:1.25em;"></p>
+
+#### Use `linearHypothesis()` from the `car` package to test for CRS
+
+--
+
+```{r, eval = F}
+library(car)
+linearHypothesis(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlove),
+                 "log(output) + log(plabor) = 1")
+```
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+```{r, eval = F}
+linearHypothesis(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlove),
+                 "log(output) + log(plabor) = 1")
+```
+
+
+```{r, echo = F}
+library(car)
+linearHypothesis(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlove),
+                 "log(output) + log(plabor) = 1")
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>The p-value is equal to 3.56%</li>
+  <ul>
+    <li>We can reject the hypothesis of constant returns to scale at the 5% confidence level</li>
+    <li>But we cannot reject the hypothesis at the 1% confidence level</li>
+  </ul>
+</ul>
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>1. Causal approach (Behaghel et al., 2015) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Structure</li>
+    <li>1.2. Data</li>
+    <li>1.3. Analysis</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+
+<ul style = "margin-left:-.5cm;list-style: none">
+  <li><b>2. Correlational approach (Chetty et al., 2014) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Empirical approach</li>
+    <li>2.2. National results</li>
+    <li>2.3. Spatial variations</li>
+    <li>2.4. Correlational analysis</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Structural approach (Nerlove, 1963) &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Theoretical modeling</li>
+    <li>3.3. Regression expression</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
 ]
 
 ---
 
 ### 4. Wrap up!
 
-#### Labor market discrimination (Behaghel et al., 2015)
+#### Causal approach (Behaghel et al., 2015)
 
  * Applicants resumes randomly anonymized or not before being sent to employers
  
@@ -1461,7 +1818,7 @@ $$Y_i = \alpha + \beta D_i +\gamma An_i + \delta D_i\times An_i + \varepsilon_i$
 
 ```{r}
 summary(lm(interview ~ minority + treatment + minority*treatment, 
-           data_rct, weights = weight))$coefficients[, c(1, 4)]
+           data_rct, weights = weight))$coefficients
 ```
 
 <p style = "margin-bottom:1cm;"></p>
@@ -1472,7 +1829,7 @@ summary(lm(interview ~ minority + treatment + minority*treatment,
 
 ### 4. Wrap up!
 
-#### Intergenerational mobility (Chetty et al., 2014)
+#### Correlational approach (Chetty et al., 2014)
 
 $$\text{percentile}(y^c_i) = \alpha + \beta_{RRC}\text{percentile}(y^p_i)+\varepsilon_i$$
 --
@@ -1499,3 +1856,33 @@ $$\text{percentile}(y^c_i) = \alpha + \beta_{RRC}\text{percentile}(y^p_i)+\varep
 </ul>
 ]
 
+---
+
+### 4. Wrap up!
+
+#### Structural approach (Nerlove, 1963)
+
+ * **Theoretical modeling**
+
+$$\begin{cases}
+\text{min } & C = p_LL + p_KK\\
+\text{s.t. } & Y = A L^\lambda K^\kappa  u
+\end{cases} \,\,
+\Longleftrightarrow \,\, \text{min }\,\mathcal{L} = p_LL + p_KK + \mu(Y - A L^\lambda K^\kappa  u)$$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * **Regression expression**
+ 
+$$\log (C) = \underbrace{\log \Bigg(\left[\frac{\big(\frac{\lambda}{\kappa}\big)^\kappa +\big(\frac{\kappa}{\lambda}\big)^\lambda}{A}\right]^\frac{1}{\lambda + \kappa} \Bigg)}_{\alpha}  +  \underbrace{\frac{1}{\lambda + \kappa}}_{\beta}\log(Y) + \underbrace{\frac{\lambda}{\lambda+\kappa}}_{\gamma}\log(p_L) + \underbrace{\frac{\kappa}{\lambda+\kappa}}_{\delta}\log(p_K) + \underbrace{\log \bigg(u^\frac{1}{\lambda+\kappa}\bigg)}_{\varepsilon}$$
+
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * **Estimation**
+ 
+$$\log(C)= \alpha + \beta\log(Y) + \gamma\log(p_L) + \delta\log(p_K) + \varepsilon \,\,\,\, \Rightarrow \,\,\,\, H_0: \gamma + \delta = 1$$
