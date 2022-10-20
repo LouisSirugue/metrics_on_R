@@ -3,13 +3,16 @@ title: "Multivariate regressions"
 subtitle: "Lecture 9"
 author: "<br>Louis SIRUGUE"
 date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
-  xaringan::moon_reader: 
+  xaringan::moon_reader:  
     css: 
         - xaringan-themer.css
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -35,7 +38,7 @@ set.seed(1)
 
 <style> .left-column {width: 65%;} .right-column {width: 35%;} </style>
 
-### Last time we saw
+### Quick reminder
 
 #### 1. Joint distribution
 
@@ -85,7 +88,7 @@ plot_ly(x=den3d$x, y=den3d$y, z=den3d$z, colorscale ='YlGnBu') %>% add_surface()
 
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 1. Joint distribution
 
@@ -120,7 +123,7 @@ $$ \text{Cov}(x, y) = \frac{1}{N}\sum_{i=1}^{N}(x_i − \bar{x})(y_i − \bar{y}
  
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 2. Regression
 
@@ -181,7 +184,7 @@ $$\hat{\alpha} = \bar{y} - \hat{\beta} \times\bar{x}$$
 
 ---
 
-### Last time we saw
+### Quick reminder
 
 #### 3. Binary variables
 
@@ -255,6 +258,7 @@ ggplot(data_binx, aes(x = as.factor(x), y = y)) +
 ]
 
 ---
+class: inverse, hide-logo
 
 ### Warm up practice
 
@@ -280,7 +284,10 @@ ggplot(data_binx, aes(x = as.factor(x), y = y)) +
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
 ---
+class: inverse, hide-logo
 
 ### Solution
 
@@ -303,6 +310,7 @@ lm(Earnings ~ Sex, asec)
 ```
 
 ---
+class: inverse, hide-logo
 
 ### Solution
 
@@ -346,40 +354,67 @@ asec %>%
 
 ---
 
+<h3>Today: Multivariate regressions</h3>
 
-<h3>Today: Multivariate regressions!</h3>
+--
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Adding variables
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Continuous variables
- * 1.2. Discrete variables
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Adding variables</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Continuous variables</li>
+    <li>1.2. Discrete variables</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Control variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Motivation</li>
+    <li>2.2. Discrete controls</li>
+    <li>2.3. Continuous controls</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Interactions</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Discrete interactions</li>
+    <li>3.3. Continuous interactions</li>
+  </ul>
+</ul>
  
-#### 2. Control variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Motivation
- * 2.2. Discrete controls
- * 2.3. Continuous controls
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 3. Interactions
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Motivation
- * 3.2. Discrete interactions
- * 3.3. Continuous interactions
-
-#### 4. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
 ---
 
-<h3>Today: Multivariate regressions!</h3>
+<h3>Today: Multivariate regressions</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Adding variables
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Continuous variables
- * 1.2. Discrete variables
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Adding variables</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Continuous variables</li>
+    <li>1.2. Discrete variables</li>
+  </ul>
+</ul>
+]
  
 ---
 
@@ -892,43 +927,76 @@ lm(Earnings ~ fac_cat, asec)
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Adding variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Continuous variables
- * 1.2. Discrete variables
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Adding variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Continuous variables</li>
+    <li>1.2. Discrete variables</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Control variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Motivation</li>
+    <li>2.2. Discrete controls</li>
+    <li>2.3. Continuous controls</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Interactions</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Discrete interactions</li>
+    <li>3.3. Continuous interactions</li>
+  </ul>
+</ul>
  
-#### 2. Control variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Motivation
- * 2.2. Discrete controls
- * 2.3. Continuous controls
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 3. Interactions
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Motivation
- * 3.2. Discrete interactions
- * 3.3. Continuous interactions
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
-#### 4. Wrap up!
 
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Adding variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Continuous variables
- * 1.2. Discrete variables
- 
-#### 2. Control variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Motivation
- * 2.2. Discrete controls
- * 2.3. Continuous controls
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Adding variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Continuous variables</li>
+    <li>1.2. Discrete variables</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Control variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Motivation</li>
+    <li>2.2. Discrete controls</li>
+    <li>2.3. Continuous controls</li>
+  </ul>
+</ul>
+
+]
 
 ---
 
@@ -1526,6 +1594,7 @@ plot_ly(ggcurve, x = ~gini, y = ~third_variable, z = ~ige) %>%
 ```
 
 ---
+class: inverse, hide-logo
 
 ### Practice
 
@@ -1547,7 +1616,10 @@ plot_ly(ggcurve, x = ~gini, y = ~third_variable, z = ~ige) %>%
 
 <center><h3><i>You've got 5 minutes!</i></h3></center>
 
+`r countdown(minutes = 5, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
 ---
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1570,6 +1642,7 @@ lm(Earnings ~ Hours + Sex, asec)$coefficients
 ```
 
 ---
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1588,54 +1661,93 @@ lm(Earnings ~ Hours + Sex, asec)$coefficients
 
 ]
 
-
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Adding variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Continuous variables
- * 1.2. Discrete variables
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Adding variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Continuous variables</li>
+    <li>1.2. Discrete variables</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Control variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Motivation</li>
+    <li>2.2. Discrete controls</li>
+    <li>2.3. Continuous controls</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Interactions</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Discrete interactions</li>
+    <li>3.3. Continuous interactions</li>
+  </ul>
+</ul>
  
-#### 2. Control variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Motivation
- * 2.2. Discrete controls
- * 2.3. Continuous controls
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 3. Interactions
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Motivation
- * 3.2. Discrete interactions
- * 3.3. Continuous interactions
-
-#### 4. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
 ---
 
+
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Adding variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Continuous variables
- * 1.2. Discrete variables
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Adding variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Continuous variables</li>
+    <li>1.2. Discrete variables</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Control variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Motivation</li>
+    <li>2.2. Discrete controls</li>
+    <li>2.3. Continuous controls</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Interactions</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Discrete interactions</li>
+    <li>3.3. Continuous interactions</li>
+  </ul>
+</ul>
  
-#### 2. Control variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Motivation
- * 2.2. Discrete controls
- * 2.3. Continuous controls
-
-#### 3. Interactions
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Motivation
- * 3.2. Discrete interactions
- * 3.3. Continuous interactions
+]
 
 ---
 
@@ -1938,30 +2050,50 @@ $$\hat{\beta_1} + \hat{\beta_3}\text{Distance}_i$$
 
 <center><i>&#10140; Don't omit to include your interaction variable as a control in the regression</i></center>
 
----
+--
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Adding variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Continuous variables
- * 1.2. Discrete variables
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Adding variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Continuous variables</li>
+    <li>1.2. Discrete variables</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Control variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Motivation</li>
+    <li>2.2. Discrete controls</li>
+    <li>2.3. Continuous controls</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Interactions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Motivation</li>
+    <li>3.2. Discrete interactions</li>
+    <li>3.3. Continuous interactions</li>
+  </ul>
+</ul>
  
-#### 2. Control variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Motivation
- * 2.2. Discrete controls
- * 2.3. Continuous controls
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 3. Interactions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Motivation
- * 3.2. Discrete interactions
- * 3.3. Continuous interactions
-
-#### 4. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
 ---
 
