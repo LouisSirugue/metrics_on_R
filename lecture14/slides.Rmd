@@ -2,14 +2,17 @@
 title: "Maps and geolocalized data"
 subtitle: "Lecture 14"
 author: "<br>Louis SIRUGUE"
-date: "`r format(Sys.time(), '%m/%Y')`"
+date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
-  xaringan::moon_reader: 
+  xaringan::moon_reader:  
     css: 
         - xaringan-themer.css
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -19,6 +22,10 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
+
+```{css, echo = F, eval = params$dark}
+body{background-color:black;filter:invert(1)}
+```
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../source/style.R"))
@@ -32,271 +39,155 @@ set.seed(1)
 
 <style> .left-column {width: 65%;} .right-column {width: 35%;} </style>
 
-### Last time we saw
+### Quick reminder
+
+#### Causal approach (Behaghel et al., 2015)
+
+ * Applicants resumes randomly anonymized or not before being sent to employers
+ 
+--
+ 
+$$Y_i = \alpha + \beta D_i +\gamma An_i + \delta D_i\times An_i + \varepsilon_i$$
+
+ * $\hat{\delta}$ captures how the difference in interview rates between the minority and the majority differs between the treated and the control employers
 
 --
 
-#### Regular expressions
+```{r, echo= F, warning = F, message = F}
+library(haven)
+library(haven)
+data_rct <- read_dta("data_candidates_mainsample.dta") %>%      # read .dta data
+  filter(!is.na(CVA)) %>%                                       # Keep participating firms
+  rename(treatment = CVA, minority = ZouI,                      # Rename variables of interest
+         interview = ENTRETIEN, weight = POIDS_SEL) %>% 
+  select(treatment, minority, interview, weight) 
+```
+
+
+```{r}
+summary(lm(interview ~ minority + treatment + minority*treatment, 
+           data_rct, weights = weight))$coefficients
+```
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><h4> &#10140; Self-selection issue: discriminatory employers did not enter the program </h4></center>
+
+---
+
+### Quick reminder
+
+#### Correlational approach (Chetty et al., 2014)
+
+$$\text{percentile}(y^c_i) = \alpha + \beta_{RRC}\text{percentile}(y^p_i)+\varepsilon_i$$
+--
 
 .left-column[
 
-<p style = "margin-bottom:1cm;"></p>
-
-<ul>
-  <li>Regular expressions are strings of codified characters describing a pattern</li>
-  <ul>
-    <li>For instance the character "^" indicates the start of the string</li>
-    <li>So the regular expression "^a" would match any "a" that is a the beginning of a string</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul>
-  <li>Regular expressions in R can be used in different functions with different purposes:</li>
-  <ul>
-    <li>grep: returns elements that match the regexpr</li>
-    <li>grepl: returns TRUE for elements that match the regexpr and FALSE otherwise</li>
-    <li>gsub: replaces the elements that match the regexpr with what you want</li>
-    <li>...</li>
-  </ul>
-</ul>
+<center><img src = "local_cef.png" width = "520"/></center>
 
 ]
 
 --
 
 .right-column[
-```{r, echo = F}
-regexpr_table <- tibble(
-  Regexpr = c("^",	"$", ".", "*", "+", "{n}", "{n,}", "{n,m}", 
-              "[]", "[^abc]", "[a-z]", "[A-Z]", "[0-9]"),
-  Meaning = c("Start of string (or 'not')", "End of string", "Any character", 
-              "0 or more occurences", "1 or more occurences", "n occurences", 
-              "n or more occurences", "between n and m occurences", "A range of characters", 
-              "Not a, b or c", "Any lowercase letter from a to z", "Any capital letter from A to Z", 
-              "Any digit from 0 to 9")
-)
 
-kable(regexpr_table %>% filter(row_number() %in% c(1:5, 10:13)), caption = "")
-```
-
-]
-
----
-
-### Last time we saw
-
-#### Tokenization
-
-<ul>
-  <li>Tokenization is the fact of cleaning the data so that there is one unit of text per row</li>
-  <ul>
-    <li>A unit of text (token) can be a character, a letter, a word, a sentence, etc.</li>
-  </ul>
-</ul>
-
---
-
-.pull-left[
-```{r, echo = F}
-library(tidytext)
-# Read the play
-raj <- tibble(line = readLines("romeo_and_juliet.txt", encoding = "UTF-8"))
-# Identify the lines "ACT I"
-beginning <- raj %>% 
-  mutate(line_number = row_number()) %>%
-  filter(line == "ACT I")
-# Remove everything before the second occurence
-raj <- raj %>% filter(row_number() >= beginning$line_number[2])
-raj <- raj %>%
-  mutate(direction = grepl("\\[.+\\]", line))
-end <- raj %>% # Do the computations separately for stage direction lines and other lines
-  group_by(direction) %>%
-  mutate(last_obs = row_number() == n()) %>% # Mark the last row of each group with TRUE
-  ungroup() %>% # Ungroup the data
-  mutate(line_number = row_number()) %>% # Create a line_number variable
-  filter(direction & last_obs) # Keep the last stage direction
-raj <- raj %>% filter(row_number() <= end$line_number)
-raj <- raj %>% filter(line != "")
-kable(head(raj, 7), caption = "")
-```
-
-]
-
---
-
-.pull-right[
-```{r, echo = F}
-raj <- raj %>% 
-  mutate(act_delim = grepl("^ACT", line),
-         scene_delim = grepl("^SCENE", line))
-raj <- raj %>% 
-  mutate(line_delim = grepl("^[A-Z ’]*\\.$", line))
-raj <- raj %>%
-  mutate(id_act = NA,
-         id_scene = NA,
-         id_line = NA,
-         id_char = NA)
-temp_act <- 0
-temp_scene <- 0
-temp_line <- 0
-temp_char <- ""
-for (i in 1:nrow(raj)) {
-  if (raj[i, "act_delim"] == TRUE) {
-    temp_act <- temp_act + 1
-    temp_scene <- 0
-    temp_line <- 0
-  }
-  if (raj[i, "scene_delim"] == TRUE) {
-    temp_scene <- temp_scene + 1
-    temp_line <- 0
-  }
-  if (raj[i, "line_delim"] == TRUE) {
-    temp_line <- temp_line + 1
-    temp_char <- gsub(pattern = "\\.$", "", raj[i, "line"])
-  }
-  raj[i, "id_act"] <- temp_act
-  raj[i, "id_scene"] <- temp_scene
-  raj[i, "id_line"] <- temp_line
-  raj[i, "id_char"] <- temp_char
-}
-raj <- raj %>% filter(id_line > 0 & !line_delim) 
-raj <- raj %>%
-  # Do the computations separately for each line
-  group_by(id_act, id_scene, id_line, id_char) %>%
-  # Paste all together all the rows of each line
-  summarise(line = paste(line, collapse = " ")) %>%
-  # Ungroup the data for future computations
-  ungroup()
-kable(head(raj, 3), caption = "")
-```
-]
-
----
-
-### Last time we saw
-
-#### Stopwords and sentiments
-
-<p style = "margin-bottom:-.5cm;"></p>
-
-.pull-left[
-<ul>
-  <li>The first step of a sentiment analysis is usually to get rid of <i>stopwords</i></li>
-  <ul>
-    <li>Stopwords are common words that do not carry much semantic meaning but take space and computing time</li>
-  </ul>
-</ul>
-
-```{r}
-matrix(get_stopwords()[["word"]][1:24],ncol=3)
-```
-]
-
---
-
-.pull-right[
-<ul>
-  <li>The second step is to join the words to their corresponding sentiment using a dictionary</li>
-  <ul>
-    <li>Some dictionaries are very simple: positive/negative</li>
-    <li>And some are more elaborate: trust/fear/sadness/anger/...</li>
-  </ul>
-</ul>
-
-```{r}
-head(get_sentiments("bing"), 5)
-```
-]
-
----
-
-### Last time we saw
-
-#### Analysis
-
-```{r, echo = F}
-raj <- raj %>% 
-  mutate(line = gsub("\\[[^\\[\\]+\\]", "", line)) %>%
-  mutate(to_unnest = line) %>%
-  unnest_tokens(token = "words", input = to_unnest, output = word) %>%
-  anti_join(get_stopwords()) %>% 
-  left_join(get_sentiments("afinn"))
-```
-
-.left-column[
+**Relative mobility:** $\widehat{\beta_{RRC}}$  
+**Absolute mobility:** $\widehat{\alpha} + 25\times\widehat{\beta_{RRC}}$
 
 <p style = "margin-bottom:1cm;"></p>
 
- * Evolution of the average sentiment over the play 
-
-```{r, echo = F, fig.width = 8, fig.height = 4, out.width = '95%'}
-raj %>% 
-  group_by(id_act, id_scene) %>%
-  summarise(
-    mean = mean(value, na.rm = T)
-    ) %>% ungroup() %>%
-  mutate(scene = row_number()) %>%
-  ggplot(aes(x = scene,y = mean))+
-  geom_bar(stat = 'identity', 
-           fill = "#6794A7", 
-           color = "#014D64", 
-           alpha = .8)
-```
-
+<ul>
+  <li>Strong persitence in the United-States</li>
+  <li>Large variations across commuting zones</li>
+  <li>Intergenerational mobility correlated with characteristics of childhood environment</li>
+</ul>
 ]
 
-.right-column[
+---
+
+### Quick reminder
+
+#### Structural approach (Nerlove, 1963)
+
+ * **Theoretical modeling**
+
+$$\begin{cases}
+\text{min } & C = p_LL + p_KK\\
+\text{s.t. } & Y = A L^\lambda K^\kappa  u
+\end{cases} \,\,
+\Longleftrightarrow \,\, \text{min }\,\mathcal{L} = p_LL + p_KK + \mu(Y - A L^\lambda K^\kappa  u)$$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * **Regression expression**
+ 
+$$\log (C) = \underbrace{\log \Bigg(\left[\frac{\big(\frac{\lambda}{\kappa}\big)^\kappa +\big(\frac{\kappa}{\lambda}\big)^\lambda}{A}\right]^\frac{1}{\lambda + \kappa} \Bigg)}_{\alpha}  +  \underbrace{\frac{1}{\lambda + \kappa}}_{\beta}\log(Y) + \underbrace{\frac{\lambda}{\lambda+\kappa}}_{\gamma}\log(p_L) + \underbrace{\frac{\kappa}{\lambda+\kappa}}_{\delta}\log(p_K) + \underbrace{\log \bigg(u^\frac{1}{\lambda+\kappa}\bigg)}_{\varepsilon}$$
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+ * **Estimation**
+ 
+$$\log(C)= \alpha + \beta\log(Y) + \gamma\log(p_L) + \delta\log(p_K) + \varepsilon \,\,\,\, \Rightarrow \,\,\,\, H_0: \gamma + \delta = 1$$
+
+---
+
+<h3>Today: Maps and geolocalized data</h3>
+
+--
 
 <p style = "margin-bottom:2cm;"></p>
 
- * Sentiment of characters (rows) when mentioning other characters (columns)
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Geolocalized data</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Shapefiles and rasters</li>
+    <li>1.2. Opening geolocalized data</li>
+    <li>1.3. Coordinate Reference Systems</li>
+    <li>1.4. Subsetting geolocalized data</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Geographic variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Import from csv</li>
+    <li>2.2. Zonal statistics</li>
+    <li>2.3. Centroids and distance</li>
+  </ul>
+</ul>
  
-```{r, echo = F}
-raj %>% 
-  filter(id_char %in% c("ROMEO", "JULIET", "NURSE")) %>%
-  group_by(id_char) %>%
-  summarise(ROMEO = mean(ifelse(grepl(pattern = "Romeo", line), value, NA), na.rm = T),
-            JULIET = mean(ifelse(grepl(pattern = "Juliet", line), value, NA), na.rm = T),
-            NURSE = mean(ifelse(grepl(pattern = "Nurse", line), value, NA), na.rm = T))
-```
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
 ]
 
 ---
 
-### Today: Maps and geolocalized data
+<h3>Today: Maps and geolocalized data</h3>
 
-<p style = "margin-bottom:3cm;">
+<p style = "margin-bottom:2cm;"></p>
 
-#### 1. Geolocalized data
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Shapefiles and rasters
- * 1.2. Opening geolocalized data
- * 1.3. Coordinate Reference Systems
- * 1.4. Subsetting geolocalized data
+.pull-left[
 
-#### 2. Geographic variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Import from csv
- * 2.2. Zonal statistics
- * 2.3. Centroids and distance
-
-#### 3. Wrap up!
-
----
-
-### Today: Maps and geolocalized data
-
-<p style = "margin-bottom:3cm;">
-
-#### 1. Geolocalized data
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Shapefiles and rasters
- * 1.2. Opening geolocalized data
- * 1.3. Coordinate Reference Systems
- * 1.4. Subsetting geolocalized data
-
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Geolocalized data</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Shapefiles and rasters</li>
+    <li>1.2. Opening geolocalized data</li>
+    <li>1.3. Coordinate Reference Systems</li>
+    <li>1.4. Subsetting geolocalized data</li>
+  </ul>
+</ul>
+]
 ---
 
 ### 1. Geolocalized data
@@ -574,8 +465,8 @@ ggplot(dep_shp) +
 
 #### 1.2. Opening geolocalized data
 
- * There are several formats of raster files (.tif, .nc, ...)
-  * We're gonna use NetCDF satellite data on PM<sub>2.5</sub> from the [Atmospheric Composition Analysis Group](https://sites.wustl.edu/acag/datasets/surface-pm2-5/)
+ * There are several **formats of raster** files (.tif, .nc, ...)
+  * We're gonna use **NetCDF** satellite data on PM<sub>2.5</sub> from the [Atmospheric Composition Analysis Group](https://sites.wustl.edu/acag/datasets/surface-pm2-5/)
   * So we're gonna need the packages `raster` and `ncdf4`
 
 --
@@ -610,7 +501,7 @@ pm_data
 <ul>
   <li>As you can see NetCDFs are complex objects:</li>
   <ul>
-    <li>Not a simple table with figures</li>
+    <li><b>Not a simple table</b> with figures</li>
     <li>Note that the PM<sub>2.5</sub> variable is Hybrid.PM_2_._5...mug.m.3.</li>
   </ul>
 </ul>
@@ -622,7 +513,7 @@ pm_data
 
 #### 1.2. Opening geolocalized data
 
- * We can rename the PM<sub>2.5</sub> variable into something more convenient
+ * We can **rename** the PM<sub>2.5</sub> variable into something more convenient
 
 ```{r}
 names(pm_data) <- "pm2.5"
@@ -631,7 +522,7 @@ names(pm_data) <- "pm2.5"
 --
 
  * And convert the data into a standard dataset using the `rasterToPoints()` function
-  * It will generate a table with 1 row per cell
+  * It will **generate a table** with 1 row per cell
   * An x variable for the longitude, y for latitude, and pm2.5 for pollution
 
 --
@@ -646,7 +537,7 @@ head(as_tibble(rasterToPoints(pm_data)), 5)
 
 #### 1.2. Opening geolocalized data
 
- * This table format allows to easily plot raster data using the `geom_tile` geometry:
+ * This table format allows to easily **plot raster data** using the `geom_tile` geometry:
 
 <p style = "margin-bottom:1.25cm;"></p>
 
@@ -741,7 +632,7 @@ ggplot(as_tibble(rasterToPoints(pm_data)), # data converted in table
 
 #### 1.3. Coordinate Reference Systems
 
- * For instance the Mercator projection preserves shape but distorts scale:
+ * For instance the **Mercator projection** preserves shape but distorts scale:
  
 <p style = "margin-bottom:-.58cm;"></p>
 
@@ -759,7 +650,7 @@ ggplot(st_crop(st_transform(world, "+proj=merc"),
 
 #### 1.3. Coordinate Reference Systems
 
- * While the Equal-Area Cylindrical projection preserves scale but distorts shape:
+ * While the **Equal-Area Cylindrical projection** preserves scale but distorts shape:
 
 <p style = "margin-bottom:1.5cm;"></p>
 
@@ -773,7 +664,7 @@ ggplot(st_transform(world, "+proj=cea")) + geom_sf(fill = "#6794A7", color = "#0
 
 #### 1.3. Coordinate Reference Systems
 
- * This is also the case for the Mollweide projection:
+ * This is also the case for the **Mollweide projection:**
 
 ```{r, echo = F, fig.height = 9.18, fig.width = 18, out.width = '75%'}
 ggplot(st_transform(world, "+proj=moll")) + geom_sf(fill = "#6794A7", color = "#014D64", alpha = .6)
@@ -785,7 +676,7 @@ ggplot(st_transform(world, "+proj=moll")) + geom_sf(fill = "#6794A7", color = "#
 
 #### 1.3. Coordinate Reference Systems
 
- * But most projections are in between, like the Robin projection:
+ * But most projections are in between, like the **Robin projection:**
 
 ```{r, echo = F, fig.height = 9.25, fig.width = 18, out.width = '75%'}
 ggplot(st_transform(world, "+proj=robin")) + geom_sf(fill = "#6794A7", color = "#014D64", alpha = .6)
@@ -798,7 +689,7 @@ ggplot(st_transform(world, "+proj=robin")) + geom_sf(fill = "#6794A7", color = "
 #### 1.3. Coordinate Reference Systems
 
 <ul>
-  <li>The smaller the area you want to map the less it is a problem</li>
+  <li>The <b>smaller</b> the <b>area</b> you want to map the <b>less</b> it is a <b>problem</b></li>
   <ul>
     <li>While you would have a hard time flatten the whole orange peel</li>
     <li>Flattening a tiny bit of orange peel wouldn't require to distort it too much</li>
@@ -808,7 +699,7 @@ ggplot(st_transform(world, "+proj=robin")) + geom_sf(fill = "#6794A7", color = "
 --
 
 <ul>
-  <li>Even though there's no perfect projection, some are more suited to specific regions</li>
+  <li>Even though there's <b>no perfect projection</b>, some are more suited to specific regions</li>
   <ul>
     <li>You wouldn't use the Mercator projection if you focus on the poles</li>
   </ul>
@@ -817,9 +708,9 @@ ggplot(st_transform(world, "+proj=robin")) + geom_sf(fill = "#6794A7", color = "
 --
 
 <ul>
-  <li>The website <a href="https://epsg.io/?q=France">epsg.io</a> allows you to find the appropriate CRS for the area you want to map</li>
+  <li>The website <a href="https://epsg.io/?q=France">epsg.io</a> allows you to <b>find the appropriate CRS</b> for the area you want to map</li>
   <ul>
-    <li>For France, the recommended projection is Lambert 93, the corresponding EPSG code is 2154</li>
+    <li>For <b>France</b>, the recommended projection is <b>Lambert 93</b>, the corresponding EPSG code is 2154</li>
     <li>The most common projection is WGS84, the corresponding EPSG code is 4326</li>
     <li>What is important is that all the datasets are projected the same way</li>
   </ul>
@@ -1024,7 +915,7 @@ ggplot(subset_data, aes(x = pm2.5)) +
   <li>To convert a continuous into deciles we should:</li>
   <ol>
     <li>Arrange the values in ascending order</li>
-    <li>Compute the ratio of their index of N to get smthg \(\in (0; 1]\)</li>
+    <li>Compute the ratio of their index over N to get something \(\in (0; 1]\)</li>
     <li>Multiply by the desired number of quantiles and take the ceiling</li>
     <li>Set as factor so that R does not interpret it as continuous</li>
   </ol>
@@ -1068,6 +959,8 @@ ggplot() +
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 <p style = "margin-bottom:.5cm;"></p>
@@ -1097,6 +990,8 @@ names(pm_data) <- "pm2.5"
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 <p style = "margin-bottom:2.5cm;"></p>
@@ -1115,9 +1010,13 @@ names(pm_data) <- "pm2.5"
 
 --
 
-<center><h3><i>You've got 5 minutes!</i></h3></center>
+<center><h3><i>You've got 8 minutes!</i></h3></center>
+
+`r countdown(minutes = 8, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1171,7 +1070,7 @@ ggplot() +
 
 ```{r, eval = F}
   # Plot the shapefile
-  geom_sf(data = dep_shp, fill = NA, color =" grey20") +
+  geom_sf(data = dep_shp, fill = NA) +
 ```
 
 --
@@ -1185,57 +1084,90 @@ ggplot() +
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
-```{r, echo = F, fig.height = 4, fig.width = 5.505, out.width = "65%"}
+```{r, echo = F, fig.height = 4, fig.width = 5.7, out.width = "65%"}
 ggplot() +
   geom_tile(data = as_tibble(rasterToPoints(pm_data)), 
             aes(x = x, y = y, fill = pm2.5))  +
-  geom_sf(data = dep_shp, fill = NA, color = "grey20") +
+  geom_sf(data = dep_shp, fill = NA, color = "#dfe6eb") +
   scale_fill_viridis(option = "B") + theme_void() +
-  theme(plot.background = element_rect(color = "#DFE6EB", fill = "#DFE6EB"),
-        panel.background = element_rect(color = "#DFE6EB", fill = "#DFE6EB"))
+  theme(plot.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.grid = element_blank(),
+        axis.title = element_text(color = "#dfe6eb"),
+        legend.title = element_text(color = "#dfe6eb"),
+        legend.text = element_text(color = "#dfe6eb"),
+        axis.text = element_text(color = "#dfe6eb"),
+        axis.line = element_line(color = "#dfe6eb"),
+        axis.ticks = element_line(color = "#dfe6eb"))
 ```
 
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:3cm;">
+<p style = "margin-bottom:2cm;"></p>
 
-#### 1. Geolocalized data &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Shapefiles and rasters
- * 1.2. Opening geolocalized data
- * 1.3. Coordinate Reference Systems
- * 1.4. Subsetting geolocalized data
+.pull-left[
 
-#### 2. Geographic variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Import from csv
- * 2.2. Zonal statistics
- * 2.3. Centroids and distance
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Geolocalized data &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Shapefiles and rasters</li>
+    <li>1.2. Opening geolocalized data</li>
+    <li>1.3. Coordinate Reference Systems</li>
+    <li>1.4. Subsetting geolocalized data</li>
+  </ul>
+</ul>
 
-#### 3. Wrap up!
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Geographic variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Import from csv</li>
+    <li>2.2. Zonal statistics</li>
+    <li>2.3. Centroids and distance</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
+]
 
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:3cm;">
+<p style = "margin-bottom:2cm;"></p>
 
-#### 1. Geolocalized data &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Shapefiles and rasters
- * 1.2. Opening geolocalized data
- * 1.3. Coordinate Reference Systems
- * 1.4. Subsetting geolocalized data
- 
-#### 2. Geographic variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Import from csv
- * 2.2. Zonal statistics
- * 2.3. Centroids and distance
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Geolocalized data &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Shapefiles and rasters</li>
+    <li>1.2. Opening geolocalized data</li>
+    <li>1.3. Coordinate Reference Systems</li>
+    <li>1.4. Subsetting geolocalized data</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Geographic variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Import from csv</li>
+    <li>2.2. Zonal statistics</li>
+    <li>2.3. Centroids and distance</li>
+  </ul>
+</ul>
+]
 
 ---
 
@@ -1244,7 +1176,7 @@ ggplot() +
 #### 2.1. Import from csv
 
 <ul>
-  <li>The simplest type of geographic variable is those you can directly import in csv:</li>
+  <li>Geographic variables can simply be stored in csv:</li>
   <ul>
     <li>The Gini index of inequality of countries</li>
     <li>The unemployment rate of departments</li>
@@ -1314,7 +1246,7 @@ head(idf_shp, 5)
 <ul>
   <li>Join csv data on median income by city and plot together with department shapefile</li>
   <ul>
-    <li>We shall make sure that the joining variables have the same name and class</li>
+    <li>We shall make sure that the <b>join variable(s)</b> have the <b>same name and class</b></li>
   </ul>
 </ul>
 
@@ -1517,7 +1449,7 @@ stargazer(lm(pm2.5 ~ MED16, idf_shp), type = "text", keep.stat = c("n", "rsq"))
 <p style = "margin-bottom:.75cm;"></p>
 
 <ul>
-  <li>But could this effect just be do to the distance to Paris?</li>
+  <li>But could this <b>effect</b> just be do to the <b>distance to Paris?</b></li>
   <ul>
     <li>Maybe richer individuals tend to live away from the urban center</li>
     <li>And thus to be less exposed to pollution</li>
@@ -1529,9 +1461,9 @@ stargazer(lm(pm2.5 ~ MED16, idf_shp), type = "text", keep.stat = c("n", "rsq"))
 <p style = "margin-bottom:.75cm;"></p>
 
 <ul>
-  <li>We need to control for the distance to Paris</li>
+  <li>We need to <b>control</b> for the distance to Paris</li>
   <ul>
-    <li>To do so we can find the location of the centroid of each municipality with st_centroid()</li>
+    <li>To do so we can find the location of the <b>centroid</b> of each municipality with st_centroid()</li>
     <li>It corresponds to the arithmetic mean position of all the points in the polygon</li>
   </ul>
 </ul>
@@ -1718,24 +1650,39 @@ stargazer(lm(pm2.5 ~ MED16 + dist_paris, idf_shp), type = "text", keep.stat = c(
 
 ---
 
-### Overview
 
-<p style = "margin-bottom:3cm;">
+<h3>Overview</h3>
 
-#### 1. Geolocalized data &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Shapefiles and rasters
- * 1.2. Opening geolocalized data
- * 1.3. Coordinate Reference Systems
- * 1.4. Subsetting geolocalized data
+<p style = "margin-bottom:2cm;"></p>
 
-#### 2. Geographic variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Import from csv
- * 2.2. Zonal statistics
- * 2.3. Centroids and distance
+.pull-left[
 
-#### 3. Wrap up!
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Geolocalized data &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Shapefiles and rasters</li>
+    <li>1.2. Opening geolocalized data</li>
+    <li>1.3. Coordinate Reference Systems</li>
+    <li>1.4. Subsetting geolocalized data</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Geographic variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Import from csv</li>
+    <li>2.2. Zonal statistics</li>
+    <li>2.3. Centroids and distance</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none"><li><b>3. Wrap up!</b></li></ul>
+]
+
 
 ---
 
@@ -1829,7 +1776,7 @@ ggplot(st_crop(st_transform(world, "+proj=merc"),
 
 <center><b>Scale</b> (like the Equal-Area Cylindrical projection)</center>
 
-```{r, echo = F, fig.height = 5.95, fig.width = 18, out.width = '100%'}
+```{r, echo = F, fig.height = 5.95, fig.width = 18.1, out.width = '100%'}
 ggplot(st_transform(world, "+proj=cea")) + geom_sf(fill = "#6794A7", color = "#014D64", alpha = .6)
 ```
 
