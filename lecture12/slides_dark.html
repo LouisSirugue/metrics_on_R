@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Interpretation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Interpretation
+## Lecture 12
+### <br>Louis SIRUGUE
+### CPES 2 - Fall 2022
+
+---
+
+
+&lt;style&gt; .left-column {width: 70%;} .right-column {width: 30%;} &lt;/style&gt;
+
+&lt;style type="text/css"&gt;
+body{background-color:black;filter:invert(1)}
+&lt;/style&gt;
+
+
+
+### Quick reminder
+
+#### Omitted variable bias
+
+&lt;ul&gt;
+  &lt;li&gt;If a third &lt;b&gt;variable&lt;/b&gt; is correlated with both \(x\) and \(y\), it would &lt;b&gt;bias the relationship&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We must then &lt;b&gt;control&lt;/b&gt; for such variables&lt;/li&gt;
+    &lt;li&gt;And if we can't we must acknowledge that our estimate is not causal with &lt;i&gt;&lt;b&gt;'ceteris paribus'&lt;/b&gt;&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Quick reminder
+
+#### Functional form
+
+&lt;ul&gt;
+  &lt;li&gt;Not capture the &lt;b&gt;right functional&lt;/b&gt; form correctly might also lead to biased estimations:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Polynomial order, interactions, logs, discretization matter&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Visualizing the relationship&lt;/b&gt; is key&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Quick reminder
+
+#### Selection bias
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Self-selection&lt;/b&gt; is also a common threat to causality&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;What is the impact of going to a better neighborhood on your children outcomes?&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We cannot just regress children outcomes on a mobility dummy&lt;/li&gt;
+    &lt;li&gt;Individuals who move may be different from those who stay: &lt;b&gt;self-selection issue&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Here it is not that the sample is not representative of the population, but that &lt;b&gt;the outcomes of those who stayed are different from the outcomes those who moved would have had, if they had stayed&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+#### Simultaneity
+
+&lt;ul&gt;
+  &lt;li&gt;Consider the relationship between &lt;b&gt;crime&lt;/b&gt; rate and &lt;b&gt;police coverage&lt;/b&gt; intensity&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;What is the &lt;b&gt;direction of the relationship?&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We cannot just regress crime rate on police intensity&lt;/li&gt;
+    &lt;li&gt;It's likely that more crime would cause a positive response in police activity&lt;/li&gt;
+    &lt;li&gt;And also that police activity would deter crime&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### Quick reminder
+
+#### Measurement error
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Measurement error&lt;/b&gt; in the independent variable also induces a bias&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The resulting estimation would mechanically be &lt;b&gt;downward biased&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;noisier&lt;/b&gt; the measure, the &lt;b&gt;larger the bias&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-4-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Quick reminder
+
+#### Randomized Controlled Trials
+
+&lt;ul&gt;
+  &lt;li&gt;A Randomized Controlled Trial (RCT) is a type of experiment in which the thing we want to know the impact of (called the treatment) is &lt;b&gt;randomly allocated&lt;/b&gt; in the population&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The two &lt;b&gt;groups&lt;/b&gt; would then have the same characteristics on expectation, and would be &lt;b&gt;comparable&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;It is a way to obtain &lt;b&gt;causality&lt;/b&gt; from randomness&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;RCTs are very &lt;b&gt;powerful tools&lt;/b&gt; to sort out issues of:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Omitted variables&lt;/li&gt;
+    &lt;li&gt;Selection bias&lt;/li&gt;
+    &lt;li&gt;Simultaneity&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But RCTs are &lt;b&gt;not immune&lt;/b&gt; to every problem:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The sample must be representative and large enough&lt;/li&gt;
+    &lt;li&gt;Participants should comply with their treatment status&lt;/li&gt;
+    &lt;li&gt;Independent variables must not be noisy measures of the variable of interest&lt;/li&gt;
+    &lt;li&gt;...&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+
+--
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Point estimates&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous variables&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete variables&lt;/li&gt;
+    &lt;li&gt;1.3. Log vs. level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Practice interpretation&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt; 
+]
+
+.pull-right[
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Regression tables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Layout&lt;/li&gt;
+    &lt;li&gt;3.2. Reported significance&lt;/li&gt;
+    &lt;li&gt;3.3. R squared&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;4. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Point estimates&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous variables&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete variables&lt;/li&gt;
+    &lt;li&gt;1.3. Log vs. level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 1. Point estimates
+
+#### 1.1. Continuous variables
+
+&lt;ul&gt;
+  &lt;li&gt;In this first part, we're going to consider the &lt;b&gt;relationship&lt;/b&gt; between:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;income level&lt;/b&gt; of young parents&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;health&lt;/b&gt; of their &lt;b&gt;newborn&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Consider first the following specification of the two variables:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A continuous measure of &lt;b&gt;annual household income in euros&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;A continuous measure of &lt;b&gt;birth weight in grams&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+`$$\text{Birth weight}_i = \alpha + \beta \times \text{Household income}_i  + \varepsilon_i$$`
+
+
+
+
+--
+
+
+```r
+lm(birth_weight ~ household_income, data)$coefficients
+```
+
+```
+##      (Intercept) household_income 
+##     3.134528e+03     2.213871e-03
+```
+
+&lt;p style = "margin-bottom:.85cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; How would you interpret \(\hat{\beta}\) here?&lt;/b&gt; &lt;i&gt;(Note that&lt;/i&gt; e+03 &lt;i&gt;and&lt;/i&gt; e-03 &lt;i&gt;mean \(\times 10^3\) and \(\times 10^{-3}\))&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.1. Continuous variables
+
+&lt;ul&gt;
+  &lt;li&gt;When both \(x\) and \(y\) are continuous, the &lt;b&gt;general&lt;/b&gt; template for the &lt;b&gt;interpretation&lt;/b&gt; of \(\hat{\beta}\) is:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 [unit] increase in [x] is associated with&lt;br&gt; an [in/de]crease of [beta] [units] in [y] on average."&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.6cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;So in our case the &lt;b&gt;adequate interpretation&lt;/b&gt; would be:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a &lt;b&gt;1 euro increase in annual household income&lt;/b&gt; is associated with&lt;br&gt; an &lt;b&gt;increase of 0.003 gram in newborn birth weight&lt;/b&gt; on average."&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.6cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;But it would be even better to &lt;b&gt;interpret&lt;/b&gt; the results for a &lt;b&gt;meaningful variation&lt;/b&gt; of \(x\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For an annual household income, a &lt;b&gt;1 euro variation&lt;/b&gt; is not really meaningful&lt;/li&gt;
+    &lt;li&gt;1 euro increase &amp;#10140; 0.003 gram increase \(\Leftrightarrow\) &lt;b&gt;1,000 euro increase&lt;/b&gt; &amp;#10140; 3 gram increase&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.1. Continuous variables
+
+&lt;ul&gt;
+  &lt;li&gt;A common way to obtain a coefficient for a &lt;b&gt;meaningful variation&lt;/b&gt; of \(x\) is to &lt;b&gt;standardize \(x\)&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If we divide \(x\) by \(\text{SD}(x)\), the 1 &lt;b&gt;unit increase&lt;/b&gt; in \(\frac{x}{\text{SD}(x)}\) is equivalent to an &lt;b&gt;\(\text{SD}(x)\) increase&lt;/b&gt; in \(x\)&lt;/li&gt;
+    &lt;li&gt;An \(\text{SD}(x)\) change in \(x\) is meaningful: it's low if \(x\) is very concentrated and high if \(x\) is highly spread out&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.1. Continuous variables
+
+&lt;ul&gt;
+  &lt;li&gt;A common way to obtain a coefficient for a &lt;b&gt;meaningful variation&lt;/b&gt; of \(x\) is to &lt;b&gt;standardize \(x\)&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If we divide \(x\) by \(\text{SD}(x)\), the 1 &lt;b&gt;unit increase&lt;/b&gt; in \(\frac{x}{\text{SD}(x)}\) is equivalent to an &lt;b&gt;\(\text{SD}(x)\) increase&lt;/b&gt; in \(x\)&lt;/li&gt;
+    &lt;li&gt;An \(\text{SD}(x)\) change in \(x\) is meaningful: it's low if \(x\) is very concentrated and high if \(x\) is highly spread out&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.1. Continuous variables
+
+&lt;ul&gt;
+  &lt;li&gt;Note that if you &lt;b&gt;standardize both \(x\) and \(y\)&lt;/b&gt;, the resulting \(\hat\beta\) equals the &lt;b&gt;correlation&lt;/b&gt; between \(x\) and \(y\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To show that, let's first rewrite the formula of the beta coefficient:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+`$$\hat{\beta} = \frac{\text{Cov}(x, \, y)}{\text{Var}(x)} = \frac{\text{Cov}(x, \, y)}{\text{SD}(x)\times\text{SD}(x)}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.1cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}(x, \, y)}{\text{SD}(x)\times\text{SD}(x)} \times \frac{\text{SD}(y)}{\text{SD}(y)}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.1cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}(x, \, y)}{\text{SD}(x)\times\text{SD}(y)} \times \frac{\text{SD}(y)}{\text{SD}(x)}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.1cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\beta} = \text{Cor}(x, \, y) \times \frac{\text{SD}(y)}{\text{SD}(x)}$$`
+
+---
+
+### 1. Point estimates
+
+#### 1.1. Continuous variables
+
+&lt;ul&gt;
+  &lt;li&gt;Starting with the previous expression, the &lt;b&gt;\(\hat\beta\) coefficient with the standardized variables&lt;/b&gt; writes:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}\big(\frac{x}{\text{SD}(x)}, \, \frac{y}{\text{SD}(y)}\big)}{\text{SD}\big(\frac{x}{\text{SD}(x)}\big)\times\text{SD}\big(\frac{y}{\text{SD}(y)}\big)} \times \frac{\text{SD}\big(\frac{y}{\text{SD}(y)}\big)}{\text{SD}\big(\frac{x}{\text{SD}(x)}\big)}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
+
+
+&lt;ul&gt;
+  &lt;li&gt;But by construction, the standard deviation of a standardized variable is 1:&lt;/li&gt;
+&lt;/ul&gt;
+
+.pull-left[
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+`$$\hat{\beta} = \frac{\text{Cov}\big(\frac{x}{\text{SD}(x)}, \, \frac{y}{\text{SD}(y)}\big)}{1\times1} \times \frac{1}{1}$$`
+
+
+`$$\hat{\beta} = \text{Cov}\bigg(\frac{x}{\text{SD}(x)}, \, \frac{y}{\text{SD}(y)}\bigg)$$`
+
+
+`$$\hat{\beta} = \frac{\text{Cov}(x, \, y)}{\text{SD}(x)\times\text{SD}(y)} = \text{Cor}(x, y)$$`
+]
+
+.pull-right[
+
+&lt;ul&gt;
+  &lt;li&gt;Learn the cheatsheet on moments properties:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/moments.pdf"&gt;&lt;img src = "moments.png" width = "150"/&gt;&lt;/a&gt;
+]
+---
+
+### 1. Point estimates
+
+#### 1.2. Discrete variables
+
+&lt;ul&gt;
+  &lt;li&gt;Consider the following specification of the two variables:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A categorical variable for &lt;b&gt;annual household income divided in terciles&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Still continuous measure of &lt;b&gt;birth weight in grams&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+
+`$$\text{Birth weight}_i = \alpha + \beta_1 \text{T2}_i + \beta_2 \text{T3}_i  + \varepsilon_i$$`
+
+&lt;p style = "margin-bottom:1.3cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Recall that when including a &lt;b&gt;categorical variable&lt;/b&gt; in a regression, a &lt;b&gt;reference category&lt;/b&gt; must be &lt;b&gt;omitted&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+
+
+
+```r
+lm(birth_weight ~ income_tercile, data)$coefficients
+```
+
+```
+##      (Intercept) income_tercileT2 income_tercileT3 
+##       3112.83162         88.24778        222.65414
+```
+
+&lt;p style = "margin-bottom:1.3cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; How would you interpret \(\hat{\beta}_1\) and \(\hat{\beta}_2\) here?&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.2. Discrete variables
+
+&lt;ul&gt;
+  &lt;li&gt;With a discrete \(x\), the interpretation of the coefficient must be &lt;b&gt;relative to the reference category:&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, belonging to the [x category] is associated with&lt;br&gt; a [beta] [unit] [higher/lower] average [y] relative to the [reference category]."&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;So in our case, the &lt;b&gt;adequate interpretations&lt;/b&gt; would be:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, belonging to the &lt;b&gt;second income tercile&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;88 grams higher average birth weight&lt;/b&gt; relative to the &lt;b&gt;first income tercile.&lt;/b&gt;"&lt;/i&gt;&lt;/center&gt;
+
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, belonging to the &lt;b&gt;third income tercile&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;223 grams higher average birth weight&lt;/b&gt; relative to the &lt;b&gt;first income tercile.&lt;/b&gt;"&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;And the &lt;b&gt;intercept&lt;/b&gt; is the &lt;b&gt;average birth weight&lt;/b&gt; for newborns to parents in the &lt;b&gt;first income tercile&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.2. Discrete variables
+
+&lt;ul&gt;
+  &lt;li&gt;Consider now the following specification of the two variables:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A continuous measure of &lt;b&gt;annual household income in euros&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;A &lt;b&gt;binary variable&lt;/b&gt; taking the value 1 if &lt;b&gt;the newborn is underweight&lt;/b&gt; and 0 otherwise&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+`$$\text{Underweight}_i = \alpha + \beta \times \text{Household income}_i  + \varepsilon_i$$`
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+
+
+```r
+lm(underweight ~ household_income, data)$coefficients
+```
+
+```
+##      (Intercept) household_income 
+##     5.214013e-02    -4.084787e-07
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; How would you interpret \(\hat{\beta}\) here?&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; And would you consider its magnitude high?&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.2. Discrete variables
+
+&lt;ul&gt;
+  &lt;li&gt;With a &lt;b&gt;binary \(y\) variable&lt;/b&gt;, the coefficient must be interpreted in &lt;b&gt;percentage points:&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 [unit] increase in [x] is associated with&lt;br&gt; a [beta] percentage point [in/de]crease in the probability that [y equals 1] on average."&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;So in our case, the &lt;b&gt;adequate interpretation&lt;/b&gt; would be:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a &lt;b&gt;1 euro increase in annual household income&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;0.0000004 percentage point decrease in the probability that the newborn is underweight&lt;/b&gt; on average."&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Here the &lt;b&gt;interpretation&lt;/b&gt; would be more &lt;b&gt;meaningful:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For a &lt;b&gt;1,000 euro&lt;/b&gt; increase &amp;#10140; 0.0004 percentage point decrease&lt;/li&gt;
+    &lt;li&gt;Compared to the &lt;b&gt;typical probability&lt;/b&gt; to have an underweight newborn&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.2. Discrete variables
+
+&lt;ul&gt;
+  &lt;li&gt;The mean of a dummy variable corresponds to the share of 1s:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+mean(data$underweight)
+```
+
+```
+## [1] 0.037
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We can also compute the probability that \(y = 1\) for the average \(x\) with our estimated coefficients:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+5.214013e-02 + mean(data$household_income) * -4.084787e-07
+```
+
+```
+## [1] 0.03700001
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;For the &lt;b&gt;average household&lt;/b&gt;, a &lt;b&gt;1,000 euro increase&lt;/b&gt; in annual income would be associated&lt;br&gt; with a &lt;b&gt;0.0004 / 0.037 \(\approx\) 1% decrease in the probability&lt;/b&gt; that the newborn is &lt;b&gt;underweight&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.3. Log vs. level
+
+&lt;ul&gt;
+  &lt;li&gt;Consider now the following hypothetical relationship:&lt;/li&gt;
+&lt;/ul&gt;
+
+.pull-left[
+
+ 
+&lt;p style = "margin-bottom:2.94cm;"&gt;&lt;/p&gt;
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:1.1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+ &lt;li&gt;The slope tells us by how many &lt;b&gt;units&lt;/b&gt; the \(y\) variable would increase for a &lt;b&gt;1 unit&lt;/b&gt; in \(x\)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+ &lt;li&gt;But often times in Economics we're interested in the elasticity between the two variables:&lt;/li&gt;
+ &lt;ul&gt;
+   &lt;li&gt;What is the expected &lt;b&gt;percentage change&lt;/b&gt; in \(y\) for a &lt;b&gt;one percent increase&lt;/b&gt; in \(x\)?&lt;/li&gt;
+ &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; The log transformation can be used&lt;br&gt; to easily get an approximation of that&lt;/i&gt;&lt;/center&gt;
+
+]
+
+---
+
+### 1. Point estimates
+
+#### 1.3. Log vs. level
+
+.pull-left[
+
+ * Instead of considering 
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+`$$y_i = \alpha_{lvl} + \beta_{lvl}x_i + \varepsilon_i$$`
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+ * We consider
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+`$$\log(y_i) = \alpha_{log} + \beta_{log}\log(x_i) + \varepsilon_i$$`
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### 1. Point estimates
+
+#### 1.3. Log vs. level
+
+.pull-left[
+
+
+
+`\(\widehat{\beta_{lvl}} = 1.0121933\)`
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-19-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+`$$\begin{align}(15\div100) \times \widehat{\beta_{lvl}} &amp;\approx (15\div100) \times 1.0121933 \\ &amp;\approx 0.0151829 \end{align}$$`
+]
+
+--
+
+.pull-right[
+
+
+
+
+`\(\widehat{\beta_{log}} = 0.16875\)`
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+`$$\begin{align}0.0151829 \div90 &amp;= 0.0001687\\ &amp; \approx \beta_{log}\%\end{align}$$`
+]
+
+---
+
+### 1. Point estimates
+
+#### 1.3. Log vs. level
+
+&lt;ul&gt;
+  &lt;li&gt;Thus the interpretation differs depending on whether variables are in log or in level:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;When variables are in &lt;b&gt;level&lt;/b&gt; we should interpret the coefficients in terms of &lt;b&gt;unit&lt;/b&gt; increase&lt;/li&gt;
+    &lt;li&gt;When variables are in &lt;b&gt;log&lt;/b&gt; we should interpret the coefficients in terms of &lt;b&gt;percentage&lt;/b&gt; increase&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+ 
+--
+
+
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;font-size: 20px;"&gt;
+&lt;caption&gt;Interpretation of the regression coefficient&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr style = "background-color: #CCD5D9;"&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; log(y) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;font-weight: bold;"&gt; x &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em; "&gt; \(\hat{\beta}\) is the unit increase in \(y\) due
+ to a 1 unit increase in \(x\) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em; "&gt; \(\hat{\beta}\times 100\) is the % increase in \(y\) due
+ to a 1 unit increase in \(x\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr style = "background-color: #CCD5D9;"&gt;
+   &lt;td style="text-align:center;font-weight: bold;"&gt; log(x) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em;"&gt; \(\hat{\beta}\div 100\) is the unit increase in \(y\) due
+ to a 1% increase in \(x\) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em;"&gt; \(\hat{\beta}\) is the % increase in \(y\) due
+ to a 1% increase in \(x\) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.3. Log vs. level
+
+&lt;ul&gt;
+  &lt;li&gt;Let's give it a try with our example on household income and birth weight&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We've already seen that because income is log-normally distribution, it should be included in log&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-23-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Point estimates
+
+#### 1.3. Log vs. level
+
+&lt;ul&gt;
+  &lt;li&gt;So what would be your interpretation of the slope estimated from the following regression?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+`$$\text{Birth weight}_i = \alpha + \beta \log(\text{Household income}_i) + \varepsilon$$`
+
+
+```r
+lm(birth_weight ~ log(household_income), data)$coefficients
+```
+
+```
+##           (Intercept) log(household_income) 
+##             2091.2323              112.3234
+```
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;With a continuous &lt;b&gt;\(y\) in level&lt;/b&gt; and a &lt;b&gt;logged \(x\)&lt;/b&gt; variable, the template would be:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 percent increase in [x] is associated with a [beta/100] [unit] [in/de]crease in [y] on average."&lt;/i&gt;&lt;/center&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;So in our case, the &lt;b&gt;adequate interpretation&lt;/b&gt; would be:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a &lt;b&gt;1 percent increase in annual household income&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;1.12 grams increase in the birth weight of the newborn&lt;/b&gt; on average."&lt;/i&gt;&lt;/center&gt;
+
+
+---
+
+&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Point estimates &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous variables&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete variables&lt;/li&gt;
+    &lt;li&gt;1.3. Log vs. level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Practice interpretation&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt; 
+]
+
+.pull-right[
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Regression tables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Layout&lt;/li&gt;
+    &lt;li&gt;3.2. Reported significance&lt;/li&gt;
+    &lt;li&gt;3.3. R squared&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;4. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Point estimates &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous variables&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete variables&lt;/li&gt;
+    &lt;li&gt;1.3. Log vs. level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Practice interpretation&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt; 
+]
+
+---
+
+class: inverse, hide-logo
+
+### 2. Practice interpretation
+
+#### &amp;#10140; Let's practice coefficient interpration with randomly generated relationships:
+
+&lt;center&gt;&lt;a href = "https://sirugue.shinyapps.io/lecture15/"&gt;&lt;img src = "practice_interpretation.png" width = 900/&gt;&lt;/a&gt;&lt;/center&gt;
+
+---
+
+&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Point estimates &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous variables&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete variables&lt;/li&gt;
+    &lt;li&gt;1.3. Log vs. level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Practice interpretation &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt; 
+]
+
+.pull-right[
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Regression tables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Layout&lt;/li&gt;
+    &lt;li&gt;3.2. Reported significance&lt;/li&gt;
+    &lt;li&gt;3.3. R squared&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;4. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Point estimates &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous variables&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete variables&lt;/li&gt;
+    &lt;li&gt;1.3. Log vs. level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Practice interpretation &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt; 
+]
+
+.pull-right[
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Regression tables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Layout&lt;/li&gt;
+    &lt;li&gt;3.2. Reported significance&lt;/li&gt;
+    &lt;li&gt;3.3. R squared&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+---
+
+### 3. Regression tables
+
+#### 3.1. Layout
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;So far&lt;/b&gt; we've been &lt;b&gt;used to&lt;/b&gt; regression results &lt;b&gt;displayed this way:&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+lm(birth_weight ~ household_income, data)$coefficients
+```
+
+```
+##      (Intercept) household_income 
+##     3.134528e+03     2.213871e-03
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Or with the more exhaustive &lt;b&gt;summary()&lt;/b&gt; coefficients output:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+summary(lm(birth_weight ~ household_income, data))$coefficients
+```
+
+```
+##                      Estimate   Std. Error    t value     Pr(&gt;|t|)
+## (Intercept)      3.134528e+03 1.656840e+01 189.187165 0.000000e+00
+## household_income 2.213871e-03 2.808507e-04   7.882732 8.355367e-15
+```
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; But in &lt;b&gt;formal&lt;/b&gt; reports and academic papers, the &lt;b&gt;layout&lt;/b&gt; of regression tables is &lt;b&gt;a bit different&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.1. Layout
+
+&lt;style type="text/css"&gt;
+.remark-slide table{
+  font-size: 15px;
+  margin: auto;
+  border-top: 0px;
+  border-bottom: 0px;
+}
+
+tr th td{
+  font-size: 15px;
+  margin: auto;
+  border-top: 0px;
+  border-bottom: 0px;
+}
+
+.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
+  background: var(--background-color);
+}
+&lt;/style&gt;
+
+
+.pull-left[
+
+&lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;&lt;em&gt;Dependent variable:&lt;/em&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan="2" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;Birth weight&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Household income&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(0.0003)&lt;/td&gt;&lt;td&gt;(0.0003)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Girl (ref: Boy)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;-135.218&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;(34.838)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;3,134.528&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;3,246.365&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(16.568)&lt;/td&gt;&lt;td&gt;(34.257)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;1,000&lt;/td&gt;&lt;td&gt;963&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="2" style="text-align:right"&gt;&lt;sup&gt;*&lt;/sup&gt;p&lt;0.1; &lt;sup&gt;**&lt;/sup&gt;p&lt;0.05; &lt;sup&gt;***&lt;/sup&gt;p&lt;0.01&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+
+Regression tables often contain multiple regressions:
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;With &lt;b&gt;one regression in each column&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Regression models are numbered&lt;/li&gt;
+    &lt;li&gt;Dependent variable mentioned above&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;And one variable in &lt;b&gt;each row&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With the &lt;b&gt;point estimate&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;And a &lt;b&gt;precision measure&lt;/b&gt; below&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;General info&lt;/b&gt; on each model &lt;b&gt;at the bottom&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A &lt;b&gt;symbology&lt;/b&gt; for the &lt;b&gt;p-value&lt;/b&gt; testing whether the coefficient is significantly different from 0 or not&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+---
+
+### 3. Regression tables
+
+#### 3.1. Layout
+
+.pull-left[
+
+&lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;&lt;em&gt;Dependent variable:&lt;/em&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan="2" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;Birth weight&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Household income&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(0.0003)&lt;/td&gt;&lt;td&gt;(0.0003)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Girl (ref: Boy)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;-135.218&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;(34.838)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;3,134.528&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;3,246.365&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(16.568)&lt;/td&gt;&lt;td&gt;(34.257)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;1,000&lt;/td&gt;&lt;td&gt;963&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="2" style="text-align:right"&gt;&lt;sup&gt;*&lt;/sup&gt;p&lt;0.1; &lt;sup&gt;**&lt;/sup&gt;p&lt;0.05; &lt;sup&gt;***&lt;/sup&gt;p&lt;0.01&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+
+It makes it easy to compare the different models:
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We can &lt;b&gt;add controls progressively&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Check the &lt;b&gt;stability&lt;/b&gt; of the main &lt;b&gt;coefficient&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; If it gets significantly closer to 0 it might indicate that the raw relationship was fallaciously driven by a confounding factor&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;And &lt;b&gt;compare general statistics&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;N is lower in the second regression&lt;/li&gt;
+    &lt;li&gt;It means that there are missing values&lt;/li&gt;
+    &lt;li&gt;Could this induce a selection bias?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 3. Regression tables
+
+#### 3.2. Reported significance
+
+.pull-left[
+
+&lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;&lt;em&gt;Dependent variable:&lt;/em&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan="2" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;Birth weight&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Household income&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(0.0003)&lt;/td&gt;&lt;td&gt;(0.0003)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Girl (ref: Boy)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;-135.218&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;(34.838)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;3,134.528&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;3,246.365&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(16.568)&lt;/td&gt;&lt;td&gt;(34.257)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;1,000&lt;/td&gt;&lt;td&gt;963&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="2" style="text-align:right"&gt;&lt;sup&gt;*&lt;/sup&gt;p&lt;0.1; &lt;sup&gt;**&lt;/sup&gt;p&lt;0.05; &lt;sup&gt;***&lt;/sup&gt;p&lt;0.01&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+
+It makes it easy to compare the different models:
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;evolution&lt;/b&gt; of the &lt;b&gt;significance&lt;/b&gt; matters as well&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The main coefficient should stay significant&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But don't rely too much on the &lt;b&gt;symbology&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Thresholds are &lt;b&gt;not always the same&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Sometimes&lt;/b&gt; there are &lt;b&gt;none&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Instead, keep in mind this &lt;b&gt;rule of thumb:&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; A coefficient \(\approx\) twice larger than its standard error has a p-value of \(\approx\) 5%&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 3. Regression tables
+
+#### 3.2. Reported significance
+
+&lt;ul&gt;
+  &lt;li&gt;Remember the formula for the &lt;b&gt;confidence interval:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+  &lt;li&gt;We can &lt;b&gt;fix&lt;/b&gt; the &lt;b&gt;confidence level&lt;/b&gt; \(1 - \alpha\) to 95% and check &lt;b&gt;how \(t\) varies with \(\text{df}\)&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+`$$\hat{\beta}\pm t(\text{df})_{1-\frac{\alpha}{2}}\times\text{se}(\hat{\beta})$$`
+
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-31-1.png" width="67%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.2. Reported significance
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;As soon as&lt;/b&gt; you have &lt;b&gt;about 20 observations more than&lt;/b&gt; you have &lt;b&gt;parameters&lt;/b&gt; to estimate:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;\(t\) value&lt;/b&gt; gets very &lt;b&gt;close to 2&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;And as \(\text{df}\) increases it quickly converges to \(\approx\) 2&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The coefficient is statistically significant if the lower bound of its (absolute) confidence interval is larger than 0&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Which is an easy calculation if we &lt;b&gt;approximate the \(t\) value by 2&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;A reasonable approximation for a back of the envelope calculation unless there are very few observations&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.pull-left[
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;i&gt;(absolute)&lt;/i&gt; lower bound of the CI writes:&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$|\hat{\beta}| - t(\text{df})_{1-\frac{\alpha}{2}}\times\text{se}(\hat{\beta})$$`
+`$$|\hat{\beta}| - 2\times\text{se}(\hat{\beta}) &gt; 0$$`
+
+`$$|\hat{\beta}| &gt; 2\times\text{se}(\hat{\beta})$$`
+]
+
+--
+
+.pull-right[
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;So if the &lt;b&gt;coefficient&lt;/b&gt; is clearly more than &lt;b&gt;twice larger&lt;/b&gt; than it's &lt;b&gt;standard error&lt;/b&gt;, it must be &lt;b&gt;statistically significant&lt;/b&gt; at the &lt;b&gt;5% significance&lt;/b&gt; level&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&amp;#10140; But sometimes the p-value or the confidence interval is reported instead of the standard error&lt;/center&gt;
+
+]
+
+---
+
+### 3. Regression tables
+
+#### 3.2. Reported significance
+
+.pull-left[
+
+&lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;&lt;em&gt;Dependent variable:&lt;/em&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan="2" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;Birth weight&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Household income&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;p = 0.000&lt;/td&gt;&lt;td&gt;p = 0.000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Girl (ref: Boy)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;-135.218&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;p = 0.0002&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;3,134.528&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;3,246.365&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;p = 0.000&lt;/td&gt;&lt;td&gt;p = 0.000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;1,000&lt;/td&gt;&lt;td&gt;963&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="2" style="text-align:right"&gt;&lt;sup&gt;*&lt;/sup&gt;p&lt;0.1; &lt;sup&gt;**&lt;/sup&gt;p&lt;0.05; &lt;sup&gt;***&lt;/sup&gt;p&lt;0.01&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+]
+.pull-right[
+
+&lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;&lt;em&gt;Dependent variable:&lt;/em&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan="2" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;Birth weight&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Household income&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(0.002, 0.003)&lt;/td&gt;&lt;td&gt;(0.002, 0.003)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Girl (ref: Boy)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;-135.218&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;(-203.500, -66.936)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;3,134.528&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;3,246.365&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(3,102.055, 3,167.002)&lt;/td&gt;&lt;td&gt;(3,179.223, 3,313.507)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;1,000&lt;/td&gt;&lt;td&gt;963&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="2" style="text-align:right"&gt;&lt;sup&gt;*&lt;/sup&gt;p&lt;0.1; &lt;sup&gt;**&lt;/sup&gt;p&lt;0.05; &lt;sup&gt;***&lt;/sup&gt;p&lt;0.01&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+]
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;In &lt;b&gt;regression tables&lt;/b&gt;, the &lt;b&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/b&gt; of the model is &lt;b&gt;always reported&lt;/b&gt; below the number of observations&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The R&lt;sup&gt;2&lt;/sup&gt; captures how well the &lt;b&gt;model fits the data&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;In &lt;b&gt;regression tables&lt;/b&gt;, the &lt;b&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/b&gt; of the model is &lt;b&gt;always reported&lt;/b&gt; below the number of observations&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The R&lt;sup&gt;2&lt;/sup&gt; captures how well the &lt;b&gt;model fits the data&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The model has a &lt;b&gt;good fit (high R&lt;sup&gt;2&lt;/sup&gt;)&lt;/b&gt; on dataset A but a &lt;b&gt;poor fit (low R&lt;sup&gt;2&lt;/sup&gt;)&lt;/b&gt; on dataset B&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-34-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;standard error&lt;/b&gt; already gives an idea on the goodness of the fit, but it is expressed in the &lt;b&gt;same unit as \(y\)&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So we &lt;b&gt;cannot compare&lt;/b&gt; two different models based on that statistic&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;standard error&lt;/b&gt; already gives an idea on the goodness of the fit, but it is expressed in the &lt;b&gt;same unit as \(y\)&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So we &lt;b&gt;cannot compare&lt;/b&gt; two different models based on that statistic&lt;/li&gt;
+    &lt;li&gt;The standard error of the slope would be larger on dataset A than on dataset B&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-35-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/b&gt; captures the &lt;b&gt;goodness of fit&lt;/b&gt; as the &lt;b&gt;percentage&lt;/b&gt; of the \(y\) variation captured by the model, from:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-36-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/b&gt; captures the &lt;b&gt;goodness of fit&lt;/b&gt; as the &lt;b&gt;percentage&lt;/b&gt; of the \(y\) variation captured by the model, from:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;total variation&lt;/b&gt; of the y variable (its variance \(\sum_{i = 1}^n(y_i-\bar{y})^2\))&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-37-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/b&gt; captures the &lt;b&gt;goodness of fit&lt;/b&gt; as the  &lt;b&gt;percentage&lt;/b&gt; of the \(y\) variation captured by the model, from:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;total variation&lt;/b&gt; of the y variable (its variance \(\sum_{i = 1}^n(y_i-\bar{y})^2\))&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;remaining variation&lt;/b&gt; of the y variable once its modeled (the sum of squared residuals \(\sum_{i = 1}^n\hat{\varepsilon_i}^2\))&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;We can then obtain a proper formula from the following reasoning&lt;/li&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+$$\text{Total variation} = \text{Explained variation} + \text{Remaining variation} $$
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+`$$\frac{\text{Explained variation}}{\text{Total variation}} = 1 - \frac{\text{Remaining variation}}{\text{Total variation}}$$`
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+`$$\frac{\text{Explained variation}}{\text{Total variation}} = 1 - \frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{\sum_{i = 1}^n(y_i-\bar{y})^2} \equiv \text{R}^2$$`
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Because all the terms are sums of squares, we usually talk about:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Total Sum of Squares&lt;/b&gt; (TSS)&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Explained Sum of Squares&lt;/b&gt; (ESS)&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Residual Sum of Squares&lt;/b&gt; (RSS)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 3. Regression tables
+
+#### 3.3. R squared
+
+&lt;ul&gt;
+  &lt;li&gt;Note that the &lt;b&gt;TSS&lt;/b&gt; is actually the &lt;b&gt;variance of \(y\):&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;So the &lt;b&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/b&gt; is interpreted as the &lt;b&gt;share of the variance of \(y\)&lt;/b&gt; which is &lt;b&gt;explained&lt;/b&gt; by the model&lt;/li&gt;
+    &lt;li&gt;And as such, the R&lt;sup&gt;2&lt;/sup&gt; is always comprised &lt;b&gt;between 0 and 1&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+    
+`$$\text{R}^2 = 1 - \frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{\sum_{i = 1}^n(y_i-\bar{y})^2} = \frac{\text{Explained variation}}{\text{Total variation}}$$`
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An undesirable property of the &lt;b&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/b&gt; is that it &lt;b&gt;mechanically increases&lt;/b&gt; with the number of &lt;b&gt;dependent variables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Such that with many variables the R&lt;sup&gt;2&lt;/sup&gt; tends to overestimate the goodness of the fit&lt;/li&gt;
+    &lt;li&gt;This is why you will sometimes see some &lt;b&gt;Adjusted R&lt;sup&gt;2&lt;/sup&gt;&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+`$$\text{Adjusted R}^2 = 1 - \frac{(1 - \text{R}^2)(n-1)}{n - \#\text{parameters}}$$`
+
+---
+
+&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Point estimates &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous variables&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete variables&lt;/li&gt;
+    &lt;li&gt;1.3. Log vs. level&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Practice interpretation &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt; 
+]
+
+.pull-right[
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Regression tables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Layout&lt;/li&gt;
+    &lt;li&gt;3.2. Reported significance&lt;/li&gt;
+    &lt;li&gt;3.3. R squared&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;4. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+### 4. Wrap up!
+
+#### Standard interpretations
+
+&lt;ul&gt;
+  &lt;li&gt;When both \(x\) and \(y\) are continuous, the &lt;b&gt;general&lt;/b&gt; template for the &lt;b&gt;interpretation&lt;/b&gt; of \(\hat{\beta}\) is:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 [unit] increase in [x] is associated with&lt;br&gt; an [in/de]crease of [beta] [units] in [y] on average."&lt;/i&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;With a discrete \(x\), the interpretation of the coefficient must be &lt;b&gt;relative to the reference category:&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, belonging to the [x category] is associated with&lt;br&gt; a [beta] [unit] [higher/lower] average [y] relative to the [reference category]."&lt;/i&gt;&lt;/center&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;With a &lt;b&gt;binary \(y\) variable&lt;/b&gt;, the coefficient must be interpreted in &lt;b&gt;percentage points:&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 [unit] increase in [x] is associated with&lt;br&gt; a [beta] percentage point [in/de]crease in the probability that [y equals 1] on average."&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 4. Wrap up!
+
+#### Interpretations with variable transformation
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;center&gt;&lt;b&gt;Standardization&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;To standardize a variable is to &lt;b&gt;divide it by its SD&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The variation of a standardized variable should not be &lt;b&gt;interpreted&lt;/b&gt; in units but &lt;b&gt;in SD&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;For instance if \(x\) and \(y\) are continuous and \(x\) is standardized, the interpretation becomes:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 &lt;b&gt;standard deviation&lt;/b&gt; increase in [x] is associated with an [in/de]crease of [beta] [units] in [y] on average."&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If both \(x\) and \(y\) are standardized, the slope is the correlation coefficient between \(x\) and \(y\)&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;b&gt;Log-transformation&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The log transformation allows to interpret the coefficient in percentage terms:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;font-size: 20px;"&gt;
+&lt;caption&gt;Interpretation of the regression coefficient&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr style = "background-color: #CCD5D9;"&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; log(y) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;font-weight: bold;"&gt; x &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em; "&gt; \(\hat{\beta}\) is the unit increase in \(y\) due
+ to a 1 unit increase in \(x\) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em; "&gt; \(\hat{\beta}\times 100\) is the % increase in \(y\) due
+ to a 1 unit increase in \(x\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr style = "background-color: #CCD5D9;"&gt;
+   &lt;td style="text-align:center;font-weight: bold;"&gt; log(x) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em;"&gt; \(\hat{\beta}\div 100\) is the unit increase in \(y\) due
+ to a 1% increase in \(x\) &lt;/td&gt;
+   &lt;td style="text-align:center;width: 10em;"&gt; \(\hat{\beta}\) is the % increase in \(y\) due
+ to a 1% increase in \(x\) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+### 4. Wrap up!
+
+#### Regression table layout
+
+.pull-left[
+
+&lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;Birth weight&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Household income&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.002&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(0.0003)&lt;/td&gt;&lt;td&gt;(0.0003)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Girl (ref: Boy)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;-135.218&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;(34.838)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;3,134.528&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;3,246.365&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(16.568)&lt;/td&gt;&lt;td&gt;(34.257)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;1,000&lt;/td&gt;&lt;td&gt;963&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0.059&lt;/td&gt;&lt;td&gt;0.074&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/td&gt;&lt;td colspan="2" style="text-align:right"&gt;&lt;sup&gt;*&lt;/sup&gt;p&lt;0.1; &lt;sup&gt;**&lt;/sup&gt;p&lt;0.05; &lt;sup&gt;***&lt;/sup&gt;p&lt;0.01&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+
+Regression tables often contain multiple regressions:
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;With &lt;b&gt;one regression in each column&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;And one variable in &lt;b&gt;each row&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With the &lt;b&gt;point estimate&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;And a &lt;b&gt;precision measure&lt;/b&gt; below&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;General info&lt;/b&gt; on each model &lt;b&gt;at the bottom&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Number of observations&lt;/li&gt;
+    &lt;li&gt;\(\text{R}^2 = 1 - \frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{\sum_{i = 1}^n(y_i-\bar{y})^2}\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+&lt;p style = "margin-bottom:.8cm;"&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A &lt;b&gt;symbology&lt;/b&gt; for the &lt;b&gt;p-value&lt;/b&gt; testing whether the coefficient is significantly different from 0 or not&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 0;
+ width: 10px;
+  height: 10px;
+   background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #F3F5F7, 
+              -4px -4px 6px #D8DEE3;
+}
+
+.logo:active {
+  box-shadow: inset 4px 4px 6px #F3F5F7, 
+              inset -4px -4px 6px #D8DEE3
+}
+
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"><a href = "https://louissirugue.github.io/metrics_on_R/home_dark.html"><p style = "margin-left:-.55cm;margin-top:-.55cm;width:53px"> <img src = "../source/home2.png"> </p> </a></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
