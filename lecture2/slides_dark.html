@@ -1454,7 +1454,7 @@ variable &lt;- c(1, 3, 8, 4, 9, 5, 3, 8, 8, 7, 4, 9,
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 5 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_861793f7" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
+<div class="countdown" id="timer_c1e65172" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -1795,7 +1795,45 @@ quartiles[3] - quartiles[1]
 `$$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$`
 
 ]
- 
+  
+---
+
+### 4. Inference
+
+#### 4.2. Empirical vs. theoretical moments
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;center&gt;&lt;b&gt;Expected value operations&lt;/b&gt;&lt;/center&gt;
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+`$$\begin{align}
+    \text{E}[X + Y]    = &amp; \text{E}[X] + \text{E}[Y] \\[1em]
+    \text{E}[aX]       = &amp; a\text{E}[X] \\[1em]
+    \text{E}[a]        = &amp; a \\[1em]
+    \text{E}[\text{E}[X]] = &amp;\text{E}[X] \\[1em]
+    \text{E}[XY]    \neq &amp; \text{E}[X]\text{E}[Y]  \text{ unless } X \perp Y
+\end{align}$$`
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;b&gt;Variance operations&lt;/b&gt;&lt;/center&gt;
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+`$$\begin{align}
+    \text{Var}(X)       &gt; &amp; 0  \,\,\,\,\,\, \text{Var}(a)       =  0 \\[1em]
+    \text{Var}(X + a)   = &amp; \text{Var}(X) \\[1em]
+    \text{Var}(aX)      = &amp; a^2\text{Var}(X) \\[1em]
+    \text{Var}(aX + bY) = &amp; a^2\text{Var}(X) +    b^2\text{Var}(Y) +\\ 
+                          &amp; 2ab\text{Cov}(X, Y) \\[1em]
+    \text{Var}(aX - bY) = &amp; a^2\text{Var}(X) +  b^2\text{Var}(Y) -\\
+                          &amp; 2ab\text{Cov}(X, Y)
+\end{align}$$`
+]
+
 ---
 
 ### 4. Inference
@@ -2070,7 +2108,7 @@ se &lt;- sd / sqrt(n)
 
 ```r
 # t-stat 
-t &lt;- qt(.975, n - 1) # qt returns t-stat from confidence level and degrees of freedom
+t &lt;- qt(.975, n - 1) # qt returns t-stat from 1 - ((1 - CL) / 2) and degrees of freedom
 ```
 
 &lt;p style = "margin-bottom:-.55cm;"&gt;&lt;/p&gt;

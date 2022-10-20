@@ -1698,7 +1698,45 @@ $$\bar{x} = \frac{1}{N}\sum_{i=1}^Nx_i$$
 $$\hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2$$
 
 ]
- 
+  
+---
+
+### 4. Inference
+
+#### 4.2. Empirical vs. theoretical moments
+
+<p style = "margin-bottom:1cm;"></p>
+
+.pull-left[
+<center><b>Expected value operations</b></center>
+<p style = "margin-bottom:2cm;"></p>
+
+$$\begin{align}
+    \text{E}[X + Y]    = & \text{E}[X] + \text{E}[Y] \\[1em]
+    \text{E}[aX]       = & a\text{E}[X] \\[1em]
+    \text{E}[a]        = & a \\[1em]
+    \text{E}[\text{E}[X]] = &\text{E}[X] \\[1em]
+    \text{E}[XY]    \neq & \text{E}[X]\text{E}[Y]  \text{ unless } X \perp Y
+\end{align}$$
+]
+
+--
+
+.pull-right[
+<center><b>Variance operations</b></center>
+<p style = "margin-bottom:1.25cm;"></p>
+
+$$\begin{align}
+    \text{Var}(X)       > & 0  \,\,\,\,\,\, \text{Var}(a)       =  0 \\[1em]
+    \text{Var}(X + a)   = & \text{Var}(X) \\[1em]
+    \text{Var}(aX)      = & a^2\text{Var}(X) \\[1em]
+    \text{Var}(aX + bY) = & a^2\text{Var}(X) +    b^2\text{Var}(Y) +\\ 
+                          & 2ab\text{Cov}(X, Y) \\[1em]
+    \text{Var}(aX - bY) = & a^2\text{Var}(X) +  b^2\text{Var}(Y) -\\
+                          & 2ab\text{Cov}(X, Y)
+\end{align}$$
+]
+
 ---
 
 ### 4. Inference
@@ -2023,7 +2061,7 @@ se <- sd / sqrt(n)
 
 ```{r}
 # t-stat 
-t <- qt(.975, n - 1) # qt returns t-stat from confidence level and degrees of freedom
+t <- qt(.975, n - 1) # qt returns t-stat from 1 - ((1 - CL) / 2) and degrees of freedom
 ```
 
 <p style = "margin-bottom:-.55cm;"></p>
