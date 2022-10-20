@@ -491,7 +491,7 @@ install.packages("dplyr") # Requires an internet connection
 <p style = "margin-bottom:1cm;"></p>
 
 <ul>
-  <li>The tidyverse package is <b>now installed</b> on your computer</li>
+  <li>The dplyr package is <b>now installed</b> on your computer</li>
   <ul>
     <li>You won't have to do it again</li>
   </ul>
@@ -940,7 +940,7 @@ data.frame(x = "a_b") %>%
 
 --
 
-#### 5) Use `group_by()` and `summarise() `to compute the percentage of draws, home wins and away wins
+#### 5) Use `group_by()` and `summarise()` to compute the percentage of draws, home wins and away wins
 
 --
 
