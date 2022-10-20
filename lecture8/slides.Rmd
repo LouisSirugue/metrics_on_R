@@ -3,6 +3,8 @@ title: "Univariate regressions"
 subtitle: "Lecture 8"
 author: "<br>Louis SIRUGUE"
 date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -33,47 +36,46 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", 
 set.seed(1)
 ```
 
-### In Part I we saw
+### Part I recap
+
+#### Import data
+
+```{r, eval = F}
+fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+```{r, echo = F}
+fb <- read.csv("ligue1.csv", encoding = "UTF-8")
+```
+
+--
 
 <p style = "margin-bottom:1.5cm;"></p>
 
---
-
- * **Different classes of R objects**
+#### Class
 
 ```{r, eval = F}
-class("numeric") # What would be the output and why?
+is.numeric("1.6180339") # What would be the output?
 ```
 
 --
 
- * **Vectors**
- 
-```{r, eval = F}
-match(8, c(6, 1, 9, 5, 8, 4)) # What would be the output and why?
-```
- 
---
- 
- * **Functions**
- 
-```{r, eval = F}
-age_from_ssn <- function(ssn) {
-  return(2022 - (as.numeric(substr(ssn, 2, 3)) + 1900))
-}
+```{r, echo = F}
+is.numeric("1.6180339") # What would be the output?
 ```
 
 --
 
- * **Packages**
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### Subsetting
 
 ```{r}
-library(tidyverse)
+fb$Home[3]
 ```
 
 ---
 
-### In Part I we saw
+### Part I recap
 
 #### Distributions
 
@@ -118,7 +120,7 @@ ggarrange(ggplot(data, aes(x = V1)) +
   
 ---
 
-### In Part I we saw
+### Part I recap
 
 #### Distributions
 
@@ -145,7 +147,7 @@ ggarrange(ggplot(data, aes(x = V1)) +
 
 ---
 
-### In Part I we saw
+### Part I recap
 
 #### Distributions
 
@@ -187,7 +189,7 @@ ggarrange(ggplot(data, aes(x = V1)) +
   
 ---
 
-### In Part I we saw
+### Part I recap
 
 #### Central tendency
 
@@ -243,7 +245,7 @@ $$\text{IQR} = Q_3 - Q_1 $$
 
 ---
 
-### In Part I we saw
+### Part I recap
 
 #### Inference
 
@@ -303,57 +305,105 @@ ggplot() +
         strip.background = element_blank())
 ```
 
-
 ---
 
-### In Part I we saw
+### Part I recap
 
-#### Read data
+#### Packages
 
 ```{r, eval = F}
-starbucks <- read.csv("C:/User/Documents/folder/starbucks.csv", sep = ";", encoding = "UTF-8")
+library(dplyr)
 ```
-
-```{r, echo = F}
-starbucks <- read.csv("starbucks.csv", sep = ";", encoding = "UTF-8")
-```
-
-<center><b><i>&#10140; Make sure to use / and not \</i></b></center>
 
 --
 
-#### Chaining operations
-
-
-```{r}
-starbucks %>%
-  arrange(-Calories) %>%
-  select(Beverage_category, Beverage_prep, Calories) %>%
-  filter(row_number() <= 3)
-```
-
-<p style = "margin-bottom:.8cm;"></p>
-<center><b><i>&#10140; Make sure to view your data at each step</i></b></center>
-
----
-
-### In Part I we saw
-
 <p style = "margin-bottom:1.5cm;"></p>
 
+#### Main dplyr functions
+
+.left-column[
 ```{r, echo = F}
 kable(tibble(Function = c("mutate()", "select()", "filter()", 
-                    "arrange()", "group_by()", "summarise()", 
-                    "bind_rows()", "left/right/inner/full_join()", "pivot_longer/wider()"),
+                    "arrange()", "group_by()", "summarise()"),
        Meaning = c("Modify or create a variable", "Keep a subset of variables", "Keep a subset of observations",
-                   "Sort the data", "Group the data", "Summarizes variables into 1 observation per group",
-                   "Append data", "Merge data", "Reshape data")),
-      caption = "<b>Important functions of the dplyr grammar</b>")
+                   "Sort the data", "Group the data", "Summarizes variables into 1 observation per group")),
+      caption = "")
+```
+]
+
+--
+
+.right-column[
+<img style = "margin-top:0cm; margin-left:1.5cm;" src = "pipe.png" width = "180"/>
+]
+
+---
+
+### Part I recap
+
+#### Merge data
+
+```{r}
+a <- data.frame(x = c(1, 2, 3), y = c("a", "b", "c"))
+b <- data.frame(x = c(4, 5, 6), y = c("d", "e", "f"))
+c <- data.frame(x = 1:6, z = c("alpha", "bravo", "charlie", "delta", "echo", "foxtrot"))
+```
+
+--
+
+```{r, eval = F}
+a %>% bind_rows(b) %>% left_join(c, by = "x")
+```
+
+```{r, echo = F}
+a %>% 
+  bind_rows(b) %>% 
+  left_join(c, by = "x") %>%
+  kable(., caption = "")
 ```
 
 ---
 
-### In Part I we saw
+### Part I recap
+
+#### Reshape data
+
+```{r, echo = F}
+attainment <- read.csv("attainment_FR_UK_US.csv") %>%
+  bind_rows(read.csv("attainment_IT_SP.csv"))
+kable(attainment %>% 
+        inner_join(read.csv("spending.csv") %>%
+                     select(-year), 
+                   by = "country"), 
+      caption = "")
+```
+
+--
+
+<p style = margin-bottom:1.25cm;"></p>
+
+```{r, eval = F}
+data %>% pivot_longer(c(share_tertiary, share_gdp), names_to = "Variable", values_to = "Value")
+```
+
+<p style = margin-bottom:1.25cm;"></p>
+
+--
+
+```{r, echo = F}
+kable(attainment %>% 
+        inner_join(read.csv("spending.csv") %>% 
+                     select(-year), 
+                   by = "country") %>%
+        pivot_longer(c(share_tertiary, share_gdp), 
+                     names_to = "Variable", 
+                     values_to = "Value"), 
+      caption = "")
+```
+
+---
+
+### Part I recap
 
 <p style = "margin-bottom:2cm;">
 
@@ -383,7 +433,7 @@ ggplot(data, aes(x = V1, y = V2)) +
 
 ---
 
-### In Part I we saw
+### Part I recap
 
 .pull-left[
 <p style = "margin-bottom:1.75cm;">
@@ -413,7 +463,7 @@ kable(tibble(Geometry = c("Bar plot", "Histogram", "Area", "Line",
 
 ---
 
-### In Part I we saw
+### Part I recap
 
 .pull-left[
 
@@ -465,7 +515,7 @@ ggplot(data, aes(x = V1, y = V2, size = V3)) +
 
 ---
 
-### In Part I we saw
+### Part I recap
 
 #### R Markdown: Three types of content
 
@@ -491,7 +541,7 @@ ggplot(data, aes(x = V1, y = V2, size = V3)) +
 
 ---
 
-### In Part I we saw
+### Part I recap
 
 #### Useful features
 
@@ -538,7 +588,7 @@ datatable(results_table)
 
 ---
 
-### In Part I we saw
+### Part I recap
 
 #### LaTeX for equations
 
@@ -582,39 +632,66 @@ $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 
 <h3>Today: <i>We start Econometrics!</i></h3>
 
-<p style = "margin-bottom:2cm;">
-
 --
 
-#### 1. Joint distributions
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Covariance
- * 1.3. Correlation
+<p style = "margin-bottom:3cm;"></p>
 
-#### 2. Univariate regressions
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Introduction to regressions
- * 2.2. Coefficients estimation
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Joint distributions</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Covariance</li>
+    <li>1.3. Correlation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Univariate regressions</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to regressions</li>
+    <li>2.2. Coefficients estimation</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Binary variables</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Binary dependent variables</li>
+    <li>3.2. Binary independent variables</li>
+  </ul>
+</ul>
  
-#### 3. Binary variables
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Binary dependent variables
- * 3.2. Binary independent variables
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 4. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
 ---
 
 <h3>Today: <i>We start Econometrics!</i></h3>
 
-<p style = "margin-bottom:2cm;">
 
-#### 1. Joint distributions
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Covariance
- * 1.3. Correlation
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Joint distributions</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Covariance</li>
+    <li>1.3. Correlation</li>
+  </ul>
+</ul>
+]
 
 ---
 
@@ -779,6 +856,21 @@ ggplot(data_cov, aes(x = `Variable A`, y = `Variable B`, color = cov_impact)) +
 
 ### 1. Joint distributions
 
+#### 1.2. Covariance 
+
+$$\begin{align}
+    \text{Cov}(X, a) = & 0\\[1.5em]
+    \text{Cov}(X, X) = & \text{Var}(X)\\[1.5em]
+    \text{Cov}(X, Y) = & \text{Cov}(Y, X)\\[1.5em]
+    \text{Cov}(aX, bY) = & ab\text{Cov}(X, Y)\\[1.5em]
+    \text{Cov}(X + a, Y + b) = & \text{Cov}(X, Y)\\[1.5em]
+    \text{Cov}(aX + bY, cW + dZ) = & ac\text{Cov}(X, W) +   ad\text{Cov}(X, Z) + \\
+    & bc\text{Cov}(Y, W) +  bd\text{Cov}(Y, Z) 
+\end{align}$$
+---
+
+### 1. Joint distributions
+
 #### 1.3. Correlation
 
 <ul>
@@ -821,7 +913,7 @@ $$\text{Corr}(x, y) = \frac{\text{Cov}(x, y)}{\text{SD}(x)\times\text{SD}(y)}$$
 
 ### 1. Joint distributions
 
-#### 1.3. Correlation 
+#### 1.3. Correlation
 
 ```{r, echo = F, fig.width = 15, fig.height = 6.25, dpi=300, out.width="100%"}
 
@@ -899,42 +991,76 @@ cor(x, y)
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Joint distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Covariance
- * 1.3. Correlation
+.pull-left[
 
-#### 2. Univariate regressions
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Introduction to regressions
- * 2.2. Coefficients estimation
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Joint distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Covariance</li>
+    <li>1.3. Correlation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Univariate regressions</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to regressions</li>
+    <li>2.2. Coefficients estimation</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Binary variables</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Binary dependent variables</li>
+    <li>3.2. Binary independent variables</li>
+  </ul>
+</ul>
  
-#### 3. Binary variables
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Binary dependent variables
- * 3.2. Binary independent variables
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 4. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
 
-#### 1. Joint distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Covariance
- * 1.3. Correlation
- 
-#### 2. Univariate regressions
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Introduction to regressions
- * 2.2. Coefficients estimation
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Joint distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Covariance</li>
+    <li>1.3. Correlation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Univariate regressions</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to regressions</li>
+    <li>2.2. Coefficients estimation</li>
+  </ul>
+</ul>
+
+]
+
 
 ---
 
@@ -1506,6 +1632,7 @@ $$\hat{\beta} = \frac{\sum_{i = 1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i = 1}^n(x
 $$\hat{\beta} = \frac{\text{Cov}(x_i, y_i)}{\text{Var}(x_i)} \:\:\:\:\:\:\:\:\: ; \:\:\:\:\:\:\:\:\: \hat{\alpha} = \bar{y} - \frac{\text{Cov}(x_i, y_i)}{\text{Var}(x_i)} \times\bar{x}$$
 
 ---
+class: inverse, hide-logo
 
 ### Practice
 
@@ -1539,7 +1666,10 @@ $$\hat{\beta} = \frac{\text{Cov}(x_i, y_i)}{\text{Var}(x_i)} \:\:\:\:\:\:\:\:\:\
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
 ---
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1574,6 +1704,7 @@ ggcurve <- ggcurve %>%
 ```
 
 ---
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1588,9 +1719,16 @@ ggplot(ggcurve, aes(x = gini)) +
  
 --
 
-```{r, echo = F, fig.width = 8, fig.height = 5, out.width = "57%"}
+```{r, echo = F, fig.width = 6, fig.height = 3.875, out.width = "57%"}
 ggplot(ggcurve, aes(x = gini)) + 
-  geom_point(aes(y = ige)) + geom_line(aes(y = fit))
+  geom_point(aes(y = ige), color = "#dfe6eb") + geom_line(aes(y = fit), color = "#dfe6eb") +
+  theme(plot.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.grid = element_blank(),
+        axis.title = element_text(color = "#dfe6eb"),
+        axis.text = element_text(color = "#dfe6eb"),
+        axis.line = element_line(color = "#dfe6eb"),
+        axis.ticks = element_line(color = "#dfe6eb"))
 ```
 
 ---
@@ -1637,12 +1775,13 @@ ggplot(ggcurve, aes(x = gini, y = ige)) +
 ]
 
 ---
+class: inverse, hide-logo
 
 <center><h3> Vocabulary </h3></center>
 
 <p style = "margin-bottom:1.5cm;"></p>
 
- * This equation we're working on is called a **regression model**
+ * This equation we're working on is called a <b>regression model</b>
  
 $$y_i = \hat{\alpha} + \hat{\beta}x_i + \widehat{\varepsilon_i}$$ 
 
@@ -1684,48 +1823,87 @@ $$y_i = \hat{\alpha} + \hat{\beta}x_i + \widehat{\varepsilon_i}$$
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Joint distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Covariance
- * 1.3. Correlation
+.pull-left[
 
-#### 2. Univariate regressions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Introduction to regressions
- * 2.2. Coefficients estimation
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Joint distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Covariance</li>
+    <li>1.3. Correlation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Univariate regressions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to regressions</li>
+    <li>2.2. Coefficients estimation</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Binary variables</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Binary dependent variables</li>
+    <li>3.2. Binary independent variables</li>
+  </ul>
+</ul>
  
-#### 3. Binary variables
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Binary dependent variables
- * 3.2. Binary independent variables
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 4. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Joint distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Covariance
- * 1.3. Correlation
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Joint distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Covariance</li>
+    <li>1.3. Correlation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Univariate regressions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to regressions</li>
+    <li>2.2. Coefficients estimation</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Binary variables</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Binary dependent variables</li>
+    <li>3.2. Binary independent variables</li>
+  </ul>
+</ul>
  
-#### 2. Univariate regressions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Introduction to regressions
- * 2.2. Coefficients estimation
- 
-#### 3. Binary variables
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Binary dependent variables
- * 3.2. Binary independent variables
- 
+]
+
 ---
 
 ### 3. Binary variables
@@ -2059,25 +2237,45 @@ $$\begin{align}\widehat{\text{Height}_i} & = 165 + 11 \times 1\\
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:2cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Joint distributions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Definition
- * 1.2. Covariance
- * 1.3. Correlation
+.pull-left[
 
-#### 2. Univariate regressions &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Introduction to regressions
- * 2.2. Coefficients estimation
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Joint distributions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Definition</li>
+    <li>1.2. Covariance</li>
+    <li>1.3. Correlation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Univariate regressions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Introduction to regressions</li>
+    <li>2.2. Coefficients estimation</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Binary variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Binary dependent variables</li>
+    <li>3.2. Binary independent variables</li>
+  </ul>
+</ul>
  
-#### 3. Binary variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Binary dependent variables
- * 3.2. Binary independent variables
+<p style = "margin-bottom:1.5cm;"></p>
 
-#### 4. Wrap up!
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
 ---
 
