@@ -1,8 +1,10 @@
 ---
 title: "R Programming & Descriptive statistics"
 subtitle: "Lecture 17"
-author: "<br>Louis SIRUGUE<br><br>G1: Pauline CHAROUSSET<br>G2: Sebastián GARCIA CORNEJO"
-date: "`r format(Sys.time(), '%m/%Y')`"
+author: "<br>Louis SIRUGUE"
+date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -19,6 +22,11 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
+
+```{css, echo = F, eval = params$dark}
+body{background-color:black;filter:invert(1)}
+```
+
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../source/style.R"))
@@ -30,38 +38,66 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center")
 
 <h3>Today: Refresher on R Programming and Descriptive Statistics</h3>
 
-<p style = "margin-bottom:1.75cm;">
+--
 
-#### 1. The basics of R programming
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Types of R objects
- * 1.2. The dplyr grammar
- * 1.3. Data visualization
+<p style = "margin-bottom:3cm;"></p>
 
-#### 2. Descriptive statistics
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Distributions
- * 2.2. Central tendency
- * 2.3. Spread
- * 2.4. Joint distributions
- 
-#### 3. A few words on using R
-<p style = "margin-bottom:-.5cm;">
- * 3.1. When it doesn't work the way you want
- * 3.2. Where to find help
- * 3.3. When it doesn't work at all
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The basics of R programming</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Types of R objects</li>
+    <li>1.2. The dplyr grammar</li>
+    <li>1.3. Data visualization</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Descriptive statistics</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Distributions</li>
+    <li>2.2. Central tendency</li>
+    <li>2.3. Spread</li>
+    <li>2.4. Joint distributions</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. A few words on using R</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. When it doesn't work the way you want</li>
+    <li>3.2. Where to find help</li>
+    <li>3.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+
+]
 
 ---
 
 <h3>Today: Refresher on R Programming and Descriptive Statistics</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. The basics of R programming
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Types of R objects
- * 1.2. The dplyr grammar
- * 1.3. Data visualization
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The basics of R programming</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Types of R objects</li>
+    <li>1.2. The dplyr grammar</li>
+    <li>1.3. Data visualization</li>
+  </ul>
+</ul>
+
+]
  
 ---
 
@@ -253,7 +289,7 @@ head(data, 5)                        # Print first 5 rows
 --
 
 ```{r, echo = F}
-data <- read.csv("data/cereals.csv")
+data <- read.csv("cereals.csv")
 data <- as_tibble(data)
 head(data, 5)
 ```
@@ -644,47 +680,180 @@ ggplot(test_data, aes(x = V1, y = V2, color = Group)) +
 
 ---
 
+class: inverse, hide-logo
+
+### Practice
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 1) Import the dataset `cereals.csv`
+
+--
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 2) There is no documentation on the variable `rating`. Use the summary() function to deduce the unit of the variable based on its distribution.
+
+--
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 3) Generate a scatter plot with  `sugars` on the `x` axis and `rating` on the `y` axis to deduce whether the rating was made by nutritionists or consumers
+
+--
+
+<p style = "margin-bottom:3cm;"></p>
+
+<center><h3><i>You've got 10 minutes!</i></h3></center>
+
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 1) Import the dataset `cereals.csv`
+
+```{r, eval = F}
+cereals <- read.csv("C:/User/Documents/cereals.csv")
+```
+
+```{r, echo = F}
+cereals <- read.csv("cereals.csv")
+```
+
+--
+
+<p style = "margin-bottom:2cm;"></p>
+
+#### 2) There is no documentation on the variable `rating`. Use the summary() function to deduce the unit of the variable based on its distribution.
+
+--
+
+```{r}
+summary(cereals$rating)
+```
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<center>The variable is probably in percentages</center>
+
+---
+
+class: inverse, hide-logo
+
+### Solution
+
+#### 3) Generate a scatter plot with `sugars` on the `x` axis and `rating` on the `y` axis to deduce whether the rating was made by nutritionists or consumers
+
+--
+
+```{r, eval = F}
+ggplot(cereals, aes(x = sugars, y = rating)) +
+  geom_point(alpha = .8)
+```
+
+--
+
+.left-column[
+```{r, echo = F, fig.width = 7, fig.height = 4.25, out.width = "80%", dpi = 300}
+ggplot(cereals, aes(x = sugars, y = rating)) +
+  geom_point(color = "#dfe6eb", alpha = .8) +
+  theme(plot.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.grid = element_blank(),
+        axis.title = element_text(color = "#dfe6eb"),
+        axis.text = element_text(color = "#dfe6eb"),
+        axis.line = element_line(color = "#dfe6eb"),
+        axis.ticks = element_line(color = "#dfe6eb"))
+```
+]
+
+--
+
+.right-column[
+<p style = "margin-bottom:4cm;"></p>
+<center>The rating was probably made by nutritionists</center>
+]
+---
+
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. The basics of R programming &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Types of R objects
- * 1.2. The dplyr grammar
- * 1.3. Data visualization
+.pull-left[
 
-#### 2. Descriptive statistics
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Distributions
- * 2.2. Central tendency
- * 2.3. Spread
- * 2.4. Joint distributions
- 
-#### 3. A few words on using R
-<p style = "margin-bottom:-.5cm;">
- * 3.1. When it doesn't work the way you want
- * 3.2. Where to find help
- * 3.3. When it doesn't work at all
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The basics of R programming &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Types of R objects</li>
+    <li>1.2. The dplyr grammar</li>
+    <li>1.3. Data visualization</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Descriptive statistics</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Distributions</li>
+    <li>2.2. Central tendency</li>
+    <li>2.3. Spread</li>
+    <li>2.4. Joint distributions</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. A few words on using R</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. When it doesn't work the way you want</li>
+    <li>3.2. Where to find help</li>
+    <li>3.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+
+]
 
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. The basics of R programming &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Types of R objects
- * 1.2. The dplyr grammar
- * 1.3. Data visualization
+.pull-left[
 
-#### 2. Descriptive statistics
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Distributions
- * 2.2. Central tendency
- * 2.3. Spread
- * 2.4. Joint distributions
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The basics of R programming &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Types of R objects</li>
+    <li>1.2. The dplyr grammar</li>
+    <li>1.3. Data visualization</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Descriptive statistics</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Distributions</li>
+    <li>2.2. Central tendency</li>
+    <li>2.3. Spread</li>
+    <li>2.4. Joint distributions</li>
+  </ul>
+</ul>
+
+]
  
 ---
 
@@ -1268,7 +1437,7 @@ ggplot(hist_data, aes(x = x, y = z)) +
 
 ### 2. Descriptive statistics
 
-#### 2.4. Joint distributions 
+#### 2.4. Joint distributions
 
  * When describing a <b>single distribution</b>, we're interested in its <b>spread and central tendency</b>
  * When describing a <b>joint distribution</b>, we're interested in the <b>relationship between the two variables</b>
@@ -1383,27 +1552,46 @@ ggplot(example, aes(x = x, y = y)) +
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.5cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. The basics of R programming &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Types of R objects
- * 1.2. The dplyr grammar
- * 1.3. Data visualization
+.pull-left[
 
-#### 2. Descriptive statistics &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Distributions
- * 2.2. Central tendency
- * 2.3. Spread
- * 2.4. Joint distributions
- 
-#### 3. A few words on using R
-<p style = "margin-bottom:-.5cm;">
- * 3.1. When it doesn't work the way you want
- * 3.2. Where to find help
- * 3.3. When it doesn't work at all
- 
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The basics of R programming &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Types of R objects</li>
+    <li>1.2. The dplyr grammar</li>
+    <li>1.3. Data visualization</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Descriptive statistics &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Distributions</li>
+    <li>2.2. Central tendency</li>
+    <li>2.3. Spread</li>
+    <li>2.4. Joint distributions</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. A few words on using R</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. When it doesn't work the way you want</li>
+    <li>3.2. Where to find help</li>
+    <li>3.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+
+]
+
 ---
 
 ### 3. A few words on using R
