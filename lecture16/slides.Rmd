@@ -2,7 +2,7 @@
 title: "How to conduct a research project"
 subtitle: "Lecture 16"
 author: "<br>Louis SIRUGUE"
-date: "CPES 2 - Fall 2022"
+date: "CPES 2 - Spring 2023"
 params:
   dark: false
 output:
