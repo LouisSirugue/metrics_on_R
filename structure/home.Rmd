@@ -198,13 +198,13 @@ s2 <- data.frame(a = c(" ", paste("Lecture", 16:18)),
                  b = c(" ", "How to conduct a research project", "Refresher: R Programming", 
                        "Refresher: Econometrics"),
                  c = c("Slides", 
-                       "html - pdf",
-                       "html - pdf",
-                       "html - pdf"),
+                       paste0("[html](", root, "lecture16/slides", dark, ".html) - [pdf](", root, "lecture16/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture17/slides", dark, ".html) - [pdf](", root, "lecture17/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture18/slides", dark, ".html) - [pdf](", root, "lecture18/slides", dark, ".pdf)")),
                  d = c("Data",
-                       "data",
-                       "data",
-                       "data"))
+                       " ",
+                       paste0("[data](", root, "lecture17/data.zip)"),
+                       " "))
 
 kable(s2, col.names = NULL, align = "llccc") %>%
   row_spec(1, font_size = 17) %>%
@@ -223,10 +223,10 @@ exs2 <- data.frame(a = c(" ",
                        "Research project"),
                  
                  b = c("Guidelines", 
-                       paste0("[html](", root, "project/example.html) - pdf")),
+                       paste0("[html](", root, "project/example.html) - [pdf](", root, "project/example.pdf)")),
                        
                  c = c("Grading",
-                       "html - pdf"),
+                       paste0("[html](", root, "project/grading.html) - [pdf](", root, "project/grading.pdf)")),
                  d = c("Data", 
                        paste0("[data](", root, "project/data.zip)")))
 
@@ -241,26 +241,28 @@ kable(exs2, col.names = NULL, align = "lccc")  %>%
   pack_rows("Exams", 2, 2) 
 ```
 
-<br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
 
 ##### Cheatsheets
 
-<br><br>
+<br><br><br>
 
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/rstudio.pdf"><img style = "margin-left:5cm;margin-top:2.3cm;" src = "../cheatsheets/rstudio.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/baser.pdf"><img style = "margin-left:-1.45cm;margin-top:-2.3cm;" src = "../cheatsheets/baser.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/readr.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;"  src = "../cheatsheets/readr.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/dplyr.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/dplyr.png" width = "100"/></a>
-<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/ggplot.pdf"><img  style = "margin-top:2.3cm;margin-left:-1.45cm;"src = "../cheatsheets/ggplot.png" width = "100"/></a>
-<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/rmarkdown.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/rmarkdown.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/tidyr.pdf"><img  style = "margin-top:2.3cm;margin-left:-1.45cm;"src = "../cheatsheets/tidyr.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/ggplot.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/ggplot.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/latex.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/latex.png" width = "100"/></a>
-<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/moments.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/moments.png" width = "100"/></a>
-<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/tidyr.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/tidyr.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/rmarkdown.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/rmarkdown.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/moments.pdf"><img style = "margin-top:2.3cm;margin-left:-1.63cm;" src = "../cheatsheets/moments.png" width = "114"/></a>
 <br>
 <a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/regex.pdf"><img style = "margin-left:6.32cm;margin-top:-.77cm;" src = "../cheatsheets/regex.png" width = "100"/></a>
-<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/cartography.pdf"><img src = "../cheatsheets/cartography.png" width = "100"/></a>
-<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/sf.pdf"><img src = "../cheatsheets/sf.png" width = "100"/></a>
-<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/strings.pdf"><img src = "../cheatsheets/strings.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/strings.pdf"><img style = "margin-left:-.14cm;margin-top:-.77cm;" src = "../cheatsheets/strings.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/cartography.pdf"><img style = "margin-left:-.14cm;margin-top:-.77cm;" src = "../cheatsheets/cartography.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/metrics_on_R/cheatsheets/sf.pdf"><img style = "margin-left:-.14cm;margin-top:-.77cm;" src = "../cheatsheets/sf.png" width = "100"/></a>
+
+<br><br><br><br><br><br><br><br><br><br>
 
 <!---
 
@@ -522,14 +524,131 @@ xfun::file_string('toc.html')
 
 ##### Spring semester
 
-<br>
+<br><br>
 
-```{r}
+```{r, include = F}
+roman <- c("I.", "II.", "III.")
 
+slides <- tibble(x = NA_character_, type = NA_character_, 
+                 link = NA_character_, bullet = NA_character_,
+                 last = NA_character_, n = NA) %>% na.omit()
+
+for (i in 1:length(roman)) {
+  
+    
+    lecture <- tibble(x = readLines(paste0("../Lecture", i + 15, "/slides.Rmd")))
+    
+    fourticks <- lecture %>%
+        mutate(row = row_number()) %>%
+        filter(grepl("^````", x))
+    
+    if (nrow(fourticks) > 0) {
+      
+      fourticks <- fourticks %>%
+        mutate(x = rep(1:(nrow(.)/2), each = 2),
+               group = ifelse(row_number() %% 2, "start", "stop")) %>%
+        pivot_wider(names_from = "group", values_from = "row")
+      
+      for (j in nrow(fourticks):1) {
+        lecture <- lecture %>%
+          filter(!row_number() %in% fourticks$start[j]:fourticks$stop[j])
+      }
+      
+    }
+
+    slides <- slides %>%
+      bind_rows(tibble(x = paste(roman[i], gsub('title: \"|\"', "", lecture$x[2])),
+                       type = "title",
+                       link = paste0(root, "lecture", i + 15, "/slides.html#1"),
+                       bullet = "detail",
+                       last = "",
+                       n = NA)) %>%
+      bind_rows(lecture %>%
+                  mutate(type = case_when(grepl("^-", x) ~ "Dashed",
+                                          grepl("^### [0-9]. ", x) ~ "Section",
+                                          grepl("^#### [0-9].[0-9]. ", x) ~ "Subsection"),
+                         x = gsub(":.*$", "", x)) %>%
+                  na.omit() %>%
+                  group_by(x) %>%
+                  filter(type == "Dashed" | row_number() == 1) %>%
+                  ungroup() %>%
+                  group_by(type == "Dashed") %>%
+                  mutate(toc_element = ifelse(type != "Dashed", row_number(), NA)) %>%
+                  ungroup() %>%
+                  mutate(slide = row_number() - toc_element,
+                         x = sub("#* ", "", x)) %>%
+                  na.omit() %>%
+                  select(x, type, slide) %>%
+                  mutate(section = substr(x, 1, 1)) %>%
+                  group_by(section) %>%
+                  mutate(n = n(),
+                         last = ifelse(row_number() == n(), "Section", "")) %>%
+                  ungroup() %>%
+                  mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
+                         link = paste0(root, "lecture", i + 15, "/slides", 
+                                       ifelse(params$dark, "_dark", ""), ".html#", slide),
+                         last = ifelse(row_number() == n(), "title", last)) %>%
+                  select(x, type, link, bullet, last, n))
+}
+
+slides <- slides %>% mutate(x = gsub("`", "", x))
+
+htmlcode <- ""
+for (i in 1:nrow(slides)) {
+  
+  # Open level 1
+  if (slides$type[i] == "title") {
+    if (slides$bullet[i] == "detail") {
+      htmlcode <- paste0(htmlcode, '<details open style = "margin-left:8.5cm;"><summary><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></summary>')
+    }
+    if (slides$bullet[i] == "item") {
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</li></ul><p style = "margin-bottom:.75cm;"></p>')
+    }
+  }
+  
+  # Open level 2
+  
+  if (slides$type[i] == "Section") {
+    if (slides$bullet[i] == "detail") {
+      htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></summary>')
+    }
+    if (slides$bullet[i] == "item") {
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;margin-bottom:0cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></li></ul>')
+    }
+  }
+  
+  # Level 3
+  if (slides$type[i] == "Subsection") {
+    htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.6cm;margin-bottom:0cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></li></ul>')
+  }
+  
+  # Close level 2
+  if (slides$last[i] == "Section" & slides$n[i] > 1) {
+    htmlcode <- paste0(htmlcode, '</details>')
+    }
+  
+  # Close level 1
+  if (slides$last[i] == "title") {htmlcode <- paste0(htmlcode, '</details></details><p style = "margin-bottom:.75cm;"></p>')}
+
+}
+
+writeLines(htmlcode, "tocs2.html")
 ```
 
 
-<br><br><br><br>
+````{=html}
+```{r, echo=FALSE, results='asis'}
+xfun::file_string('tocs2.html')
+```
+````
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
 
 #### Syllabus {.tabset}
 
@@ -560,15 +679,11 @@ Don't hesitate to send me an email if you're already facing issues at that stage
 
 <br><br><br>
 
-##### Grading system 
+##### Grading system {.tabset}
+
+###### Fall semester
 
 <br>
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<center><span style = "font-size:15pt;"><b>Fall semester</b></span></center>  
-
-<p style = "margin-bottom:.75cm;"></p>
 
 The grading of the first semester will be based on:  
 
@@ -588,11 +703,11 @@ The **homework** is a set of exercises related to the first five lectures of the
 
 The **final exam** will be a paper exam in classroom. You are allowed to bring a cheatsheet with you to the exam as long as it is handwritten and standing on a single A4 (21cm x 29.7cm) page, i.e., *recto* only. Cheatsheets that do not comply with these rules will be confiscated. Beyond that, standard examination rules apply. 
 
-<p style = "margin-bottom:1.5cm;"></p>
+<br><br><br>
 
-<center><span style = "font-size:15pt;"><b>Spring semester</b></span></center>  
+###### Spring semester
 
-<p style = "margin-bottom:.75cm;"></p>
+<br>
 
 The grading of the second semester grade will be entirely based on your research project that you will carry out all along the semester. Research projects must be done by groups of two, so both members of a pair will have the same grade. You will be evaluated three times, at three different stages of the research process:
 
@@ -606,40 +721,11 @@ As the first three lectures of the second semester will be refreshers on the not
 
 <br><br><br><br>
 
-##### Schedule
+##### Schedule {.tabset}
+
+###### Fall semester 
 
 <br>
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<center><span style = "font-size:15pt;"><b>Fall semester</b></span></center>  
-
-<p style = "margin-bottom:.75cm;"></p>
-
-<span style = "color:#014D64;"><u>Standard lectures:</u></span>  
-
-During these lectures we will cover the material core material of the course.  
-
-<span style = "color:#6794A7;"><u>Buffer lectures:</u></span>   
-
-These lectures are slightly more advanced, but their content will not be needed for the exams. There are two buffer lectures, each placed before an exam to give you time to prepare for the exam.  
-
-<span style = "color:#00A2D9;"><u>Exams:</u></span>  
-
-The homework is due by the 16<sup>th</sup> of October 23:59, and will be corrected in class during the 7<sup>th</sup> lecture.  
-The final exam will take place during the very last lecture.  
-The six online quizzes will take place during the first three weeks of each part of the course. The corresponding lectures are marked with a <span style = "color:#00A2D9;">*</span> symbol.
-
-```{r, echo = F}
-tibble(a = c("")) %>%
-  kable(col.names = NULL) %>%
-  kable_styling(bootstrap_options ="condensed") %>%
-  row_spec(1, extra_css = "border-bottom: dashed 1px #014D64 !important;")
-```
-
-Horizontal dashed lines represent break periods. They all last 1 week except the 2-week-long Christmas break.
-
-<p style = "margin-bottom:.75cm;"></p>
 
 ```{r s1, echo = FALSE}
 s1 <- data.frame(c = c("05/09/22", 
@@ -697,26 +783,19 @@ kable(s1, col.names = NULL, escape= F)  %>%
   row_spec(c(7, 15), color = "#00A2D9") # %>%  row_spec(c(8, 12, 16, 18), color = "#86D7F2")
 ```
 
-<p style = "margin-bottom:2cm;"></p>
+<span style = "color:#014D64;"><u>Standard lectures:</u></span>  
 
-<center><span style = "font-size:15pt;"><b>Spring semester</b></span></center>  
+During these lectures we will cover the material core material of the course.  
 
-<p style = "margin-bottom:.75cm;"></p>
+<span style = "color:#6794A7;"><u>Buffer lectures:</u></span>   
 
-<span style = "color:#6794A7;"><u>Guidelines and refreshers:</u></span>  
-
-The first lecture will cover in detail how to conduct your research project, and the next two lectures will go back on the most important notions seen during the first semester. These are meant to give you time to form groups of 2 and to find your research question and your dataset. You will be guided on where and how to look for data, and both the data and the research question can be taken from an existing academic article. 
-
-<span style = "color:#014D64;"><u>Follow-ups:</u></span>   
-
-Follow-up sessions are meetings during which you will be given feedback on what you've done and indications on what to do next. The precise format of the follow-ups may vary between TAs. Between each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc., until your final presentation. [Here](https://louissirugue.github.io/data-analysis-course/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the *Material* section of the homepage. You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
+These lectures are slightly more advanced, but their content will not be needed for the exams. There are two buffer lectures, each placed before an exam to give you time to prepare for the exam.  
 
 <span style = "color:#00A2D9;"><u>Exams:</u></span>  
 
-The 4<sup>th</sup> lecture will be dedicated to the presentation of your research questions and datasets.  
-A midterm report must be handed out by email to your TA after the 9<sup>the</sup> lecture. Lecture 10 will be devoted to giving you feedback about it.  
-The last lecture will be dedicated to your final presentations.  
-More detailed guidelines are provided above and in the first set of slides *"How to conduct a research project".*
+The homework is due by the 16<sup>th</sup> of October 23:59, and will be corrected in class during the 7<sup>th</sup> lecture.  
+The final exam will take place during the very last lecture.  
+The six online quizzes will take place during the first three weeks of each part of the course. The corresponding lectures are marked with a <span style = "color:#00A2D9;">*</span> symbol.
 
 ```{r, echo = F}
 tibble(a = c("")) %>%
@@ -725,11 +804,13 @@ tibble(a = c("")) %>%
   row_spec(1, extra_css = "border-bottom: dashed 1px #014D64 !important;")
 ```
 
-Horizontal dashed lines represent break periods.
+Horizontal dashed lines represent break periods. They all last 1 week except the 2-week-long Christmas break.
 
-<p style = "margin-bottom:.75cm;"></p>
+<br><br><br><br>
 
-<p style = "margin-bottom:.75cm;"></p>
+###### Spring semester
+
+<br>
 
 ```{r s2, echo = FALSE}
 s2 <- data.frame(a = c(" ", paste("Lecture", 1:15)),
@@ -762,8 +843,8 @@ kable(s2, col.names = NULL, align = "lccl")  %>%
   pack_rows("Part 2: Research project", 5, 16) %>%
   
   column_spec(1, width = "7em", width_min = "7em", width_max = "7em") %>%
-  column_spec(2, width = "5em", width_min = "4em", width_max = "4em") %>%
-  column_spec(3, width = "5em", width_min = "4em", width_max = "4em") %>%
+  column_spec(2, width = "5em", width_min = "5em", width_max = "5em") %>%
+  column_spec(3, width = "5em", width_min = "5em", width_max = "5em") %>%
   column_spec(4, width = "20em", width_min = "14em", width_max = "20em") %>%
   
   row_spec(c(6:10, 12:15), color = "#014D64") %>%
@@ -771,13 +852,35 @@ kable(s2, col.names = NULL, align = "lccl")  %>%
   row_spec(c(5, 11, 16), color = "#00A2D9")
 ```
 
-***
+<span style = "color:#6794A7;"><u>Guidelines and refreshers:</u></span>  
+
+The first lecture will cover in detail how to conduct your research project, and the next two lectures will go back on the most important notions seen during the first semester. These are meant to give you time to form groups of 2 and to find your research question and your dataset. You will be guided on where and how to look for data, and both the data and the research question can be taken from an existing academic article. 
+
+<span style = "color:#014D64;"><u>Follow-ups:</u></span>   
+
+Follow-up sessions are meetings during which you will be given feedback on what you've done and indications on what to do next. The precise format of the follow-ups may vary between TAs. Between each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc., until your final presentation. [Here](https://louissirugue.github.io/data-analysis-course/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the *Material* section of the homepage. You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
+
+<span style = "color:#00A2D9;"><u>Exams:</u></span>  
+
+The 4<sup>th</sup> lecture will be dedicated to the presentation of your research questions and datasets.  
+A midterm report must be handed out by email to your TA after the 9<sup>th</sup> lecture. Lecture 10 will be devoted to giving you feedback about it.  
+The last lecture will be dedicated to your final presentations.  
+More detailed guidelines are provided above and in the first set of slides *"How to conduct a research project".*
+
+```{r, echo = F}
+tibble(a = c("")) %>%
+  kable(col.names = NULL) %>%
+  kable_styling(bootstrap_options ="condensed") %>%
+  row_spec(1, extra_css = "border-bottom: dashed 1px #014D64 !important;")
+```
+
+Horizontal dashed lines represent break periods.
 
 <br><br><br><br>
 
 ##### References
 
-<br>
+<br><br>
 
 This course is inspired by:
 
@@ -789,7 +892,7 @@ This course is inspired by:
  * Geolocalized Datasets and Applications for Economics, <i>by F. Libois and E. Madinier.</i> Paris School of Economics (2020)
  * Countless posts on [stackoverflow](https://stackoverflow.com/) and [R-bloggers](https://www.r-bloggers.com/)
  
-<br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 
 <!---
 
