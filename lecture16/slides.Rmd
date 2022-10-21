@@ -1,15 +1,18 @@
 ---
 title: "How to conduct a research project"
 subtitle: "Lecture 16"
-author: "<br>Louis SIRUGUE<br><br>G1: Pauline CHAROUSSET<br>G2: Sebastián GARCIA CORNEJO"
-date: "<br>`r format(Sys.time(), '%m/%Y')`"
+author: "<br>Louis SIRUGUE"
+date: "CPES 2 - Fall 2022"
+params:
+  dark: false
 output:
-  xaringan::moon_reader: 
+  xaringan::moon_reader:  
     css: 
         - xaringan-themer.css
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-
+```{css, echo = F, eval = params$dark}
+body{background-color:black;filter:invert(1)}
+```
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../source/style.R"))
@@ -40,7 +45,6 @@ set.seed(1)
 
 --
 
-<p style = "margin-bottom:-.5cm;"></P>
 
 .pull-left[
 
@@ -48,22 +52,24 @@ set.seed(1)
   <li>Dedicated to an empirical <b>research project</b>:</li>
   <ul>
     <li><b>By pairs</b>, apply programming & econometric tools from S1 to your own research question</li>
-    <li>Find an example of what is expected <a href="https://louissirugue.github.io/data-analysis-course/project/example.html">here</a></li>
+    <li>Find an example of what is expected <a href="https://louissirugue.github.io/metrics_on_R/project/example.html">here</a></li>
   </ul>
 </ul>
 
-<p style = "margin-bottom:.8cm;"></P>
+<p style = "margin-bottom:1cm;"></p>
 
 <ul>
-  <li>The <b>first part</b> will be <b>formal lectures</b>:</li>
+  <li>In Part I: <b>formal lectures</b>:</li>
   <ul>
     <li>Today: The steps of the research process</li>
     <li>The next two lectures: Refreshers from S1</li>
   </ul>
 </ul>
 
+<p style = "margin-bottom:1cm;"></p>
+
 ```{r, echo = F}
-s2 <- data.frame(a = c(paste("Lecture", 1:7), "Lecture 8-9", paste("Lecture", 10:15)),
+s2 <- data.frame(a = c(paste("Lecture", 1:4), "Lecture 5-6", paste("Lecture", 7:15)),
                  b = c("How to conduct a research project",
                        "Refresher: R Programming",
                        "Refresher: Econometrics",
@@ -72,10 +78,10 @@ s2 <- data.frame(a = c(paste("Lecture", 1:7), "Lecture 8-9", paste("Lecture", 10
                        "Follow-up: Descriptive statistics",
                        "Follow-up: Visualizing the data",
                        "Follow-up: Regression analysis",
+                       "Midterm report feedback",
                        "Follow-up: Causality assessment",
                        "Follow-up: Robustness",
                        "Follow-up: Heterogeneity",
-                       "Follow-up: Tidy your html report",
                        "Follow-up: Last tips", 
                        "Final presentation"))
 
@@ -83,65 +89,90 @@ kable(s2 %>% filter(row_number() < 4), col.names = NULL, caption = "<b>Part 1: G
   kable_styling(bootstrap_options = c("hover", "condensed"))
 ```
 
-<p style = "margin-bottom:.8cm;"></P>
+<p style = "margin-bottom:1cm;"></p>
 
 <ul>
-  <li>The <b>second part</b> will be <b>follow-ups</b>:</li>
-  <ul>
-    <li>Meetings to help you at each step</li>
-    <li>Graded presentations (see last slides)</li>
-  </ul>
+  <li>In Part II: <b>follow-ups</b> and <b>reports/presentations</b></li>
 </ul>
-
 ]
 
 --
 
 .pull-right[
-<p style = "margin-bottom:1.15cm;"></P>
+<p style = "margin-bottom:.8cm;"></p>
+
 ```{r, echo = F}
 kable(s2 %>% filter(row_number() > 3), col.names = NULL, caption = "<b>Part 2: Research project</b>")  %>%
-  kable_styling(bootstrap_options = c("hover", "condensed"))
+  kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+  row_spec(c(1, 6, 11), bold = T, italic = T)
 ```
 ]
 
 ---
 
-### Today: How to conduct a research project
+<h3>Today: How to conduct a research project</h3>
 
-<p style = "margin-bottom:1.25cm;">
+--
 
-#### 1. Preliminary steps
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Research question
- * 1.2. Finding data
- * 1.3. Literature review
+<p style = "margin-bottom:3cm;"></p>
 
-#### 2. Data description
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data cleaning
- * 2.2. Descriptive statistics
- * 2.3. Data visualization
+.pull-left[
 
-#### 3. Analysis
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Regression analysis
- * 3.2. Robustness
- * 3.2. Heterogeneity
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Preliminary steps</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Research question</li>
+    <li>1.2. Finding data</li>
+    <li>1.3. Literature review</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Data description</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data cleaning</li>
+    <li>2.2. Descriptive statistics</li>
+    <li>2.3. Data visualization</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Analysis</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Regression analysis</li>
+    <li>3.2. Robustness</li>
+    <li>3.3. Heterogeneity</li>
+  </ul>
+</ul>
  
-#### 4. Wrap up!
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
 
 ---
 
-### Today: How to conduct a research project
+<h3>Today: How to conduct a research project</h3>
 
-<p style = "margin-bottom:1.25cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Preliminary steps
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Research question
- * 1.2. Finding data
- * 1.3. Literature review
+.pull-left[
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Preliminary steps</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Research question</li>
+    <li>1.2. Finding data</li>
+    <li>1.3. Literature review</li>
+  </ul>
+</ul>
+]
 
 ---
 
@@ -242,12 +273,14 @@ kable(s2 %>% filter(row_number() > 3), col.names = NULL, caption = "<b>Part 2: R
 
 #### 1.2. Finding data
 
- * Open access online data is increasingly common
+ * **Open** access online **data** is increasingly common
+ 
+<p style = "margin-bottom:1cm;"></p>
  
 <ul>
-  <li>Academic journals start asking authors to share their data</li>
+  <li>Academic journals ask authors to share their data more and more systematically</li>
   <ul>
-    <li>Academic papers is a great source of data</li>
+    <li>The <b>academic literature</b> is a great source of data</li>
     <li>Especially RCTs as they usually include many variables</li>
   </ul>
 </ul>
@@ -261,7 +294,7 @@ kable(s2 %>% filter(row_number() > 3), col.names = NULL, caption = "<b>Part 2: R
   <ul>
     <li><a href="https://www.openicpsr.org/openicpsr/search/studies">openICPSR</a></li>
     <li><a href="https://dataverse.harvard.edu/dataverse/harvard?q=&fq0=subject_ss%3A%22Social%20Sciences%22&types=dataverses%3Adatasets&sort=dateSort&order=desc">Harvard Dataverse</a></li>
-    <li>Browse the available datasets and check the corresponding academic articles, this may give you inspiration</li>
+    <li>Browse the available datasets and check the corresponding articles, this may give you inspiration</li>
   </ul>
 </ul>
 
@@ -341,6 +374,7 @@ kable(s2 %>% filter(row_number() > 3), col.names = NULL, caption = "<b>Part 2: R
   <li>So we now have a valid research question and appropriate data to work with</li>
   <ul>
     <li>But there is one last preliminary step</li>
+    <li>We need to know were the research idea stands with respect to the existing literature</li>
   </ul>
 </ul>
 
@@ -472,7 +506,7 @@ kable(tibble(` ` = c("Within the sentence", "Outside the sentence"),
   <li>The reference of every article you cite should be added by alphabetical order in a Reference section at the end</li>
   <ul>
     <li>How to write the reference in this last section is also codified</li>
-    <li>Take a look at the research project example available <a href="https://louissirugue.github.io/data-analysis-course/project/example.html">here</a> to see what it should look like</li>
+    <li>Take a look at the research project example available <a href="https://louissirugue.github.io/metrics_on_R/project/example.html">here</a> to see what it should look like</li>
   </ul>
 </ul>
  
@@ -504,47 +538,79 @@ kable(tibble(` ` = c("Within the sentence", "Outside the sentence"),
 
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:1.25cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Preliminary steps &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Research question
- * 1.2. Finding data
- * 1.3. Literature review
+.pull-left[
 
-#### 2. Data description
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data cleaning
- * 2.2. Descriptive statistics
- * 2.3. Data visualization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Preliminary steps &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Research question</li>
+    <li>1.2. Finding data</li>
+    <li>1.3. Literature review</li>
+  </ul>
+</ul>
 
-#### 3. Analysis
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Regression analysis
- * 3.2. Robustness
- * 3.2. Heterogeneity
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Data description</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data cleaning</li>
+    <li>2.2. Descriptive statistics</li>
+    <li>2.3. Data visualization</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Analysis</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Regression analysis</li>
+    <li>3.2. Robustness</li>
+    <li>3.3. Heterogeneity</li>
+  </ul>
+</ul>
  
-#### 4. Wrap up!
- 
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
+
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:1.25cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Preliminary steps &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Research question
- * 1.2. Finding data
- * 1.3. Literature review
+.pull-left[
 
-#### 2. Data description
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data cleaning
- * 2.2. Descriptive statistics
- * 2.3. Data visualization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Preliminary steps &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Research question</li>
+    <li>1.2. Finding data</li>
+    <li>1.3. Literature review</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Data description</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data cleaning</li>
+    <li>2.2. Descriptive statistics</li>
+    <li>2.3. Data visualization</li>
+  </ul>
+</ul>
+
+]
  
 ---
 
@@ -553,7 +619,7 @@ kable(tibble(` ` = c("Within the sentence", "Outside the sentence"),
 #### 2.1. Data cleaning
 
 <ul>
-  <li>The first thing to do with the data is to clean it</li>
+  <li>The <b>first</b> thing to do with the <b>data</b> is to <b>clean</b> it</li>
   <ul>
     <li>You should open the data and take a close look at it to understand what's inside</li>
   </ul>
@@ -563,7 +629,7 @@ kable(tibble(` ` = c("Within the sentence", "Outside the sentence"),
 
 ```{r}
 library(tidyverse)
-data_match <- read.csv("data/data_match.csv")
+data_match <- read.csv("data_match.csv")
 dim(data_match)
 ```
 
@@ -579,7 +645,17 @@ dim(data_match)
 ```{r}
 names(data_match)
 ```
- 
+  
+---
+
+### 2. Data description
+
+#### 2.1. Data cleaning
+
+```{r}
+str(data_match)
+```
+
 ---
 
 ### 2. Data description
@@ -651,20 +727,19 @@ kable(head(data_match, n = 5), caption = "Outlook of the data:")
 
 --
 
-<p style = "margin-bottom:1cm;"></p>
+<p style = "margin-bottom:1.25cm;"></p>
 
 ```{r, echo = F}
 kable(head(data_match, n = 1), caption = "")
 ```
 
-<p style = "margin-bottom:1cm;"></p>
+<p style = "margin-bottom:1.25cm;"></p>
 
 <ul>
-  <li>Here at least two variables should be recoded:</li>
+  <li>Here is what we can do already:</li>
   <ul>
-    <li>The score variable should be divided into two variables, for home and away</li>
-    <li>A variable indicating who won should be created</li>
-    <li>If we consider Time as continuous, it should be numeric and in hours</li>
+    <li>Divide the score variable into two variables, for home and away</li>
+    <li>Create a variable indicating who won</li>
   </ul>
 </ul>
 
@@ -685,17 +760,17 @@ kable(head(data_match, n = 1), caption = "")
 ```{r}
 data_match <- data_match %>%
   
-         # Assign the first and third characters of the string Score to Goals_home and Goals_away
-  mutate(Goals_home = as.numeric(substr(Score, 1, 1)),
-         Goals_away = as.numeric(substr(Score, 3, 3)),
+  # Separate the home and away score into 2 variables
+  separate(Score, c("Home", "Away"), "-") %>%
+  
+  # Convert these variables as numeric
+  mutate(Home = as.numeric(Home),
+         Away = as.numeric(Away),
          
          # Generate a variable for the outcome of the match depending on who scored the most
-         Winner = case_when(Goals_home > Goals_away ~ "Home",
-                            Goals_home == Goals_away ~ "Draw",
-                            Goals_home < Goals_away ~ "Away"),
-         
-         # Recode the Time variable as a continuous variable
-         Time = as.numeric(substr(Time, 1, 2)) + as.numeric(substr(Time, 4, 5)) / 60)
+         Winner = case_when(Home > Away ~ "Home",
+                            Home == Away ~ "Draw",
+                            Home < Away ~ "Away"))
 ```
 
 --
@@ -716,7 +791,7 @@ data_match <- data_match %>%
 #### 2.1. Data cleaning
 
 ```{r, echo = F}
-datatable(data_match, width = '100%', options = list(scrollX = TRUE, pageLength = 4))
+datatable(data_match, width = '100%', options = list(scrollX = TRUE, pageLength = 7))
 ```
 
 ---
@@ -726,21 +801,21 @@ datatable(data_match, width = '100%', options = list(scrollX = TRUE, pageLength 
 #### 2.1. Data cleaning
 
 <ul>
-  <li>Between each week of competition there is a empty line with missing values</li>
+  <li><b>Between each week</b> of competition there is a <b>empty line</b> with missing values</li>
   <ul>
-    <li>These rows are not actual observations so we should delete them</li>
+    <li>These rows are not actual observations so we should <b>delete</b> them</li>
   </ul>
 </ul>
 
 ```{r}
-data_match <- data_match %>% filter(Score != "")
+data_match <- data_match %>% filter(!is.na(Home))
 ```
 
 --
 
-<p style = "margin-bottom:1cm;"></p>
+<p style = "margin-bottom:1.5cm;"></p>
 
- * But we still need to check for actual missing values
+ * But we still need to **check** for actual **missing values**
  
 ```{r}
 data_match %>% summarise_all(~sum(is.na(.)))
@@ -748,12 +823,12 @@ data_match %>% summarise_all(~sum(is.na(.)))
 
 --
 
-<p style = "margin-bottom:1cm;"></p>
+<p style = "margin-bottom:1.5cm;"></p>
 
 <ul>
-  <li>There is no missing value except for the Attendance variable that has many NAs</li>
+  <li>There is no missing value except for the <b>Attendance</b> variable that has <b>many NAs</b></li>
   <ul>
-    <li>This is suspicious, we should investigate more</li>
+    <li>This is suspicious, we should <b>investigate</b> more</li>
   </ul>
 </ul>
 
@@ -763,29 +838,31 @@ data_match %>% summarise_all(~sum(is.na(.)))
 
 #### 2.1. Data cleaning
 
+ * We must check the distribution of the variable:
+
 ```{r}
 summary(data_match$Attendance)
 ```
 
 --
 
-<p style = "margin-bottom:1.5cm;"></p>
+<p style = "margin-bottom:1.25cm;"></p>
 
 <ul>
   <li>Except for NAs, the distribution seems fine</li>
   <ul>
     <li>But the number of spectators per match starts at 13 while the COVID-19 pandemic prevented many matches from having any attendance</li>
-    <li>These NAs for attendance may actually mean 0 attendance</li>
+    <li>These <b>NAs</b> for attendance may actually <b>mean 0 attendance</b></li>
     <li> This is particularly plausible given that there is no other variable with missing values in the data</li>
   </ul>
 </ul>
 
 --
 
-<p style = "margin-bottom:1.5cm;"></p>
+<p style = "margin-bottom:1.25cm;"></p>
 
 <center><i>&#10140; To check this hypothesis we can plot the evolution of the monthly attendance, <b>replacing NAs by 0s</b></i></center>
-<center><i>(code in the <a href="https://louissirugue.github.io/data-analysis-course/project/example.html">research project example</a>)</i></center>
+<center><i>(code in the <a href="https://louissirugue.github.io/metrics_on_R/project/example.html">research project example</a>)</i></center>
 
 ---
 
@@ -878,7 +955,7 @@ data_match %>%
 <ul>
   <li>The number of observations per season/league is also interesting to know:</li>
   <ul>
-    <li><i>(code in the <a href="https://louissirugue.github.io/data-analysis-course/project/example.html">research project example</a>)</i>
+    <li><i>(code in the <a href="https://louissirugue.github.io/metrics_on_R/project/example.html">research project example</a>)</i>
   </ul>
 </ul>
 
@@ -916,7 +993,7 @@ nb_obs %>%
 <ul>
   <li>The distribution of the main continuous variables can also be summarized by season/league</li>
   <ul>
-    <li><i>(code in the <a href="https://louissirugue.github.io/data-analysis-course/project/example.html">research project example</a>)</i>
+    <li><i>(code in the <a href="https://louissirugue.github.io/metrics_on_R/project/example.html">research project example</a>)</i>
   </ul>
 </ul>
 
@@ -925,7 +1002,7 @@ nb_obs %>%
 ```{r, echo = F}
 descriptive_data <- data_match %>%
   # Put the variables of interest in long format
-  pivot_longer(c(Attendance, Goals_home, Goals_away), 
+  pivot_longer(c(Attendance, Home, Away), 
                names_to = "Variable", values_to = "Value") %>%
   # Group the data by variable of interest, season and league
   group_by(Variable, Season, League) %>%
@@ -1028,7 +1105,7 @@ ggplot(data_match, aes(x = Season, y = Attendance, fill = Season)) +
 
 ```{r, eval = F}
 data_match %>%
-  pivot_longer(c(Goals_home, Goals_away), names_to = "Variable", values_to = "Value") %>%
+  pivot_longer(c(Home, Away), names_to = "Variable", values_to = "Value") %>%
   ggplot(., aes(x = Season, y = Value, fill = Variable)) + geom_boxplot(alpha = .75) 
 ```
 
@@ -1036,7 +1113,7 @@ data_match %>%
 
 ```{r, echo = F, fig.width = 8, fig.height = 3.25, out.width = '70%'}
 data_match %>%
-  pivot_longer(c(Goals_home, Goals_away), names_to = "Variable", values_to = "Value") %>%
+  pivot_longer(c(Home, Away), names_to = "Variable", values_to = "Value") %>%
   ggplot(., aes(x = Season, y = Value, fill = Variable)) + geom_boxplot(alpha = .75) 
 ```
 
@@ -1062,53 +1139,91 @@ ggplot(data_match, aes(x = Season, fill = Winner)) + ylab("Number of matches") +
 
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:1.25cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Preliminary steps &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Research question
- * 1.2. Finding data
- * 1.3. Literature review
+.pull-left[
 
-#### 2. Data description &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data cleaning
- * 2.2. Descriptive statistics
- * 2.3. Data visualization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Preliminary steps &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Research question</li>
+    <li>1.2. Finding data</li>
+    <li>1.3. Literature review</li>
+  </ul>
+</ul>
 
-#### 3. Analysis
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Regression analysis
- * 3.2. Robustness
- * 3.2. Heterogeneity
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Data description &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data cleaning</li>
+    <li>2.2. Descriptive statistics</li>
+    <li>2.3. Data visualization</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Analysis</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Regression analysis</li>
+    <li>3.2. Robustness</li>
+    <li>3.3. Heterogeneity</li>
+  </ul>
+</ul>
  
-#### 4. Wrap up!
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
  
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:1.25cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Preliminary steps &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Research question
- * 1.2. Finding data
- * 1.3. Literature review
+.pull-left[
 
-#### 2. Data description &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data cleaning
- * 2.2. Descriptive statistics
- * 2.3. Data visualization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Preliminary steps &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Research question</li>
+    <li>1.2. Finding data</li>
+    <li>1.3. Literature review</li>
+  </ul>
+</ul>
 
-#### 3. Analysis
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Regression analysis
- * 3.2. Robustness
- * 3.2. Heterogeneity
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Data description &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data cleaning</li>
+    <li>2.2. Descriptive statistics</li>
+    <li>2.3. Data visualization</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Analysis</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Regression analysis</li>
+    <li>3.2. Robustness</li>
+    <li>3.3. Heterogeneity</li>
+  </ul>
+</ul>
+]
  
 ---
 
@@ -1168,7 +1283,7 @@ stargazer(lm(Winner_home~Public, data_match),
   <li>And the coefficient of interest properly interpreted:</li>
 </ul> 
 
-<center><b><i>The presence of supporters in the audience increases by 5.9 percentage points on expectation the probability for the home team to win the match relative to loose or draw, everything else equal. The coefficient is statistically significantly different from 0 at the 1% significance level.</i></b></center>
+<center><b><i>The presence of supporters in the audience increases by 5.9 percentage points on average the probability for the home team to win the match relative to loose or draw, everything else equal. The coefficient is statistically significantly different from 0 at the 1% significance level.</i></b></center>
 
 ]
 
@@ -1191,7 +1306,7 @@ stargazer(lm(Winner_home ~ Public, data_match),
   <ul>
     <li>In this case it is not simple because both variables are binary</li>
     <li>But geom_jitter() allows to add noise in the location of each data point around the 4 possible coordinates</li>
-    <li><i>(code in the <a href="https://louissirugue.github.io/data-analysis-course/project/example.html">research project example</a>)</i>
+    <li><i>(code in the <a href="https://louissirugue.github.io/metrics_on_R/project/example.html">research project example</a>)</i>
   </ul>
 </ul>
 
@@ -1250,6 +1365,8 @@ data_match %>%
   </ul>
 </ul>
 
+<p style = "margin-bottom:.9cm;"></p>
+
 --
 
 <ul>
@@ -1259,6 +1376,8 @@ data_match %>%
     <li>Variations in x are fully driven by decision teams have no control over</li>
   </ul>
 </ul>
+
+<p style = "margin-bottom:.9cm;"></p>
 
 --
 
@@ -1272,7 +1391,7 @@ data_match %>%
 
 --
 
-<p style = "margin-bottom:1.25cm;"></p>
+<p style = "margin-bottom:.9cm;"></p>
 
 <center><i><b>Thus, this result can be considered as causal only if there was no change concomitant to the attendance restrictions that could have a differentiated impact on the teams that play home and away</b></i></center>
 
@@ -1318,6 +1437,7 @@ stargazer(lm(Winner_home ~ Public, data_match),
 ---
 
 .left-column[
+<p style = "margin-bottom:-1cm;"></p>
 ```{r, echo = F}
 data_match <- data_match %>% mutate(League = relevel(as.factor(League), "Ligue 1"))
 
@@ -1330,7 +1450,7 @@ stargazer(lm(Winner_home ~ Public, data_match),
 ]
 
 .right-column[
-<p style = "margin-bottom:5cm;"></p>
+<p style = "margin-bottom:6cm;"></p>
 <ul>
   <li>As control variables are included:</li>
   <ul>
@@ -1463,6 +1583,7 @@ stargazer(lm(Winner_home ~ Public, data_match),
 ---
 
 .left-column[
+<p style = "margin-bottom:-1cm;"></p>
 ```{r, echo = F}
 stargazer(lm(Winner_home ~ Public, data_match), 
           lm(Winner_home ~ Public + League, data_match), 
@@ -1495,29 +1616,49 @@ stargazer(lm(Winner_home ~ Public, data_match),
 
 ---
 
-### Overview
+<h3>Overview</h3>
 
-<p style = "margin-bottom:1.25cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Preliminary steps &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Research question
- * 1.2. Finding data
- * 1.3. Literature review
+.pull-left[
 
-#### 2. Data description &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Data cleaning
- * 2.2. Descriptive statistics
- * 2.3. Data visualization
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. Preliminary steps &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Research question</li>
+    <li>1.2. Finding data</li>
+    <li>1.3. Literature review</li>
+  </ul>
+</ul>
 
-#### 3. Analysis &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 3.1. Regression analysis
- * 3.2. Robustness
- * 3.2. Heterogeneity
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Data description &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Data cleaning</li>
+    <li>2.2. Descriptive statistics</li>
+    <li>2.3. Data visualization</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Analysis &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Regression analysis</li>
+    <li>3.2. Robustness</li>
+    <li>3.3. Heterogeneity</li>
+  </ul>
+</ul>
  
-#### 4. Wrap up!
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>4. Wrap up!</b></li></ul>
+]
  
 ---
 
@@ -1591,11 +1732,11 @@ stargazer(lm(Winner_home ~ Public, data_match),
 --
 
 <ul>
-  <li>It will be <b>graded</b>:</li>
+  <li>It will be <b>graded</b> (detailed grading scheme <a href="https://louissirugue.github.io/metrics_on_R/project/grading.html">here</a>):</li>
   <ul>
-    <li>20% of the grade on this presentation</li>
-    <li>80% of the grade on the final research project/regularity/final presentation</li>
-    <li>The detailed grading scheme is available <a href="https://louissirugue.github.io/data-analysis-course/project/grading.html">here</a></li>
+    <li>25% of the grade on this presentation</li>
+    <li>30% of the grade on the midterm report</li>
+    <li>45% of the grade on the final research project/presentation</li>
   </ul>
 </ul>
 
@@ -1603,7 +1744,7 @@ stargazer(lm(Winner_home ~ Public, data_match),
 
 <p style = "margin-bottom:1cm;"></p>
 
-<center><b><i>Please go through the <a href="https://louissirugue.github.io/data-analysis-course/project/example.html">example</a> to get familiar with what is expected from you</i></b></center>
+<center><b><i>Please go through the <a href="https://louissirugue.github.io/metrics_on_R/project/example.html">example</a> to get familiar with what is expected from you</i></b></center>
 
 <p style = "margin-bottom:1cm;"></p>
 
