@@ -2,7 +2,7 @@
 title: "R Programming & Descriptive statistics"
 subtitle: "Lecture 17"
 author: "<br>Louis SIRUGUE"
-date: "CPES 2 - Fall 2022"
+date: "CPES 2 - Spring 2023"
 params:
   dark: false
 output:
