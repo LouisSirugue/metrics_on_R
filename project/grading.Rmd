@@ -1,7 +1,7 @@
 ---
 title: "Spring semester: Grading system"
 author: "Louis Sirugue"
-date: "`r format(Sys.time(), '%m/%Y')`"
+date: "Spring 2023"
 output: 
   html_document:
     theme: cosmo
@@ -16,6 +16,10 @@ output:
   min-width: 20cm;
   margin-left: auto;
   margin-right: auto;
+}
+.column {
+  width: 50%;
+  float: left;
 }
 </style>
 
@@ -61,8 +65,19 @@ notes2  <- tibble(     group = c(paste("Groupe",   c(1, 2, 3, 4, 5, 6)), "Barèm
                 `Relevance of the data`          = c(0, 0, 0, 0, 0, 0,   "/1"),
                 `Literature review`              = c(0, 0, 0, 0, 0, 0,   "/1"),
                 `Clarity of slides and speech`   = c(0, 0, 0, 0, 0, 0,   "/1")) 
+
+
+notes3  <- tibble(     group = c(paste("Groupe",   c(1, 2, 3, 4, 5, 6)), "Barème"), 
+                 ### Reproducibility of the analysis (4 points) 
+                `Teacher's comment accounted for` = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Work regularity`                 = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Autonomy`                        = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Project overall advancement`     = c(0, 0, 0, 0, 0, 0,   "/1"),
+                `Midterm report well formatted`   = c(0, 0, 0, 0, 0, 0,   "/1")) 
 ```
 
+<div class="row">
+<div class="column">
 ```{r table_notes}
 kable(notes2 %>%
         mutate(`Final grade` = ifelse(group == "Barème", "/5", eval(parse(
@@ -76,14 +91,46 @@ kable(notes2 %>%
         select(c(" ", 
                  #paste0("Groupe ", display_groups), 
                  "Barème")), 
-      caption = "Presentation of research idea",
+      caption = "Research idea (25%)",
       col.names = NULL,
       align = c("l", rep("c", dim(notes)[2]))) %>%
   kable_styling(bootstrap_options = c("condensed"), full_width = F, position = "float_left") %>%
   column_spec(1, width_min = "20em") %>%
   pack_rows("Presentation (5 points)", 1, 5) %>%
   pack_rows("Total (5 points)", 6, 6) 
+```
 
+
+<br><br>
+<br><br>
+
+```{r}
+kable(notes3 %>%
+        mutate(`Final grade` = ifelse(group == "Barème", "/5", eval(parse(
+          text = paste0("as.numeric(`", names(.)[names(.) != "group"], "`)", 
+                        collapse = "+")))),
+          `Final grade` = ifelse(group == "Barème", "/5", 
+                                 ifelse(as.numeric(`Final grade`) > 5, 
+                                        "5", `Final grade`))) %>%
+        pivot_longer(!group, names_to = " ", values_to = "grade") %>%
+        pivot_wider(names_from = group, values_from = grade) %>% 
+        select(c(" ", 
+                 #paste0("Groupe ", display_groups), 
+                 "Barème")), 
+      caption = "Midterm report (30%)",
+      col.names = NULL,
+      align = c("l", rep("c", dim(notes)[2]))) %>%
+  kable_styling(bootstrap_options = c("condensed"), full_width = F, position = "float_left") %>%
+  column_spec(1, width_min = "20em") %>%
+  pack_rows("Midterm report (5 points)", 1, 5) %>%
+  pack_rows("Total (5 points)", 6, 6) 
+```
+
+</div>
+
+<div class="column">
+
+```{r table_notes2}
 kable(notes %>%
         mutate(`Final grade` = ifelse(group == "Barème", "/20", eval(parse(
           text = paste0("as.numeric(`", names(.)[names(.) != "group"], "`)", 
@@ -96,7 +143,7 @@ kable(notes %>%
         select(c(" ", 
                  #paste0("Groupe ", display_groups), 
                  "Barème")), 
-      caption = "Research project",
+      caption = "Research project (45%)",
       col.names = NULL,
       align = c("l", rep("c", dim(notes)[2]))) %>%
   kable_styling(bootstrap_options = c("condensed"), full_width = F, position = "float_right") %>%
@@ -109,5 +156,7 @@ kable(notes %>%
   pack_rows("Total (20 points)", 19, 19) 
 ```
 
+</div>
+</div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

@@ -1,7 +1,7 @@
 ---
 title: "Do supporters help the home team win the match?"
-author: "CPES 2 - Example of research project<br> <h4><center><i>Detailed instructions in <a href='https://louissirugue.github.io/data-analysis-course/lecture16/slides.html'>Lecture 16</a><br>Grading system available <a href='https://louissirugue.github.io/data-analysis-course/project/grading.html'>here</a></i><br><br>Louis Sirugue"
-date: "`r format(Sys.time(), '%m/%Y')`"
+author: "CPES 2 - Example of research project<br> <h4><center><i>Detailed instructions in <a href='https://louissirugue.github.io/metrics_on_R/lecture16/slides.html'>Lecture 16</a><br>Grading system available <a href='https://louissirugue.github.io/metrics_on_R/project/grading.html'>here</a></i><br><br>Louis Sirugue"
+date: "Spring 2023"
 output: 
   html_document:
     theme: cosmo
@@ -77,15 +77,21 @@ kable(head(data_match, n = 5), caption = "Outlook of the data:")
 Before starting the analysis, some variables must be recoded for convenience. For instance, the `Score` variable is not in a practical format. It stores the number of goals scored by each team, separated with a dash. I should assign the score of each team to distinct variables, and set their class to `numeric` instead of `character`. The same type of modifications can be applied to the `Time` variable, which in currently in `character` format as `hh:mm`. To transform the time variable in a continuous variable expressed in hours, the number of minutes divided by 60 should be added to the number of hours. The following table displays the first 15 lines of the data recoded as described above.
 
 <p style = "margin-bottom:1em;"></p>
-```{r}
+```{r, warning = F, message = F}
 data_match <- data_match %>%
-         # Assign the first and third characters of the string Score to Goals_home and Goals_away
-  mutate(Goals_home = as.numeric(substr(Score, 1, 1)),
-         Goals_away = as.numeric(substr(Score, 3, 3)),
+  
+  # Separate the home and away score into 2 variables
+  separate(Score, c("Home", "Away"), "-") %>%
+  
+  # Convert these variables as numeric
+  mutate(Home = as.numeric(Home),
+         Away = as.numeric(Away),
+         
          # Generate a variable for the outcome of the match depending on who scored the most
-         Winner = case_when(Goals_home > Goals_away ~ "Home",
-                            Goals_home == Goals_away ~ "Draw",
-                            Goals_home < Goals_away ~ "Away"),
+         Winner = case_when(Home > Away ~ "Home",
+                            Home == Away ~ "Draw",
+                            Home < Away ~ "Away"),
+         
          # Recode the Time variable as a continuous variable
          Time = as.numeric(substr(Time, 1, 2)) + as.numeric(substr(Time, 4, 5)) / 60)
 
@@ -94,12 +100,12 @@ kable(head(data_match, n = 15), caption = "Recoded data:")
 ```
 <p style = "margin-bottom:2.5em;"></p>
 
-An important step of the data cleaning process is to handle missing values. It can be seen from the table above that between each week of competition there is an empty line with missing values. These rows can be deleted by filtering out every observation for which the `Score` variable is blank. 
+An important step of the data cleaning process is to handle missing values. It can be seen from the table above that between each week of competition there is an empty line with missing values. These rows can be deleted by filtering out every observation for which the `Home` variable is blank. 
 
 <p style = "margin-bottom:1em;"></p>
 ```{r}
 # Drop blank rows
-data_match <- data_match %>% filter(Score != "")
+data_match <- data_match %>% filter(Home != "")
 ```
 <p style = "margin-bottom:2.5em;"></p>
 
@@ -211,7 +217,7 @@ This confirm the well-established stylized fact that football matches have great
 ```{r}
 descriptive_data <- data_match %>%
   # Put the variables of interest in long format
-  pivot_longer(c(Attendance, Goals_home, Goals_away), 
+  pivot_longer(c(Attendance, Home, Away), 
                names_to = "Variable", values_to = "Value") %>%
   # Group the data by variable of interest, season, and league
   group_by(Variable, Season, League) %>%
@@ -299,7 +305,7 @@ ggplot(data_match, aes(x = League, y = Attendance, fill = League)) +
 ```{r, fig.width = 7.65, fig.height = 6.8}
 data_match %>%
   # Put the goals scored home and away in long format
-  pivot_longer(c(Goals_home, Goals_away), names_to = "Variable", values_to = "Value") %>%
+  pivot_longer(c(Home, Away), names_to = "Variable", values_to = "Value") %>%
   # Assign the League to the x and fill axis and the goals scored to the y axis
   ggplot(., aes(x = League, y = Value, fill = League)) +
   # Overlay a violin density and a boxplot with transparency
