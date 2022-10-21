@@ -727,19 +727,20 @@ kable(head(data_match, n = 5), caption = "Outlook of the data:")
 
 --
 
-<p style = "margin-bottom:1.25cm;"></p>
+<p style = "margin-bottom:1cm;"></p>
 
 ```{r, echo = F}
 kable(head(data_match, n = 1), caption = "")
 ```
 
-<p style = "margin-bottom:1.25cm;"></p>
+<p style = "margin-bottom:1cm;"></p>
 
 <ul>
   <li>Here is what we can do already:</li>
   <ul>
     <li>Divide the score variable into two variables, for home and away</li>
     <li>Create a variable indicating who won</li>
+    <li>Recode the Time variable as numeric</li>
   </ul>
 </ul>
 
@@ -770,12 +771,19 @@ data_match <- data_match %>%
          # Generate a variable for the outcome of the match depending on who scored the most
          Winner = case_when(Home > Away ~ "Home",
                             Home == Away ~ "Draw",
-                            Home < Away ~ "Away"))
+                            Home < Away ~ "Away"),
+         
+         # Recode the Time variable as a continuous variable
+         Time = as.numeric(substr(Time, 1, 2)) + as.numeric(substr(Time, 4, 5)) / 60)
 ```
 
---
 
-<p style = "margin-bottom:1cm;"></p>
+---
+
+### 2. Data description
+
+#### 2.1. Data cleaning
+
 
 <ul>
   <li>Let's take a look at the cleaned data</li>
@@ -784,14 +792,10 @@ data_match <- data_match %>%
   </ul>
 </ul>
 
----
-
-### 2. Data description
-
-#### 2.1. Data cleaning
+--
 
 ```{r, echo = F}
-datatable(data_match, width = '100%', options = list(scrollX = TRUE, pageLength = 7))
+datatable(data_match, width = '100%', options = list(scrollX = TRUE, pageLength = 5))
 ```
 
 ---
