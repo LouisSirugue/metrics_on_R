@@ -3,7 +3,7 @@
   <head>
     <title>Introductory Econometrics</title>
     <meta charset="utf-8" />
-    <meta name="author" content=" Louis SIRUGUE  G1: Pauline CHAROUSSET G2: Sebastián GARCIA CORNEJO" />
+    <meta name="author" content=" Louis SIRUGUE" />
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
     <link rel="shortcut icon" href="star.png" />
@@ -16,33 +16,78 @@ class: center, middle, inverse, title-slide
 
 # Introductory Econometrics
 ## Lecture 18
-### <br>Louis SIRUGUE<br><br>G1: Pauline CHAROUSSET<br>G2: Sebastián GARCIA CORNEJO
-### 01/2022
+### <br>Louis SIRUGUE
+### CPES 2 - Spring 2023
 
 ---
 
 
 
+
+
 &lt;style&gt; .left-column {width: 70%;} .right-column {width: 30%;} &lt;/style&gt;
+
 
 &lt;h3&gt;Today: Refresher on Introductory Econometrics&lt;/h3&gt;
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;
+--
 
-#### 1. Regressions with continuous variables
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Estimation
- * 1.2. Inference
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 
-#### 2. Regressions with discrete variables
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions
+.pull-left[
 
-#### (4. Interpretation)
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Regressions with continuous variables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Estimation&lt;/li&gt;
+    &lt;li&gt;1.2. Inference&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Regressions with discrete variables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Binary dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Binary independent variable&lt;/li&gt;
+    &lt;li&gt;2.3. Categorical independent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Controls and interactions&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Interpretation&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+
+---
+
+&lt;h3&gt;Today: Refresher on Introductory Econometrics&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Regressions with continuous variables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Estimation&lt;/li&gt;
+    &lt;li&gt;1.2. Inference&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
  
 ---
 
@@ -54,7 +99,7 @@ class: center, middle, inverse, title-slide
 
 .left-column[
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-1-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-2-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
 
 ]
 
@@ -82,11 +127,11 @@ class: center, middle, inverse, title-slide
 
 #### 1.1. Estimation
 
- * Consider these two relationships :
+ * Consider these two relationships:
 
 .left-column[
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-2-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
 
 ]
 
@@ -104,12 +149,12 @@ class: center, middle, inverse, title-slide
 
 #### 1.1. Estimation
 
- * The idea of a regression is to find the line that fits the data the best
-  * Such that its slope can indicate how we expect y to change if we increase x by 1 unit
+ * The idea of a regression is to find the &lt;b&gt;line&lt;/b&gt; that &lt;b&gt;fits&lt;/b&gt; the data the &lt;b&gt;best&lt;/b&gt;
+  * Such that its slope can indicate &lt;b&gt;how we expect &lt;b&gt;y&lt;/b&gt; to &lt;b&gt;change&lt;/b&gt; if we &lt;b&gt;increase x by 1 unit&lt;/b&gt;
  
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-3-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-4-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -117,13 +162,13 @@ class: center, middle, inverse, title-slide
 
 #### 1.1. Estimation
 
- * To do so we should minimize the distance between each point and the line
+ * To do so we should &lt;b&gt;minimize the distance&lt;/b&gt; between each &lt;b&gt;point&lt;/b&gt; and the &lt;b&gt;line&lt;/b&gt;
 
 &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
 --
  
-&lt;img src="slides_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -137,7 +182,7 @@ class: center, middle, inverse, title-slide
 
 Take for instance the 20&lt;sup&gt;th&lt;/sup&gt; observation: Peru
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -171,7 +216,7 @@ And consider the following notations:
 
 &lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -215,7 +260,7 @@ And consider the following notations:
 &lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
 
 .left-column[
-&lt;img src="slides_files/figure-html/unnamed-chunk-7-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-8-1.png" width="90%" style="display: block; margin: auto auto auto 0;" /&gt;
 
 ]
 
@@ -315,18 +360,18 @@ And consider the following notations:
   &lt;li&gt;Inference refers to the fact of being able to &lt;b&gt;conclude&lt;/b&gt; something from our estimation&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;The \(\hat{\beta}\) from our sample is actually an &lt;b&gt;estimation&lt;/b&gt; of the unobserved \(\beta\) of the underlying population&lt;/li&gt;
-    &lt;li&gt;To make inference possible we would like to know how reliable \(\hat{\beta}\) is, &lt;b&gt;how confident we are&lt;/b&gt; in its estimation&lt;/li&gt;
+    &lt;li&gt;We would like to know how reliable \(\hat{\beta}\) is, &lt;b&gt;how confident we are&lt;/b&gt; in its estimation&lt;/li&gt;
     &lt;li&gt;The first step of inference is to compute the &lt;b&gt;standard error&lt;/b&gt; of \(\hat{\beta}\)&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
 --
 
-&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
 
 `$$\text{se}(\hat{\beta}) = \sqrt{\widehat{\text{Var}(\hat{\beta})}} = \sqrt{\frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{(n-\#\text{parameters})\sum_{i = 1}^n(x_i-\bar{x})^2}}$$`
 
-&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
 
 --
 
@@ -347,20 +392,20 @@ And consider the following notations:
  * The magnitude of the standard error gives an indication of the &lt;b&gt;precision&lt;/b&gt; of our estimate:
   * The larger the estimate relative to its standard error, the more precise the estimate
 
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+&lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
 
 --
 
  * But standard errors are not easily interpretable by themselves
   * A more direct way to get a sense of the precision for inference is to construct a &lt;b&gt;confidence interval&lt;/b&gt;
 
-&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+&lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
 
 --
 
 &lt;center&gt;&amp;#10140; &lt;b&gt;Instead of saying that our estimation \(\hat{\beta}\) is equal to 1.02, we would like to say that we are 95% sure that the actual \(\beta\) lies between two given values&lt;/b&gt;&lt;/center&gt;
 
-&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+&lt;p style = "margin-bottom:1.2cm;"&gt;&lt;/p&gt;
 
 --
 
@@ -378,7 +423,7 @@ And consider the following notations:
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-8-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-9-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -393,7 +438,7 @@ And consider the following notations:
 
 &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-9-1.png" width="67%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-10-1.png" width="67%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -450,7 +495,7 @@ qt(.975, 20)
 
 --
 
- * But the ***p-value*** is what we tend to ultimately focus on, it is the **% chance that our estimation of the true parameter is different from 0 just coincidentally**
+ * But the ***p-value*** is what we tend to ultimately focus on, it is the **% chance that our estimation of the true parameter is different from a given value (generally 0) just coincidentally**
  
 &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
@@ -471,7 +516,7 @@ qt(.975, 20)
 &lt;ul&gt;
   &lt;li&gt;But these two indicators are &lt;b&gt;complementary&lt;/b&gt; to easily get the full picture:&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;With a p-value we can easily know how sure we are that the parameter is different from 0, but it is difficult to get a sense of the set of values the parameters can reasonably take&lt;/li&gt;
+    &lt;li&gt;With a p-value we can easily know how sure we are that the parameter is different from a given value, but it is difficult to get a sense of the set of values the parameters can reasonably take&lt;/li&gt;
     &lt;li&gt;With the confidence interval it is the opposite&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
@@ -519,40 +564,74 @@ qt(.975, 20)
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 
-#### 1. Regressions with continuous variables &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Regressions with continuous variables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Estimation&lt;/li&gt;
+    &lt;li&gt;1.2. Inference&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### (4. Interpretation)
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Regressions with discrete variables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Binary dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Binary independent variable&lt;/li&gt;
+    &lt;li&gt;2.3. Categorical independent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Controls and interactions&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Interpretation&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+]
  
 ---
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 
-#### 1. Regressions with continuous variables &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Regressions with continuous variables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Estimation&lt;/li&gt;
+    &lt;li&gt;1.2. Inference&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Regressions with discrete variables&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Binary dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Binary independent variable&lt;/li&gt;
+    &lt;li&gt;2.3. Categorical independent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
 ---
 
 ### 2. Regressions with discrete variables
@@ -580,13 +659,13 @@ qt(.975, 20)
 
 &lt;p style = "margin-bottom:1.25cm;"&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-11-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ### 2. Regressions with discrete variables
 
-#### 2.1. Binary dependent variable 
+#### 2.1. Binary dependent variable
 
 &lt;ul&gt;
   &lt;li&gt;Even if the outcome variable is binary we can regress it on the grade variable&lt;/li&gt;
@@ -606,7 +685,7 @@ qt(.975, 20)
 
 &lt;style&gt; .left-column {width: 65%;} .right-column {width: 35%;} &lt;/style&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -631,7 +710,7 @@ qt(.975, 20)
 
 &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -649,7 +728,7 @@ qt(.975, 20)
 
 &lt;p style = "margin-bottom:1.75cm;"&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -706,7 +785,7 @@ qt(.975, 20)
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
  
@@ -722,7 +801,7 @@ qt(.975, 20)
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-17-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
  
@@ -745,11 +824,11 @@ qt(.975, 20)
 ##              ---------------------------
 ##                        Height           
 ## ----------------------------------------
-## SexMale                9.6***           
-##                         (0.7)           
+## SexMale                9.5***           
+##                         (0.6)           
 ##                                         
-## Constant              164.8***          
-##                         (0.5)           
+## Constant              165.0***          
+##                         (0.4)           
 ##                                         
 ## ----------------------------------------
 ## Observations            1,000           
@@ -781,21 +860,21 @@ qt(.975, 20)
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 131.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 158.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 164.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 164.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 171.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 193.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 135.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 158.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 164.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 165.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 170.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 194.7 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 141.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 167.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 174.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 145.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 168.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 174.4 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 174.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 181.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 206.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 180.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 202.6 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1139,41 +1218,79 @@ summary(lm(Earnings ~ relevel(as.factor(Race), "White"), asec_2020))$coefficient
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 
-#### 1. Regressions with continuous variables &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Regressions with continuous variables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Estimation&lt;/li&gt;
+    &lt;li&gt;1.2. Inference&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### (4. Interpretation)
- 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Regressions with discrete variables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Binary dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Binary independent variable&lt;/li&gt;
+    &lt;li&gt;2.3. Categorical independent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Controls and interactions&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Interpretation&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+] 
 ---
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 
-#### 1. Regressions with continuous variables &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Regressions with continuous variables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Estimation&lt;/li&gt;
+    &lt;li&gt;1.2. Inference&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Regressions with discrete variables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Binary dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Binary independent variable&lt;/li&gt;
+    &lt;li&gt;2.3. Categorical independent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Controls and interactions&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+]
 
 ---
 
@@ -1220,7 +1337,7 @@ head(data, 7) # fictitious data
 --
 
 .pull-right[
-&lt;img src="slides_files/figure-html/unnamed-chunk-26-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-27-1.png" width="85%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -1249,7 +1366,7 @@ head(data, 7) # fictitious data
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-28-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-29-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -1279,7 +1396,7 @@ head(data, 7) # fictitious data
 --
 
 .pull-left[
-&lt;img src="slides_files/figure-html/unnamed-chunk-29-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-30-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 &lt;ul&gt;
   &lt;li&gt;The crosses are located at the average x and y values for each education group&lt;/li&gt;
@@ -1293,7 +1410,7 @@ head(data, 7) # fictitious data
 --
 
 .pull-right[
-&lt;img src="slides_files/figure-html/unnamed-chunk-30-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-31-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ```
 ##                     Estimate Pr(&gt;|t|)
@@ -1357,7 +1474,7 @@ head(data, 7) # fictitious data
 --
 
 .pull-left[
-&lt;img src="slides_files/figure-html/unnamed-chunk-32-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-33-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -1389,28 +1506,53 @@ head(data, 7) # fictitious data
 
 &lt;h3&gt;Overview&lt;/h3&gt;
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 
-#### 1. Regressions with continuous variables &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables &amp;#10004;
-&lt;p style = "margin-bottom:-.5cm;"&gt;
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions &amp;#10004;
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Regressions with continuous variables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Estimation&lt;/li&gt;
+    &lt;li&gt;1.2. Inference&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
 
-#### (4. Interpretation)
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
+&lt;ul style = "margin-left:1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Regressions with discrete variables &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Binary dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Binary independent variable&lt;/li&gt;
+    &lt;li&gt;2.3. Categorical independent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Controls and interactions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Interpretation&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+] 
 ---
 
-### (4. Interpretation)
+class: inverse, hide-logo
 
-#### If time train at interpreting randomly drawn relationships
+### 4. Interpretation
+
+&lt;center&gt;&lt;b&gt;Train at interpreting coefficients from randomly drawn relationships&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
 &lt;center&gt;&lt;a href="https://sirugue.shinyapps.io/lecture15/"&gt;&lt;img src = "html.png" width = "900"/&gt;&lt;/a&gt;&lt;/center&gt;
     </textarea>
@@ -1504,6 +1646,43 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<style>
+.logo {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 0;
+ width: 10px;
+  height: 10px;
+  background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #c7c4c4, 
+              -4px -4px 6px #E7EDF0;
+}
+.logo:active {
+  box-shadow: inset 4px 4px 6px #c7c4c4, 
+              inset -4px -4px 6px #E7EDF0
+}
+
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"><a href = "https://louissirugue.github.io/metrics_on_R/home.html"><p style = "margin-left:-.55cm;margin-top:-.55cm;width:53px"> <img src = "../source/home2.png"> </p> </a></div>';
+  });
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {

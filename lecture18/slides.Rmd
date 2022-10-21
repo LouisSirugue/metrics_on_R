@@ -1,8 +1,10 @@
 ---
 title: "Introductory Econometrics"
 subtitle: "Lecture 18"
-author: "<br>Louis SIRUGUE<br><br>G1: Pauline CHAROUSSET<br>G2: Sebastián GARCIA CORNEJO"
-date: "`r format(Sys.time(), '%m/%Y')`"
+author: "<br>Louis SIRUGUE"
+date: "CPES 2 - Spring 2023"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,6 +23,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{css, echo = F, eval = params$dark}
+body{background-color:black;filter:invert(1)}
+```
+
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../source/style.R"))
 stargazer <- stargazer::stargazer
@@ -29,24 +36,67 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", 
 ```
 <style> .left-column {width: 70%;} .right-column {width: 30%;} </style>
 
+
 <h3>Today: Refresher on Introductory Econometrics</h3>
 
-<p style = "margin-bottom:1.75cm;">
+--
 
-#### 1. Regressions with continuous variables
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Estimation
- * 1.2. Inference
+<p style = "margin-bottom:3cm;"></p>
 
-#### 2. Regressions with discrete variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions
+.pull-left[
 
-#### (4. Interpretation)
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>1. Regressions with continuous variables</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Estimation</li>
+    <li>1.2. Inference</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>2. Regressions with discrete variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Binary dependent variable</li>
+    <li>2.2. Binary independent variable</li>
+    <li>2.3. Categorical independent variable</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Controls and interactions</b></li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Interpretation</b></li>
+</ul>
+
+]
+
+---
+
+<h3>Today: Refresher on Introductory Econometrics</h3>
+
+<p style = "margin-bottom:3cm;"></p>
+
+.pull-left[
+
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>1. Regressions with continuous variables</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Estimation</li>
+    <li>1.2. Inference</li>
+  </ul>
+</ul>
+
+]
  
 ---
 
@@ -68,7 +118,9 @@ example <- tibble(x = c(x, x), y = c(y1, y2),
 
 ggplot(example, aes(x = x, y = y)) +
   geom_point(alpha = .3, color = "#014D64") + 
-  facet_wrap(~z)
+  facet_wrap(~z) +
+  scale_x_continuous(limits = c(6, 14)) +
+  scale_y_continuous(limits = c(25, 65))
 ```
 
 ]
@@ -97,7 +149,7 @@ ggplot(example, aes(x = x, y = y)) +
 
 #### 1.1. Estimation
 
- * Consider these two relationships :
+ * Consider these two relationships:
 
 .left-column[
 
@@ -134,7 +186,9 @@ ggplot(example, aes(x = x, y = y)) +
   
   geom_segment(aes(x = border, y = cross1, xend = border, yend = cross2), arrow = arrow(length = unit(0.2, "cm")), color = dash_color) +
   geom_segment(aes(x = border, y = cross2, xend = border, yend = cross1), arrow = arrow(length = unit(0.2, "cm")), color = dash_color) +
-  facet_wrap(~z) 
+  facet_wrap(~z)  +
+  scale_x_continuous(limits = c(6, 14)) +
+  scale_y_continuous(limits = c(25, 65))
 ```
 
 ]
@@ -153,8 +207,8 @@ ggplot(example, aes(x = x, y = y)) +
 
 #### 1.1. Estimation
 
- * The idea of a regression is to find the line that fits the data the best
-  * Such that its slope can indicate how we expect y to change if we increase x by 1 unit
+ * The idea of a regression is to find the <b>line</b> that <b>fits</b> the data the <b>best</b>
+  * Such that its slope can indicate <b>how we expect <b>y</b> to <b>change</b> if we <b>increase x by 1 unit</b>
  
 --
 
@@ -171,7 +225,7 @@ ggplot(ggcurve , aes(x = gini, y = ige, label = country)) +
                linetype = "dashed", color = dash_color) +
   geom_segment(aes(x = .6, y = ols[1, 1] + (.5 * ols[2, 1]), xend = .6, yend = ols[1, 1] + (.6 * ols[2, 1])), 
                linetype = "dashed", color = dash_color) +
-  annotate("text", x = .625, y = .465, label = "slope (/10)")
+  annotate("text", x = .625, y = .465, label = "slope")
 ```
 
 ---
@@ -180,7 +234,7 @@ ggplot(ggcurve , aes(x = gini, y = ige, label = country)) +
 
 #### 1.1. Estimation
 
- * To do so we should minimize the distance between each point and the line
+ * To do so we should <b>minimize the distance</b> between each <b>point</b> and the <b>line</b>
 
 <p style = "margin-bottom:1cm;"></p>
 
@@ -449,18 +503,18 @@ $$y_i = \alpha + \beta x_i + \varepsilon_i$$
   <li>Inference refers to the fact of being able to <b>conclude</b> something from our estimation</li>
   <ul>
     <li>The \(\hat{\beta}\) from our sample is actually an <b>estimation</b> of the unobserved \(\beta\) of the underlying population</li>
-    <li>To make inference possible we would like to know how reliable \(\hat{\beta}\) is, <b>how confident we are</b> in its estimation</li>
+    <li>We would like to know how reliable \(\hat{\beta}\) is, <b>how confident we are</b> in its estimation</li>
     <li>The first step of inference is to compute the <b>standard error</b> of \(\hat{\beta}\)</li>
   </ul>
 </ul>
 
 --
 
-<p style = "margin-bottom:1.5cm;"></p>
+<p style = "margin-bottom:1.75cm;"></p>
 
 $$\text{se}(\hat{\beta}) = \sqrt{\widehat{\text{Var}(\hat{\beta})}} = \sqrt{\frac{\sum_{i = 1}^n\hat{\varepsilon_i}^2}{(n-\#\text{parameters})\sum_{i = 1}^n(x_i-\bar{x})^2}}$$
 
-<p style = "margin-bottom:1.5cm;"></p>
+<p style = "margin-bottom:1.75cm;"></p>
 
 --
 
@@ -481,20 +535,20 @@ $$\text{se}(\hat{\beta}) = \sqrt{\widehat{\text{Var}(\hat{\beta})}} = \sqrt{\fra
  * The magnitude of the standard error gives an indication of the <b>precision</b> of our estimate:
   * The larger the estimate relative to its standard error, the more precise the estimate
 
-<p style = "margin-bottom:1cm;"></p>
+<p style = "margin-bottom:1.2cm;"></p>
 
 --
 
  * But standard errors are not easily interpretable by themselves
   * A more direct way to get a sense of the precision for inference is to construct a <b>confidence interval</b>
 
-<p style = "margin-bottom:1cm;"></p>
+<p style = "margin-bottom:1.2cm;"></p>
 
 --
 
 <center>&#10140; <b>Instead of saying that our estimation \(\hat{\beta}\) is equal to 1.02, we would like to say that we are 95% sure that the actual \(\beta\) lies between two given values</b></center>
 
-<p style = "margin-bottom:.5cm;"></p>
+<p style = "margin-bottom:1.2cm;"></p>
 
 --
 
@@ -604,7 +658,7 @@ qt(.975, 20)
 
 --
 
- * But the ***p-value*** is what we tend to ultimately focus on, it is the **% chance that our estimation of the true parameter is different from 0 just coincidentally**
+ * But the ***p-value*** is what we tend to ultimately focus on, it is the **% chance that our estimation of the true parameter is different from a given value (generally 0) just coincidentally**
  
 <p style = "margin-bottom:1cm;"></p>
 
@@ -625,7 +679,7 @@ qt(.975, 20)
 <ul>
   <li>But these two indicators are <b>complementary</b> to easily get the full picture:</li>
   <ul>
-    <li>With a p-value we can easily know how sure we are that the parameter is different from 0, but it is difficult to get a sense of the set of values the parameters can reasonably take</li>
+    <li>With a p-value we can easily know how sure we are that the parameter is different from a given value, but it is difficult to get a sense of the set of values the parameters can reasonably take</li>
     <li>With the confidence interval it is the opposite</li>
   </ul>
 </ul>
@@ -673,40 +727,74 @@ qt(.975, 20)
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Regressions with continuous variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>1. Regressions with continuous variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Estimation</li>
+    <li>1.2. Inference</li>
+  </ul>
+</ul>
 
-#### (4. Interpretation)
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>2. Regressions with discrete variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Binary dependent variable</li>
+    <li>2.2. Binary independent variable</li>
+    <li>2.3. Categorical independent variable</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Controls and interactions</b></li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Interpretation</b></li>
+</ul>
+
+]
  
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Regressions with continuous variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>1. Regressions with continuous variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Estimation</li>
+    <li>1.2. Inference</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>2. Regressions with discrete variables</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Binary dependent variable</li>
+    <li>2.2. Binary independent variable</li>
+    <li>2.3. Categorical independent variable</li>
+  </ul>
+</ul>
+
+]
+
 ---
 
 ### 2. Regressions with discrete variables
@@ -747,7 +835,7 @@ ggplot(data_bin, aes(x = x, y = y)) +
 
 ### 2. Regressions with discrete variables
 
-#### 2.1. Binary dependent variable 
+#### 2.1. Binary dependent variable
 
 <ul>
   <li>Even if the outcome variable is binary we can regress it on the grade variable</li>
@@ -1167,41 +1255,79 @@ summary(lm(Earnings ~ relevel(as.factor(Race), "White"), asec_2020))$coefficient
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Regressions with continuous variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>1. Regressions with continuous variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Estimation</li>
+    <li>1.2. Inference</li>
+  </ul>
+</ul>
 
-#### (4. Interpretation)
- 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>2. Regressions with discrete variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Binary dependent variable</li>
+    <li>2.2. Binary independent variable</li>
+    <li>2.3. Categorical independent variable</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Controls and interactions</b></li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Interpretation</b></li>
+</ul>
+
+] 
 ---
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Regressions with continuous variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>1. Regressions with continuous variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Estimation</li>
+    <li>1.2. Inference</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>2. Regressions with discrete variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Binary dependent variable</li>
+    <li>2.2. Binary independent variable</li>
+    <li>2.3. Categorical independent variable</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Controls and interactions</b></li>
+</ul>
+]
 
 ---
 
@@ -1424,27 +1550,52 @@ round(summary(lm(Children ~ Income + Education + Income * Education, data))$coef
 
 <h3>Overview</h3>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:3cm;"></p>
 
-#### 1. Regressions with continuous variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 1.1. Estimation
- * 1.2. Inference
+.pull-left[
 
-#### 2. Regressions with discrete variables &#10004;
-<p style = "margin-bottom:-.5cm;">
- * 2.1. Binary dependent variable
- * 2.2. Binary independent variable
- * 2.3. Categorical independent variable
- 
-#### 3. Controls and interactions &#10004;
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>1. Regressions with continuous variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Estimation</li>
+    <li>1.2. Inference</li>
+  </ul>
+</ul>
 
-#### (4. Interpretation)
+<p style = "margin-bottom:1cm;"></p>
 
+<ul style = "margin-left:1cm;list-style: none">
+  <li><b>2. Regressions with discrete variables &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. Binary dependent variable</li>
+    <li>2.2. Binary independent variable</li>
+    <li>2.3. Categorical independent variable</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Controls and interactions &#10004;</b></li>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. Interpretation</b></li>
+</ul>
+
+] 
 ---
 
-### (4. Interpretation)
+class: inverse, hide-logo
 
-#### If time train at interpreting randomly drawn relationships
+### 4. Interpretation
+
+<center><b>Train at interpreting coefficients from randomly drawn relationships</b></center>
+
+<p style = "margin-bottom:1cm;"></p>
 
 <center><a href="https://sirugue.shinyapps.io/lecture15/"><img src = "html.png" width = "900"/></a></center>
