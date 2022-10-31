@@ -1638,13 +1638,13 @@ class: inverse, hide-logo
 
 #### 1) Import `ggcurve.csv` and compute the $\hat{\alpha}$ and $\hat{\beta}$ coefficients of that equation:
  
-$$\text{gini}_i = \hat{\alpha} + \hat{\beta}\times\text{IGE}_i + \widehat{\varepsilon_i}$$
+$$\text{IGE}_i = \hat{\alpha} + \hat{\beta}\times\text{gini}_i + \widehat{\varepsilon_i}$$
 
 --
 
 <p style = "margin-bottom:1cm;"></p>
 
-#### 2) Create a new variable in the dataset for $\widehat{\text{gini}}$
+#### 2) Create a new variable in the dataset for $\widehat{\text{IGE}}$
 
 --
 
@@ -1694,7 +1694,7 @@ c(alpha, beta)
 
 --
 
-#### 2) Create a new variable in the dataset for $\widehat{\text{gini}}$
+#### 2) Create a new variable in the dataset for $\widehat{\text{IGE}}$
 
 --
 
