@@ -1281,7 +1281,7 @@ ggplot(example, aes(x = x, y = y)) +
 <ul>
   <li>But how much more intergenerational mobility could we expect for a given reduction in inequality?</li>
   <ul>
-    <li>We need to know to characterize the <b><i>"steepness"</i></b> of the relationship!</li>
+    <li>We need to characterize the <b><i>"steepness"</i></b> of the relationship!</li>
   </ul>
 </ul>
 
@@ -1613,7 +1613,7 @@ $$\sum_{i=1}^ny_i - n\hat{\alpha} - \sum_{i=1}^n\hat{\beta}x_i = 0 \:\: \Longlef
 
  * Replacing $\hat{\alpha}$ in the second equation by its new expression writes
 
-$$-2\sum_{i=1}^n(y_i - \hat{\alpha} - \hat{\beta}x_i) = 0  \:\: \Longleftrightarrow \:\: -2\sum_{i=1}^n\left[y_i - (\bar{y} - \hat{\beta}\bar{x}) - \hat{\beta}x_i\right] = 0$$
+$$-2x_i\sum_{i=1}^n(y_i - \hat{\alpha} - \hat{\beta}x_i) = 0  \:\: \Longleftrightarrow \:\: -2x_i\sum_{i=1}^n\left[y_i - (\bar{y} - \hat{\beta}\bar{x}) - \hat{\beta}x_i\right] = 0$$
 
 --
 
