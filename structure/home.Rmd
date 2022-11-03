@@ -670,10 +670,10 @@ During the first semester, the emphasis will successively be put on R Programmin
 
 <indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in R programming or Statistics. Lectures will take place at Campus Jourdan - Room 5, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
 
-Please make sure to download and install both R and R studio before the first lecture and to bring your laptop with you at each class.  
+Please make sure to download and install both R and RStudio before the first lecture and to bring your laptop with you at each class.  
 
  * [Download R](https://cran.r-project.org/)
- * [Download R studio](https://www.rstudio.com/products/rstudio/download/#download)
+ * [Download RStudio](https://posit.co/download/rstudio-desktop/#download)
 
 Don't hesitate to send me an email if you're already facing issues at that stage.
 
