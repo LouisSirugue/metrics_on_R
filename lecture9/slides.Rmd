@@ -854,6 +854,44 @@ lm(Earnings ~ Race_fct, asec)
 
 #### 1.2. Discrete variables
 
+<ul>
+  <li>The <b>factor class</b> is made for variables whose values <b>indicate</b> different <b>groups</b></li>
+  <ul>
+    <li>Values are just <b>arbitrary group classifiers</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r}
+individuals <- as.factor(c(1, 2, 3, 4, 5))
+individuals[1]
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>With <b>factors</b>, R understands that the different values <b>do not mean anything</b></li>
+  <ul>
+    <li>And applying <b>standard operations</b> to factors <b>does not make sense</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, warning = T}
+individuals * 2
+```
+
+
+---
+
+### 1. Adding variables
+
+#### 1.2. Discrete variables
+
  * What you can also do is <b>create the dummies yourself:</b>
  
 ```{r}
@@ -887,7 +925,7 @@ lm(Earnings ~ Black + Other, asec)
 asec <- asec %>%
   mutate(num_cat = case_when(Race == "White" ~ 0,
                              Race == "Black" ~ 1,
-                             Race == "Other" ~ 3))
+                             Race == "Other" ~ 2))
 ```
 
 ```{r}
@@ -1025,7 +1063,7 @@ $$\text{Pollution}_i = \hat{\alpha_1} + \hat{\beta_1} \text{Income}_i + \hat{\va
   <li>You would probably expect that \(\hat{\beta_1} < 0\)</li>
   <ul>
     <li>Meaning that <b>higher income</b> earners live in <b>less polluted</b> areas</li>
-    <li>But the closer from <b>Paris</b> the higher the <b>rents</b> and the <b>ring-road</b></li>
+    <li>But the closer from <b>Paris</b> the higher the <b>rents</b> and the closer the <b>ring-road</b></li>
     <li>This phenomenon might counteract this effect and pull \(\hat{\beta_1}\) towards 0</li>
   </ul>
 </ul>
@@ -1552,8 +1590,8 @@ ggplot(temp_dat, aes(x = Hours, y = Earnings, color = Sex)) +
   <ul>
     <li>Including it in the regression allows to <b>account for another dimension</b></li>
     <li>Such that when \(x\) moves this variable <b>remains constant</b></li>
-    <li>This <b>nets out</b> the relationship of \(x\) and \(y\) from the potential <b>confounding effect</b> of this variable</li>
-    <li>This is why we call it <b>controlling for something</b></li>
+    <li>This <b>nets out</b> the relationship between \(x\) and \(y\) from the potential <b>confounding effect</b> of this variable</li>
+    <li>This is why we call it <b><i>controlling</i> for something</b></li>
   </ul>
 </ul>
 
@@ -1614,9 +1652,9 @@ class: inverse, hide-logo
 
 <p style = "margin-bottom:3cm;"></p>
 
-<center><h3><i>You've got 5 minutes!</i></h3></center>
+<center><h3><i>You've got 8 minutes!</i></h3></center>
 
-`r countdown(minutes = 5, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+`r countdown(minutes = 8, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 class: inverse, hide-logo
@@ -2024,7 +2062,7 @@ $$\text{Pollution}_i = \hat{\alpha} + \hat{\beta_1} \text{Income}_i + \hat{\beta
 --
 
 <ul>
-  <li>What is the <b>effect of</b> 1-unit increase in <b>income here?</b></li>
+  <li>What is the <b>effect of</b> a 1-unit increase in <b>income here?</b></li>
 </ul>
 
 --
@@ -2038,7 +2076,7 @@ $$\hat{\beta_1} + \hat{\beta_3}\text{Distance}_i$$
 <ul>
   <li>The <b>coefficient</b> associated with the <b>interaction</b>, \(\hat{\beta_3}\), indicates:</li>
   <ul>
-    <li>By how the <b>effect</b> of a one unit increase in <b>income</b> on pollution <b>varies with distance</b></li>
+    <li>By how the <b>effect</b> of a 1-unit increase in <b>income</b> on pollution <b>varies with distance</b></li>
     <li>When <b>distance = 0</b> the effect of income is \(\hat{\beta_1}\)</li>
     <li>For every <b>additional unit</b> of distance, the effect of income on pollution <b>increases by \(\hat{\beta_3}\)</li>
   </ul>
@@ -2050,7 +2088,7 @@ $$\hat{\beta_1} + \hat{\beta_3}\text{Distance}_i$$
 
 <center><i>&#10140; Don't omit to include your interaction variable as a control in the regression</i></center>
 
---
+---
 
 <h3>Overview</h3>
 
