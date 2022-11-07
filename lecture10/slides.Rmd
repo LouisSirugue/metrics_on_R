@@ -106,7 +106,7 @@ $$\hat{\alpha} = \bar{y} - \hat{\beta} \times\bar{x}$$
 <ul>
   <li><b>Adding</b> a second independent <b>variable</b> in the regression amounts to <b>fitting a plane</b> instead of a line</li>
   <ul>
-    <li>Adding a third variable would fit an hyperplane of dimension 3 and so on</li>
+    <li>Adding a third variable would fit a hyperplane of dimension 3 and so on</li>
   </ul>
 </ul>
 
@@ -2539,7 +2539,7 @@ pt((beta - 0) / se_dat$se, nrow(ggcurve) - 2)
 </ul>
 
 ```{r}
-1 - pt((beta - 0) / se_dat$se, nrow(ggcurve) - 2)
+1 - pt(abs((beta - 0) / se_dat$se), nrow(ggcurve) - 2)
 ```
 
 ---
@@ -2557,7 +2557,7 @@ pt((beta - 0) / se_dat$se, nrow(ggcurve) - 2)
 </ul>
 
 ```{r}
-2 * (1 - pt((beta - 0) / se_dat$se, nrow(ggcurve) - 2))
+2 * (1 - pt(abs((beta - 0) / se_dat$se), nrow(ggcurve) - 2))
 ```
 
 --
