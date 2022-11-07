@@ -226,7 +226,7 @@ slope_plot
 
 <ul>
   <ul>
-    <li>We call that a <b>Linear Probability model</b></li>
+    <li>We call that a <b>Linear Probability Model</b></li>
   </ul>
 </ul>
 
@@ -1954,9 +1954,9 @@ ggplot(edu, aes(x = Income, y = Children, color = Education, shape = Education))
 <p style = "margin-bottom:2cm;"></p>
 
 $$\begin{align}
-\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
-& \hat{\beta_2}\text{(<Highschool)}_i + \hat{\beta_3}\text{Highschool}_i+ \hat{\beta_4}\text{College}_i+& \small{\text{Allow for} \neq \text{slopes}} \\ 
-& \text{Children}_i\times\left[\hat{\beta_5}\text{(<Highschool)}_i + \hat{\beta_6}\text{Highschool}_i+ \hat{\beta_7}\text{College}_i\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+\text{Children}_i = \:& \hat{\alpha_A} + \hat{\beta_A}\text{Income}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_B}\text{Highschool}_i+ \hat{\beta_C}\text{College}_i+& \small{\text{Allow for} \neq \text{intercepts}} \\ 
+& \text{Income}_i\times\left[\hat{\beta_D}\text{Highschool}_i+ \hat{\beta_E}\text{College}_i\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{slopes}}\end{align}$$
 
 ---
 
@@ -1969,14 +1969,14 @@ $$\begin{align}
 <p style = "margin-bottom:2cm;"></p>
 
 $$\begin{align}
-\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
-& \hat{\beta_2}\underbrace{\text{(<Highschool)}_i}_{1} + \hat{\beta_3}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_4}\underbrace{\text{College}_i}_{0}+& \small{\text{Allow for} \neq \text{slopes}} \\ 
-& \text{Children}_i\times\left[\hat{\beta_5}\underbrace{\text{(<Highschool)}_i}_{1} + \hat{\beta_6}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_7}\underbrace{\text{College}_i}_{0}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+\text{Children}_i = \:& \hat{\alpha_A} + \hat{\beta_A}\text{Income}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_B}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_C}\underbrace{\text{College}_i}_{0}+& \small{\text{Allow for} \neq \text{Intercepts}} \\ 
+& \text{Income}_i\times\left[\hat{\beta_D}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_E}\underbrace{\text{College}_i}_{0}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{slopes}}\end{align}$$
 
 <p style = "margin-bottom:2cm;"></p>
 
 <ul style = "list-style: none; margin-left: 5cm;">
-  <li><b>< Highschool:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_2}) + (\hat{\beta_1} + \hat{\beta_5})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+  <li><b>< Highschool:</b> \(\:\:\: \text{Children}_i = \hat{\alpha_A} + \hat{\beta_A}\text{Income}_i+\hat{\varepsilon_i}\)</li>
 </ul>
 
 ---
@@ -1990,14 +1990,14 @@ $$\begin{align}
 <p style = "margin-bottom:2cm;"></p>
 
 $$\begin{align}
-\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
-& \hat{\beta_2}\underbrace{\text{(<Highschool)}_i}_{0} + \hat{\beta_3}\underbrace{\text{Highschool}_i}_{1}+ \hat{\beta_4}\underbrace{\text{College}_i}_{0}+& \small{\text{Allow for} \neq \text{slopes}} \\ 
-& \text{Children}_i\times\left[\hat{\beta_5}\underbrace{\text{(<Highschool)}_i}_{0} + \hat{\beta_6}\underbrace{\text{Highschool}_i}_{1}+ \hat{\beta_7}\underbrace{\text{College}_i}_{0}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+\text{Children}_i = \:& \hat{\alpha_A} + \hat{\beta_A}\text{Income}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_B}\underbrace{\text{Highschool}_i}_{1}+ \hat{\beta_C}\underbrace{\text{College}_i}_{0}+& \small{\text{Allow for} \neq \text{intercepts}} \\ 
+& \text{Income}_i\times\left[\hat{\beta_D}\underbrace{\text{Highschool}_i}_{1}+ \hat{\beta_E}\underbrace{\text{College}_i}_{0}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{slopes}}\end{align}$$
 
 <p style = "margin-bottom:2cm;"></p>
 
 <ul style = "list-style: none; margin-left: 5cm;">
-  <li><b>Highschool:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_3}) + (\hat{\beta_1} + \hat{\beta_6})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+  <li><b>Highschool:</b> \(\:\:\: \text{Children}_i = (\hat{\alpha_A} + \hat{\beta_B}) + (\hat{\beta_A} + \hat{\beta_D})\text{Income}_i+\hat{\varepsilon_i}\)</li>
 </ul>
 
 ---
@@ -2011,14 +2011,14 @@ $$\begin{align}
 <p style = "margin-bottom:2cm;"></p>
 
 $$\begin{align}
-\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
-& \hat{\beta_2}\underbrace{\text{(<Highschool)}_i}_{0} + \hat{\beta_3}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_4}\underbrace{\text{College}_i}_{1}+& \small{\text{Allow for} \neq \text{slopes}} \\ 
-& \text{Children}_i\times\left[\hat{\beta_5}\underbrace{\text{(<Highschool)}_i}_{0} + \hat{\beta_6}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_7}\underbrace{\text{College}_i}_{1}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+\text{Children}_i = \:& \hat{\alpha_A} + \hat{\beta_A}\text{Income}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_B}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_C}\underbrace{\text{College}_i}_{1}+& \small{\text{Allow for} \neq \text{intercepts}} \\ 
+& \text{Income}_i\times\left[\hat{\beta_D}\underbrace{\text{Highschool}_i}_{0}+ \hat{\beta_E}\underbrace{\text{College}_i}_{1}\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{slopes}}\end{align}$$
 
 <p style = "margin-bottom:2cm;"></p>
 
 <ul style = "list-style: none; margin-left: 5cm;">
-  <li><b>College:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_4}) + (\hat{\beta_1} + \hat{\beta_7})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+  <li><b>College:</b> \(\:\:\: \text{Children}_i = (\hat{\alpha_A} + \hat{\beta_C}) + (\hat{\beta_A} + \hat{\beta_E})\text{Income}_i+\hat{\varepsilon_i}\)</li>
 </ul>
 
 ---
@@ -2032,16 +2032,16 @@ $$\begin{align}
 <p style = "margin-bottom:2cm;"></p>
 
 $$\begin{align}
-\text{Income}_i = \:& \hat{\alpha} + \hat{\beta_1}\text{Children}_i + & \small{\text{Baseline equation}}\\ 
-& \hat{\beta_2}\text{(<Highschool)}_i + \hat{\beta_3}\text{Highschool}_i+ \hat{\beta_4}\text{College}_i+& \small{\text{Allow for} \neq \text{slopes}} \\ 
-& \text{Children}_i\times\left[\hat{\beta_5}\text{(<Highschool)}_i + \hat{\beta_6}\text{Highschool}_i+ \hat{\beta_7}\text{College}_i\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{intercepts}}\end{align}$$
+\text{Children}_i = \:& \hat{\alpha_A} + \hat{\beta_A}\text{Income}_i + & \small{\text{Baseline equation}}\\ 
+& \hat{\beta_B}\text{Highschool}_i+ \hat{\beta_C}\text{College}_i+& \small{\text{Allow for} \neq \text{intercepts}} \\ 
+& \text{Income}_i\times\left[\hat{\beta_D}\text{Highschool}_i+ \hat{\beta_E}\text{College}_i\right]+\hat{\varepsilon_i}& \small{\text{Allow for} \neq \text{slopes}}\end{align}$$
 
 <p style = "margin-bottom:2cm;"></p>
 
 <ul style = "list-style: none; margin-left: 5cm;">
-  <li><b>< Highschool:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_2}) + (\hat{\beta_1} + \hat{\beta_5})\text{Children}_i+\hat{\varepsilon_i}\)</li>
-  <li><b>Highschool:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_3}) + (\hat{\beta_1} + \hat{\beta_6})\text{Children}_i+\hat{\varepsilon_i}\)</li>
-  <li><b>College:</b> \(\:\:\: \text{Income}_i = (\hat{\alpha} + \hat{\beta_4}) + (\hat{\beta_1} + \hat{\beta_7})\text{Children}_i+\hat{\varepsilon_i}\)</li>
+  <li><b>< Highschool:</b> \(\:\:\: \text{Children}_i = \hat{\alpha_A} + \hat{\beta_A} \text{Income}_i+\hat{\varepsilon_i}\)</li>
+  <li><b>Highschool:</b> \(\:\:\: \text{Children}_i = (\hat{\alpha_A} + \hat{\beta_B}) + (\hat{\beta_A} + \hat{\beta_D})\text{Income}_i+\hat{\varepsilon_i}\)</li>
+  <li><b>College:</b> \(\:\:\: \text{Children}_i = (\hat{\alpha_A} + \hat{\beta_C}) + (\hat{\beta_A} + \hat{\beta_E})\text{Income}_i+\hat{\varepsilon_i}\)</li>
 </ul>
 
 
@@ -2142,7 +2142,7 @@ $$\hat{\beta_1} + \hat{\beta_3}\text{Distance}_i$$
 <ul>
   <li><b>Adding</b> a second independent <b>variable</b> in the regression amounts to <b>fitting a plane</b> instead of a line</li>
   <ul>
-    <li>Adding a third variable would fit an hyperplane of dimension 3 and so on</li>
+    <li>Adding a third variable would fit a hyperplane of dimension 3 and so on</li>
   </ul>
 </ul>
 
