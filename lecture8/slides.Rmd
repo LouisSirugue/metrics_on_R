@@ -2424,7 +2424,7 @@ slope_plot
 
 <ul>
   <ul>
-    <li>We call that a <b>Linear Probability model</b></li>
+    <li>We call that a <b>Linear Probability Model</b></li>
   </ul>
 </ul>
 
