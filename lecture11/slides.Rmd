@@ -846,7 +846,7 @@ selec_plot
 #### 1.4. Measurement error
 
 <ul>
-  <li>Another way of obtaining <b>biased estimates</b> is to have a <b>dependent variable measured with errors</b></li>
+  <li>Another way of obtaining <b>biased estimates</b> is to have an <b>independent variable measured with errors</b></li>
   <ul>
     <li>For instance if you want to measure the effect of cognitive skills but you only have IQ scores</li>
     <li>IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent</li>
@@ -895,7 +895,7 @@ ggplot() +
 #### 1.4. Measurement error
 
 <ul>
-  <li>Another way of obtaining <b>biased estimates</b> is to have a <b>dependent variable measured with errors</b></li>
+  <li>Another way of obtaining <b>biased estimates</b> is to have an <b>independent variable measured with errors</b></li>
   <ul>
     <li>For instance if you want to measure the effect of cognitive skills but you only have IQ scores</li>
     <li>IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent</li>
@@ -939,7 +939,7 @@ ggplot() +
 #### 1.4. Measurement error
 
 <ul>
-  <li>Another way of obtaining <b>biased estimates</b> is to have a <b>dependent variable measured with errors</b></li>
+  <li>Another way of obtaining <b>biased estimates</b> is to have an <b>independent variable measured with errors</b></li>
   <ul>
     <li>For instance if you want to measure the effect of cognitive skills but you only have IQ scores</li>
     <li>IQ is a noisy measure of cognitive skills as individuals' performances to such test are not always consistent</li>
@@ -1782,7 +1782,7 @@ ggplot(dat %>%
   <li>While the observed effect would be positive under full compliance, <b>under treatment sharing:</b></li>
   <ul>
     <li><b>Treated children</b> would have <b>lower grades</b> because they would benefit from less calories</li>
-    <li><b>Untreated children</b> would have <b>higher grades</b> because they would benefit from less calories</li>
+    <li><b>Untreated children</b> would have <b>higher grades</b> because they would benefit from more calories</li>
   </ul>
 </ul>
 
@@ -2030,7 +2030,7 @@ ggplot(illuedu) +
 #### Functional form
 
 <ul>
-  <li>Not capture the <b>right functional</b> form correctly might also lead to biased estimations:</li>
+  <li>Not capturing the <b>right functional form</b> might also lead to biased estimations:</li>
   <ul>
     <li>Polynomial order, interactions, logs, discretization matter</li>
     <li><b>Visualizing the relationship</b> is key</li>
@@ -2065,7 +2065,7 @@ ggplot(quadratic, aes(x = Education, y = Earnings)) +
   <ul>
     <li>We cannot just regress children outcomes on a mobility dummy</li>
     <li>Individuals who move may be different from those who stay: <b>self-selection issue</b></li>
-    <li>Here it is not that the sample is not representative of the population, but that <b>the outcomes of those who stayed are different from the outcomes those who moved would have had, if they had stayed</b></li>
+    <li>Here <b>the outcomes of those who stayed are different from the outcomes those who moved would have had, if they had stayed</b></li>
   </ul>
 </ul>
 
