@@ -283,7 +283,7 @@ lm(birth_weight ~ household_income, data)$coefficients
   &lt;li&gt;So in our case the &lt;b&gt;adequate interpretation&lt;/b&gt; would be:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;center&gt;&lt;i&gt;"Everything else equal, a &lt;b&gt;1 euro increase in annual household income&lt;/b&gt; is associated with&lt;br&gt; an &lt;b&gt;increase of 0.003 gram in newborn birth weight&lt;/b&gt; on average."&lt;/i&gt;&lt;/center&gt;
+&lt;center&gt;&lt;i&gt;"Everything else equal, a &lt;b&gt;1 euro increase in annual household income&lt;/b&gt; is associated with&lt;br&gt; an &lt;b&gt;increase of 0.002 gram in newborn birth weight&lt;/b&gt; on average."&lt;/i&gt;&lt;/center&gt;
 
 &lt;p style = "margin-bottom:1.6cm;"&gt;&lt;/p&gt;
 
@@ -293,7 +293,7 @@ lm(birth_weight ~ household_income, data)$coefficients
   &lt;li&gt;But it would be even better to &lt;b&gt;interpret&lt;/b&gt; the results for a &lt;b&gt;meaningful variation&lt;/b&gt; of \(x\)&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;For an annual household income, a &lt;b&gt;1 euro variation&lt;/b&gt; is not really meaningful&lt;/li&gt;
-    &lt;li&gt;1 euro increase &amp;#10140; 0.003 gram increase \(\Leftrightarrow\) &lt;b&gt;1,000 euro increase&lt;/b&gt; &amp;#10140; 3 gram increase&lt;/li&gt;
+    &lt;li&gt;1 euro increase &amp;#10140; 0.002 gram increase \(\Leftrightarrow\) &lt;b&gt;1,000 euro increase&lt;/b&gt; &amp;#10140; 2 gram increase&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -416,7 +416,7 @@ lm(birth_weight ~ household_income, data)$coefficients
   &lt;li&gt;Consider the following specification of the two variables:&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;A categorical variable for &lt;b&gt;annual household income divided in terciles&lt;/b&gt;&lt;/li&gt;
-    &lt;li&gt;Still continuous measure of &lt;b&gt;birth weight in grams&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Still a continuous measure of &lt;b&gt;birth weight in grams&lt;/b&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -609,6 +609,43 @@ mean(data$underweight)
 
 ### 1. Point estimates
 
+#### 1.2. Discrete variables
+
+&lt;ul&gt;
+  &lt;li&gt;Finally if &lt;b&gt;both&lt;/b&gt; the \(y\) and the \(x\) variables are &lt;b&gt;discrete&lt;/b&gt;, the coefficient must be interpreted:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;In &lt;b&gt;percentage points&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Relative&lt;/b&gt; to the reference category&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+`$$\text{Underweight}_i = \alpha + \beta_1 \text{T2}_i + \beta_2 \text{T3}_i  + \varepsilon_i$$`
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+lm(underweight ~ household_income, data)$coefficients
+```
+
+```
+##      (Intercept) household_income 
+##     5.214013e-02    -4.084787e-07
+```
+
+--
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;"Everything else equal, belonging to the &lt;b&gt;second income tercile&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;.00004 percentage point lower probability that the newborn is underweight&lt;/b&gt;&lt;br&gt; relative to the &lt;b&gt;first income tercile.&lt;/b&gt;"&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 1. Point estimates
+
 #### 1.3. Log vs. level
 
 &lt;ul&gt;
@@ -620,7 +657,7 @@ mean(data$underweight)
  
 &lt;p style = "margin-bottom:2.94cm;"&gt;&lt;/p&gt;
  
-&lt;img src="slides_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
@@ -630,7 +667,7 @@ mean(data$underweight)
 &lt;p style = "margin-bottom:1.1cm;"&gt;&lt;/p&gt;
 
 &lt;ul&gt;
- &lt;li&gt;The slope tells us by how many &lt;b&gt;units&lt;/b&gt; the \(y\) variable would increase for a &lt;b&gt;1 unit&lt;/b&gt; in \(x\)&lt;/li&gt;
+ &lt;li&gt;The slope tells us by how many &lt;b&gt;units&lt;/b&gt; the \(y\) variable would increase for a &lt;b&gt;1 unit&lt;/b&gt; increase in \(x\)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
@@ -642,7 +679,7 @@ mean(data$underweight)
  &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
 
 &lt;center&gt;&lt;i&gt;&amp;#10140; The log transformation can be used&lt;br&gt; to easily get an approximation of that&lt;/i&gt;&lt;/center&gt;
 
@@ -664,7 +701,7 @@ mean(data$underweight)
 
 &lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -680,7 +717,7 @@ mean(data$underweight)
 
 &lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-17-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -696,7 +733,7 @@ mean(data$underweight)
 
 `\(\widehat{\beta_{lvl}} = 1.0121933\)`
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-19-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-20-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 `$$\begin{align}(15\div100) \times \widehat{\beta_{lvl}} &amp;\approx (15\div100) \times 1.0121933 \\ &amp;\approx 0.0151829 \end{align}$$`
 ]
@@ -710,7 +747,7 @@ mean(data$underweight)
 
 `\(\widehat{\beta_{log}} = 0.16875\)`
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 `$$\begin{align}0.0151829 \div90 &amp;= 0.0001687\\ &amp; \approx \beta_{log}\%\end{align}$$`
 ]
@@ -771,13 +808,13 @@ mean(data$underweight)
 &lt;ul&gt;
   &lt;li&gt;Let's give it a try with our example on household income and birth weight&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;We've already seen that because income is log-normally distribution, it should be included in log&lt;/li&gt;
+    &lt;li&gt;We've already seen that because income is log-normally distributed, it should be included in log&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-23-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-24-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -826,7 +863,7 @@ lm(birth_weight ~ log(household_income), data)$coefficients
 
 ---
 
-&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+&lt;h3&gt;Overview&lt;/h3&gt;
 
 &lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
 
@@ -865,7 +902,7 @@ lm(birth_weight ~ log(household_income), data)$coefficients
 
 ---
 
-&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+&lt;h3&gt;Overview&lt;/h3&gt;
 
 &lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
 
@@ -899,7 +936,7 @@ class: inverse, hide-logo
 
 ---
 
-&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+&lt;h3&gt;Overview&lt;/h3&gt;
 
 &lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
 
@@ -938,7 +975,7 @@ class: inverse, hide-logo
 
 ---
 
-&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+&lt;h3&gt;Overview&lt;/h3&gt;
 
 &lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
 
@@ -1230,7 +1267,7 @@ It makes it easy to compare the different models:
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-31-1.png" width="67%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-32-1.png" width="67%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1360,7 +1397,7 @@ It makes it easy to compare the different models:
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-34-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-35-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1390,7 +1427,7 @@ It makes it easy to compare the different models:
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-35-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-36-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1406,7 +1443,7 @@ It makes it easy to compare the different models:
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-36-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-37-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1423,7 +1460,7 @@ It makes it easy to compare the different models:
 &lt;/ul&gt;
 
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-37-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1439,7 +1476,7 @@ It makes it easy to compare the different models:
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-39-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1518,7 +1555,7 @@ $$\text{Total variation} = \text{Explained variation} + \text{Remaining variatio
 
 ---
 
-&lt;h3&gt;Today: Interpretation&lt;/h3&gt;
+&lt;h3&gt;Overview&lt;/h3&gt;
 
 &lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
 
@@ -1624,7 +1661,7 @@ $$\text{Total variation} = \text{Explained variation} + \text{Remaining variatio
 &lt;center&gt;&lt;b&gt;Log-transformation&lt;/b&gt;&lt;/center&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;The log transformation allows to interpret the coefficient in percentage terms:&lt;/li&gt;
+  &lt;li&gt;The log transformation allows to interpret the coefficient in percentage:&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;

@@ -365,7 +365,7 @@ lm(birth_weight ~ household_income, data)$coefficients
   <li>So in our case the <b>adequate interpretation</b> would be:</li>
 </ul>
 
-<center><i>"Everything else equal, a <b>1 euro increase in annual household income</b> is associated with<br> an <b>increase of 0.003 gram in newborn birth weight</b> on average."</i></center>
+<center><i>"Everything else equal, a <b>1 euro increase in annual household income</b> is associated with<br> an <b>increase of 0.002 gram in newborn birth weight</b> on average."</i></center>
 
 <p style = "margin-bottom:1.6cm;"></p>
 
@@ -375,7 +375,7 @@ lm(birth_weight ~ household_income, data)$coefficients
   <li>But it would be even better to <b>interpret</b> the results for a <b>meaningful variation</b> of \(x\)</li>
   <ul>
     <li>For an annual household income, a <b>1 euro variation</b> is not really meaningful</li>
-    <li>1 euro increase &#10140; 0.003 gram increase \(\Leftrightarrow\) <b>1,000 euro increase</b> &#10140; 3 gram increase</li>
+    <li>1 euro increase &#10140; 0.002 gram increase \(\Leftrightarrow\) <b>1,000 euro increase</b> &#10140; 2 gram increase</li>
   </ul>
 </ul>
 
@@ -535,7 +535,7 @@ $$\hat{\beta} = \frac{\text{Cov}(x, \, y)}{\text{SD}(x)\times\text{SD}(y)} = \te
   <li>Consider the following specification of the two variables:</li>
   <ul>
     <li>A categorical variable for <b>annual household income divided in terciles</b></li>
-    <li>Still continuous measure of <b>birth weight in grams</b></li>
+    <li>Still a continuous measure of <b>birth weight in grams</b></li>
   </ul>
 </ul>
 
@@ -713,6 +713,37 @@ mean(data$underweight)
 
 ### 1. Point estimates
 
+#### 1.2. Discrete variables
+
+<ul>
+  <li>Finally if <b>both</b> the \(y\) and the \(x\) variables are <b>discrete</b>, the coefficient must be interpreted:</li>
+  <ul>
+    <li>In <b>percentage points</b></li>
+    <li><b>Relative</b> to the reference category</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+$$\text{Underweight}_i = \alpha + \beta_1 \text{T2}_i + \beta_2 \text{T3}_i  + \varepsilon_i$$
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+```{r}
+lm(underweight ~ household_income, data)$coefficients
+```
+
+--
+<p style = "margin-bottom:1.25cm;"></p>
+
+<center><i>"Everything else equal, belonging to the <b>second income tercile</b> is associated with<br> a <b>.00004 percentage point lower probability that the newborn is underweight</b><br> relative to the <b>first income tercile.</b>"</i></center>
+
+---
+
+### 1. Point estimates
+
 #### 1.3. Log vs. level
 
 <ul>
@@ -741,7 +772,7 @@ ggplot(data_log, aes(x = x, y = y)) +
 <p style = "margin-bottom:1.1cm;"></p>
 
 <ul>
- <li>The slope tells us by how many <b>units</b> the \(y\) variable would increase for a <b>1 unit</b> in \(x\)</li>
+ <li>The slope tells us by how many <b>units</b> the \(y\) variable would increase for a <b>1 unit</b> increase in \(x\)</li>
 </ul>
 
 <p style = "margin-bottom:1.25cm;"></p>
@@ -753,7 +784,7 @@ ggplot(data_log, aes(x = x, y = y)) +
  </ul>
 </ul>
 
-<p style = "margin-bottom:1.75cm;"></p>
+<p style = "margin-bottom:1.25cm;"></p>
 
 <center><i>&#10140; The log transformation can be used<br> to easily get an approximation of that</i></center>
 
@@ -913,7 +944,7 @@ kable(tibble(` ` = c("x", "log(x)"),
 <ul>
   <li>Let's give it a try with our example on household income and birth weight</li>
   <ul>
-    <li>We've already seen that because income is log-normally distribution, it should be included in log</li>
+    <li>We've already seen that because income is log-normally distributed, it should be included in log</li>
   </ul>
 </ul>
 
@@ -972,7 +1003,7 @@ lm(birth_weight ~ log(household_income), data)$coefficients
 
 ---
 
-<h3>Today: Interpretation</h3>
+<h3>Overview</h3>
 
 <p style = "margin-bottom:4cm;"></p>
 
@@ -1011,7 +1042,7 @@ lm(birth_weight ~ log(household_income), data)$coefficients
 
 ---
 
-<h3>Today: Interpretation</h3>
+<h3>Overview</h3>
 
 <p style = "margin-bottom:4cm;"></p>
 
@@ -1045,7 +1076,7 @@ class: inverse, hide-logo
 
 ---
 
-<h3>Today: Interpretation</h3>
+<h3>Overview</h3>
 
 <p style = "margin-bottom:4cm;"></p>
 
@@ -1084,7 +1115,7 @@ class: inverse, hide-logo
 
 ---
 
-<h3>Today: Interpretation</h3>
+<h3>Overview</h3>
 
 <p style = "margin-bottom:4cm;"></p>
 
@@ -1684,7 +1715,7 @@ $$\text{Adjusted R}^2 = 1 - \frac{(1 - \text{R}^2)(n-1)}{n - \#\text{parameters}
 
 ---
 
-<h3>Today: Interpretation</h3>
+<h3>Overview</h3>
 
 <p style = "margin-bottom:4cm;"></p>
 
@@ -1790,7 +1821,7 @@ $$\text{Adjusted R}^2 = 1 - \frac{(1 - \text{R}^2)(n-1)}{n - \#\text{parameters}
 <center><b>Log-transformation</b></center>
 
 <ul>
-  <li>The log transformation allows to interpret the coefficient in percentage terms:</li>
+  <li>The log transformation allows to interpret the coefficient in percentage:</li>
 </ul>
 
 <p style = "margin-bottom:1.25cm;"></p>
