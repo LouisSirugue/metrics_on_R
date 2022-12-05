@@ -47,7 +47,7 @@ class: center, middle, inverse, title-slide
 #### Functional form
 
 &lt;ul&gt;
-  &lt;li&gt;Not capture the &lt;b&gt;right functional&lt;/b&gt; form correctly might also lead to biased estimations:&lt;/li&gt;
+  &lt;li&gt;Not capturing the &lt;b&gt;right functional&lt;/b&gt; form correctly might also lead to biased estimations:&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;Polynomial order, interactions, logs, discretization matter&lt;/li&gt;
     &lt;li&gt;&lt;b&gt;Visualizing the relationship&lt;/b&gt; is key&lt;/li&gt;
@@ -539,7 +539,7 @@ lm(underweight ~ household_income, data)$coefficients
   &lt;li&gt;With a &lt;b&gt;binary \(y\) variable&lt;/b&gt;, the coefficient must be interpreted in &lt;b&gt;percentage points:&lt;/b&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 [unit] increase in [x] is associated with&lt;br&gt; a [beta] percentage point [in/de]crease in the probability that [y equals 1] on average."&lt;/i&gt;&lt;/center&gt;
+&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 [unit] increase in [x] is associated with&lt;br&gt; a [beta \(\times\) 100] percentage point [in/de]crease in the probability that [y equals 1] on average."&lt;/i&gt;&lt;/center&gt;
 
 &lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
 
@@ -549,7 +549,7 @@ lm(underweight ~ household_income, data)$coefficients
   &lt;li&gt;So in our case, the &lt;b&gt;adequate interpretation&lt;/b&gt; would be:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;center&gt;&lt;i&gt;"Everything else equal, a &lt;b&gt;1 euro increase in annual household income&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;0.0000004 percentage point decrease in the probability that the newborn is underweight&lt;/b&gt; on average."&lt;/i&gt;&lt;/center&gt;
+&lt;center&gt;&lt;i&gt;"Everything else equal, a &lt;b&gt;1 euro increase in annual household income&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;0.00004 percentage point decrease in the probability that the newborn is underweight&lt;/b&gt; on average."&lt;/i&gt;&lt;/center&gt;
 
 &lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
 
@@ -558,7 +558,7 @@ lm(underweight ~ household_income, data)$coefficients
 &lt;ul&gt;
   &lt;li&gt;Here the &lt;b&gt;interpretation&lt;/b&gt; would be more &lt;b&gt;meaningful:&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;For a &lt;b&gt;1,000 euro&lt;/b&gt; increase &amp;#10140; 0.0004 percentage point decrease&lt;/li&gt;
+    &lt;li&gt;For a &lt;b&gt;1,000 euro&lt;/b&gt; increase &amp;#10140; 0.04 percentage point decrease&lt;/li&gt;
     &lt;li&gt;Compared to the &lt;b&gt;typical probability&lt;/b&gt; to have an underweight newborn&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
@@ -629,18 +629,18 @@ mean(data$underweight)
 
 
 ```r
-lm(underweight ~ household_income, data)$coefficients
+lm(underweight ~ income_tercile, data)$coefficients
 ```
 
 ```
-##      (Intercept) household_income 
-##     5.214013e-02    -4.084787e-07
+##      (Intercept) income_tercileT2 income_tercileT3 
+##       0.07207207      -0.03903904      -0.06608405
 ```
 
 --
 &lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
 
-&lt;center&gt;&lt;i&gt;"Everything else equal, belonging to the &lt;b&gt;second income tercile&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;.00004 percentage point lower probability that the newborn is underweight&lt;/b&gt;&lt;br&gt; relative to the &lt;b&gt;first income tercile.&lt;/b&gt;"&lt;/i&gt;&lt;/center&gt;
+&lt;center&gt;&lt;i&gt;"Everything else equal, belonging to the &lt;b&gt;second income tercile&lt;/b&gt; is associated with&lt;br&gt; a &lt;b&gt;3.9 percentage point lower probability that the newborn is underweight&lt;/b&gt;&lt;br&gt; relative to the &lt;b&gt;first income tercile.&lt;/b&gt;"&lt;/i&gt;&lt;/center&gt;
 
 ---
 
@@ -1622,7 +1622,7 @@ $$\text{Total variation} = \text{Explained variation} + \text{Remaining variatio
   &lt;li&gt;With a &lt;b&gt;binary \(y\) variable&lt;/b&gt;, the coefficient must be interpreted in &lt;b&gt;percentage points:&lt;/b&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 [unit] increase in [x] is associated with&lt;br&gt; a [beta] percentage point [in/de]crease in the probability that [y equals 1] on average."&lt;/i&gt;&lt;/center&gt;
+&lt;center&gt;&lt;i&gt;"Everything else equal, a 1 [unit] increase in [x] is associated with&lt;br&gt; a [beta \(\times\) 100] percentage point [in/de]crease in the probability that [y equals 1] on average."&lt;/i&gt;&lt;/center&gt;
 
 ---
 

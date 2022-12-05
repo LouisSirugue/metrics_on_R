@@ -88,7 +88,7 @@ ggplot(illuedu) +
 #### Functional form
 
 <ul>
-  <li>Not capture the <b>right functional</b> form correctly might also lead to biased estimations:</li>
+  <li>Not capturing the <b>right functional</b> form correctly might also lead to biased estimations:</li>
   <ul>
     <li>Polynomial order, interactions, logs, discretization matter</li>
     <li><b>Visualizing the relationship</b> is key</li>
@@ -653,7 +653,7 @@ lm(underweight ~ household_income, data)$coefficients
   <li>With a <b>binary \(y\) variable</b>, the coefficient must be interpreted in <b>percentage points:</b></li>
 </ul>
 
-<center><i>"Everything else equal, a 1 [unit] increase in [x] is associated with<br> a [beta] percentage point [in/de]crease in the probability that [y equals 1] on average."</i></center>
+<center><i>"Everything else equal, a 1 [unit] increase in [x] is associated with<br> a [beta \(\times\) 100] percentage point [in/de]crease in the probability that [y equals 1] on average."</i></center>
 
 <p style = "margin-bottom:1.75cm;"></p>
 
@@ -663,7 +663,7 @@ lm(underweight ~ household_income, data)$coefficients
   <li>So in our case, the <b>adequate interpretation</b> would be:</li>
 </ul>
 
-<center><i>"Everything else equal, a <b>1 euro increase in annual household income</b> is associated with<br> a <b>0.0000004 percentage point decrease in the probability that the newborn is underweight</b> on average."</i></center>
+<center><i>"Everything else equal, a <b>1 euro increase in annual household income</b> is associated with<br> a <b>0.00004 percentage point decrease in the probability that the newborn is underweight</b> on average."</i></center>
 
 <p style = "margin-bottom:1.75cm;"></p>
 
@@ -672,7 +672,7 @@ lm(underweight ~ household_income, data)$coefficients
 <ul>
   <li>Here the <b>interpretation</b> would be more <b>meaningful:</b></li>
   <ul>
-    <li>For a <b>1,000 euro</b> increase &#10140; 0.0004 percentage point decrease</li>
+    <li>For a <b>1,000 euro</b> increase &#10140; 0.04 percentage point decrease</li>
     <li>Compared to the <b>typical probability</b> to have an underweight newborn</li>
   </ul>
 </ul>
@@ -732,13 +732,13 @@ $$\text{Underweight}_i = \alpha + \beta_1 \text{T2}_i + \beta_2 \text{T3}_i  + \
 --
 
 ```{r}
-lm(underweight ~ household_income, data)$coefficients
+lm(underweight ~ income_tercile, data)$coefficients
 ```
 
 --
 <p style = "margin-bottom:1.25cm;"></p>
 
-<center><i>"Everything else equal, belonging to the <b>second income tercile</b> is associated with<br> a <b>.00004 percentage point lower probability that the newborn is underweight</b><br> relative to the <b>first income tercile.</b>"</i></center>
+<center><i>"Everything else equal, belonging to the <b>second income tercile</b> is associated with<br> a <b>3.9 percentage point lower probability that the newborn is underweight</b><br> relative to the <b>first income tercile.</b>"</i></center>
 
 ---
 
@@ -1782,7 +1782,7 @@ $$\text{Adjusted R}^2 = 1 - \frac{(1 - \text{R}^2)(n-1)}{n - \#\text{parameters}
   <li>With a <b>binary \(y\) variable</b>, the coefficient must be interpreted in <b>percentage points:</b></li>
 </ul>
 
-<center><i>"Everything else equal, a 1 [unit] increase in [x] is associated with<br> a [beta] percentage point [in/de]crease in the probability that [y equals 1] on average."</i></center>
+<center><i>"Everything else equal, a 1 [unit] increase in [x] is associated with<br> a [beta \(\times\) 100] percentage point [in/de]crease in the probability that [y equals 1] on average."</i></center>
 
 ---
 
