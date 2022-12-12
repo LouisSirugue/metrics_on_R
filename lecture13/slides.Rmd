@@ -491,10 +491,11 @@ View(data_rct)
 
 ```{r, eval = F}
 data_rct <- data_rct %>% 
-  filter(!is.na(CVA)) %>%                                       # Keep participating firms
-  rename(treatment = CVA, minority = ZouI,                      # Rename variables of interest
-         interview = ENTRETIEN, weight = POIDS_SEL) %>% 
-  select(treatment, minority, interview, weight)                # Select variables of interest
+  filter(!is.na(CVA)) %>%                      # Keep participating firms
+  select(treatment = CVA,                      # Select and rename variables 
+         minority = ZouI,                      # of interest
+         interview = ENTRETIEN, 
+         weight = POIDS_SEL)
 
 head(data_rct, 5)
 ```
@@ -504,10 +505,11 @@ head(data_rct, 5)
 .pull-left[
 ```{r, echo = F}
 data_rct <- data_rct %>% 
-  filter(!is.na(CVA)) %>%                                       # Keep participating firms
-  rename(treatment = CVA, minority = ZouI,                      # Rename variables of interest
-         interview = ENTRETIEN, weight = POIDS_SEL) %>% 
-  select(treatment, minority, interview, weight)                # Select variables of interest
+  filter(!is.na(CVA)) %>%                      # Keep participating firms
+  select(treatment = CVA,                      # Select and rename variables 
+         minority = ZouI,                      # of interest
+         interview = ENTRETIEN, 
+         weight = POIDS_SEL)
 
 head(data_rct, 5)
 ```
@@ -520,7 +522,7 @@ head(data_rct, 5)
 
 <p style = "margin-bottom:3.5em;"></p>
 
-<center><i>&#10140; We want to know whether anonymizing resume helped reducing labor market discrimination toward the minority group</i></center>
+<center><i>&#10140; We want to know whether anonymizing resumes helped reducing labor market discrimination toward the minority group</i></center>
 
 
 ]
@@ -647,7 +649,7 @@ $$\delta = \underbrace{(\overline{Y}^{An = 1, D = 1} - \overline{Y}^{An = 1, D =
 
 --
 
-`r countdown(minutes = 7, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+`r countdown(minutes = 8, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 
 ---
@@ -814,7 +816,7 @@ summary(lm(interview ~ minority + treatment + minority*treatment,
 
 #### 2.1. Empirical approach
 
- * How to characterize the joint distribution of parent and child income?
+ * How to characterize the <b>joint distribution<b> of <b>parent and child income?<b>
  
 --
 
@@ -1149,8 +1151,8 @@ ggplot(cef, aes(x = parent_quantile, y = mean_child)) +
   <li>Then they investigate whether local <b>characteristics of commuting zones</b> are related to mobility</li>
   <li>But regressing directly upward mobility on different characteristics would give:</li>
   <ul>
-    <li>Lower coefficients for variables with bigger metrics (test scores)</li>
-    <li>Higher coefficients for variables with smaller metrics (frac. single moms)</li>
+    <li><b>Lower coefficients</b> for variables with <b>bigger metrics</b> (test scores)</li>
+    <li><b>Higher coefficients</b> for variables with <b>smaller metrics</b> (fraction of single mothers)</li>
   </ul>
 </ul>
 
@@ -1339,7 +1341,7 @@ Note that these coefficients combine:
 --
 
 <ul>
-  <li>Structural paper are <b>more and more complex</b> on the theoretical side</li>
+  <li>Structural papers are <b>more and more complex</b> on the theoretical side</li>
   <ul>
     <li>The current standards in this literature are beyond the scope of this course</li>
     <li>So we are going to explore a quite <b>old study</b> for this section</li>
@@ -1490,7 +1492,7 @@ $$\begin{cases}
 $$\frac{\partial \mathcal{L}}{\partial L} = 0 \Leftrightarrow p_L = \mu A \lambda L^{\lambda-1}K^\kappa  u$$
 $$\frac{\partial \mathcal{L}}{\partial K} = 0 \Leftrightarrow p_K = \mu A \kappa L^\lambda K^{\kappa-1} u$$
 
-$$\frac{\partial \mathcal{L}}{\partial \lambda} = 0 \Leftrightarrow Y = A L^\lambda K^\kappa  u$$
+$$\frac{\partial \mathcal{L}}{\partial \mu} = 0 \Leftrightarrow Y = A L^\lambda K^\kappa  u$$
 ]
 
 --
@@ -1691,7 +1693,7 @@ $$\log(C)= \alpha + \beta\log(Y) + \gamma\log(p_L) + \delta\log(p_K) + \varepsil
 
 --
 
-`r countdown(minutes = 7, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
+`r countdown(minutes = 8, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 
@@ -1720,7 +1722,7 @@ summary(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlove))$coeff
 ```{r, eval = F}
 library(car)
 linearHypothesis(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlove),
-                 "log(output) + log(plabor) = 1")
+                 "log(plabor) + log(pkap) = 1")
 ```
 
 ---
@@ -1731,14 +1733,14 @@ class: inverse, hide-logo
 
 ```{r, eval = F}
 linearHypothesis(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlove),
-                 "log(output) + log(plabor) = 1")
+                 "log(plabor) + log(pkap) = 1")
 ```
 
 
 ```{r, echo = F}
 library(car)
 linearHypothesis(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlove),
-                 "log(output) + log(plabor) = 1")
+                 "log(plabor) + log(pkap) = 1")
 ```
 
 --
@@ -1746,10 +1748,10 @@ linearHypothesis(lm(log(totcost) ~ log(output) + log(plabor) + log(pkap), nerlov
 <p style = "margin-bottom:1cm;"></p>
 
 <ul>
-  <li>The p-value is equal to 3.56%</li>
+  <li>The p-value is equal to 93.6%</li>
   <ul>
-    <li>We can reject the hypothesis of constant returns to scale at the 5% confidence level</li>
-    <li>But we cannot reject the hypothesis at the 1% confidence level</li>
+    <li>We cannot reject the hypothesis of constant returns to scale</li>
+    <li>\(\hat\gamma + \hat\delta = .96\) is not sufficiently far from \(1\) to reject that \(\gamma + \delta = 1\)</li>
   </ul>
 </ul>
 
