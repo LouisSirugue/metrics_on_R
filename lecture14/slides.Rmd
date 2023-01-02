@@ -4,7 +4,7 @@ subtitle: "Lecture 14"
 author: "<br>Louis SIRUGUE"
 date: "CPES 2 - Fall 2022"
 params:
-  dark: false
+  dark: true
 output:
   xaringan::moon_reader:  
     css: 
@@ -12,7 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
-      after_body: insert-logo.html
+      after_body: insert-logo_dark.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -232,7 +232,7 @@ $$\log(C)= \alpha + \beta\log(Y) + \gamma\log(p_L) + \delta\log(p_K) + \varepsil
 <ul>
   <li>The geometry can be:</li>
   <ul>
-    <li><b>Points</b> at given coordinates: location of weather stations/of your phone</li>
+    <li><b>Points</b> at given coordinates: location of weather stations/of a phone</li>
     <li><b>Polylines</b> that link sets of points: rivers/roads</li>
     <li><b>Polygons</b> that link sets of points to form a closed shape: countries/land parcels</li>
   </ul>
@@ -589,7 +589,7 @@ ggplot(as_tibble(rasterToPoints(pm_data)), # data converted in table
 <ul>
   <li>You might have noticed that France does not look the same on the two graphs</li>
   <ul>
-    <li>This is because have not <b>reprojected the data</b> yet</li>
+    <li>This is because we have not <b>reprojected the data</b> yet</li>
     <li>But this is the <b>first thing to do</b> when working with geolocalized data</li>
   </ul>
 </ul> 
@@ -1438,7 +1438,7 @@ stargazer(lm(pm2.5 ~ MED16, idf_shp), type = "text", keep.stat = c("n", "rsq"))
 
 #### 2.3. Centroids and distances
 
-<center><i><b>Results indicate that the city level in in Île-de-France an increase of 1,000 euros is associated</b></i></center>
+<center><i><b>Results indicate that at the city level in Île-de-France, an increase of 1,000 euros is associated</b></i></center>
 
 <p style = "margin-bottom:-.65cm;"></p>
 
@@ -1449,7 +1449,7 @@ stargazer(lm(pm2.5 ~ MED16, idf_shp), type = "text", keep.stat = c("n", "rsq"))
 <p style = "margin-bottom:.75cm;"></p>
 
 <ul>
-  <li>But could this <b>effect</b> just be do to the <b>distance to Paris?</b></li>
+  <li>But could this <b>effect</b> just be due to the <b>distance to Paris?</b></li>
   <ul>
     <li>Maybe richer individuals tend to live away from the urban center</li>
     <li>And thus to be less exposed to pollution</li>
