@@ -124,14 +124,14 @@ s1 <- data.frame(a = c(" ",
                  
                  
                  d = c("Quizzes", 
-                       "[Quiz 1](https://sirugue.shinyapps.io/quiz1/)",
-                       "[Quiz 2](https://sirugue.shinyapps.io/quiz2/)",
-                       "[Quiz 3](https://sirugue.shinyapps.io/quiz3/)",
+                       "Quiz 1",
+                       "Quiz 2",
+                       "Quiz 3",
                        " ", " ", 
                        " ", " ", 
-                       "[Quiz 4](https://sirugue.shinyapps.io/quiz4/)", 
-                       "[Quiz 5](https://sirugue.shinyapps.io/quiz5/)", 
-                       "[Quiz 6](https://sirugue.shinyapps.io/quiz6/)",
+                       "Quiz 4", 
+                       "Quiz 5", 
+                       "Quiz 6",
                        " ", " ", 
                        " ", " "),
                  
@@ -168,13 +168,13 @@ exs1 <- data.frame(a = c(" ",
                        "Homework"),
                  
                  b = c("Guidelines", 
-                       paste0("[html](", root, "homework/guidelines.html) - [pdf](", root, "homework/guidelines.pdf)")),
+                       paste0("html - pdf")),
                        
                  c = c("Source",
-                       paste0("[Rmd](", root, "homework/homework.zip)")),
+                       paste0("Rmd")),
                  
                  d = c("Data", 
-                       paste0("[data](https://www.aeaweb.org/articles?id=10.1257/aer.20130360)")))
+                       paste0("data")))
                  
 kable(exs1, col.names = NULL, align = "lccc")  %>%
   #add_header_above(c("Semester 1" = 3)) %>%
@@ -668,12 +668,13 @@ During the first semester, the emphasis will successively be put on R Programmin
 
 <p style = "margin-bottom:.75cm;"></p>
 
-<indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in R programming or Statistics. Lectures will take place at Campus Jourdan - Room 5, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
+<indent></indent> The course will be taught in French but the material is written in English. It is meant to be accessible without prior knowledge in R programming or Statistics. Lectures will take place at Campus Jourdan - Room 3-38, every Monday from 13:30 to 15:30. Please reach me at <a href="mailto:louis.sirugue@psemail">louis.sirugue@psemail</a> for any question or comment about the course.
 
-Please make sure to download and install both R and RStudio before the first lecture and to bring your laptop with you at each class.  
+Please make sure to download and install R, RStudio, and Quarto before the first lecture, and to bring your laptop with you at each class.  
 
  * [Download R](https://cran.r-project.org/)
  * [Download RStudio](https://posit.co/download/rstudio-desktop/#download)
+ * [Download Quarto](https://quarto.org/docs/get-started/)
 
 Don't hesitate to send me an email if you're already facing issues at that stage.
 
@@ -693,11 +694,11 @@ The grading of the first semester will be based on:
 
 <p style = "margin-bottom:.75cm;"></p>
 
-Online **quizzes** consist in sets of 3 to 5 short questions related to the content of the previous class. Links to the quizzes are available in the *Material* section of the course webpage. You will be able to log in to each quiz using the verification code I sent you via email. You will have the possibility to retry the quiz as many times as you want before submitting. But the quiz of a given lecture will be open from the end of that lecture and closed at the beginning of the following one. When you're done with a quiz you can click on *download results* and send the downloaded file to me by email. This is to keep track of your answers in case of disagreement about the grading.   
+Online **quizzes** consist in sets of 3 to 5 short questions related to the content of the previous class. Links to the quizzes will be available in the *Material* section of the course webpage. You will be able to log in to each quiz using the verification code received by email. You will have the possibility to retry the quiz as many times as you want before submitting. When you're done with a quiz you must click on *download results* and send the downloaded file to me by email. This is to keep track of your answers in case of disagreement about the grading. You have until the beginning of the following lecture to submit your results and send them to me by email.   
 
 <p style = "margin-bottom:.75cm;"></p>
 
-The **homework** is a set of exercises related to the first five lectures of the course. It can be done alone or by pairs, and must be handed over via email by the end of the sixth week (16<sup>th</sup> of October 23:59). Late submissions will be penalized by half a point for each 30min beyond the deadline. It is already available on the *Material* section of the course webpage, so I strongly encourage you to work on it progressively as we go the trough the course. The precise grading system of the homework is also available on the *Material* section of the course webpage already. You are very welcome to help each other, but you must write your answers yourselves. Copy-pasting is not permitted.  
+The **homework** is a set of exercises related to the first five lectures of the course. It can be done alone or by pairs, and must be handed over via email by the end of the sixth week (15<sup>th</sup> of October 18:00). Late submissions will be penalized by half a point for each 30min beyond the deadline. It will soon be available on the *Material* section of the course webpage. The precise grading system of the homework is also available on the *Material* section of the course webpage already. You are very welcome to help each other, but you must write your answers yourselves. Copy-pasting is not permitted.  
 
 <p style = "margin-bottom:.75cm;"></p>
 
@@ -709,7 +710,7 @@ The **final exam** will be a paper exam in classroom. You are allowed to bring a
 
 <br>
 
-The grading of the second semester grade will be entirely based on your research project that you will carry out all along the semester. Research projects must be done by groups of two, so both members of a pair will have the same grade. You will be evaluated three times, at three different stages of the research process:
+The grading of the second semester will be entirely based on your research project that you will carry out all along the semester. Research projects must be done by groups of two, so both members of a pair will have the same grade. You will be evaluated three times, at three different stages of the research process:
 
   * Presentation of research idea - 25%
   * Midterm report - 30%
@@ -728,21 +729,21 @@ As the first three lectures of the second semester will be refreshers on the not
 <br>
 
 ```{r s1, echo = FALSE}
-s1 <- data.frame(c = c("05/09/22", 
-                       "12/09/22", 
-                       "19/09/22", 
-                       "26/09/22",
-                       "03/10/22", 
-                       "10/10/22", 
-                       "17/10/22", 
-                       "31/10/22", 
-                       "07/11/22",
-                       "14/11/22", 
-                       "28/11/22", 
-                       "05/12/22", 
-                       "12/12/22", 
-                       "02/01/23", 
-                       "16/01/23"),
+s1 <- data.frame(c = c("04/09/23", 
+                       "11/09/23", 
+                       "18/09/23", 
+                       "25/09/23",
+                       "02/10/23", 
+                       "09/10/23", 
+                       "16/10/23", 
+                       "23/10/23", 
+                       "06/11/23",
+                       "13/11/23", 
+                       "20/11/23", 
+                       "04/12/23", 
+                       "11/12/23", 
+                       "18/12/23", 
+                       "15/01/24"),
                  
                  a = c(paste("Lecture", 1:3, '<span style = "color:#00A2D9;">*</span>'), 
                        paste("Lecture", 4:7),
@@ -777,7 +778,7 @@ kable(s1, col.names = NULL, escape= F)  %>%
   column_spec(2, width = "12em", width_min = "8em", width_max = "12em") %>%
   column_spec(3, width = "24em", width_min = "15em", width_max = "24em") %>%
   
-  row_spec(c(7, 10, 13, 14), extra_css = "border-bottom: dashed 1px #014D64 !important;") %>%
+  row_spec(c(8, 11, 14), extra_css = "border-bottom: dashed 1px #014D64 !important;") %>%
   row_spec(c(1:5, 8:13), color = "#014D64") %>%
   row_spec(c(6, 14), color = "#6794A7") %>%
   row_spec(c(7, 15), color = "#00A2D9") # %>%  row_spec(c(8, 12, 16, 18), color = "#86D7F2")
@@ -793,7 +794,7 @@ These lectures are slightly more advanced, but their content will not be needed 
 
 <span style = "color:#00A2D9;"><u>Exams:</u></span>  
 
-The homework is due by the 16<sup>th</sup> of October 23:59, and will be corrected in class during the 7<sup>th</sup> lecture.  
+The homework is due by the 15<sup>th</sup> of October 18:00, and will be corrected in class during the 7<sup>th</sup> lecture.  
 The final exam will take place during the very last lecture.  
 The six online quizzes will take place during the first three weeks of each part of the course. The corresponding lectures are marked with a <span style = "color:#00A2D9;">*</span> symbol.
 
@@ -804,7 +805,7 @@ tibble(a = c("")) %>%
   row_spec(1, extra_css = "border-bottom: dashed 1px #014D64 !important;")
 ```
 
-Horizontal dashed lines represent break periods. They all last 1 week except the 2-week-long Christmas break.
+Horizontal dashed lines represent break periods. They all last 1 week except the 3-week-long Christmas break.
 
 <br><br><br><br>
 
@@ -858,12 +859,12 @@ The first lecture will cover in detail how to conduct your research project, and
 
 <span style = "color:#014D64;"><u>Follow-ups:</u></span>   
 
-Follow-up sessions are meetings during which you will be given feedback on what you've done and indications on what to do next. The precise format of the follow-ups may vary between TAs. Between each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc., until your final presentation. [Here](https://louissirugue.github.io/metrics_on_R/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the *Material* section of the homepage. You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
+Follow-up sessions are meetings during which you will be given feedback on what you've done and indications on what to do next. Between each session you will have to apply a given step of the research process to your research project: data cleaning, descriptive statistics, data visualization, hypothesis testing, etc., until your final presentation. [Here](https://louissirugue.github.io/metrics_on_R/project/example.html) is an example of what the final document should look like, and the guidelines and grading system are available at the bottom of the *Material* section of the homepage. You will have the possibility to write it in French or in English depending on what you think would be the most useful for you.
 
 <span style = "color:#00A2D9;"><u>Exams:</u></span>  
 
 The 4<sup>th</sup> lecture will be dedicated to the presentation of your research questions and datasets.  
-A midterm report must be handed out by email to your TA after the 9<sup>th</sup> lecture. Lecture 10 will be devoted to giving you feedback about it.  
+A midterm report must be handed out by email after the 9<sup>th</sup> lecture. Lecture 10 will be devoted to giving you feedback about it.  
 The last lecture will be dedicated to your final presentations.  
 More detailed guidelines are provided above and in the first set of slides *"How to conduct a research project".*
 

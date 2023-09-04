@@ -4,6 +4,7 @@
     <title>Introduction to R</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
     <link href="libs/countdown/countdown.css" rel="stylesheet" />
@@ -16,10 +17,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Introduction to R
+]
+.subtitle[
 ## Lecture 1
+]
+.author[
 ### <br>Louis SIRUGUE
-### CPES 2 - Fall 2022
+]
+.date[
+### CPES 2 - Fall 2023
+]
 
 ---
 
@@ -90,7 +99,7 @@ body{background-color:black;filter:invert(1)}
 &lt;ul&gt;
   &lt;li&gt;&lt;b&gt;Prerequisites:&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li style = "margin-bottom:.3cm;"&gt;None (middle-school maths level)&lt;/li&gt;
+    &lt;li style = "margin-bottom:.3cm;"&gt;None&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -686,11 +695,11 @@ body{background-color:black;filter:invert(1)}
   &lt;li&gt;&lt;b&gt;Online quizzes:&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;Available in the &lt;i&gt;Material&lt;/i&gt; section of the course webpage&lt;/li&gt;
-    &lt;li&gt;Log in using the verification code I sent you via email&lt;/li&gt;
+    &lt;li&gt;Log in using the verification received by email&lt;/li&gt;
     &lt;li&gt;&lt;b&gt;3-5 shorts questions&lt;/b&gt; on to the content of the previous class &lt;/li&gt;
     &lt;li&gt;Quizzes open at the end of the lecture and &lt;b&gt;close at the beginning of the next one&lt;/b&gt;&lt;/li&gt;
     &lt;li&gt;You can retry the quiz as many times as you want before submitting&lt;/li&gt;
-    &lt;li&gt;To submit click on &lt;i&gt;download results&lt;/i&gt; and &lt;b&gt;send the downloaded file&lt;/b&gt; to me by email&lt;/li&gt;
+    &lt;li&gt;To submit click on &lt;i&gt;download results&lt;/i&gt; and &lt;b&gt;send the downloaded file&lt;/b&gt; to me by email before the next lecture&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt; 
 
@@ -706,9 +715,8 @@ body{background-color:black;filter:invert(1)}
   &lt;ul&gt;
     &lt;li&gt;&lt;b&gt;Set of exercises&lt;/b&gt; related to the first five lectures of the course&lt;/li&gt;
     &lt;li&gt;It can be done &lt;b&gt;alone or by pairs&lt;/b&gt;&lt;/li&gt;
-    &lt;li&gt;Must be handed over via email by the end of the sixth week &lt;b&gt;(16th of October 23:59)&lt;/b&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;b&gt;Late submissions will be penalized&lt;/b&gt; by half a point for each 30min beyond the deadline&lt;/li&gt;
-    &lt;li&gt;I encourage you to &lt;b&gt;work on it progressively&lt;/b&gt; as we go the trough the course&lt;/li&gt;
+    &lt;li&gt;Must be handed over via email by the end of the sixth week &lt;b&gt;(15th of October 18:00)&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Late submissions will be penalized&lt;/b&gt; by half a point for each 30 min. beyond the deadline&lt;/li&gt;
     &lt;li&gt;You can help each other but write your answers yourselves &lt;b&gt;(no copy-pasting)&lt;/b&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
@@ -1093,7 +1101,7 @@ body{background-color:black;filter:invert(1)}
   &lt;ul&gt;
     &lt;li&gt;Research projects must be done &lt;b&gt;by pairs&lt;/b&gt;&lt;/li&gt;
     &lt;li&gt;It can be written in &lt;b&gt;French or in English&lt;/b&gt;&lt;/li&gt;
-    &lt;li&gt;Follow-ups are &lt;b&gt;group meetings&lt;/b&gt; with a T.A.&lt;/li&gt;
+    &lt;li&gt;Follow-ups are &lt;b&gt;short meetings&lt;/b&gt; with each group individually&lt;/li&gt;
     &lt;li&gt;Find an &lt;b&gt;example&lt;/b&gt; of what is expected &lt;a href = "https://louissirugue.github.io/metrics_on_R/project/example.html"&gt;here&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;We'll come back to that in due time (January)&lt;/li&gt;
   &lt;/ul&gt;
@@ -1502,7 +1510,7 @@ class: inverse, hide-logo
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 3 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_67f6700d" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
+<div class="countdown" id="timer_dc75eef5" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -1684,7 +1692,7 @@ fb &lt;- read.csv("C:\User\Documents\ligue1.csv")
 
 
 ```
-## Error: '\U' used without hex digits in character string starting ""C:\U"
+## Error: '\U' used without hex digits in character string (&lt;text&gt;:1:20)
 ```
 
 &lt;center&gt;Oops, slashes must be the other way around!&lt;/center&gt;
@@ -1777,7 +1785,7 @@ head(fb, 4)
 &lt;ul&gt;
   &lt;li&gt;That kind of &lt;b&gt;weird characters&lt;/b&gt; kicks in when there is an &lt;b&gt;encoding issue&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;Thankfully, &lt;b&gt;read.csv()&lt;/b&gt; can take many &lt;b&gt;other inputs&lt;/b&gt;, including encoding!&lt;/li&gt;
+    &lt;li&gt;Thankfully, &lt;b&gt;read.csv()&lt;/b&gt; has &lt;b&gt;many options&lt;/b&gt; that can be set as &lt;b&gt;inputs&lt;/b&gt;, including encoding!&lt;/li&gt;
     &lt;li&gt;Usually the UTF-8 encoding is the solution to French characters&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
@@ -2993,7 +3001,7 @@ class: inverse, hide-logo
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 6 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_12808409" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
+<div class="countdown" id="timer_7aa2e210" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -3052,7 +3060,7 @@ fb[Wk == last_week, c("Home", "Score", "Away")]
 ```
 
 ```
-## Error in `[.data.frame`(fb, Wk == last_week, c("Home", "Score", "Away")): object 'Wk' not found
+## Error in eval(expr, envir, enclos): object 'Wk' not found
 ```
 
 &lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
@@ -3234,6 +3242,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

@@ -2,7 +2,7 @@
 title: "Introduction to R"
 subtitle: "Lecture 1"
 author: "<br>Louis SIRUGUE"
-date: "CPES 2 - Fall 2022"
+date: "CPES 2 - Fall 2023"
 params:
   dark: false
 output:
@@ -96,7 +96,7 @@ Sys.setenv(LANG = "en")
 <ul>
   <li><b>Prerequisites:</b></li>
   <ul>
-    <li style = "margin-bottom:.3cm;">None (middle-school maths level)</li>
+    <li style = "margin-bottom:.3cm;">None</li>
   </ul>
 </ul>
 
@@ -494,11 +494,11 @@ ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
   <li><b>Online quizzes:</b></li>
   <ul>
     <li>Available in the <i>Material</i> section of the course webpage</li>
-    <li>Log in using the verification code I sent you via email</li>
+    <li>Log in using the verification received by email</li>
     <li><b>3-5 shorts questions</b> on to the content of the previous class </li>
     <li>Quizzes open at the end of the lecture and <b>close at the beginning of the next one</b></li>
     <li>You can retry the quiz as many times as you want before submitting</li>
-    <li>To submit click on <i>download results</i> and <b>send the downloaded file</b> to me by email</li>
+    <li>To submit click on <i>download results</i> and <b>send the downloaded file</b> to me by email before the next lecture</li>
   </ul>
 </ul> 
 
@@ -514,9 +514,8 @@ ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
   <ul>
     <li><b>Set of exercises</b> related to the first five lectures of the course</li>
     <li>It can be done <b>alone or by pairs</b></li>
-    <li>Must be handed over via email by the end of the sixth week <b>(16th of October 23:59)</b></li>
-    <li><b>Late submissions will be penalized</b> by half a point for each 30min beyond the deadline</li>
-    <li>I encourage you to <b>work on it progressively</b> as we go the trough the course</li>
+    <li>Must be handed over via email by the end of the sixth week <b>(15th of October 18:00)</b></li>
+    <li><b>Late submissions will be penalized</b> by half a point for each 30 min. beyond the deadline</li>
     <li>You can help each other but write your answers yourselves <b>(no copy-pasting)</b></li>
   </ul>
 </ul>
@@ -843,7 +842,7 @@ ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
   <ul>
     <li>Research projects must be done <b>by pairs</b></li>
     <li>It can be written in <b>French or in English</b></li>
-    <li>Follow-ups are <b>group meetings</b> with a T.A.</li>
+    <li>Follow-ups are <b>short meetings</b> with each group individually</li>
     <li>Find an <b>example</b> of what is expected <a href = "https://louissirugue.github.io/metrics_on_R/project/example.html">here</a></li>
     <li>We'll come back to that in due time (January)</li>
   </ul>
@@ -1455,7 +1454,7 @@ head(fb, 4)
 <ul>
   <li>That kind of <b>weird characters</b> kicks in when there is an <b>encoding issue</b></li>
   <ul>
-    <li>Thankfully, <b>read.csv()</b> can take many <b>other inputs</b>, including encoding!</li>
+    <li>Thankfully, <b>read.csv()</b> has <b>many options</b> that can be set as <b>inputs</b>, including encoding!</li>
     <li>Usually the UTF-8 encoding is the solution to French characters</li>
   </ul>
 </ul>
