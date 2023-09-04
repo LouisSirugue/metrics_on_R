@@ -495,7 +495,7 @@ ggplot(exams, aes(x = reorder(exam, order_exam), y = coef)) +
   <ul>
     <li>Available in the <i>Material</i> section of the course webpage</li>
     <li>Log in using the verification received by email</li>
-    <li><b>3-5 shorts questions</b> on to the content of the previous class </li>
+    <li><b>3-5 short questions</b> on to the content of the previous class </li>
     <li>Quizzes open at the end of the lecture and <b>close at the beginning of the next one</b></li>
     <li>You can retry the quiz as many times as you want before submitting</li>
     <li>To submit click on <i>download results</i> and <b>send the downloaded file</b> to me by email before the next lecture</li>
