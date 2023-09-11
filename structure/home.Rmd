@@ -125,7 +125,7 @@ s1 <- data.frame(a = c(" ",
                  
                  d = c("Quizzes", 
                        "[Quiz 1](https://sirugue.shinyapps.io/quiz1/)",
-                       "Quiz 2",
+                       "[Quiz 2](https://sirugue.shinyapps.io/quiz2/)",
                        "Quiz 3",
                        " ", " ", 
                        " ", " ", 
