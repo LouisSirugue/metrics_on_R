@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>R Markdown &amp; LaTeX</title>
+    <title>Quarto &amp; LaTeX</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
     <link href="libs/countdown/countdown.css" rel="stylesheet" />
     <script src="libs/countdown/countdown.js"></script>
     <script src="libs/htmlwidgets/htmlwidgets.js"></script>
-    <script src="libs/jquery/jquery.min.js"></script>
     <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
     <script src="libs/datatables-binding/datatables.js"></script>
+    <script src="libs/jquery/jquery-3.6.0.min.js"></script>
     <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
     <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
-    <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+    <link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
     <script src="libs/crosstalk/js/crosstalk.min.js"></script>
     <link rel="shortcut icon" href="star.png" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
@@ -25,10 +26,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# R Markdown &amp; LaTeX
+.title[
+# Quarto &amp; LaTeX
+]
+.subtitle[
 ## Lecture 5
+]
+.author[
 ### <br>Louis SIRUGUE
-### CPES 2 - Fall 2022
+]
+.date[
+### CPES 2 - Fall 2023
+]
 
 ---
 
@@ -327,7 +336,7 @@ class: inverse, hide-logo
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_f6e090db" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
+<div class="countdown" id="timer_ec26bf5c" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -400,7 +409,7 @@ names %&gt;%
 
 
 ```
-## # A tibble: 8 x 2
+## # A tibble: 8 × 2
 ##   annais      n
 ##    &lt;dbl&gt;  &lt;int&gt;
 ## 1   1900 415040
@@ -441,7 +450,7 @@ names %&gt;%
 
 ---
 
-&lt;h3&gt;Today we learn how to make reports with R Markdown!&lt;/h3&gt;
+&lt;h3&gt;Today we learn how to make reports with Quarto!&lt;/h3&gt;
 
 --
 
@@ -452,11 +461,11 @@ names %&gt;%
 &lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
   &lt;li&gt;&lt;b&gt;1. Basic principles&lt;/b&gt;&lt;/li&gt;
   &lt;ul style = "list-style: none"&gt;
-    &lt;li&gt;1.1. What is R Markdown?&lt;/li&gt;
+    &lt;li&gt;1.1. What is Quarto?&lt;/li&gt;
     &lt;li&gt;1.2. YAML header&lt;/li&gt;
     &lt;li&gt;1.3. Code chunks&lt;/li&gt;
     &lt;li&gt;1.4. Text formatting&lt;/li&gt;
-    &lt;li&gt;1.5. Run and knit your code&lt;/li&gt;
+    &lt;li&gt;1.5. Run and render your code&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -492,7 +501,7 @@ names %&gt;%
 
 ---
 
-&lt;h3&gt;Today we learn how to make reports with R Markdown!&lt;/h3&gt;
+&lt;h3&gt;Today we learn how to make reports with Quarto!&lt;/h3&gt;
 
 &lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
 
@@ -501,11 +510,11 @@ names %&gt;%
 &lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
   &lt;li&gt;&lt;b&gt;1. Basic principles&lt;/b&gt;&lt;/li&gt;
   &lt;ul style = "list-style: none"&gt;
-    &lt;li&gt;1.1. What is R Markdown?&lt;/li&gt;
+    &lt;li&gt;1.1. What is Quarto?&lt;/li&gt;
     &lt;li&gt;1.2. YAML header&lt;/li&gt;
     &lt;li&gt;1.3. Code chunks&lt;/li&gt;
     &lt;li&gt;1.4. Text formatting&lt;/li&gt;
-    &lt;li&gt;1.5. Run and knit your code&lt;/li&gt;
+    &lt;li&gt;1.5. Run and render your code&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 ]
@@ -514,10 +523,10 @@ names %&gt;%
 
 ### 1. Basic principles
 
-#### 1.1. What is R Markdown?
+#### 1.1. What is Quarto?
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;R Markdown&lt;/b&gt; is a type of document in which you can both &lt;b&gt;write/run R code&lt;/b&gt; and &lt;b&gt;edit text&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Quarto&lt;/b&gt; is an open-source publishing system in which you can both &lt;b&gt;write/run code&lt;/b&gt; (R/Python/Julia/Observable) and &lt;b&gt;edit text&lt;/b&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p style = "margin-bottom:1cm;"&gt;
@@ -525,12 +534,11 @@ names %&gt;%
 --
 
 &lt;ul&gt;
-  &lt;li&gt;Here are some examples of R Markdown reports &lt;i&gt;(from my other course)&lt;/i&gt;&lt;/li&gt;
+  &lt;li&gt;Here are some examples of Quarto documents&lt;/li&gt;
   &lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://louissirugue.github.io/metrics_on_R/2021_homework1/correction.html"&gt;Last year homework&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://louissirugue.github.io/metrics_on_R/project/example"&gt;Example of research project&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://louissirugue.github.io/metrics_on_R/2021_covariance_vs_correlation_with_code.html"&gt;Supplementary material&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://louissirugue.github.io/metrics_on_R/home.html"&gt;Course webpage and material&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://louissirugue.github.io/metrics_on_R/homework/guidelines.html"&gt;Homework&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://www.louissirugue.com"&gt;Website&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://quarto.org/docs/presentations/revealjs/demo/#/title-slide"&gt;Slides&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -543,7 +551,7 @@ names %&gt;%
   &lt;ul&gt;
   &lt;li&gt;&lt;b&gt;Code chunks&lt;/b&gt; to run and render the output&lt;/li&gt;
   &lt;li&gt;&lt;b&gt;Editable text&lt;/b&gt; to display&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;YAML metadata&lt;/b&gt; for the R Markdown build process&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;YAML metadata&lt;/b&gt; for the Quarto build process&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -551,22 +559,22 @@ names %&gt;%
 
 --
 
- &lt;center&gt;&lt;h4&gt;&lt;i&gt;&amp;#10140; Let's go through them by creating our first R Markdown!&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
+ &lt;center&gt;&lt;h4&gt;&lt;i&gt;&amp;#10140; Let's go through them by creating our first Quarto document!&lt;/i&gt;&lt;/h4&gt;&lt;/center&gt;
 
 ---
 
 ### 1. Basic principles
 
-#### 1.1. What is R Markdown?
+#### 1.1. What is Quarto?
 
-&lt;center&gt;&amp;#10140; Click on &lt;b&gt;File &gt; New File &gt; Rmarkdown&lt;/b&gt;&lt;/center&gt;
+&lt;center&gt;&amp;#10140; Click on &lt;b&gt;File &gt; New File &gt; Quarto document&lt;/b&gt;&lt;/center&gt;
 
 &lt;p style = "margin-bottom:-.5cm;"&gt;
 
 --
 
 .pull-left[
-&lt;img src = "new_markdown.png" width = "450"/&gt;
+&lt;img src = "new_quarto.png" width = "450"/&gt;
 ]
 
 --
@@ -584,7 +592,7 @@ names %&gt;%
 
 ### 1. Basic principles
 
-#### 1.1. What is R Markdown?
+#### 1.1. What is Quarto?
 
  * It creates a **template** containing the **3 types of content**:
  
@@ -597,22 +605,18 @@ names %&gt;%
 
 &lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;YAML header &amp;#10140;&lt;/b&gt;
 
-&lt;p style = "margin-bottom:.75cm;"&gt;
+&lt;p style = "margin-bottom:2.75cm;"&gt;
 
-&lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Code chunks &amp;#10140;&lt;/b&gt;
-
-&lt;p style = "margin-bottom:1.25cm;"&gt;
 
 &lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Text &amp;#10140;&lt;/b&gt;
 
-&lt;p style = "margin-bottom:1.75cm;"&gt;
+&lt;p style = "margin-bottom:2.7cm;"&gt;
 
-&lt;center&gt;&lt;i&gt;Let's go through them one by one!&lt;/i&gt;&lt;/center&gt;
-
+&lt;b&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Code chunks &amp;#10140;&lt;/b&gt;
 ]
 
 .right-column[
-&lt;center&gt;&lt;img src = "template.png" width = "650"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;img src = "template.png" width = "550"/&gt;&lt;/center&gt;
 ]
 
 ---
@@ -630,9 +634,9 @@ names %&gt;%
 &lt;ul&gt;
 &lt;ul&gt;
 &lt;li&gt;Title/subtitle (in quotes)&lt;/li&gt;
-&lt;li&gt;Author (in quotes)&lt;/li&gt;
-&lt;li&gt;Date (in quotes)&lt;/li&gt;
-&lt;li&gt;Output type (html_document/pdf_document)&lt;/li&gt;
+&lt;li&gt;Author/date (in quotes)&lt;/li&gt;
+&lt;li&gt;Output type (html/pdf)&lt;/li&gt;
+&lt;li&gt;Editor configuration (use source, not visual)&lt;/li&gt;
 &lt;li&gt;...&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/ul&gt;
@@ -641,14 +645,16 @@ names %&gt;%
 
 &lt;p style = "margin-bottom:1cm;"&gt;
 
-* It should be specified at the **very beginning** of the document and surrounded by **three dashes** like so:
+* It should be specified at the **very beginning** of the document and surrounded by **three dashes** like this:
 
 ````markdown
 ---
-title: "My First Markdown Report"
+title: "My first Quarto document"
+subtitle: "A step-by-step introduction"
 author: "Louis Sirugue"
-date: "24/09/2021"
-output: html_document
+date: "10/02/2023"
+format: html
+editor: source
 ---
 ````
 ---
@@ -657,7 +663,7 @@ output: html_document
 
 #### 1.3. Code chunks
 
- * **Code chunks are blocks of R code** that can be run when working on and rendering the .Rmd file
+ * **Code chunks are blocks of R code** that can be run when working on and rendering the .qmd file
  
 --
 
@@ -801,13 +807,54 @@ output: html_document
 
 ### 1. Basic principles
 
+#### 1.3. Code chunks
+
+ * For an option to apply to the &lt;b&gt;whole document&lt;/b&gt;, set it up in the YAML header:
+ 
+````markdown
+---
+title: "My first Quarto document"
+format: html
+execute:
+  echo: false
+  warning: false
+---
+````
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;
+
+ * For an option to apply to a &lt;b&gt;specific chunk&lt;/b&gt;, two possibilities:
+ 
+.pull-left[
+````markdown
+```{r, echo = F, warning = F}
+1+1
+```
+````
+]
+.pull-right[
+````markdown
+```{r}
+#| echo: false
+#| warning: false
+1+1
+```
+````
+]
+
+---
+
+### 1. Basic principles
+
 #### 1.4. Text formatting
 
 &lt;ul&gt;
-  &lt;li&gt;R Markdown is not only about rendering code but also about &lt;b&gt;writing&lt;/b&gt; actual &lt;b&gt;text&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;Quarto is not only about rendering code but also about &lt;b&gt;writing&lt;/b&gt; actual &lt;b&gt;text&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;You can write &lt;b&gt;paragraphs&lt;/b&gt; as you would normally do on a typical report&lt;/li&gt;
-    &lt;li&gt;And R Markdown provides convenient ways to &lt;b&gt;format&lt;/b&gt; your text&lt;/li&gt;
+    &lt;li&gt;And Quarto provides convenient ways to &lt;b&gt;format&lt;/b&gt; your text&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -833,7 +880,7 @@ output: html_document
 --
 
 &lt;ul&gt;
-  &lt;li&gt;Unlike most text editing software, in R Markdown &lt;b&gt;text formatting&lt;/b&gt; isn't about clicking on dedicated buttons&lt;/li&gt;
+  &lt;li&gt;Unlike most text editing software, in &lt;i&gt;source&lt;/i&gt; Quarto &lt;b&gt;text formatting&lt;/b&gt; isn't about clicking on dedicated buttons&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;It &lt;b&gt;relies on symbols&lt;/b&gt; that should be written along with the text&lt;/li&gt;
   &lt;/ul&gt;
@@ -961,10 +1008,10 @@ Horizontal rule:
 
 ### 1. Basic principles
 
-#### 1.5. Run and knit your code
+#### 1.5. Run and render your code
 
 &lt;ul&gt;
-  &lt;li&gt;To &lt;b&gt;execute&lt;/b&gt; the content of a &lt;b&gt;code&lt;/b&gt; chunk in R Markdown&lt;/li&gt;
+  &lt;li&gt;To &lt;b&gt;execute&lt;/b&gt; the content of a &lt;b&gt;code&lt;/b&gt; chunk in Quarto&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;Click on the &lt;b&gt;green play button&lt;/b&gt; at the top right of the chunk &lt;img src = "current_chunk.png" width = "20"/&gt;&lt;/li&gt;
   &lt;/ul&gt;
@@ -993,18 +1040,12 @@ Horizontal rule:
   &lt;ul&gt;
     &lt;li&gt;To choose where the &lt;b&gt;output&lt;/b&gt; must be &lt;b&gt;displayed&lt;/b&gt;, click on the &lt;i&gt;"Options"&lt;/i&gt; button&lt;/li&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;b&gt;Chunk output inline:&lt;/b&gt; output displayed right&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Chunk output inline&lt;/b&gt; (below the chunk)&lt;/li&gt;
+      &lt;li&gt;&lt;b&gt;Chunk output in console&lt;/b&gt;&lt;/li&gt;
     &lt;/ul&gt;                             
   &lt;/ul&gt;
   
-  &lt;p style = "margin-left:7.72cm; margin-top:-.55cm;"&gt;below the chunk in the&lt;/p&gt;
-  &lt;p style = "margin-left:7.72cm; margin-top:-.55cm; margin-bottom:-.55cm;"&gt;&lt;b&gt;source panel&lt;/b&gt;&lt;/p&gt;
-  
-  &lt;ul&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Chunk output in console:&lt;/b&gt; output displayed&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
-  
-  &lt;p style = "margin-left:8.88cm; margin-top:-.55cm;"&gt;in &lt;b&gt;console panel&lt;/b&gt;&lt;/p&gt;
-  
-  &lt;center&gt;&lt;img src = "inline.png" width = "200"/&gt;&lt;/center&gt;
+  &lt;center&gt;&lt;img src = "inline.png" width = "150"/&gt;&lt;/center&gt;
   
 ]
   
@@ -1012,23 +1053,13 @@ Horizontal rule:
 
 ### 1. Basic principles
 
-#### 1.5. Run and knit your code
+#### 1.5. Run and render your code
 
- * To **render** an R Markdown file, click on the **knit button** &lt;img src = "knit.png" width = "35"/&gt; (`ctrl + shift + k`)
+ * To **render** a Quarto file, click on the **render button** &lt;img src = "render.png" width = "50"/&gt; (`ctrl + shift + k`)
  
 --
 
-&lt;center&gt;&lt;img src = "comparison_1.png" width = "900"/&gt;&lt;/center&gt;
-
----
-
-### 1. Basic principles
-
-#### 1.5. Run and knit your code
-
- * To **render** an R Markdown file, click on the **knit button** &lt;img src = "knit.png" width = "35"/&gt; (`ctrl + shift + k`)
-
-&lt;center&gt;&lt;img src = "comparison_2.png" width = "900"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;img src = "comparison_1.png" width = "1000"/&gt;&lt;/center&gt;
 
 ---
 
@@ -1041,11 +1072,11 @@ Horizontal rule:
 &lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
   &lt;li&gt;&lt;b&gt;1. Basic principles &amp;#10004;&lt;/b&gt;&lt;/li&gt;
   &lt;ul style = "list-style: none"&gt;
-    &lt;li&gt;1.1. What is R Markdown?&lt;/li&gt;
+    &lt;li&gt;1.1. What is Quarto?&lt;/li&gt;
     &lt;li&gt;1.2. YAML header&lt;/li&gt;
     &lt;li&gt;1.3. Code chunks&lt;/li&gt;
     &lt;li&gt;1.4. Text formatting&lt;/li&gt;
-    &lt;li&gt;1.5. Run and knit your code&lt;/li&gt;
+    &lt;li&gt;1.5. Run and render your code&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -1090,11 +1121,11 @@ Horizontal rule:
 &lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
   &lt;li&gt;&lt;b&gt;1. Basic principles &amp;#10004;&lt;/b&gt;&lt;/li&gt;
   &lt;ul style = "list-style: none"&gt;
-    &lt;li&gt;1.1. What is R Markdown?&lt;/li&gt;
+    &lt;li&gt;1.1. What is Quarto?&lt;/li&gt;
     &lt;li&gt;1.2. YAML header&lt;/li&gt;
     &lt;li&gt;1.3. Code chunks&lt;/li&gt;
     &lt;li&gt;1.4. Text formatting&lt;/li&gt;
-    &lt;li&gt;1.5. Run and knit your code&lt;/li&gt;
+    &lt;li&gt;1.5. Run and render your code&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -1118,7 +1149,7 @@ Horizontal rule:
 
 #### 2.1. Inline code
 
- * A big advantage of R Markdown is that you can &lt;b&gt;automate&lt;/b&gt; your &lt;b&gt;reports&lt;/b&gt;
+ * A big advantage of Quarto is that you can &lt;b&gt;automate&lt;/b&gt; your &lt;b&gt;reports&lt;/b&gt;
 
 --
 
@@ -1167,7 +1198,7 @@ Horizontal rule:
  
  * Consider the following report :
 
-&lt;center&gt;&lt;img src = "report_example_1.png" width = "740"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;img src = "report_example_1.png" width = "1200"/&gt;&lt;/center&gt;
 
 ---
 
@@ -1175,9 +1206,9 @@ Horizontal rule:
 
 #### 2.1. Inline code
 
- * Imagine that there is a problem with the observation for which `dist &gt; 100` and that you should discard it
+ * Imagine that there is a problem with the data and that you must use an updated version
 
-&lt;center&gt;&lt;img src = "report_example_2.png" width = "740"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;img src = "report_example_2.png" width = "1200"/&gt;&lt;/center&gt;
 
 ---
 
@@ -1251,7 +1282,7 @@ a-b
 
  * With inline code, **paragraphs** also do **update automatically**:
 
-&lt;center&gt;&lt;img src = "report_example_3.png" width = "700"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;img src = "report_example_3.png" width = "1200"/&gt;&lt;/center&gt;
 
 
 ---
@@ -1461,8 +1492,8 @@ datatable(mtcars, options = list(pageLength = 5))
 
 #### 2.2. Tables
 
-<div id="htmlwidget-70976d1caca6a818620f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-70976d1caca6a818620f">{"x":{"filter":"none","data":[["Mazda RX4","Mazda RX4 Wag","Datsun 710","Hornet 4 Drive","Hornet Sportabout","Valiant","Duster 360","Merc 240D","Merc 230","Merc 280","Merc 280C","Merc 450SE","Merc 450SL","Merc 450SLC","Cadillac Fleetwood","Lincoln Continental","Chrysler Imperial","Fiat 128","Honda Civic","Toyota Corolla","Toyota Corona","Dodge Challenger","AMC Javelin","Camaro Z28","Pontiac Firebird","Fiat X1-9","Porsche 914-2","Lotus Europa","Ford Pantera L","Ferrari Dino","Maserati Bora","Volvo 142E"],[21,21,22.8,21.4,18.7,18.1,14.3,24.4,22.8,19.2,17.8,16.4,17.3,15.2,10.4,10.4,14.7,32.4,30.4,33.9,21.5,15.5,15.2,13.3,19.2,27.3,26,30.4,15.8,19.7,15,21.4],[6,6,4,6,8,6,8,4,4,6,6,8,8,8,8,8,8,4,4,4,4,8,8,8,8,4,4,4,8,6,8,4],[160,160,108,258,360,225,360,146.7,140.8,167.6,167.6,275.8,275.8,275.8,472,460,440,78.7,75.7,71.1,120.1,318,304,350,400,79,120.3,95.1,351,145,301,121],[110,110,93,110,175,105,245,62,95,123,123,180,180,180,205,215,230,66,52,65,97,150,150,245,175,66,91,113,264,175,335,109],[3.9,3.9,3.85,3.08,3.15,2.76,3.21,3.69,3.92,3.92,3.92,3.07,3.07,3.07,2.93,3,3.23,4.08,4.93,4.22,3.7,2.76,3.15,3.73,3.08,4.08,4.43,3.77,4.22,3.62,3.54,4.11],[2.62,2.875,2.32,3.215,3.44,3.46,3.57,3.19,3.15,3.44,3.44,4.07,3.73,3.78,5.25,5.424,5.345,2.2,1.615,1.835,2.465,3.52,3.435,3.84,3.845,1.935,2.14,1.513,3.17,2.77,3.57,2.78],[16.46,17.02,18.61,19.44,17.02,20.22,15.84,20,22.9,18.3,18.9,17.4,17.6,18,17.98,17.82,17.42,19.47,18.52,19.9,20.01,16.87,17.3,15.41,17.05,18.9,16.7,16.9,14.5,15.5,14.6,18.6],[0,0,1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,1,0,0,0,1],[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1],[4,4,4,3,3,3,3,4,4,4,4,3,3,3,3,3,3,4,4,4,3,3,3,3,3,4,5,5,5,5,5,4],[4,4,1,1,2,1,4,2,2,4,4,3,3,3,4,4,4,1,2,1,1,2,2,4,2,1,2,2,4,6,8,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>mpg<\/th>\n      <th>cyl<\/th>\n      <th>disp<\/th>\n      <th>hp<\/th>\n      <th>drat<\/th>\n      <th>wt<\/th>\n      <th>qsec<\/th>\n      <th>vs<\/th>\n      <th>am<\/th>\n      <th>gear<\/th>\n      <th>carb<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-23be8dea5453d9870020" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-23be8dea5453d9870020">{"x":{"filter":"none","vertical":false,"data":[["Mazda RX4","Mazda RX4 Wag","Datsun 710","Hornet 4 Drive","Hornet Sportabout","Valiant","Duster 360","Merc 240D","Merc 230","Merc 280","Merc 280C","Merc 450SE","Merc 450SL","Merc 450SLC","Cadillac Fleetwood","Lincoln Continental","Chrysler Imperial","Fiat 128","Honda Civic","Toyota Corolla","Toyota Corona","Dodge Challenger","AMC Javelin","Camaro Z28","Pontiac Firebird","Fiat X1-9","Porsche 914-2","Lotus Europa","Ford Pantera L","Ferrari Dino","Maserati Bora","Volvo 142E"],[21,21,22.8,21.4,18.7,18.1,14.3,24.4,22.8,19.2,17.8,16.4,17.3,15.2,10.4,10.4,14.7,32.4,30.4,33.9,21.5,15.5,15.2,13.3,19.2,27.3,26,30.4,15.8,19.7,15,21.4],[6,6,4,6,8,6,8,4,4,6,6,8,8,8,8,8,8,4,4,4,4,8,8,8,8,4,4,4,8,6,8,4],[160,160,108,258,360,225,360,146.7,140.8,167.6,167.6,275.8,275.8,275.8,472,460,440,78.7,75.7,71.09999999999999,120.1,318,304,350,400,79,120.3,95.09999999999999,351,145,301,121],[110,110,93,110,175,105,245,62,95,123,123,180,180,180,205,215,230,66,52,65,97,150,150,245,175,66,91,113,264,175,335,109],[3.9,3.9,3.85,3.08,3.15,2.76,3.21,3.69,3.92,3.92,3.92,3.07,3.07,3.07,2.93,3,3.23,4.08,4.93,4.22,3.7,2.76,3.15,3.73,3.08,4.08,4.43,3.77,4.22,3.62,3.54,4.11],[2.62,2.875,2.32,3.215,3.44,3.46,3.57,3.19,3.15,3.44,3.44,4.07,3.73,3.78,5.25,5.424,5.345,2.2,1.615,1.835,2.465,3.52,3.435,3.84,3.845,1.935,2.14,1.513,3.17,2.77,3.57,2.78],[16.46,17.02,18.61,19.44,17.02,20.22,15.84,20,22.9,18.3,18.9,17.4,17.6,18,17.98,17.82,17.42,19.47,18.52,19.9,20.01,16.87,17.3,15.41,17.05,18.9,16.7,16.9,14.5,15.5,14.6,18.6],[0,0,1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,1,0,0,0,1],[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1],[4,4,4,3,3,3,3,4,4,4,4,3,3,3,3,3,3,4,4,4,3,3,3,3,3,4,5,5,5,5,5,4],[4,4,1,1,2,1,4,2,2,4,4,3,3,3,4,4,4,1,2,1,1,2,2,4,2,1,2,2,4,6,8,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>mpg<\/th>\n      <th>cyl<\/th>\n      <th>disp<\/th>\n      <th>hp<\/th>\n      <th>drat<\/th>\n      <th>wt<\/th>\n      <th>qsec<\/th>\n      <th>vs<\/th>\n      <th>am<\/th>\n      <th>gear<\/th>\n      <th>carb<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 --
 
@@ -1476,10 +1507,8 @@ datatable(mtcars, options = list(pageLength = 5))
 
 #### 2.3. Preset themes
 
-
-
 &lt;ul&gt;
-  &lt;li&gt;The &lt;b&gt;default theme&lt;/b&gt; of R Markdown might seem &lt;b&gt;a bit dull&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;The &lt;b&gt;default theme&lt;/b&gt; of Quarto might seem &lt;b&gt;a bit dull&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;The look of your reports can easily be &lt;b&gt;enhanced&lt;/b&gt; using a variety of &lt;b&gt;preset&lt;/b&gt; themes&lt;/li&gt;
     &lt;li&gt;The preset theme to use should be specified in the &lt;b&gt;YAML header&lt;/b&gt;&lt;/li&gt;
@@ -1493,12 +1522,13 @@ datatable(mtcars, options = list(pageLength = 5))
  
 ````markdown
 ---
-title: "My First Markdown Report"
+title: "My first Quarto document"
+subtitle: "A step-by-step introduction"
 author: "Louis Sirugue"
-date: "24/09/2021"
-output: 
-  html_document:
-    theme: cosmo
+date: "10/02/2023"
+format: html
+editor: source
+theme: "cosmo"
 ---
 ````
 
@@ -1522,15 +1552,15 @@ output:
 &lt;p style = "margin-bottom:-1cm;"&gt;
 
 .pull-left[
-&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;cosmo&lt;/h4&gt;
-&lt;img src = "default_cosmo.png" width = "550"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;yeti&lt;/h4&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src = "yeti.png" width = "600"/&gt;&lt;/center&gt;
 ]
 
 --
 
 .pull-right[
-&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;cerulean&lt;/h4&gt;
-&lt;img src = "default_cerulean.png" width = "550"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;sandstone&lt;/h4&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src = "sandstone.png" width = "600"/&gt;&lt;/center&gt;
 ]
 
 ---
@@ -1542,15 +1572,15 @@ output:
 &lt;p style = "margin-bottom:-1cm;"&gt;
 
 .pull-left[
-&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;cayman (from prettydoc)&lt;/h4&gt;
-&lt;img src = "prettydoc_cayman.png" width = "375"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;darkly&lt;/h4&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src = "darkly.png" width = "600"/&gt;&lt;/center&gt;
 ]
 
 --
 
 .pull-right[
-&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;tactile (from prettydoc)&lt;/h4&gt;
-&lt;img src = "prettydoc_tactile.png" width = "360"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;slate&lt;/h4&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src = "slate.png" width = "600"/&gt;&lt;/center&gt;
 ]
 
 ---
@@ -1559,48 +1589,19 @@ output:
 
 #### 2.3. Preset themes
 
-&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;leonids (from prettydoc)&lt;/h4&gt;
-&lt;img src = "prettydoc_leonids.png" width = "725"/&gt;&lt;/center&gt;
-
----
-
-### 2. Useful features
-
-#### 2.3. Preset themes
-
-&lt;p style = "margin-bottom:-.5cm;"&gt;
+&lt;p style = "margin-bottom:-1cm;"&gt;
 
 .pull-left[
-&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;downcute (from rmdformats)&lt;/h4&gt;
-&lt;img src = "rmdformats_downcute.png" width = "550"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;minty&lt;/h4&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src = "minty.png" width = "600"/&gt;&lt;/center&gt;
 ]
 
 --
 
 .pull-right[
-&lt;center&gt;&lt;h4 style = "margin-bottom:.5cm;"&gt;downcute chaos (from rmdformats)&lt;/h4&gt;
-&lt;img src = "rmdformats_downcute_chaos.png" width = "550"/&gt;&lt;/center&gt;
+&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;lux&lt;/h4&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src = "lux.png" width = "600"/&gt;&lt;/center&gt;
 ]
-
----
-
-### 2. Useful features
-
-#### 2.3. Preset themes
-
-
-.pull-left[
-&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;readthedown (from rmdformats)&lt;/h4&gt;
-&lt;img src = "rmdformats_readthedown.png" width = "550"/&gt;&lt;/center&gt;
-]
-
---
-
-.pull-right[
-&lt;center&gt;&lt;h4 style = "margin-bottom:0cm;"&gt;robobook (from rmdformats)&lt;/h4&gt;
-&lt;img src = "rmdformats_robobook.png" width = "550"/&gt;&lt;/center&gt;
-]
-
 
 ---
 
@@ -1611,21 +1612,21 @@ class: inverse, hide-logo
 .pull-left[
 
 &lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
-&lt;center&gt;&lt;b&gt;&lt;i&gt;Reproduce the following html using R markdown&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+&lt;center&gt;&lt;b&gt;&lt;i&gt;Reproduce the following html using Quarto&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
 
 &lt;p style = "margin-bottom:.25cm;"&gt;&lt;/p&gt;
 &lt;center&gt;&lt;button onclick="copyText()"&gt;Copy raw output&lt;/button&gt;&lt;/center&gt;
 &lt;script&gt;
   function copyText() {
     navigator.clipboard.writeText
-      ("Report on the first name LOUIS \n Your name \n Fall 2022 \n  \n 1. Setup \n  \n The packages needed in an Rmd must always be loaded in a code chunk at the beginning of the file. \n  \n library(dplyr) \n library(ggplot2) \n  \n However, the command install.packages() must not be written in an R markdown. \n It should be run only once in the console. \n  \n 2. Data cleaning \n  \n names &lt;- read.csv('fichier_prenoms.csv', encoding = 'UTF-8', sep = ';') %&gt;% \n mutate(sexe = ifelse(sexe == 1, 'Male', 'Female')) %&gt;% \n rename(Sex = sexe, Year = annais) %&gt;% \n filter(Year != 'XXXX') %&gt;% \n mutate(Year = as.numeric(Year)) \n  \n 3. Evolution of the first name LOUIS over time \n  \n 3715 children were born under the name LOUIS in 2021. This statistic is written in inline code such that it updates automatically.");
+      ("Report on the first name LOUIS \nYour name \nOctober 2, 2023 \n\n1. Setup \n\nThe packages needed in a qmd must always be loaded in a code chunk at the beginning of the file. \n\nlibrary(dplyr) \nlibrary(ggplot2) \n\nHowever, the command install.packages() must not be written in a Quarto document. \nIt should be run only once in the console. \n\n2. Data cleaning \n\nnames &lt;- read.csv('fichier_prenoms.csv', encoding = 'UTF-8', sep = ';') %&gt;% \nmutate(Gender = ifelse(sexe == 1, 'Male', 'Female')) %&gt;% \nfilter(annais != 'XXXX') %&gt;% \nmutate(Year = as.numeric(annais)) \n\n3. Evolution of the first name LOUIS over time \n\n3715 children were born under the name LOUIS in 2021. This statistic is written in inline code such that it updates automatically.");
   }
 &lt;/script&gt;
 
 &lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 15 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_1262f17e" data-update-every="1" data-start-immediately="true" tabindex="0" style="bottom:1;left:0;margin-left:5.65cm;">
+<div class="countdown" id="timer_368a7d49" data-update-every="1" data-start-immediately="true" tabindex="0" style="bottom:1;left:0;margin-left:5.65cm;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -1649,22 +1650,22 @@ class: inverse, hide-logo
 ---
 title: "Report on the first name LOUIS"
 author: "Your name"
-date: "Fall 2022"
-output: 
-  html_document:
-    theme: cosmo
+date: "10-02-2023"
+format: html
+editor: source
+theme: "cosmo"
 ---
 
-### 1) Setup
-
-The packages needed in an Rmd must *always* be loaded in a code chunk at the beginning of the file.
+### 1. Setup 
+  
+The packages needed in a qmd must *always* be loaded in a code chunk at the beginning of the file. 
 
 ```{r, message = F, warning = F}
 library(dplyr)
 library(ggplot2)
 ```
 
-However, the command `install.packages()` must **not** be written in an R markdown.  
+However, the command `install.packages()` must **not** be written in a Quarto document.  
 It should be run only once in the console.
 ````
 
@@ -1680,26 +1681,27 @@ class: inverse, hide-logo
 ### 2) Data cleaning
 
 ```{r}
-names &lt;- read.csv("fichier_prenoms.csv", encoding = "UTF-8", sep = ";") %&gt;%
-  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %&gt;%
-  rename(Sex = sexe, Year = annais) %&gt;%
-  filter(Year != "XXXX") %&gt;%
-  mutate(Year = as.numeric(Year))
+names &lt;- read.csv('fichier_prenoms.csv', encoding = 'UTF-8', sep = ';') %&gt;% 
+  mutate(Gender = ifelse(sexe == 1, 'Male', 'Female')) %&gt;% 
+  filter(annais != 'XXXX') %&gt;% 
+  mutate(Year = as.numeric(annais)) 
 ```
 
 ### 3) Evolution of the first name LOUIS over time
 
-```{r, echo = F, message = F, fig.height = 3}
-names %&gt;%
-  filter(preusuel == "LOUIS") %&gt;%
-  group_by(Sex, Year) %&gt;%
-  summarise(Total = sum(nombre)) %&gt;% 
-  ggplot(aes(x = Year, y = Total, color = Sex)) +
-  geom_line()
+```{r, echo = F, message = F, fig.height = 3, fig.width = 8}
+names %&gt;% filter(preusuel == "LOUIS") %&gt;%
+  group_by(Year, Gender) %&gt;%
+  summarise(Total = sum(nombre)) %&gt;% ungroup() %&gt;%
+  ggplot(aes(x = Year, y = Total, color = Gender)) + geom_line()
 ```
 
-`r sum(names[names$preusuel=='LOUIS' &amp; names$Year==2021, 'nombre'])` children were born under the
-name LOUIS in 2021. This statistic is written in **inline code** such that it updates automatically
+```{r, echo = F}
+n_louis &lt;- names %&gt;% filter(Year == 2021 &amp; preusuel == "LOUIS") %&gt;% summarise(n = sum(nombre))
+```
+
+`r n_louis$n` children were born under the name LOUIS in 2021. This statistic is written in  
+inline code such that it updates automatically.
 ````
 ---
 
@@ -1735,12 +1737,12 @@ name LOUIS in 2021. This statistic is written in **inline code** such that it up
 ```r
 *title: "Report on the first name `r params$name`"
 author: "Your name"
-date: "Fall 2022"
-output: 
-  html_document:
-    theme: cosmo
+date: "10-02-2023"
+format: html
+editor: source
+theme: "cosmo"
 *params:
-* name: "LOUIS"
+*  name: "LOUIS"
 ```
 
 &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
@@ -1761,21 +1763,23 @@ output:
 *### 3) Evolution of the first name `r params$name` over time
 
 ```{r, echo = F, message = F, fig.height = 3}
-names %&gt;%
-* filter(preusuel == params$name) %&gt;%
-  group_by(Sex, Year) %&gt;%
-  summarise(Total = sum(nombre)) %&gt;% 
-  ggplot(aes(x = Year, y = Total, color = Sex)) +
-  geom_line()
+* names %&gt;% filter(preusuel == params$name) %&gt;%
+  group_by(Year, Gender) %&gt;%
+  summarise(Total = sum(nombre)) %&gt;% ungroup() %&gt;%
+  ggplot(aes(x = Year, y = Total, color = Gender)) + geom_line()
 ```
 
-*`r sum(names[names$preusuel == params$name &amp; names$Year == 2021, 'nombre'])` children were born 
-*under the name `r params$name` in 2021. This statistic is written in **inline code** such that it
-updates automatically.
+
+```{r, echo = F}
+* n_louis &lt;- names %&gt;% filter(Year == 2021 &amp; preusuel == params$name) %&gt;% summarise(n = sum(nombre))
+```
+
+*`r n_louis$n` children were born under the name `r params$name` in 2021. This statistic is  
+written in inline code such that it updates automatically.
 ````
 --
 
-&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; Let's knit our .Rmd with different values of that parameter!&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; Let's render our .qmd with different values of that parameter!&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
 
 ---
 class: hide-logo
@@ -1808,10 +1812,10 @@ class: hide-logo
 #### 2.4. Report parameters
 
 &lt;ul&gt;
-  &lt;li&gt;But by &lt;b&gt;default&lt;/b&gt; the &lt;b&gt;name of the .html&lt;/b&gt; output will be the name of your .Rmd&lt;/li&gt;
+  &lt;li&gt;But by &lt;b&gt;default&lt;/b&gt; the &lt;b&gt;name of the .html&lt;/b&gt; output will be the name of your .qmd&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;So if you &lt;b&gt;knit report.Rmd&lt;/b&gt; for the first name Louis it will save the report under &lt;b&gt;report.html&lt;/b&gt;&lt;/li&gt;
-    &lt;li&gt;And if you &lt;b&gt;knit it a second time&lt;/b&gt; for the first name Didier it will &lt;b&gt;override&lt;/b&gt; the first .html&lt;/li&gt;
+    &lt;li&gt;So if you &lt;b&gt;render report.qmd&lt;/b&gt; for the first name Louis it will save the report under &lt;b&gt;report.html&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;And if you &lt;b&gt;render it a second time&lt;/b&gt; for the first name Didier it will &lt;b&gt;override&lt;/b&gt; the first .html&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -1820,10 +1824,10 @@ class: hide-logo
 --
 
 &lt;ul&gt;
-  &lt;li&gt;The &lt;b&gt;solution&lt;/b&gt; is to &lt;b&gt;knit&lt;/b&gt; your .Rmd &lt;b&gt;externally&lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;The &lt;b&gt;solution&lt;/b&gt; is to &lt;b&gt;render&lt;/b&gt; your .qmd &lt;b&gt;externally&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;You can do that with the &lt;b&gt;render()&lt;/b&gt; function of the rmarkdown package&lt;/li&gt;
-    &lt;li&gt;Save your .Rmd and &lt;b&gt;open a new .R script&lt;/b&gt; to try it out&lt;/li&gt;
+    &lt;li&gt;Save your .qmd and &lt;b&gt;open a new .R script&lt;/b&gt; to try it out&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -1836,7 +1840,7 @@ class: hide-logo
 library(rmarkdown)
 
 render(
-  input = "C:/User/Documents/prenom.Rmd",                   # Specify the input .Rmd
+  input = "C:/User/Documents/prenom.qmd",                   # Specify the input .qmd
   output_file = "C:/User/Documents/LOUIS.html",             # Specify the output file
   params = list(name = "LOUIS")                             # Specify the YAML parameter(s)
 )                                          
@@ -1969,7 +1973,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 
   render(
-    input = "C:/User/Documents/prenom.Rmd",  
+    input = "C:/User/Documents/prenom.qmd",  
     output_file = "C:/User/Documents/LOUIS.html",
     params = list(name = "LOUIS")
   )  
@@ -2000,7 +2004,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 
   render(
-    input = "C:/User/Documents/prenom.Rmd",  
+    input = "C:/User/Documents/prenom.qmd",  
     output_file = paste0("C:/User/Documents/", i, ".html"),
     params = list(name = i)
   )  
@@ -2019,11 +2023,11 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 &lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
   &lt;li&gt;&lt;b&gt;1. Basic principles &amp;#10004;&lt;/b&gt;&lt;/li&gt;
   &lt;ul style = "list-style: none"&gt;
-    &lt;li&gt;1.1. What is R Markdown?&lt;/li&gt;
+    &lt;li&gt;1.1. What is Quarto?&lt;/li&gt;
     &lt;li&gt;1.2. YAML header&lt;/li&gt;
     &lt;li&gt;1.3. Code chunks&lt;/li&gt;
     &lt;li&gt;1.4. Text formatting&lt;/li&gt;
-    &lt;li&gt;1.5. Run and knit your code&lt;/li&gt;
+    &lt;li&gt;1.5. Run and render your code&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -2067,11 +2071,11 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 &lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
   &lt;li&gt;&lt;b&gt;1. Basic principles &amp;#10004;&lt;/b&gt;&lt;/li&gt;
   &lt;ul style = "list-style: none"&gt;
-    &lt;li&gt;1.1. What is R Markdown?&lt;/li&gt;
+    &lt;li&gt;1.1. What is Quarto?&lt;/li&gt;
     &lt;li&gt;1.2. YAML header&lt;/li&gt;
     &lt;li&gt;1.3. Code chunks&lt;/li&gt;
     &lt;li&gt;1.4. Text formatting&lt;/li&gt;
-    &lt;li&gt;1.5. Run and knit your code&lt;/li&gt;
+    &lt;li&gt;1.5. Run and render your code&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -2116,7 +2120,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
   &lt;li&gt;But LaTeX is not a &lt;i&gt;"what you see is what you get"&lt;/i&gt; system&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;In Microsoft Word or Google doc, you work directly on the "output document"&lt;/li&gt;
-    &lt;li&gt;&lt;b&gt;LaTeX&lt;/b&gt; works more like R Markdown: &lt;b&gt;Edit&lt;/b&gt; your text &lt;b&gt;in a script using commands and symbols&lt;/b&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;b&gt;LaTeX&lt;/b&gt; works more like Quarto: &lt;b&gt;Edit&lt;/b&gt; your text &lt;b&gt;in a script using commands and symbols&lt;/b&gt;&lt;/li&gt; 
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -2150,7 +2154,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 
 #### 3.2. LaTeX syntax
 
- * To include a **LaTeX equation** in R Markdown, you simply have to surround it with the **`$` sign**:
+ * To include a **LaTeX equation** in Quarto, you simply have to surround it with the **`$` sign**:
  
 --
  
@@ -2189,7 +2193,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 &lt;p style = "margin-bottom:.25cm;"&gt;
 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What you type in the text area: `$x \neq \frac{\alpha \times \beta}{2}$`  
 &lt;/p&gt;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What is rendered when knitting the document: `\(x \neq \frac{\alpha \times \beta}{2}\)`
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What is rendered as an output: `\(x \neq \frac{\alpha \times \beta}{2}\)`
 
 ---
 
@@ -2510,7 +2514,7 @@ class: inverse, hide-logo
 
 &lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 
-#### 1) Inside your .Rmd, reproduce the following mathematical expression
+#### 1) Inside your .qmd, reproduce the following mathematical expression
 
 `$$Y_i = \alpha + \beta X_i + \varepsilon_i$$`
 
@@ -2527,7 +2531,7 @@ class: inverse, hide-logo
 &lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 3 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_147fd0df" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
+<div class="countdown" id="timer_994996ab" data-update-every="1" data-start-immediately="true" tabindex="0" style="top:0;right:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -2540,7 +2544,7 @@ class: inverse, hide-logo
 
 &lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
 
-#### 1) Inside your .Rmd, reproduce the following mathematical expression
+#### 1) Inside your .qmd, reproduce the following mathematical expression
 
 `$$Y_i = \alpha + \beta X_i + \varepsilon_i$$`
 
@@ -2578,11 +2582,11 @@ $\hat{Y_i}$ denote the fitted values of the model.
 &lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
   &lt;li&gt;&lt;b&gt;1. Basic principles &amp;#10004;&lt;/b&gt;&lt;/li&gt;
   &lt;ul style = "list-style: none"&gt;
-    &lt;li&gt;1.1. What is R Markdown?&lt;/li&gt;
+    &lt;li&gt;1.1. What is Quarto?&lt;/li&gt;
     &lt;li&gt;1.2. YAML header&lt;/li&gt;
     &lt;li&gt;1.3. Code chunks&lt;/li&gt;
     &lt;li&gt;1.4. Text formatting&lt;/li&gt;
-    &lt;li&gt;1.5. Run and knit your code&lt;/li&gt;
+    &lt;li&gt;1.5. Run and render your code&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -2704,13 +2708,13 @@ datatable(results_table)
 &lt;p style = "margin-bottom:1cm;"&gt;
 
 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What you **type** in the text area: `$x \neq \frac{\alpha \times \beta}{2}$`  
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What is **rendered** when knitting the document: `\(x \neq \frac{\alpha \times \beta}{2}\)`
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;#10140; What is **rendered** as an output: `\(x \neq \frac{\alpha \times \beta}{2}\)`
 
 --
 
 &lt;p style = "margin-bottom:1.5cm;"&gt;
 
-&lt;center&gt;To &lt;b&gt;include&lt;/b&gt; a &lt;b&gt;LaTeX equation&lt;/b&gt; in R Markdown, you simply have to surround it with the &lt;b&gt;$ sign&lt;/b&gt;&lt;/center&gt;
+&lt;center&gt;To &lt;b&gt;include&lt;/b&gt; a &lt;b&gt;LaTeX equation&lt;/b&gt; in Quarto, you simply have to surround it with the &lt;b&gt;$ sign&lt;/b&gt;&lt;/center&gt;
 
 &lt;p style = "margin-bottom:0cm;"&gt;
 
@@ -2779,6 +2783,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

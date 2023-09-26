@@ -1,0 +1,52 @@
+---
+title: "Report on the first name `r params$name`"
+author: "Your name"
+date: "10-02-2023"
+format: html
+editor: source
+theme: "cosmo"
+params:
+  name: "LOUIS"
+---
+
+### 1. Setup 
+  
+The packages needed in a qmd must *always* be loaded in a code chunk at the beginning of the file. 
+
+```{r, message = F}
+library(dplyr) 
+library(ggplot2) 
+```
+  
+However, the command `install.packages()` must **not** be written in a Quarto document.  
+It should be run only once in the console. 
+  
+### 2. Data cleaning 
+  
+```{r}
+names <- read.csv('fichier_prenoms.csv', encoding = 'UTF-8', sep = ';') %>% 
+  mutate(Gender = ifelse(sexe == 1, 'Male', 'Female')) %>% 
+  filter(annais != 'XXXX') %>% 
+  mutate(Year = as.numeric(annais)) 
+``` 
+
+### 3. Evolution of the first name `r params$name` over time 
+
+```{r, message = F, echo = F, fig.height = 3, fig.width = 8}
+names %>%
+  filter(preusuel == params$name) %>%
+  group_by(Year, Gender) %>%
+  summarise(Total = sum(nombre)) %>%
+  ungroup() %>%
+  ggplot(aes(x = Year, y = Total, color = Gender)) +
+  geom_line()
+```
+
+```{r, echo = F}
+n_louis <- names %>%
+  filter(Year == 2021 & preusuel == params$name) %>%
+  summarise(n = sum(nombre))
+```
+  
+`r n_louis$n` children were born under the name `r params$name` in 2021. This statistic is written in inline code such that it updates automatically.
+

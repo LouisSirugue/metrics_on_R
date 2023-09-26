@@ -1,8 +1,8 @@
 ---
-title: "R Markdown & LaTeX"
+title: "Quarto & LaTeX"
 subtitle: "Lecture 5"
 author: "<br>Louis SIRUGUE"
-date: "CPES 2 - Fall 2022"
+date: "CPES 2 - Fall 2023"
 params:
   dark: false
 output:
@@ -336,7 +336,7 @@ names %>%
 
 ---
 
-<h3>Today we learn how to make reports with R Markdown!</h3>
+<h3>Today we learn how to make reports with Quarto!</h3>
 
 --
 
@@ -347,11 +347,11 @@ names %>%
 <ul style = "margin-left:1.5cm;list-style: none">
   <li><b>1. Basic principles</b></li>
   <ul style = "list-style: none">
-    <li>1.1. What is R Markdown?</li>
+    <li>1.1. What is Quarto?</li>
     <li>1.2. YAML header</li>
     <li>1.3. Code chunks</li>
     <li>1.4. Text formatting</li>
-    <li>1.5. Run and knit your code</li>
+    <li>1.5. Run and render your code</li>
   </ul>
 </ul>
 
@@ -387,7 +387,7 @@ names %>%
 
 ---
 
-<h3>Today we learn how to make reports with R Markdown!</h3>
+<h3>Today we learn how to make reports with Quarto!</h3>
 
 <p style = "margin-bottom:2.5cm;"></p>
 
@@ -396,11 +396,11 @@ names %>%
 <ul style = "margin-left:1.5cm;list-style: none">
   <li><b>1. Basic principles</b></li>
   <ul style = "list-style: none">
-    <li>1.1. What is R Markdown?</li>
+    <li>1.1. What is Quarto?</li>
     <li>1.2. YAML header</li>
     <li>1.3. Code chunks</li>
     <li>1.4. Text formatting</li>
-    <li>1.5. Run and knit your code</li>
+    <li>1.5. Run and render your code</li>
   </ul>
 </ul>
 ]
@@ -409,10 +409,10 @@ names %>%
 
 ### 1. Basic principles
 
-#### 1.1. What is R Markdown?
+#### 1.1. What is Quarto?
 
 <ul>
-  <li><b>R Markdown</b> is a type of document in which you can both <b>write/run R code</b> and <b>edit text</b></li>
+  <li><b>Quarto</b> is an open-source publishing system in which you can both <b>write/run code</b> (R/Python/Julia/Observable) and <b>edit text</b></li>
 </ul>
 
 <p style = "margin-bottom:1cm;">
@@ -420,12 +420,11 @@ names %>%
 --
 
 <ul>
-  <li>Here are some examples of R Markdown reports <i>(from my other course)</i></li>
+  <li>Here are some examples of Quarto documents</li>
   <ul>
-  <li><a href="https://louissirugue.github.io/metrics_on_R/2021_homework1/correction.html">Last year homework</a></li>
-  <li><a href="https://louissirugue.github.io/metrics_on_R/project/example">Example of research project</a></li>
-  <li><a href="https://louissirugue.github.io/metrics_on_R/2021_covariance_vs_correlation_with_code.html">Supplementary material</a></li>
-  <li><a href="https://louissirugue.github.io/metrics_on_R/home.html">Course webpage and material</a></li>
+  <li><a href="https://louissirugue.github.io/metrics_on_R/homework/guidelines.html">Homework</a></li>
+  <li><a href="https://www.louissirugue.com">Website</a></li>
+  <li><a href="https://quarto.org/docs/presentations/revealjs/demo/#/title-slide">Slides</a></li>
   </ul>
 </ul>
 
@@ -438,7 +437,7 @@ names %>%
   <ul>
   <li><b>Code chunks</b> to run and render the output</li>
   <li><b>Editable text</b> to display</li>
-  <li><b>YAML metadata</b> for the R Markdown build process</li>
+  <li><b>YAML metadata</b> for the Quarto build process</li>
   </ul>
 </ul>
 
@@ -446,22 +445,22 @@ names %>%
 
 --
 
- <center><h4><i>&#10140; Let's go through them by creating our first R Markdown!</i></h4></center>
+ <center><h4><i>&#10140; Let's go through them by creating our first Quarto document!</i></h4></center>
 
 ---
 
 ### 1. Basic principles
 
-#### 1.1. What is R Markdown?
+#### 1.1. What is Quarto?
 
-<center>&#10140; Click on <b>File > New File > Rmarkdown</b></center>
+<center>&#10140; Click on <b>File > New File > Quarto document</b></center>
 
 <p style = "margin-bottom:-.5cm;">
 
 --
 
 .pull-left[
-<img src = "new_markdown.png" width = "450"/>
+<img src = "new_quarto.png" width = "450"/>
 ]
 
 --
@@ -479,7 +478,7 @@ names %>%
 
 ### 1. Basic principles
 
-#### 1.1. What is R Markdown?
+#### 1.1. What is Quarto?
 
  * It creates a **template** containing the **3 types of content**:
  
@@ -492,22 +491,18 @@ names %>%
 
 <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YAML header &#10140;</b>
 
-<p style = "margin-bottom:.75cm;">
+<p style = "margin-bottom:2.75cm;">
 
-<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Code chunks &#10140;</b>
-
-<p style = "margin-bottom:1.25cm;">
 
 <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text &#10140;</b>
 
-<p style = "margin-bottom:1.75cm;">
+<p style = "margin-bottom:2.7cm;">
 
-<center><i>Let's go through them one by one!</i></center>
-
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Code chunks &#10140;</b>
 ]
 
 .right-column[
-<center><img src = "template.png" width = "650"/></center>
+<center><img src = "template.png" width = "550"/></center>
 ]
 
 ---
@@ -525,9 +520,9 @@ names %>%
 <ul>
 <ul>
 <li>Title/subtitle (in quotes)</li>
-<li>Author (in quotes)</li>
-<li>Date (in quotes)</li>
-<li>Output type (html_document/pdf_document)</li>
+<li>Author/date (in quotes)</li>
+<li>Output type (html/pdf)</li>
+<li>Editor configuration (use source, not visual)</li>
 <li>...</li>
 </ul>
 </ul>
@@ -536,14 +531,16 @@ names %>%
 
 <p style = "margin-bottom:1cm;">
 
-* It should be specified at the **very beginning** of the document and surrounded by **three dashes** like so:
+* It should be specified at the **very beginning** of the document and surrounded by **three dashes** like this:
 
 ````markdown
 ---
-title: "My First Markdown Report"
+title: "My first Quarto document"
+subtitle: "A step-by-step introduction"
 author: "Louis Sirugue"
-date: "24/09/2021"
-output: html_document
+date: "10/02/2023"
+format: html
+editor: source
 ---
 ````
 ---
@@ -552,7 +549,7 @@ output: html_document
 
 #### 1.3. Code chunks
 
- * **Code chunks are blocks of R code** that can be run when working on and rendering the .Rmd file
+ * **Code chunks are blocks of R code** that can be run when working on and rendering the .qmd file
  
 --
 
@@ -648,13 +645,54 @@ kable(tibble(Option = c("eval", "echo", "warning", "error", "message",
 
 ### 1. Basic principles
 
+#### 1.3. Code chunks
+
+ * For an option to apply to the <b>whole document</b>, set it up in the YAML header:
+ 
+````markdown
+---
+title: "My first Quarto document"
+format: html
+execute:
+  echo: false
+  warning: false
+---
+````
+
+--
+
+<p style = "margin-bottom:1cm;">
+
+ * For an option to apply to a <b>specific chunk</b>, two possibilities:
+ 
+.pull-left[
+````markdown
+`r ''````{r, echo = F, warning = F}
+1+1
+```
+````
+]
+.pull-right[
+````markdown
+`r ''````{r}
+#| echo: false
+#| warning: false
+1+1
+```
+````
+]
+
+---
+
+### 1. Basic principles
+
 #### 1.4. Text formatting
 
 <ul>
-  <li>R Markdown is not only about rendering code but also about <b>writing</b> actual <b>text</b></li>
+  <li>Quarto is not only about rendering code but also about <b>writing</b> actual <b>text</b></li>
   <ul>
     <li>You can write <b>paragraphs</b> as you would normally do on a typical report</li>
-    <li>And R Markdown provides convenient ways to <b>format</b> your text</li>
+    <li>And Quarto provides convenient ways to <b>format</b> your text</li>
   </ul>
 </ul>
 
@@ -680,7 +718,7 @@ kable(tibble(Option = c("eval", "echo", "warning", "error", "message",
 --
 
 <ul>
-  <li>Unlike most text editing software, in R Markdown <b>text formatting</b> isn't about clicking on dedicated buttons</li>
+  <li>Unlike most text editing software, in <i>source</i> Quarto <b>text formatting</b> isn't about clicking on dedicated buttons</li>
   <ul>
     <li>It <b>relies on symbols</b> that should be written along with the text</li>
   </ul>
@@ -808,10 +846,10 @@ Horizontal rule:
 
 ### 1. Basic principles
 
-#### 1.5. Run and knit your code
+#### 1.5. Run and render your code
 
 <ul>
-  <li>To <b>execute</b> the content of a <b>code</b> chunk in R Markdown</li>
+  <li>To <b>execute</b> the content of a <b>code</b> chunk in Quarto</li>
   <ul>
     <li>Click on the <b>green play button</b> at the top right of the chunk <img src = "current_chunk.png" width = "20"/></li>
   </ul>
@@ -840,18 +878,12 @@ Horizontal rule:
   <ul>
     <li>To choose where the <b>output</b> must be <b>displayed</b>, click on the <i>"Options"</i> button</li>
     <ul>
-      <li><b>Chunk output inline:</b> output displayed right</li>
+      <li><b>Chunk output inline</b> (below the chunk)</li>
+      <li><b>Chunk output in console</b></li>
     </ul>                             
   </ul>
   
-  <p style = "margin-left:7.72cm; margin-top:-.55cm;">below the chunk in the</p>
-  <p style = "margin-left:7.72cm; margin-top:-.55cm; margin-bottom:-.55cm;"><b>source panel</b></p>
-  
-  <ul><ul><li><b>Chunk output in console:</b> output displayed</li></ul></ul>
-  
-  <p style = "margin-left:8.88cm; margin-top:-.55cm;">in <b>console panel</b></p>
-  
-  <center><img src = "inline.png" width = "200"/></center>
+  <center><img src = "inline.png" width = "150"/></center>
   
 ]
   
@@ -859,23 +891,13 @@ Horizontal rule:
 
 ### 1. Basic principles
 
-#### 1.5. Run and knit your code
+#### 1.5. Run and render your code
 
- * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/> (`ctrl + shift + k`)
+ * To **render** a Quarto file, click on the **render button** <img src = "render.png" width = "50"/> (`ctrl + shift + k`)
  
 --
 
-<center><img src = "comparison_1.png" width = "900"/></center>
-
----
-
-### 1. Basic principles
-
-#### 1.5. Run and knit your code
-
- * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/> (`ctrl + shift + k`)
-
-<center><img src = "comparison_2.png" width = "900"/></center>
+<center><img src = "comparison_1.png" width = "1000"/></center>
 
 ---
 
@@ -888,11 +910,11 @@ Horizontal rule:
 <ul style = "margin-left:1.5cm;list-style: none">
   <li><b>1. Basic principles &#10004;</b></li>
   <ul style = "list-style: none">
-    <li>1.1. What is R Markdown?</li>
+    <li>1.1. What is Quarto?</li>
     <li>1.2. YAML header</li>
     <li>1.3. Code chunks</li>
     <li>1.4. Text formatting</li>
-    <li>1.5. Run and knit your code</li>
+    <li>1.5. Run and render your code</li>
   </ul>
 </ul>
 
@@ -937,11 +959,11 @@ Horizontal rule:
 <ul style = "margin-left:1.5cm;list-style: none">
   <li><b>1. Basic principles &#10004;</b></li>
   <ul style = "list-style: none">
-    <li>1.1. What is R Markdown?</li>
+    <li>1.1. What is Quarto?</li>
     <li>1.2. YAML header</li>
     <li>1.3. Code chunks</li>
     <li>1.4. Text formatting</li>
-    <li>1.5. Run and knit your code</li>
+    <li>1.5. Run and render your code</li>
   </ul>
 </ul>
 
@@ -965,7 +987,7 @@ Horizontal rule:
 
 #### 2.1. Inline code
 
- * A big advantage of R Markdown is that you can <b>automate</b> your <b>reports</b>
+ * A big advantage of Quarto is that you can <b>automate</b> your <b>reports</b>
 
 --
 
@@ -1014,7 +1036,7 @@ Horizontal rule:
  
  * Consider the following report :
 
-<center><img src = "report_example_1.png" width = "740"/></center>
+<center><img src = "report_example_1.png" width = "1200"/></center>
 
 ---
 
@@ -1022,9 +1044,9 @@ Horizontal rule:
 
 #### 2.1. Inline code
 
- * Imagine that there is a problem with the observation for which `dist > 100` and that you should discard it
+ * Imagine that there is a problem with the data and that you must use an updated version
 
-<center><img src = "report_example_2.png" width = "740"/></center>
+<center><img src = "report_example_2.png" width = "1200"/></center>
 
 ---
 
@@ -1096,7 +1118,7 @@ Horizontal rule:
 
  * With inline code, **paragraphs** also do **update automatically**:
 
-<center><img src = "report_example_3.png" width = "700"/></center>
+<center><img src = "report_example_3.png" width = "1200"/></center>
 
 
 ---
@@ -1206,10 +1228,8 @@ datatable(mtcars, options = list(pageLength = 5))
 
 #### 2.3. Preset themes
 
-
-
 <ul>
-  <li>The <b>default theme</b> of R Markdown might seem <b>a bit dull</b></li>
+  <li>The <b>default theme</b> of Quarto might seem <b>a bit dull</b></li>
   <ul>
     <li>The look of your reports can easily be <b>enhanced</b> using a variety of <b>preset</b> themes</li>
     <li>The preset theme to use should be specified in the <b>YAML header</b></li>
@@ -1223,12 +1243,13 @@ datatable(mtcars, options = list(pageLength = 5))
  
 ````markdown
 ---
-title: "My First Markdown Report"
+title: "My first Quarto document"
+subtitle: "A step-by-step introduction"
 author: "Louis Sirugue"
-date: "24/09/2021"
-output: 
-  html_document:
-    theme: cosmo
+date: "10/02/2023"
+format: html
+editor: source
+theme: "cosmo"
 ---
 ````
 
@@ -1252,15 +1273,15 @@ output:
 <p style = "margin-bottom:-1cm;">
 
 .pull-left[
-<center><h4 style = "margin-bottom:0cm;">cosmo</h4>
-<img src = "default_cosmo.png" width = "550"/></center>
+<center><h4 style = "margin-bottom:0cm;">yeti</h4><br><br>
+<img src = "yeti.png" width = "600"/></center>
 ]
 
 --
 
 .pull-right[
-<center><h4 style = "margin-bottom:0cm;">cerulean</h4>
-<img src = "default_cerulean.png" width = "550"/></center>
+<center><h4 style = "margin-bottom:0cm;">sandstone</h4><br><br>
+<img src = "sandstone.png" width = "600"/></center>
 ]
 
 ---
@@ -1272,15 +1293,15 @@ output:
 <p style = "margin-bottom:-1cm;">
 
 .pull-left[
-<center><h4 style = "margin-bottom:0cm;">cayman (from prettydoc)</h4>
-<img src = "prettydoc_cayman.png" width = "375"/></center>
+<center><h4 style = "margin-bottom:0cm;">darkly</h4><br><br>
+<img src = "darkly.png" width = "600"/></center>
 ]
 
 --
 
 .pull-right[
-<center><h4 style = "margin-bottom:0cm;">tactile (from prettydoc)</h4>
-<img src = "prettydoc_tactile.png" width = "360"/></center>
+<center><h4 style = "margin-bottom:0cm;">slate</h4><br><br>
+<img src = "slate.png" width = "600"/></center>
 ]
 
 ---
@@ -1289,48 +1310,19 @@ output:
 
 #### 2.3. Preset themes
 
-<center><h4 style = "margin-bottom:0cm;">leonids (from prettydoc)</h4>
-<img src = "prettydoc_leonids.png" width = "725"/></center>
-
----
-
-### 2. Useful features
-
-#### 2.3. Preset themes
-
-<p style = "margin-bottom:-.5cm;">
+<p style = "margin-bottom:-1cm;">
 
 .pull-left[
-<center><h4 style = "margin-bottom:0cm;">downcute (from rmdformats)</h4>
-<img src = "rmdformats_downcute.png" width = "550"/></center>
+<center><h4 style = "margin-bottom:0cm;">minty</h4><br><br>
+<img src = "minty.png" width = "600"/></center>
 ]
 
 --
 
 .pull-right[
-<center><h4 style = "margin-bottom:.5cm;">downcute chaos (from rmdformats)</h4>
-<img src = "rmdformats_downcute_chaos.png" width = "550"/></center>
+<center><h4 style = "margin-bottom:0cm;">lux</h4><br><br>
+<img src = "lux.png" width = "600"/></center>
 ]
-
----
-
-### 2. Useful features
-
-#### 2.3. Preset themes
-
-
-.pull-left[
-<center><h4 style = "margin-bottom:0cm;">readthedown (from rmdformats)</h4>
-<img src = "rmdformats_readthedown.png" width = "550"/></center>
-]
-
---
-
-.pull-right[
-<center><h4 style = "margin-bottom:0cm;">robobook (from rmdformats)</h4>
-<img src = "rmdformats_robobook.png" width = "550"/></center>
-]
-
 
 ---
 
@@ -1341,14 +1333,14 @@ class: inverse, hide-logo
 .pull-left[
 
 <p style = "margin-bottom:2cm;"></p>
-<center><b><i>Reproduce the following html using R markdown</i></b></center>
+<center><b><i>Reproduce the following html using Quarto</i></b></center>
 
 <p style = "margin-bottom:.25cm;"></p>
 <center><button onclick="copyText()">Copy raw output</button></center>
 <script>
   function copyText() {
     navigator.clipboard.writeText
-      ("Report on the first name LOUIS \n Your name \n Fall 2022 \n  \n 1. Setup \n  \n The packages needed in an Rmd must always be loaded in a code chunk at the beginning of the file. \n  \n library(dplyr) \n library(ggplot2) \n  \n However, the command install.packages() must not be written in an R markdown. \n It should be run only once in the console. \n  \n 2. Data cleaning \n  \n names <- read.csv('fichier_prenoms.csv', encoding = 'UTF-8', sep = ';') %>% \n mutate(sexe = ifelse(sexe == 1, 'Male', 'Female')) %>% \n rename(Sex = sexe, Year = annais) %>% \n filter(Year != 'XXXX') %>% \n mutate(Year = as.numeric(Year)) \n  \n 3. Evolution of the first name LOUIS over time \n  \n 3715 children were born under the name LOUIS in 2021. This statistic is written in inline code such that it updates automatically.");
+      ("Report on the first name LOUIS \nYour name \nOctober 2, 2023 \n\n1. Setup \n\nThe packages needed in a qmd must always be loaded in a code chunk at the beginning of the file. \n\nlibrary(dplyr) \nlibrary(ggplot2) \n\nHowever, the command install.packages() must not be written in a Quarto document. \nIt should be run only once in the console. \n\n2. Data cleaning \n\nnames <- read.csv('fichier_prenoms.csv', encoding = 'UTF-8', sep = ';') %>% \nmutate(Gender = ifelse(sexe == 1, 'Male', 'Female')) %>% \nfilter(annais != 'XXXX') %>% \nmutate(Year = as.numeric(annais)) \n\n3. Evolution of the first name LOUIS over time \n\n3715 children were born under the name LOUIS in 2021. This statistic is written in inline code such that it updates automatically.");
   }
 </script>
 
@@ -1376,22 +1368,22 @@ class: inverse, hide-logo
 ---
 title: "Report on the first name LOUIS"
 author: "Your name"
-date: "Fall 2022"
-output: 
-  html_document:
-    theme: cosmo
+date: "10-02-2023"
+format: html
+editor: source
+theme: "cosmo"
 ---
 
-### 1) Setup
-
-The packages needed in an Rmd must *always* be loaded in a code chunk at the beginning of the file.
+### 1. Setup 
+  
+The packages needed in a qmd must *always* be loaded in a code chunk at the beginning of the file. 
 
 `r ''````{r, message = F, warning = F}
 library(dplyr)
 library(ggplot2)
 ```
 
-However, the command `install.packages()` must **not** be written in an R markdown.  
+However, the command `install.packages()` must **not** be written in a Quarto document.  
 It should be run only once in the console.
 ````
 
@@ -1407,26 +1399,27 @@ class: inverse, hide-logo
 ### 2) Data cleaning
 
 `r ''````{r}
-names <- read.csv("fichier_prenoms.csv", encoding = "UTF-8", sep = ";") %>%
-  mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
-  rename(Sex = sexe, Year = annais) %>%
-  filter(Year != "XXXX") %>%
-  mutate(Year = as.numeric(Year))
+names <- read.csv('fichier_prenoms.csv', encoding = 'UTF-8', sep = ';') %>% 
+  mutate(Gender = ifelse(sexe == 1, 'Male', 'Female')) %>% 
+  filter(annais != 'XXXX') %>% 
+  mutate(Year = as.numeric(annais)) 
 ```
 
 ### 3) Evolution of the first name LOUIS over time
 
-`r ''````{r, echo = F, message = F, fig.height = 3}
-names %>%
-  filter(preusuel == "LOUIS") %>%
-  group_by(Sex, Year) %>%
-  summarise(Total = sum(nombre)) %>% 
-  ggplot(aes(x = Year, y = Total, color = Sex)) +
-  geom_line()
+`r ''````{r, echo = F, message = F, fig.height = 3, fig.width = 8}
+names %>% filter(preusuel == "LOUIS") %>%
+  group_by(Year, Gender) %>%
+  summarise(Total = sum(nombre)) %>% ungroup() %>%
+  ggplot(aes(x = Year, y = Total, color = Gender)) + geom_line()
 ```
 
-`r "\u0060r sum(names[names$preusuel=='LOUIS' & names$Year==2021, 'nombre'])\u0060"` children were born under the
-name LOUIS in 2021. This statistic is written in **inline code** such that it updates automatically
+`r ''````{r, echo = F}
+n_louis <- names %>% filter(Year == 2021 & preusuel == "LOUIS") %>% summarise(n = sum(nombre))
+```
+
+`r "\u0060r n_louis$n\u0060"` children were born under the name LOUIS in 2021. This statistic is written in  
+inline code such that it updates automatically.
 ````
 ---
 
@@ -1461,12 +1454,12 @@ name LOUIS in 2021. This statistic is written in **inline code** such that it up
 ```{r, eval = F}
 *title: "Report on the first name `r params$name`"
 author: "Your name"
-date: "Fall 2022"
-output: 
-  html_document:
-    theme: cosmo
+date: "10-02-2023"
+format: html
+editor: source
+theme: "cosmo"
 *params:
-* name: "LOUIS"
+*  name: "LOUIS"
 ```
 
 <p style = "margin-bottom:1cm;"></p>
@@ -1487,21 +1480,23 @@ output:
 *### 3) Evolution of the first name `r "\u0060r params$name\u0060"` over time
 
 `r ''````{r, echo = F, message = F, fig.height = 3}
-names %>%
-* filter(preusuel == params$name) %>%
-  group_by(Sex, Year) %>%
-  summarise(Total = sum(nombre)) %>% 
-  ggplot(aes(x = Year, y = Total, color = Sex)) +
-  geom_line()
+* names %>% filter(preusuel == params$name) %>%
+  group_by(Year, Gender) %>%
+  summarise(Total = sum(nombre)) %>% ungroup() %>%
+  ggplot(aes(x = Year, y = Total, color = Gender)) + geom_line()
 ```
 
-*`r "\u0060r sum(names[names$preusuel == params$name & names$Year == 2021, 'nombre'])\u0060"` children were born 
-*under the name `r "\u0060r params$name\u0060"` in 2021. This statistic is written in **inline code** such that it
-updates automatically.
+
+`r ''````{r, echo = F}
+* n_louis <- names %>% filter(Year == 2021 & preusuel == params$name) %>% summarise(n = sum(nombre))
+```
+
+*`r "\u0060r n_louis$n\u0060"` children were born under the name `r "\u0060r params$name\u0060"` in 2021. This statistic is  
+written in inline code such that it updates automatically.
 ````
 --
 
-<center><i><b>&#10140; Let's knit our .Rmd with different values of that parameter!</b></i></center>
+<center><i><b>&#10140; Let's render our .qmd with different values of that parameter!</b></i></center>
 
 ---
 class: hide-logo
@@ -1534,10 +1529,10 @@ class: hide-logo
 #### 2.4. Report parameters
 
 <ul>
-  <li>But by <b>default</b> the <b>name of the .html</b> output will be the name of your .Rmd</li>
+  <li>But by <b>default</b> the <b>name of the .html</b> output will be the name of your .qmd</li>
   <ul>
-    <li>So if you <b>knit report.Rmd</b> for the first name Louis it will save the report under <b>report.html</b></li>
-    <li>And if you <b>knit it a second time</b> for the first name Didier it will <b>override</b> the first .html</li>
+    <li>So if you <b>render report.qmd</b> for the first name Louis it will save the report under <b>report.html</b></li>
+    <li>And if you <b>render it a second time</b> for the first name Didier it will <b>override</b> the first .html</li>
   </ul>
 </ul>
 
@@ -1546,10 +1541,10 @@ class: hide-logo
 --
 
 <ul>
-  <li>The <b>solution</b> is to <b>knit</b> your .Rmd <b>externally</b></li>
+  <li>The <b>solution</b> is to <b>render</b> your .qmd <b>externally</b></li>
   <ul>
     <li>You can do that with the <b>render()</b> function of the rmarkdown package</li>
-    <li>Save your .Rmd and <b>open a new .R script</b> to try it out</li>
+    <li>Save your .qmd and <b>open a new .R script</b> to try it out</li>
   </ul>
 </ul>
 
@@ -1561,7 +1556,7 @@ class: hide-logo
 library(rmarkdown)
 
 render(
-  input = "C:/User/Documents/prenom.Rmd",                   # Specify the input .Rmd
+  input = "C:/User/Documents/prenom.qmd",                   # Specify the input .qmd
   output_file = "C:/User/Documents/LOUIS.html",             # Specify the output file
   params = list(name = "LOUIS")                             # Specify the YAML parameter(s)
 )                                          
@@ -1690,7 +1685,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 
   render(
-    input = "C:/User/Documents/prenom.Rmd",  
+    input = "C:/User/Documents/prenom.qmd",  
     output_file = "C:/User/Documents/LOUIS.html",
     params = list(name = "LOUIS")
   )  
@@ -1720,7 +1715,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 
   render(
-    input = "C:/User/Documents/prenom.Rmd",  
+    input = "C:/User/Documents/prenom.qmd",  
     output_file = paste0("C:/User/Documents/", i, ".html"),
     params = list(name = i)
   )  
@@ -1739,11 +1734,11 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 <ul style = "margin-left:1.5cm;list-style: none">
   <li><b>1. Basic principles &#10004;</b></li>
   <ul style = "list-style: none">
-    <li>1.1. What is R Markdown?</li>
+    <li>1.1. What is Quarto?</li>
     <li>1.2. YAML header</li>
     <li>1.3. Code chunks</li>
     <li>1.4. Text formatting</li>
-    <li>1.5. Run and knit your code</li>
+    <li>1.5. Run and render your code</li>
   </ul>
 </ul>
 
@@ -1787,11 +1782,11 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 <ul style = "margin-left:1.5cm;list-style: none">
   <li><b>1. Basic principles &#10004;</b></li>
   <ul style = "list-style: none">
-    <li>1.1. What is R Markdown?</li>
+    <li>1.1. What is Quarto?</li>
     <li>1.2. YAML header</li>
     <li>1.3. Code chunks</li>
     <li>1.4. Text formatting</li>
-    <li>1.5. Run and knit your code</li>
+    <li>1.5. Run and render your code</li>
   </ul>
 </ul>
 
@@ -1836,7 +1831,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
   <li>But LaTeX is not a <i>"what you see is what you get"</i> system</li>
   <ul>
     <li>In Microsoft Word or Google doc, you work directly on the "output document"</li>
-    <li><b>LaTeX</b> works more like R Markdown: <b>Edit</b> your text <b>in a script using commands and symbols</b></li> 
+    <li><b>LaTeX</b> works more like Quarto: <b>Edit</b> your text <b>in a script using commands and symbols</b></li> 
   </ul>
 </ul>
 
@@ -1870,7 +1865,7 @@ $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 
 #### 3.2. LaTeX syntax
 
- * To include a **LaTeX equation** in R Markdown, you simply have to surround it with the **`$` sign**:
+ * To include a **LaTeX equation** in Quarto, you simply have to surround it with the **`$` sign**:
  
 --
  
@@ -1909,7 +1904,7 @@ $1 + 1$
 <p style = "margin-bottom:.25cm;">
 &nbsp;&nbsp;&nbsp;&nbsp;&#10140; What you type in the text area: `$x \neq \frac{\alpha \times \beta}{2}$`  
 </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&#10140; What is rendered when knitting the document: $x \neq \frac{\alpha \times \beta}{2}$
+&nbsp;&nbsp;&nbsp;&nbsp;&#10140; What is rendered as an output: $x \neq \frac{\alpha \times \beta}{2}$
 
 ---
 
@@ -2226,7 +2221,7 @@ class: inverse, hide-logo
 
 <p style = "margin-bottom:3cm;"></p>
 
-#### 1) Inside your .Rmd, reproduce the following mathematical expression
+#### 1) Inside your .qmd, reproduce the following mathematical expression
 
 $$Y_i = \alpha + \beta X_i + \varepsilon_i$$
 
@@ -2253,7 +2248,7 @@ class: inverse, hide-logo
 
 <p style = "margin-bottom:3cm;"></p>
 
-#### 1) Inside your .Rmd, reproduce the following mathematical expression
+#### 1) Inside your .qmd, reproduce the following mathematical expression
 
 $$Y_i = \alpha + \beta X_i + \varepsilon_i$$
 
@@ -2289,11 +2284,11 @@ $\hat{Y_i}$ denote the fitted values of the model.
 <ul style = "margin-left:1.5cm;list-style: none">
   <li><b>1. Basic principles &#10004;</b></li>
   <ul style = "list-style: none">
-    <li>1.1. What is R Markdown?</li>
+    <li>1.1. What is Quarto?</li>
     <li>1.2. YAML header</li>
     <li>1.3. Code chunks</li>
     <li>1.4. Text formatting</li>
-    <li>1.5. Run and knit your code</li>
+    <li>1.5. Run and render your code</li>
   </ul>
 </ul>
 
@@ -2412,13 +2407,13 @@ datatable(results_table)
 <p style = "margin-bottom:1cm;">
 
 &nbsp;&nbsp;&nbsp;&nbsp;&#10140; What you **type** in the text area: `$x \neq \frac{\alpha \times \beta}{2}$`  
-&nbsp;&nbsp;&nbsp;&nbsp;&#10140; What is **rendered** when knitting the document: $x \neq \frac{\alpha \times \beta}{2}$
+&nbsp;&nbsp;&nbsp;&nbsp;&#10140; What is **rendered** as an output: $x \neq \frac{\alpha \times \beta}{2}$
 
 --
 
 <p style = "margin-bottom:1.5cm;">
 
-<center>To <b>include</b> a <b>LaTeX equation</b> in R Markdown, you simply have to surround it with the <b>$ sign</b></center>
+<center>To <b>include</b> a <b>LaTeX equation</b> in Quarto, you simply have to surround it with the <b>$ sign</b></center>
 
 <p style = "margin-bottom:0cm;">
 

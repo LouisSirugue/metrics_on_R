@@ -1,0 +1,19 @@
+---
+title: "Report example"
+subtitle: "Motivation for using inline code in Quarto"
+author: "Louis Sirugue"
+date: "10-02-2023"
+format: html
+editor: source
+---
+
+## Data description
+
+```{r}
+dt <- data.frame(Name = c("Bob", "Emmy", "Mark", "Ann", "Tom", "Sam"),
+                 Height = c(1.72, 1.80, 1.94, 1.60, 1.90, 1.84))
+
+mean(dt$Height)
+```
+
+The average height in the sample is `r mean(dt$Height)` meters.
