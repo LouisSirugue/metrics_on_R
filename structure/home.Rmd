@@ -88,11 +88,11 @@ s1 <- data.frame(a = c(" ",
                        paste("Lecture", 1:14)),
                  
                  b = c(" ",
-                       paste("Introduction to", "R"),
+                       "Introduction to R",
                        "Descriptive statistics",
                        "Basic data manipulation",
                        "Data visualization",
-                       paste("R", "Markdown & \\(\\LaTeX\\)"),
+                       "Quarto & \\(\\LaTeX\\)",
                        "Text data & sentiment analysis",
                        "Homework correction",
                        
