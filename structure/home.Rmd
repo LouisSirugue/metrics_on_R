@@ -172,7 +172,7 @@ exs1 <- data.frame(a = c(" ",
                               root, "homework/homework.pdf)")),
                        
                  c = c("Source",
-                       paste0("[qmd](", root, "homework/homework.qmd)")),
+                       paste0("[qmd](", root, "homework/homework.zip)")),
                  
                  d = c("Data", 
                        "[data](https://data.education.gouv.fr/explore/dataset/fr-en-ips_lycees/)"))
