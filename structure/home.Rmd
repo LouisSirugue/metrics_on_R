@@ -168,16 +168,16 @@ exs1 <- data.frame(a = c(" ",
                        "Homework"),
                  
                  b = c("Guidelines", 
-                       paste0("html - pdf")),
+                       paste0("[html](", root, "homework/homework.html) - [pdf](", 
+                              root, "homework/homework.pdf)")),
                        
                  c = c("Source",
-                       paste0("Rmd")),
+                       paste0("[qmd](", root, "homework/homework.qmd)")),
                  
                  d = c("Data", 
-                       paste0("data")))
+                       "[data](https://data.education.gouv.fr/explore/dataset/fr-en-ips_lycees/)"))
                  
 kable(exs1, col.names = NULL, align = "lccc")  %>%
-  #add_header_above(c("Semester 1" = 3)) %>%
   row_spec(1, font_size = 17) %>%
   column_spec(1, width_max = "24em", width = "24em", width_min = "20em") %>%
   column_spec(2, width_max = "5em", width = "5em", width_min = "5em") %>%
