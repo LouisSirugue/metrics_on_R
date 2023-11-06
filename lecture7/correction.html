@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="CPES 2">
+
+<title>Homework</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="correction_files/libs/clipboard/clipboard.min.js"></script>
+<script src="correction_files/libs/quarto-html/quarto.js"></script>
+<script src="correction_files/libs/quarto-html/popper.min.js"></script>
+<script src="correction_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="correction_files/libs/quarto-html/anchor.min.js"></script>
+<link href="correction_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="correction_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="correction_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="correction_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="correction_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework</h1>
+<p class="subtitle lead">Introduction to Econometrics and R Programming</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>CPES 2 </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Fall 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<hr>
+<p><strong>Guidelines:</strong></p>
+<ul>
+<li>This homework can be done by groups of 2 at most.</li>
+<li>Write your answers directly in this <code>.qmd</code> file, which must compile without errors.</li>
+<li>Make sure that your answers are unambiguous and that your code is annotated with comments.</li>
+<li>You can write either in English or in French.</li>
+<li>Save and render your file regularly to avoid any last-minute technical inconvenience.</li>
+<li>The <code>.qmd</code>, the rendered <code>.html</code> or <code>.pdf</code>, and the data should be sent in a <code>.zip</code> by email <a href="mailto:louis.sirugue@psemail.eu">louis.sirugue@psemail.eu</a></li>
+<li>If you are not familiar with <code>.zip</code> files, first download and install winRAR. Then select your <code>.qmd</code>, <code>.html</code>/<code>.pdf</code>, and data files &gt; right click &gt; Add to archive &gt; select “zip” and save.</li>
+<li>Deadline: Sunday the 15<sup>th</sup> of October 2023, 18:00.</li>
+<li>Late submissions will be penalized by half a point for each 30min beyond the deadline.</li>
+<li>The cleanliness of the <code>qmd</code> and the <code>html</code> is worth 1 point.</li>
+<li>The number of points associated with each question is indicative and may be subject to modifications.</li>
+</ul>
+<hr>
+<section id="the-social-position-index" class="level2">
+<h2 class="anchored" data-anchor-id="the-social-position-index">The social position index</h2>
+<blockquote class="blockquote">
+<p>The <em>indice de position sociale</em> (IPS) is an index computed by the French Ministry of National Education to measure the socio-economic background of students in primary schools, middle schools, and highschools.<br>
+The IPS of students is given by the socio-professional category of their parents. 32 categories are considered, yielding 32 <span class="math inline">\(\times\)</span> 32 = 1024 possible socio-professional compositions. Each socio-professional couple is attributed an IPS integer value from 38 (unemployed mother, no father) to 179 (mother teacher, father engineer). Several socio-professional couples can have the same IPS. For instance, having a mother policewoman and a father commercial employee, and having a mother technician and a father qualified worker, both yield an IPS of 110.<br>
+Since 2022, IPS statistics aggregated at the school level are published every year by the Ministry.</p>
+</blockquote>
+<p><strong>1) Eyeball the dataset available at <a href="https://data.education.gouv.fr/explore/dataset/fr-en-ips_lycees/" class="uri">https://data.education.gouv.fr/explore/dataset/fr-en-ips_lycees/</a>, and have a look at the documentation. What does the UAI corresponds to?</strong> (/1)</p>
+<p>The UAI (Unité Administrative Immatriculée) is a unique identifier assigned to each schooling establishment.</p>
+<p><strong>2) Download the dataset and import it in R. Show the structure of the data with the <code>str()</code> function. Do you think the class of the first variable is adequate? Justify your answer.</strong> (/1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"fr-en-ips_lycees.csv"</span>, <span class="at">sep =</span> <span class="st">";"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   21777 obs. of  15 variables:
+ $ rentree_scolaire            : chr  "2018-2019" "2018-2019" "2018-2019" "2018-2019" ...
+ $ academie                    : chr  "CRETEIL" "CRETEIL" "CRETEIL" "CRETEIL" ...
+ $ code_du_departement         : int  77 77 77 77 77 77 77 77 77 77 ...
+ $ departement                 : chr  "SEINE-ET-MARNE" "SEINE-ET-MARNE" "SEINE-ET-MARNE" "SEINE-ET-MARNE" ...
+ $ uai                         : chr  "0771995A" "0772127U" "0772151V" "0772188K" ...
+ $ nom_de_l_etablissment       : chr  "LYCEE PROFESSIONNEL LE CHAMP DE CLAYE LYCEE DES METIERS DE L ENERGIE" "LYCEE GENERAL ET TECHNOLOGIQUE GALILEE" "LYCEE PROFESSIONNEL PRIVE LES SINOPLIES" "LYCEE GENERAL ET TECHNOLOGIQUE PIERRE MENDES FRANCE" ...
+ $ code_insee_de_la_commune    : int  77118 77122 77390 77445 77058 77393 77470 77183 77183 77449 ...
+ $ nom_de_la_commune           : chr  "CLAYE SOUILLY" "COMBS LA VILLE" "ROISSY EN BRIE" "SAVIGNY LE TEMPLE" ...
+ $ secteur                     : chr  "public" "public" "privé sous contrat" "public" ...
+ $ type_de_lycee               : chr  "LP" "LEGT" "LP" "LEGT" ...
+ $ ips_voie_gt                 : num  NA 115.6 NA 99.4 121.3 ...
+ $ ips_voie_pro                : num  87.4 NA 114.2 NA NA ...
+ $ ips_ensemble_gt_pro         : num  87.4 115.6 114.2 99.4 121.3 ...
+ $ ecart_type_de_l_ips_voie_gt : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ ecart_type_de_l_ips_voie_pro: num  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
+</div>
+</div>
+<p>The first variable indicates the school year, and is stored as a <code>character</code> variable. On the one hand it can be seen as a continuous time variable, so one could argue that it should be converted to <code>numeric</code>, typically for it to be used as the x-axis of a line plot. On the other hand it can be seen as a discrete categorical variable whose value can’t be subject to numerical operations such as the addition or the division, so one could argue that the <code>character</code> class is suitable.</p>
+<p><strong>3) What is the level of observation of the data? In other words, according to which variable(s) is each row uniquely identified?</strong> (/1)</p>
+<p>Let’s compute the number of observations per year/school:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rentree_scolaire, uai) <span class="sc">%&gt;%</span> <span class="co"># Group by year/school</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span>              <span class="co"># Count number of observations</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()                              <span class="co"># Look at the first rows of the resulting data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+# Groups:   rentree_scolaire [1]
+  rentree_scolaire uai          n
+  &lt;chr&gt;            &lt;chr&gt;    &lt;int&gt;
+1 2016-2017        0010001W     1
+2 2016-2017        0010006B     1
+3 2016-2017        0010010F     1
+4 2016-2017        0010013J     1
+5 2016-2017        0010014K     1
+6 2016-2017        0010016M     1</code></pre>
+</div>
+</div>
+<p>It seems that the variables <code>rentree_scolaire</code> and <code>uai</code> uniquely identify each row. Let’s compute the share of rows uniquely identified by these two variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rentree_scolaire, uai) <span class="sc">%&gt;%</span> <span class="co"># Group by year/school</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span>              <span class="co"># Count number of observations</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span>                       <span class="co"># Ungroup</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(n <span class="sc">==</span> <span class="dv">1</span>))             <span class="co"># Share of uniquely identified rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  `mean(n == 1)`
+           &lt;dbl&gt;
+1              1</code></pre>
+</div>
+</div>
+<p>100% of rows are uniquely identified by the variables <code>rentree_scolaire</code> and <code>uai</code>. This confirms that the observation level is the school/year.</p>
+<blockquote class="blockquote">
+<p>Datasets in which the same subjects are observed repeatedly over time are called <em>“panel data”</em>. A panel is said to be <em>“balanced”</em> if every subject is observed at each period. If at least one subject is not observed for at least one of the periods, the panel is said to be <em>“unbalanced”</em>.</p>
+</blockquote>
+<p><strong>4) How many periods are there in the data? How many high schools are there in the data? What fraction of high schools is observed at every period? Is the panel balanced?</strong> (/2)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(dt<span class="sc">$</span>uai)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3697</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rentree_scolaire) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">share_observed =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">n_distinct</span>(dt<span class="sc">$</span>uai))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  rentree_scolaire share_observed
+  &lt;chr&gt;                     &lt;dbl&gt;
+1 2016-2017                 0.987
+2 2017-2018                 0.989
+3 2018-2019                 0.983
+4 2019-2020                 0.979
+5 2020-2021                 0.977
+6 2021-2022                 0.976</code></pre>
+</div>
+</div>
+<p>There are 6 years of observation and 3697 high schools in the data. About 2% of high schools are missing every year in the data, so the panel is unbalanced.</p>
+<p><strong>5) What socio-economic indicator does the standard deviation of the IPS within a school actually capture? Deduce from the data the reason(s) why this information can be missing.</strong> (/2)</p>
+<p>The standard deviation of the IPS within a school captures the social diversity of its students.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rentree_scolaire) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">share_observed =</span> <span class="fu">mean</span>(<span class="fu">is.na</span>(ecart_type_de_l_ips_voie_gt) <span class="sc">&amp;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">is.na</span>(ecart_type_de_l_ips_voie_pro)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  rentree_scolaire share_observed
+  &lt;chr&gt;                     &lt;dbl&gt;
+1 2016-2017                     1
+2 2017-2018                     1
+3 2018-2019                     1
+4 2019-2020                     0
+5 2020-2021                     0
+6 2021-2022                     0</code></pre>
+</div>
+</div>
+<p>This variable is consistently missing for school years from 2016-2017 to 2018-2019. I was thus probably not computed at the time.</p>
+<p><strong>6) What are the 5 <em>départements</em> with the lowest average IPS in 2021-2022?</strong> (/1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rentree_scolaire <span class="sc">==</span> <span class="st">"2021-2022"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(departement) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">IPS =</span> <span class="fu">mean</span>(ips_ensemble_gt_pro)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(IPS) <span class="sc">%&gt;%</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  departement   IPS
+  &lt;chr&gt;       &lt;dbl&gt;
+1 MAYOTTE      68.1
+2 GUYANE       80.2
+3 LA REUNION   84.9
+4 GUADELOUPE   85.9
+5 MARTINIQUE   91.8</code></pre>
+</div>
+</div>
+<p>The 5 departments with the lowest IPS are the overseas departments.</p>
+<p><strong>7) Compute the mean, the standard deviation, the median, and the interquartile range of the IPS separately for public and private high schools. Comment.</strong> (/1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(secteur) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ips_ensemble_gt_pro),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(ips_ensemble_gt_pro),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(ips_ensemble_gt_pro),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">iqr =</span> <span class="fu">IQR</span>(ips_ensemble_gt_pro))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  secteur             mean    sd median   iqr
+  &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 privé sous contrat 111.   19.1  111.   28.4
+2 public              99.0  17.3   98.8  26.4</code></pre>
+</div>
+</div>
+<p>The average IPS is much larger in private schools. For both public and private schools, the mean is close to median so the distributions seem relatively symmetric. They also have a similar spread given that their standard deviation and inter-quartile range are quite close.</p>
+<p><strong>8) Reproduce the following plot. Find out why this distribution is multimodal.</strong> (/3)</p>
+<p><img src="graph.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt, <span class="fu">aes</span>(<span class="at">x =</span> ips_ensemble_gt_pro, <span class="at">color =</span> rentree_scolaire)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="correction_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dt, <span class="fu">aes</span>(<span class="at">x =</span> ips_ensemble_gt_pro, <span class="at">color =</span> type_de_lycee)) <span class="sc">+</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="correction_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The reason for the multimodality is a marked heterogeneity by type of high school.</p>
+<p><strong>9) Find your high school in the data, and compute the share of high schools with a lower average IPS than your high school in 2021-2022.</strong> (/1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ips_stjo <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rentree_scolaire <span class="sc">==</span> <span class="st">"2021-2022"</span> <span class="sc">&amp;</span> academie <span class="sc">==</span> <span class="st">"RENNES"</span> <span class="sc">&amp;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>           nom_de_l_etablissment <span class="sc">==</span> <span class="st">"LYCEE GENERAL PRIVE SAINT JOSEPH"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(ips_ensemble_gt_pro)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ips_stjo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 135.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rentree_scolaire <span class="sc">==</span> <span class="st">"2021-2022"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(ips_ensemble_gt_pro <span class="sc">&lt;</span> ips_stjo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  mean(ips_ensemble_gt_pro &lt; ips_stjo)
+1                            0.9439978</code></pre>
+</div>
+</div>
+<p><strong>10) Compute the average IPS by type of high school. Use the functions <code>sd()</code> and <code>pt()</code> to compute their 99% confidence interval. If someone tells you that the IPS in their high school is 87, what type would you guess for that high school?</strong> (/3)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter(type_de_lycee %in% c("LP", "LEGT")) %&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(type_de_lycee) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(ips_ensemble_gt_pro),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(ips_ensemble_gt_pro),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">lb =</span> mean <span class="sc">-</span> (<span class="fu">qt</span>(.<span class="dv">995</span>, n<span class="dv">-1</span>) <span class="sc">*</span> (sd<span class="sc">/</span><span class="fu">sqrt</span>(n))),</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">ub =</span>  mean <span class="sc">+</span> (<span class="fu">qt</span>(.<span class="dv">995</span>, n<span class="dv">-1</span>) <span class="sc">*</span> (sd<span class="sc">/</span><span class="fu">sqrt</span>(n))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  type_de_lycee  mean    sd     n    lb    ub
+  &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 LEGT          117.   14.9  9221 117.  118. 
+2 LP             86.1  10.7  6985  85.8  86.4
+3 LPO           101.   13.3  5571 101.  102. </code></pre>
+</div>
+</div>
+<p>Given these descriptive statistics, a high school with a 87 IPS is likely a professional high school.</p>
+<p><strong>11) For this question, omit the “polyvalent” high schools (<code>LPO</code>) to focus only on professional high schools and general &amp; technological high schools. Based on the results of the previous questions, find a simple rule to predict the type of high school using only the IPS. Generate the resulting predictions and compute the share of correct predictions. Describe how you could improve the predictions (just explain your idea(s) in one or two sentences but don’t implement them).</strong> (/3)</p>
+<p>From questions 8 and 10 it is clear that most of the IPS distribution is below 100 for professional high schools and above 100 for general &amp; technological high schools. This threshold can be used to predict the type of high school.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type_de_lycee <span class="sc">!=</span> <span class="st">"LPO"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prediction =</span> <span class="fu">ifelse</span>(ips_ensemble_gt_pro <span class="sc">&gt;</span> <span class="dv">100</span>, <span class="st">"LEGT"</span>, <span class="st">"LP"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(prediction <span class="sc">==</span> type_de_lycee))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  mean(prediction == type_de_lycee)
+1                         0.9002838</code></pre>
+</div>
+</div>
+<p>The 100 IPS threshold can distinguish a professional high school from a general &amp; technological high school with 90% accuracy.</p>
+<p>To improve the predictions, other variables could be used. For instance, instead of using the 100 IPS threshold on the whole dataset, the threshold could be adapted to each department according to where the IPS distributions for the two types of high school cross.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

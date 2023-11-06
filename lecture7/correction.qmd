@@ -1,0 +1,186 @@
+---
+title: "Homework"
+subtitle: "Introduction to Econometrics and R Programming"
+author: "CPES 2"
+date: "Fall 2023"
+date-format: "[Fall 2023]"
+format: html
+editor: source
+theme: cosmo
+---
+
+***
+
+**Guidelines:**
+
+ * This homework can be done by groups of 2 at most.
+ * Write your answers directly in this `.qmd` file, which must compile without errors.
+ * Make sure that your answers are unambiguous and that your code is annotated with comments.
+ * You can write either in English or in French.
+ * Save and render your file regularly to avoid any last-minute technical inconvenience.
+ * The `.qmd`, the rendered `.html` or `.pdf`, and the data should be sent in a `.zip` by email [louis.sirugue@psemail.eu](mailto:louis.sirugue@psemail.eu)
+ * If you are not familiar with `.zip` files, first download and install winRAR. Then select your `.qmd`, `.html`/`.pdf`, and data files > right click > Add to archive > select "zip" and save.
+ * Deadline: Sunday the 15<sup>th</sup> of October 2023, 18:00.
+ * Late submissions will be penalized by half a point for each 30min beyond the deadline.
+ * The cleanliness of the `qmd` and the `html` is worth 1 point.
+ * The number of points associated with each question is indicative and may be subject to modifications.
+
+***
+
+## The social position index
+
+> The *indice de position sociale* (IPS) is an index computed by the French Ministry of National Education to measure the socio-economic background of students in primary schools, middle schools, and highschools.  
+The IPS of students is given by the socio-professional category of their parents. 32 categories are considered, yielding 32 $\times$ 32 = 1024 possible socio-professional compositions. Each socio-professional couple is attributed an IPS integer value from 38 (unemployed mother, no father) to 179 (mother teacher, father engineer). Several socio-professional couples can have the same IPS. For instance, having a mother policewoman and a father commercial employee, and having a mother technician and a father qualified worker, both yield an IPS of 110.   
+Since 2022, IPS statistics aggregated at the school level are published every year by the Ministry. 
+
+**1) Eyeball the dataset available at <https://data.education.gouv.fr/explore/dataset/fr-en-ips_lycees/>, and have a look at the documentation. What does the UAI corresponds to?** (/1)
+
+The UAI (Unité Administrative Immatriculée) is a unique identifier assigned to each schooling establishment.
+
+**2) Download the dataset and import it in R. Show the structure of the data with the `str()` function. Do you think the class of the first variable is adequate? Justify your answer.** (/1)
+
+```{r}
+dt <- read.csv("fr-en-ips_lycees.csv", sep = ";")
+str(dt)
+```
+
+The first variable indicates the school year, and is stored as a `character` variable. On the one hand it can be seen as a continuous time variable, so one could argue that it should be converted to `numeric`, typically for it to be used as the x-axis of a line plot. On the other hand it can be seen as a discrete categorical variable whose value can't be subject to numerical operations such as the addition or the division, so one could argue that the `character` class is suitable.
+
+**3) What is the level of observation of the data? In other words, according to which variable(s) is each row uniquely identified?** (/1)
+
+Let's compute the number of observations per year/school: 
+
+```{r, message = F}
+library(tidyverse)
+
+dt %>%
+  group_by(rentree_scolaire, uai) %>% # Group by year/school
+  summarise(n = n()) %>%              # Count number of observations
+  head()                              # Look at the first rows of the resulting data
+```
+
+It seems that the variables `rentree_scolaire` and `uai` uniquely identify each row. Let's compute the share of rows uniquely identified by these two variables.
+
+```{r, message = F}
+dt %>%
+  group_by(rentree_scolaire, uai) %>% # Group by year/school
+  summarise(n = n()) %>%              # Count number of observations
+  ungroup() %>%                       # Ungroup
+  summarise(mean(n == 1))             # Share of uniquely identified rows
+```
+
+100% of rows are uniquely identified by the variables `rentree_scolaire` and `uai`. This confirms that the observation level is the school/year.
+
+> Datasets in which the same subjects are observed repeatedly over time are called *"panel data"*. A panel is said to be *"balanced"* if every subject is observed at each period. If at least one subject is not observed for at least one of the periods, the panel is said to be *"unbalanced"*.
+
+**4) How many periods are there in the data? How many high schools are there in the data? What fraction of high schools is observed at every period? Is the panel balanced?** (/2)
+
+```{r}
+n_distinct(dt$uai)
+
+dt %>%
+  group_by(rentree_scolaire) %>%
+  summarise(share_observed = n()/n_distinct(dt$uai))
+```
+
+There are `r n_distinct(dt$rentree_scolaire)` years of observation and `r n_distinct(dt$uai)` high schools in the data. About 2% of high schools are missing every year in the data, so the panel is unbalanced.
+
+**5) What socio-economic indicator does the standard deviation of the IPS within a school actually capture? Deduce from the data the reason(s) why this information can be missing.** (/2)
+
+The standard deviation of the IPS within a school captures the social diversity of its students.
+
+```{r}
+dt %>%
+  group_by(rentree_scolaire) %>%
+  summarise(share_observed = mean(is.na(ecart_type_de_l_ips_voie_gt) & 
+                                    is.na(ecart_type_de_l_ips_voie_pro)))
+```
+
+This variable is consistently missing for school years from 2016-2017 to 2018-2019. I was thus probably not computed at the time. 
+
+**6) What are the 5 *départements* with the lowest average IPS in 2021-2022?** (/1)
+
+```{r}
+dt %>%
+  filter(rentree_scolaire == "2021-2022") %>%
+  group_by(departement) %>%
+  summarise(IPS = mean(ips_ensemble_gt_pro)) %>%
+  ungroup() %>%
+  arrange(IPS) %>%
+  head(5)
+```
+
+The 5 departments with the lowest IPS are the overseas departments. 
+
+**7) Compute the mean, the standard deviation, the median, and the interquartile range of the IPS separately for public and private high schools. Comment.** (/1)
+
+```{r}
+dt %>%
+  group_by(secteur) %>%
+  summarise(mean = mean(ips_ensemble_gt_pro),
+            sd = sd(ips_ensemble_gt_pro),
+            median = median(ips_ensemble_gt_pro),
+            iqr = IQR(ips_ensemble_gt_pro))
+```
+
+The average IPS is much larger in private schools. For both public and private schools, the mean is close to median so the distributions seem relatively symmetric. They also have a similar spread given that their standard deviation and inter-quartile range are quite close.
+
+**8) Reproduce the following plot. Find out why this distribution is multimodal.** (/3)
+
+![](graph.png)
+```{r}
+ggplot(dt, aes(x = ips_ensemble_gt_pro, color = rentree_scolaire)) + geom_density()
+```
+
+```{r}
+ggplot(dt, aes(x = ips_ensemble_gt_pro, color = type_de_lycee)) + 
+  geom_density()
+```
+
+The reason for the multimodality is a marked heterogeneity by type of high school.
+
+**9) Find your high school in the data, and compute the share of high schools with a lower average IPS than your high school in 2021-2022.** (/1)
+
+```{r}
+ips_stjo <- dt %>%
+  filter(rentree_scolaire == "2021-2022" & academie == "RENNES" & 
+           nom_de_l_etablissment == "LYCEE GENERAL PRIVE SAINT JOSEPH") %>%
+  pull(ips_ensemble_gt_pro)
+
+ips_stjo
+
+dt %>%
+  filter(rentree_scolaire == "2021-2022") %>%
+  summarise(mean(ips_ensemble_gt_pro < ips_stjo))
+```
+
+**10) Compute the average IPS by type of high school. Use the functions `sd()` and `pt()` to compute their 99% confidence interval. If someone tells you that the IPS in their high school is 87, what type would you guess for that high school?** (/3)
+
+```{r}
+dt %>%
+  #filter(type_de_lycee %in% c("LP", "LEGT")) %>%
+  group_by(type_de_lycee) %>%
+  summarise(mean = mean(ips_ensemble_gt_pro),
+            sd = sd(ips_ensemble_gt_pro),
+            n = n(),
+            lb = mean - (qt(.995, n-1) * (sd/sqrt(n))),
+            ub =  mean + (qt(.995, n-1) * (sd/sqrt(n))))
+```
+
+Given these descriptive statistics, a high school with a 87 IPS is likely a professional high school. 
+
+**11) For this question, omit the "polyvalent" high schools (`LPO`) to focus only on professional high schools and general & technological high schools. Based on the results of the previous questions, find a simple rule to predict the type of high school using only the IPS. Generate the resulting predictions and compute the share of correct predictions. Describe how you could improve the predictions (just explain your idea(s) in one or two sentences but don't implement them).** (/3)
+
+From questions 8 and 10 it is clear that most of the IPS distribution is below 100 for professional high schools and above 100 for general & technological high schools. This threshold can be used to predict the type of high school.
+
+```{r}
+dt %>%
+  filter(type_de_lycee != "LPO") %>%
+  mutate(prediction = ifelse(ips_ensemble_gt_pro > 100, "LEGT", "LP")) %>%
+  summarise(mean(prediction == type_de_lycee))
+```
+
+The 100 IPS threshold can distinguish a professional high school from a general & technological high school with 90% accuracy.  
+
+To improve the predictions, other variables could be used. For instance, instead of using the 100 IPS threshold on the whole dataset, the threshold could be adapted to each department according to where the IPS distributions for the two types of high school cross.
+

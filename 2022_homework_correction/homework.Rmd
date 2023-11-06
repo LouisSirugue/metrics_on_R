@@ -1,0 +1,341 @@
+---
+title: "Homework"
+author: "CPES 2 - Fall 2022"
+date: "Louis Sirugue"
+output: html_document
+---
+
+<style type="text/css"> h1.title {text-align: center;} h4.author {text-align: center;} h4.date {color: DarkBlue; text-align: center;} h3 {margin-top: 1cm; font-weight: bold; font-size: 1.15em;} p {margin-top: .5cm; font-size: 1.15em;}</style><br>
+
+***
+
+### Guidelines:
+
+ * This homework can be done by **groups of 2 at most**. 
+ * Write your **answers directly in this .Rmd** file, which must compile without errors. 
+ * Make sure that your answers are unambiguous and that your code is annotated with comments. 
+ * You can write either in English or in French.
+ * Save and knit your file regularly to avoid any last-minute technical inconvenience. 
+ * Both the .Rmd and the knitted .html or .pdf should be sent in a **.zip by email** (louis.sirugue@psemail.eu)
+   * If you are not familiar with .zip files, first download and install [winRAR](https://www.win-rar.com/).
+   * Then select your .Rmd and .html files > right click > Add to archive > select ''zip'' and save.
+ * Deadline: **Sunday the 16<sup>th</sup> of October 2022, 23:59**.
+ * Late submissions will be penalized by half a point for each 30min beyond the deadline.
+ * The number of points associated with each question is indicative and may be subject to modifications.  
+
+This homework covers the material from lectures 1 to 5. I encourage you to start **working on it progressively** as we go through the course. Contrarily to the online quizzes, this homework is meant to be challenging. **Partial answers will be taken into account**, so if you cannot do everything, **write down your thought process**.
+
+***
+
+## Context:
+
+This homework consists in analyzing data from a survey conducted for the academic article available [here](https://eml.berkeley.edu/~saez/kuziemko-norton-saez-stantchevaAER15.pdf). In this article, authors study individuals' **preferences regarding income redistribution**, and how these preferences may vary if individuals are more or less aware of the extent and consequences of income inequality.  
+
+Authors conducted an online survey in which respondents had to answer to two waves of questions:  
+
+ * **Wave 1: General information:** gender, age, education, marital status, household income, ...
+ * **Wave 2: Questions on income inequality/redistribution:** if inequality is a problem, if high incomes deserve their income, whether income is due to effort or luck, ...  
+ 
+Each participant to the survey was allocated to one of **two groups:** either to the **control** group, or to the **treatment** group. Between the two waves of questions, **information** on the extent and consequences of income inequality **were given to individuals in the treatment group** but not to individuals in the control group.  
+
+## Data:
+
+The datasets for this homework are available at [this webpage](https://www.aeaweb.org/articles?id=10.1257/aer.20130360). To **download the data** you will have to create an ICPSR account. You can do it with your @psl.eu address. You will also find an **Online Appendix** containing documentation on the experiment and the dataset, including the questions and possible answers of the survey.
+
+## Questions: 
+
+### 1) Load the `haven` package and import the file `Inequality_AER_Omnibus.dta` using the dedicated function (/1)
+
+*Note:* `.dta` *data imported with haven often come with labels. These labels can cause errors when reshaping the data with* `pivot_longer()` *and plotting the data with* `ggplot()`. *You can remove these labels at any point using the function* `zap_labels()`.
+
+```{r, warning = F}
+library(haven)
+omnibus <- read_dta("Inequality_AER_Omnibus.dta")
+```
+
+
+### 2) Use the `filter()` function from `dplyr` to keep only individuals older than 18, who finished the survey, and who belong either to the `Treatment Group` or `Control` group. (/1)
+
+```{r, warning = F, message = F}
+library(dplyr)
+omnibus <- omnibus %>%
+  filter(age > 18 & finished == 1 & group %in% c("Treatment Group", "Control")) 
+```
+
+
+### 3) Given the answers of the survey, do people with higher household income tend to be more or less satisfied with their income? (/1)
+
+It is specified in the documentation of the survey that the answers to the satisfaction question are the following: *Very satisfied*, *Somewhat satisfied*, *Not too satisfied*, and *Not at all satisfied*. We can compute the share of individuals choosing each answer by household income group as follows.
+
+```{r, warning = F}
+library(knitr)
+omnibus %>%
+  filter(!(is.na(hhincome)|is.na(satisfied))) %>% 
+  group_by(hhincome) %>%
+  summarise(Very_satisfied = 100 * mean(satisfied == 1),
+            Somewhat_satisfied = 100 * mean(satisfied == 2),
+            Not_too_satisfied = 100 * mean(satisfied == 3),
+            Not_at_all_satisfied = 100 * mean(satisfied == 4)) %>%
+  kable(digits = 2)
+```
+
+We can see that the higher the household income group, the  higher the proportion of respondents who are satisfied with their income.
+
+### 4) We are interested in knowing whether or not treated individuals answered differently to the questions *'Inequality is a problem?'*, *'Inequality has increased?'*, and *'Do you think high incomes deserve their income?'*. Find out a convenient way to summarise the 3 corresponding variables into their mean, their standard deviation, and their number of non-missing values, separately for the treatment and control group. Display your results in a good-looking table. (/2)
+
+```{r, warning = F, message = F}
+library(tidyr)
+library(knitr)
+
+mean_table <- omnibus %>% 
+  select(group, inequality_problem, inequality_increase, deserving) %>% 
+  zap_labels() %>%
+  pivot_longer(!group, names_to = "variable", values_to = "value") %>%
+  group_by(variable, group) %>%
+  summarise(mean = mean(value, na.rm = T),
+            sd = sd(value, na.rm = T),
+            n = sum(!is.na(value)))
+
+kable(mean_table, digits = 2)
+```
+
+### 5) Write down the formula of the standard error of the mean using a LaTeX equation, and compute the 97% confidence interval of each mean. (/2)
+
+$$\text{S.E.}(x) = \frac{\text{SD}(x)}{\sqrt{N}} = \frac{\sqrt{\text{Var}(x)}}{\sqrt{N}} =\frac{\sqrt{\frac{1}{N}\sum_{i = 1}^N(x_i-\bar{x})^2}}{\sqrt{N}}$$
+
+```{r}
+mean_table <- mean_table %>%
+  mutate(se = sd / sqrt(n),
+         t = qt(1 - ((1 - .97)/2), n - 1),
+         lb = mean - t*se,
+         ub = mean + t*se)
+
+kable(mean_table, digits = 2)
+```
+
+### 6) Produce a graph like the following one to represent the mean and confidence interval of the three variables separately for the two groups. Do you notice a specific pattern? (/3)
+
+![](example_plot.png){width=50%}
+
+```{r, warning = F, out.width='75%'}
+library(ggplot2)
+ggplot(mean_table, aes(x = variable, y = mean, color = group)) +
+  geom_point(position = position_dodge(.5)) +
+  geom_errorbar(aes(xmin = variable, xmax = variable, ymin = lb, ymax = ub), 
+                position = position_dodge(.5), width = .25) + 
+  coord_flip() + theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+The treatment group always has a higher mean than the control group, and the confidence intervals do not overlap. Being given the treatment seems to have an effect on the preferences for redistribution.
+
+### 7) Consider the mean of the variable `inequality_increase` for the treatment group. What is the confidence level below which you would not consider, and above which you would consider, that this mean value could be equal to 2.75. (/3)
+
+*Hint: While* `qt(proba, df)` *gives the t-stat corresponding to a given probability to fall below this t-stat in a Student t distribution with a given number of degrees of freedom,* `pt(t_stat, df)` *gives the probability to fall below a given t-stat in a Student t distribution with a given number of degrees of freedom.*
+
+Given that the mean of the variable `inequality_increase` for the treatment group is larger than 2.75, we are interested in the lower bound of the confidence interval. The formula for the lower bound of the confidence interval writes as follows.   
+
+$$\bar{x} - t_{\text{df}, \: 1 - \frac{1 - \text{CL}}{2}} \times \text{SE}(x),$$
+
+Where $\text{CL}$ denotes the confidence level. We can find the confidence level whose confidence interval lower bound equals 2.75 by solving the following equation.
+
+$$\begin{aligned} \bar{x} - t_{\text{df}, \: 1 - \frac{1 - \text{CL}}{2}} \times \text{SE}(x) & = 2.75\\ 
+t_{\text{df}, \: 1 - \frac{1 - \text{CL}}{2}} & = \frac{\bar{x} - 2.75}{\text{SE}(x)}\end{aligned}$$
+
+We can compute the value of this t-stat:
+
+```{r}
+x <- omnibus$inequality_increase[omnibus$group == "Treatment Group"]
+
+t_stat <- (mean(x) - 2.75) / (sd(x)/sqrt(length(x)))
+t_stat
+```
+
+Then we can use `pt(t_stat, df)` to get the probability the fall below this t-stat with a Student t distribution with the corresponding number of degrees of freedom:
+
+```{r}
+prob <- pt(t_stat, df = length(x) - 1)
+prob
+```
+
+And we can compute the corresponding confidence level:
+
+$$\begin{aligned} 1 - \frac{1 - \text{CL}}{2} &= 0.8813212\\ 
+\text{CL} & = 1 - 2\times(1 - 0.8813212)\end{aligned}$$
+
+```{r}
+1 - (2*(1-prob))
+```
+
+The lower bound of the confidence interval equals 2.75 when the confidence level is 76%. Below this threshold, we would not consider that the mean could be equal to 2.75, but we would consider it plausible above this threshold.
+
+### 8) We would like to know whether the difference in opinion on *'deserving'* between the control and the treatment group persisted over time. A followup survey has been conducted, and the results are stored in `Inequality_AER_Followup.dta`. In this dataset, variables from the follow up survey end with the suffix `_s2`. Import the followup dataset, keep only the variables you need, and join it to the omnibus data. (/1)
+
+```{r}
+followup <- read_dta("Inequality_AER_Followup.dta") %>%
+  select(responseid, deserving_s2)
+
+omnibus <- omnibus %>%
+  left_join(followup, by = "responseid")
+```
+
+### 9) Compute the fraction of the initial sample that appears in the followup dataset, and the response rate to the *'deserving'* question in the followup survey. (/1)
+
+```{r}
+mean(omnibus$responseid %in% followup$responseid)
+mean(!is.na(followup$deserving_s2))
+```
+
+### 10) Would you conclude that the difference in opinion on *'deserving'* between the control and the treatment group persisted over time? (/2)
+
+```{r}
+omnibus %>%
+  group_by(group) %>%
+  summarise(mean = mean(deserving_s2, na.rm = T),
+            sd = sd(deserving_s2, na.rm = T),
+            n = sum(!is.na(deserving_s2))) %>%
+  mutate(se = sd / sqrt(n),
+         t = qt(1 - ((1 - .95)/2), n - 1),
+         lb = mean - t*se,
+         ub = mean + t*se)
+```
+
+Even though the mean value is still higher for the treatment group in the second wave, the precision is not sufficient to conclude that the two means are different at a reasonable confidence level.
+
+### 11) Make the best graph you can using the variables of your choice. The graph should be preceded by a description of the variables used, both in words and using appropriate statistics. The aim of the graph can be to document a relationship that has not been explored in this homework, to investigate the heterogeneity of a relationship that was studied in the homework, etc. The graph should be clear and relevant. The interest of your graph could lie in how efficient it is to convey a story about your data, or in how it helps uncover underlying patterns in your data. (/3)
+
+*If you do not find inspiration with the variables available in the dataset, feel free to do this exercise using variables from another dataset (from the list below or other sources). Using another dataset will not grant extra points, but if it helps you making an interesting graph it can be worth it.*
+
+ * [data.gouv.fr](https://www.data.gouv.fr/)
+ * [data.gov](https://www.data.gov/)
+ * [data.oecd.org](https://data.oecd.org/)
+ * [data.worldbank.org](https://data.worldbank.org/)
+ * [ec.europa.eu](https://ec.europa.eu/eurostat/web/main/data/database) 
+ * [www.bfi.org.uk](https://www.bfi.org.uk/industry-data-insights)
+ * [apps.who.int](https://apps.who.int/gho/data/node.home)
+ * [dataverse.harvard.edu](https://dataverse.harvard.edu/)
+ * [archive.ics.uci.edu](https://archive.ics.uci.edu/ml/datasets.php)
+ * [kaggle.com](https://www.kaggle.com/datasets)
+ * [datahub.io](https://datahub.io/collections)
+ * [wid.world](https://wid.world/data/)
+ * [opportunityinsights.org](https://opportunityinsights.org/data/)
+ * ...
+
+#### Example with variables from the dataset {.tabset}
+
+The dataset contains information on individuals' income level, and perception on whether income is due to effort or luck. We can expect that the higher one's income, the more likely to believe that income is due to effort rather than luck. Given that the dataset also provides individuals' education level, it can be interesting to study how the relationship between the two variables vary with educational attainment.  
+
+Let's keep only the variables we need and clean the subset.
+
+```{r}
+plot_dt <- omnibus %>%
+  select(hhincome, worldbelief, education)
+```
+
+##### World belief
+
+```{r}
+plot_dt %>% 
+  group_by(worldbelief) %>% 
+  tally()
+```
+
+##### Education
+
+```{r}
+plot_dt %>%
+  group_by(education) %>%
+  tally()
+```
+
+##### Household income
+
+```{r}
+plot_dt %>%
+  group_by(hhincome) %>%
+  tally()
+```
+
+#### ` ` 
+
+We can remove individuals with missing values and recode the variables conveniently.
+
+```{r}
+plot_dt <- plot_dt %>%
+  filter(!(is.na(worldbelief) | is.na(hhincome))) %>%
+  mutate(worldbelief = ifelse(worldbelief == 1, "Effort", "Luck"),
+         education = ifelse(education > 4, "High", "Low"))
+```
+
+We can now plot how the average perception of income merit evolves with income, separately for the 2 education groups
+
+```{r, message = F, warning=F, out.width='75%'}
+library(ggthemes)
+
+plot_dt %>%
+  zap_labels() %>%
+  group_by(hhincome, education) %>%
+  summarise(bl = mean(worldbelief == "Luck")) %>%
+  ggplot(aes(x = hhincome, y = bl, color = education)) + 
+  geom_point() + geom_line() +
+  scale_x_continuous(name = "Household income group", limits = c(1, 12), breaks = 1:12) +
+  scale_y_continuous(name = "Share of individuals believing that income is due to luck",
+                     limits = c(0, 1), breaks = seq(0, 1, .25), 
+                     labels = c("0%", "25%", "50%", "75%", "100%")) +
+  theme_economist()
+```
+
+It seems like indeed the higher the income level the more likely to believe that income is due to effort rather than luck, but this trend seems to be quite homogeneous across education groups.  
+
+***
+
+#### Example with another data source
+
+The package `HSAUR` comes with a data set of **2 variables** on the **47 stars** of the CYGOB1 star cluster in the Cygnus constellation:  
+
+ * Effective temperature: $\text{log}(T_e)$
+ * Light intensity: $\text{log}(L/L_0)$
+
+```{r, warning = F, message = F}
+library(HSAUR)
+data("CYGOB1", package = "HSAUR")
+kable(head(CYGOB1, 5), caption = "5 first observations")
+summary(CYGOB1)
+```
+
+We can use a scatterplot to represent the relationship between these two variables
+
+```{r, out.width='75%'}
+CYGOB1 <- CYGOB1 %>% 
+  rename(Temperature = logst, Light_intensity = logli)
+
+ggplot(CYGOB1, aes(x = Temperature, y = Light_intensity)) +
+  geom_point(color = "#014D64", alpha = .5) +
+  theme_economist()
+```
+
+The relationship is negative overall: the higher the temperature, the lower the light intensity. But this seems to be fallaciously driven by four stars at the top left. Indeed, the documentation of the data mentions that there are **two types of stars**:  
+
+ * Stars that lie on the main sequence
+ * Giants stars
+
+There's no variable in the data to distinguish between these two groups, but the documentation indicates that Giants are located at the following rows:  
+
+ * The 11<sup>th</sup>;  
+ * The 20<sup>th</sup>;  
+ * The 30<sup>th</sup>;  
+ * The 34<sup>th</sup>. 
+
+Based on these information, a variable indicating the type of star can easily be created as follows, so that we can then distinguish the two types of stars in the plot by attributing them separate colors:  
+
+```{r, out.width='75%'}
+CYGOB1 <- CYGOB1 %>%
+  mutate(Type = ifelse(row_number() %in% c(11, 20, 30, 34), 
+                       "Giant", "Main-sequence"))
+
+ggplot(CYGOB1, aes(x = Temperature, y = Light_intensity, color = Type)) +
+  geom_point(alpha = .5) + theme_economist()
+```
+
+By omitting the difference in type of stars, we would have fallaciously concluded that the relationship was somewhat negative. Actually we observe no relationship for the giants, and a strong positive relationship for stars that lie on the main sequence.
+
+<br><br><br>
