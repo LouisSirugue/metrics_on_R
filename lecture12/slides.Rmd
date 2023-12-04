@@ -2,7 +2,7 @@
 title: "Interpretation"
 subtitle: "Lecture 12"
 author: "<br>Louis SIRUGUE"
-date: "CPES 2 - Fall 2022"
+date: "CPES 2 - Fall 2023"
 params:
   dark: false
 output:
@@ -856,7 +856,7 @@ ggplot(data_log, aes(x = x, y = y)) +
   geom_smooth(method = 'lm', se = F, color = "#014D64")
 ```
 
-$$\begin{align}(15\div100) \times \widehat{\beta_{lvl}} &\approx (15\div100) \times `r beta_lvl` \\ &\approx `r 0.015 * beta_lvl` \end{align}$$
+$$\begin{align}(15\div100) \times \widehat{\beta_{lvl}} &\approx (15\div100) \times `r beta_lvl` \\ &\approx `r 0.15 * beta_lvl` \end{align}$$
 ]
 
 --
@@ -876,7 +876,7 @@ ggplot(data_log, aes(x = log(x), y = log(y))) +
   geom_smooth(method = 'lm', se = F, color = "#014D64")
 ```
 
-$$\begin{align}`r 0.015 * beta_lvl` \div90 &= `r sprintf("%.7f", (0.015 * beta_lvl) / 90)`\\ & \approx \beta_{log}\%\end{align}$$
+$$\begin{align}`r 0.15 * beta_lvl` \div90 &= `r sprintf("%.7f", (0.15 * beta_lvl) / 90)`\\ & \approx \beta_{log}\%\end{align}$$
 ]
 
 ---
@@ -1214,11 +1214,11 @@ data <- data %>%
   mutate(Sex = ifelse((birth_weight - mean(birth_weight))/sd(birth_weight) + rnorm(n(), -5, 5) > 0, "Boy", "Girl"),
          Sex = ifelse(row_number() %in% sample(1:1000, 37, F), NA, Sex))
 
-stargazer(lm(birth_weight ~ household_income, data), 
-                      lm(birth_weight ~ household_income + Sex, data), 
-                      type = "html", keep.stat = c("n"), 
-                      covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
-                      dep.var.labels = "Birth weight")
+list(lm(birth_weight ~ household_income, data), 
+     lm(birth_weight ~ household_income + Sex, data)) %>%
+  stargazer(type = "html", keep.stat = c("n"), 
+            covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
+            dep.var.labels = "Birth weight")
 ```
 ]
 
@@ -1262,11 +1262,11 @@ Regression tables often contain multiple regressions:
 
 .pull-left[
 ```{r, echo = F, results = "asis"}
-stargazer(lm(birth_weight ~ household_income, data), 
-                      lm(birth_weight ~ household_income + Sex, data), 
-                      type = "html", keep.stat = c("n"), 
-                      covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
-                      dep.var.labels = "Birth weight")
+list(lm(birth_weight ~ household_income, data), 
+     lm(birth_weight ~ household_income + Sex, data)) %>%
+  stargazer(type = "html", keep.stat = c("n"), 
+            covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
+            dep.var.labels = "Birth weight")
 ```
 ]
 
@@ -1307,11 +1307,11 @@ It makes it easy to compare the different models:
 
 .pull-left[
 ```{r, echo = F, results = "asis"}
-stargazer(lm(birth_weight ~ household_income, data), 
-                      lm(birth_weight ~ household_income + Sex, data), 
-                      type = "html", keep.stat = c("n"), 
-                      covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
-                      dep.var.labels = "Birth weight")
+list(lm(birth_weight ~ household_income, data), 
+     lm(birth_weight ~ household_income + Sex, data)) %>%
+  stargazer(type = "html", keep.stat = c("n"), 
+            covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
+            dep.var.labels = "Birth weight")
 ```
 ]
 
@@ -1439,18 +1439,18 @@ $$|\hat{\beta}| > 2\times\text{se}(\hat{\beta})$$
 
 .pull-left[
 ```{r, echo = F, results = "asis"}
-stargazer(lm(birth_weight ~ household_income, data), 
-                      lm(birth_weight ~ household_income + Sex, data), 
-                      type = "html", keep.stat = c("n"), 
+list(lm(birth_weight ~ household_income, data), 
+                      lm(birth_weight ~ household_income + Sex, data)) %>%
+  stargazer(type = "html", keep.stat = c("n"), 
                       covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
                       dep.var.labels = "Birth weight", report=('vc*p'))
 ```
 ]
 .pull-right[
 ```{r, echo = F, results = "asis"}
-stargazer(lm(birth_weight ~ household_income, data), 
-                      lm(birth_weight ~ household_income + Sex, data), 
-                      type = "html", keep.stat = c("n"), 
+list(lm(birth_weight ~ household_income, data), 
+                      lm(birth_weight ~ household_income + Sex, data)) %>%
+  stargazer(type = "html", keep.stat = c("n"), 
                       covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
                       dep.var.labels = "Birth weight", ci = T)
 ```
@@ -1862,9 +1862,9 @@ $$\text{Adjusted R}^2 = 1 - \frac{(1 - \text{R}^2)(n-1)}{n - \#\text{parameters}
 
 .pull-left[
 ```{r, echo = F, results = "asis"}
-stargazer(lm(birth_weight ~ household_income, data), 
-          lm(birth_weight ~ household_income + Sex, data), 
-          type = "html", keep.stat = c("n", "rsq"), 
+list(lm(birth_weight ~ household_income, data), 
+          lm(birth_weight ~ household_income + Sex, data)) %>%
+  stargazer(type = "html", keep.stat = c("n", "rsq"), 
           covariate.labels = c("Household income", "Girl (ref: Boy)", "Constant"), 
           dep.var.labels = "Birth weight", dep.var.caption = "")
 ```
