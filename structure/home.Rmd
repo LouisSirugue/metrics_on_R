@@ -85,7 +85,7 @@ xfun::file_string('astre.html')
 
 ```{r}
 s1 <- data.frame(a = c(" ", 
-                       paste("Lecture", 1:14)),
+                       paste("Lecture", 1:15)),
                  
                  b = c(" ",
                        "Introduction to R",
@@ -104,7 +104,9 @@ s1 <- data.frame(a = c(" ",
                        "Interpretation",
                        "Applications in academic research",
                        
-                       "Maps and geolocalized data"),
+                       "Maps and geolocalized data",
+                       
+                       "Final exam"),
                  
                  c = c("Slides", 
                        paste0("[html](", root, "lecture1/slides", dark, ".html) - [pdf](", root, "lecture1/slides", dark, ".pdf)"),
@@ -113,27 +115,28 @@ s1 <- data.frame(a = c(" ",
                        paste0("[html](", root, "lecture4/slides", dark, ".html) - [pdf](", root, "lecture4/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture5/slides", dark, ".html) - [pdf](", root, "lecture5/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture6/slides", dark, ".html) - [pdf](", root, "lecture6/slides", dark, ".pdf)"),
-                       paste0("[html](", root, "lecture7/correction.html) - [pdf](", root, "lecture7/correction.pdf)"),
+                       paste0("html - pdf"),
                        paste0("[html](", root, "lecture8/slides", dark, ".html) - [pdf](", root, "lecture8/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture9/slides", dark, ".html) - [pdf](", root, "lecture9/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture10/slides", dark, ".html) - [pdf](", root, "lecture10/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture11/slides", dark, ".html) - [pdf](", root, "lecture11/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture12/slides", dark, ".html) - [pdf](", root, "lecture12/slides", dark, ".pdf)"),
                        paste0("[html](", root, "lecture13/slides", dark, ".html) - [pdf](", root, "lecture13/slides", dark, ".pdf)"),
-                       paste0("[html](", root, "lecture14/slides", dark, ".html) - [pdf](", root, "lecture14/slides", dark, ".pdf)")),
+                       paste0("[html](", root, "lecture14/slides", dark, ".html) - [pdf](", root, "lecture14/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture15/exam.html) - [pdf](", root, "lecture15/exam.pdf)")),
                  
                  
                  d = c("Quizzes", 
-                       "Quiz 1",
-                       "Quiz 2",
-                       "Quiz 3",
+                       "[Quiz 1](https://sirugue.shinyapps.io/quiz1/)",
+                       "[Quiz 2](https://sirugue.shinyapps.io/quiz2/)",
+                       "[Quiz 3](https://sirugue.shinyapps.io/quiz3/)",
                        " ", " ", 
                        " ", " ", 
-                       "Quiz 4", 
-                       "Quiz 5", 
-                       "Quiz 6", 
+                       "[Quiz 4](https://sirugue.shinyapps.io/quiz4/)",
+                       "[Quiz 5](https://sirugue.shinyapps.io/quiz5/)",
+                       "[Quiz 6](https://sirugue.shinyapps.io/quiz6/)",
                        " ", " ", 
-                       " ", " "),
+                       " ", " ", " "),
                  
                  e = c("Data", 
                        paste0("[data](", root, "lecture1/data.zip)"),
@@ -149,7 +152,7 @@ s1 <- data.frame(a = c(" ",
                        " ",
                        " ",
                        paste0("[data](", root, "lecture13/data.zip)"),
-                       paste0("[data](", root, "lecture14/data.zip)")))
+                       paste0("[data](", root, "lecture14/data.zip)"), " "))
 
 kable(s1, col.names = NULL, align = "llcccc") %>%
   row_spec(1, font_size = 17)  %>%
@@ -160,7 +163,7 @@ kable(s1, col.names = NULL, align = "llcccc") %>%
   column_spec(5, width_max = "5em", width = "5em", width_min = "3em") %>%
   kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F) %>%
   pack_rows("Part 1: Introduction to R programming", 2, 8) %>%
-  pack_rows("\nPart 2: Introduction to Econometrics", 9, 15) 
+  pack_rows("\nPart 2: Introduction to Econometrics", 9, 16) 
 ```
 <br>
 ```{r}
