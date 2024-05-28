@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Final Exam">
+
+<title>Introduction to Econometrics &amp; R Programming</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="exam_files/libs/clipboard/clipboard.min.js"></script>
+<script src="exam_files/libs/quarto-html/quarto.js"></script>
+<script src="exam_files/libs/quarto-html/popper.min.js"></script>
+<script src="exam_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="exam_files/libs/quarto-html/anchor.min.js"></script>
+<link href="exam_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="exam_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="exam_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="exam_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="exam_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+</head><body>\usepackage{longtable}
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+
+
+
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to Econometrics &amp; R Programming</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Final Exam </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">CPES 2 - Fall 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="exercise-1-coin-flips-75" class="level1 page-columns page-full">
+<h1>Exercise 1: Coin flips (/7,5)</h1>
+<blockquote class="blockquote">
+<p>Consider two coins, both with a value on each side. Coin A has the value 0 on one side and the value 100 on the other. Coin B has the value 100 on one side and the value 200 on the other. Denote <span class="math inline">\(x\)</span> the outcome of flipping the two coins and summing the values of the visible sides. Consider that both coins are balanced, such that each of their side has a 50% chance of being drawn.<br>
+<em>On considère deux pièces, chacune ayant une valeur sur chaque face. La pièce A a la valeur 0 sur une face et 100 sur l’autre. La pièce B a la valeur 100 sur une face et 200 sur l’autre. On note <span class="math inline">\(x\)</span> la somme des faces visibles après le lancer des deux pièces. On considère que les pièces sont équilibrées, telles que chaque face a une probabilité d’être tirée égale à 50 %.</em></p>
+</blockquote>
+<section id="question-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
+<ol type="a">
+<li><p>Is the distribution of <span class="math inline">\(x\)</span> left-skewed, right-skewed, or symmetrical? Justify your answer.<br>
+<em>La distribution de <span class="math inline">\(x\)</span> est-elle étalée à gauche, à droite, ou symétrique ? Justifiez.</em></p></li>
+<li><p>Compute the first and second theoretical moments of the distribution of <span class="math inline">\(x\)</span>.<br>
+<em>Calculez le premier et le deuxième moment théorique de la distribution de <span class="math inline">\(x\)</span>.</em></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><span class="">/1</span><span class="">/2</span></div></section>
+<section id="question-2" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
+<div class="page-columns page-full"><p>You flip both coins 200 times and gather the outcome every time. The resulting distribution has a mean of 185 and a variance of 5,000. This mean seems a bit far from its expected value for the coins to actually be balanced, but can you reject this hypothesis at the 95% confidence level?<br>
+<em>Vous lancez les deux pièces 200 fois et documentez le résultat à chaque fois. La distribution qui en résulte a une moyenne de 185 et une variance de 5 000. Cette moyenne semble un peu loin de son espérance pour que les pièces soient effectivement équilibrées, mais pouvez-vous rejeter cette hypothèse au seuil de confiance de 95 % ?</em></p><div class="no-row-height column-margin column-container"><span class="">/2</span></div></div>
+</section>
+<section id="question-3" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
+<blockquote class="blockquote">
+<p>You gathered the outcome of each coin flip in a <code>csv</code> file that you import in R as follows:<br>
+<em>Vous avez documenté le résultat de chaque tirage dans un fichier <code>csv</code> que vous importez ainsi :</em></p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>flips <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"C:/User/data/flips.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(flips)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   201 obs. of  1 variable:
+ $ x: num  300 200 100 100 300 100 100 200 200 100 ...</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>When trying to compute the mean, you obtain the following outcome:<br>
+<em>Lorsque vous tentez de calculer la moyenne, vous obtenez le résultat suivant :</em></p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(flips<span class="sc">$</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<div class="page-columns page-full"><p>What is the problem and where does it seem to come from?<br>
+<em>Quel est le problème et d’où semble-t’il venir ?</em></p><div class="no-row-height column-margin column-container"><span class="">/1,5</span></div></div>
+</section>
+<section id="question-4" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
+<blockquote class="blockquote">
+<p>You then run the following code to compute descriptive statistics on the variable but you obtain the following error.<br>
+<em>Vous exécutez ensuite le code suivant pour calculer des statistiques descriptives mais vous obtenez l’erreur suivante.</em></p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flips <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x), </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(x), </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>Error in flips %&gt;% summarise(mean = mean(x), median = median(x), sd = sd(x)) :    could not find function "%&gt;%"</code></p>
+<div class="page-columns page-full"><p>How would you solve this issue?<br>
+<em>Comment régleriez-vous ce problème ?</em></p><div class="no-row-height column-margin column-container"><span class="">/1</span></div></div>
+</section>
+</section>
+<section id="exercise-2-intergenerational-income-mobility-125" class="level1 page-columns page-full">
+<h1>Exercise 2: Intergenerational income mobility (/12,5)</h1>
+<blockquote class="blockquote">
+<p>In Economics, the study of intergenerational income mobility generally consists in characterizing the joint distribution of individuals’ income and the income of their parents. To do so, it is common to rank individuals from those who earn the lowest incomes to those who earn the highest incomes, and to divide this income distribution in 100 groups of 1% of the population. These groups are called <em>percentile income ranks</em>. Denote <span class="math inline">\(p^p\)</span> the percentile rank of parents in their income distribution, from 1 to 100, and <span class="math inline">\(p^c\)</span> the percentile rank attained by their children once they are adults, from 1 to 100. One way to measure intergenerational income mobility is to estimate the following regression:<br>
+<em>En économie, l’étude de la mobilité intergénérationelle consiste généralement en la caractéristation de la distribution jointe entre le revenu des individus et le revenu de leurs parents. Pour ce faire, il est commun d’ordonner les individus de celui dont les revenus sont les plus faibles à celui dont les revenus sont les plus élevés, et de diviser cette distribution des revenus en 100 groupes de 1 % de la population. Ces groupes peuvent être considérés comme des rangs en centiles de revenus. On note <span class="math inline">\(p^p\)</span> le rang en centile des parents dans leur distribution des revenus, de 1 à 100, et <span class="math inline">\(p^c\)</span> le rang en centile atteint par leurs enfants à l’âge adulte, de 1 à 100. Une façon de mesurer la mobilité intergénérationnelle de revenus est d’estimer la régression suivante :</em> <span class="math display">\[p^c_i = \alpha + \beta\times p^p_i+\varepsilon_i\]</span></p>
+</blockquote>
+<section id="question-1-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-1-1">Question 1</h2>
+<ol type="a">
+<li><p>Using the income tax records of more than 40 million individuals in the United States, Chetty et al.&nbsp;(2014) estimated <span class="math inline">\(\beta\)</span> to be equal to 0.34. Interpret this coefficient.<br>
+<em>À partir des données fiscales de plus de 40 millions d’individus aux États-Unis, Chetty et al.&nbsp;(2014) ont estimé la valeur de <span class="math inline">\(\beta\)</span> à 0,34. Interprétez ce coefficient.</em></p></li>
+<li><p>Using the same data, it can be shown that <span class="math inline">\(Cor(p^p, p^c)\)</span> is also equal to 0.34. Why is this not a coincidence?<br>
+<em>À partir des mêmes données, on peut montrer que <span class="math inline">\(Cor(p^p, p^c)\)</span> vaut aussi 0,34. Pourquoi est-ce que cela n’est pas une coïncidence ?</em></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><span class="">/1</span><span class="">/1</span></div></section>
+<section id="question-2-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-2-1">Question 2</h2>
+<blockquote class="blockquote">
+<p>For each percentile rank <span class="math inline">\(p^p\)</span> of the parents income distribution, the following graph represents the average percentile income rank <span class="math inline">\(\bar{p}^c_p\)</span> attained by children, separately for France and the United States.<br>
+<em>Pour chaque rang en centile <span class="math inline">\(p^p\)</span> de la distribution des revenus des parents, le graphique suivant représente le rang moyen en centile <span class="math inline">\(\bar{p}^c_p\)</span> atteint par les enfants, séparément pour la France et les États-Unis.</em></p>
+</blockquote>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="exam_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<ol type="a">
+<li><p>Draw on the graph the line that would be obtained if the position of children in the income distribution was completely independent from that of their parents. Label this line “A”.<br>
+<em>Tracez sur le graphique la ligne qui serait obtenue si la position des enfants dans la distribution des revenus était complétement indépendante de celle de leurs parents. Notez cette ligne “A”.</em></p></li>
+<li><p>Draw on the graph the line that would be obtained if every child had the same position as their parents in the income distribution. Label this line “B”.<br>
+<em>Tracez sur le graphique la ligne qui serait obtenue si chaque enfant avait la même position que leurs parents dans la distribution des revenus. Notez cette ligne “B”.</em></p></li>
+<li><p>Do the two lines cross, and if so, at which coordinates?<br>
+<em>Les deux lignes se croisent-elles, et si oui, à quelles coordonnées ?</em></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><span class="">/0,5</span><span class="">/0,5</span><span class="">/1</span></div></section>
+<section id="question-3-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-3-1">Question 3</h2>
+<ol type="a">
+<li><p>Which country has the highest intergenerational income mobility in the bottom quartile? Motivate your answer.<br>
+<em>Quel pays a la mobilité intergénérationnelle la plus élevée dans le quartile le plus défavorisé ? Justifiez votre réponse.</em></p></li>
+<li><p>Which country has the highest intergenerational income mobility in the top 5%? Motivate your answer.<br>
+<em>Quel pays a la mobilité intergénérationnelle la plus élevée parmi le top 5 % ? Justifiez votre réponse.</em></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><span class="">/0,5</span><span class="">/0,5</span></div></section>
+<section id="question-4-1" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-4-1">Question 4</h2>
+<ol type="a">
+<li><p>Would regressing <span class="math inline">\(\bar{p}^c_p\)</span> on <span class="math inline">\(p^p\)</span> provide a higher <span class="math inline">\(R^2\)</span> on the US data or on the French data, and why?<br>
+<em>La régression de <span class="math inline">\(\bar{p}^c_p\)</span> sur <span class="math inline">\(p^p\)</span> produirait-elle un <span class="math inline">\(R^2\)</span> plus élevé sur les données françaises ou états-uniennes, et pourquoi ?</em></p></li>
+<li><p>Would regressing <span class="math inline">\(\bar{p}^c_p\)</span> on a third-order polynomial of <span class="math inline">\(p^p\)</span> provide a higher <span class="math inline">\(R^2\)</span> on the US data or on the French data, and why?<br>
+<em>La régression de <span class="math inline">\(\bar{p}^c_p\)</span> sur un polynome d’ordre 3 de <span class="math inline">\(p^p\)</span> produirait-elle un <span class="math inline">\(R^2\)</span> plus élevé sur les données françaises ou états-uniennes, et pourquoi ?</em></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><span class="">/1</span><span class="">/1</span></div></section>
+<section id="question-5" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="question-5">Question 5</h2>
+<blockquote class="blockquote">
+<p>The following graph shows the relationship between parents <em>ventile</em> income rank and the average <em>ventile</em> income rank of children, separately for those who grew up in Paris, in the Nord department, and in the Rhône department. Ventiles are used instead of centile because of sample size issues. Ventiles are computed based on the national income distribution. Table 2 in Annex provides the underlying values to this graph and additional information on the distribution of the variables <span class="math inline">\(p^p\)</span> and <span class="math inline">\(\bar{p}^c_p\)</span> in these three departments. Table 1 reports the regression results corresponding to this graph.<br>
+<em>Le graphique suivant représente la relation entre le rang en vingtile de revenus des parents et le rang moyen en vingtile de leurs enfants, séparément pour ceux qui ont grandi à Paris, dans le département du Nord, et dans le Rhône. Les vingtiles sont utilisés au lieu des centiles pour des raisons de taille d’échantillon. Les vingtiles sont calculés à partir de la distribution nationale des revenus. Le tableau 2 en Annexe documente les valeurs sous-jacentes à ce graphique ainsi que des informations supplémentaires sur la distribution des variables <span class="math inline">\(p^p\)</span> et <span class="math inline">\(\bar{p}^c_p\)</span> dans ces trois départements. Le tableau 1 reporte les résultats de régression correpondants à ce graphique.</em></p>
+</blockquote>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="exam_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+
+<table class="huxtable" data-quarto-disable-processing="true" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-7">
+<caption style="caption-side: top; text-align: center;"></caption><colgroup><col><col></colgroup><tbody><tr>
+<th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Child ventile</th></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Parents ventile</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.245 ***</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.027)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Department: Nord</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-2.870 ***</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.457)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Department: Rhône</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.865&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.457)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Parents ventile x Department: Nord</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.113 **&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.038)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Parents ventile x Department: Rhône</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.005&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.038)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Constant</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">8.665 ***</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.323)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">N</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">60&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">R2</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.882&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th colspan="2" style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"> *** p &lt; 0.001;  ** p &lt; 0.01;  * p &lt; 0.05.</th></tr>
+</tbody></table>
+
+</div>
+</div>
+<ol type="a">
+<li>Interpret the results associated with:<br>
+<em>Interprétez les résultats associés à :</em></li>
+</ol>
+<div class="no-row-height column-margin column-container"><span class="">/3</span></div><ul>
+<li>Department: Nord</li>
+<li>Parents ventile x Department: Nord</li>
+<li>Parents ventile x Department: Rhône</li>
+</ul>
+<ol start="2" type="a">
+<li><p>What is the ventile-ventile correlation in the Rhône department?<br>
+<em>Quelle est la corrélation vingtile-vingtile dans le département du Rhône ?</em></p></li>
+<li><p>Compare the expected ventile rank for children whose parents locate at the 10th ventile in these three departments.<br>
+<em>Comparez l’espérance du rang en vingtile pour les enfants dont les parents sont situés au 10ème vingtile dans ces trois départements.</em></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><span class="">/1</span><span class="">/1,5</span></div><div style="page-break-after: always;"></div>
+</section>
+<section id="annex" class="level2">
+<h2 class="anchored" data-anchor-id="annex">Annex</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Paris</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rhône</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Nord</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean child ventile</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">9.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Child ventile standard deviation</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">5.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean parents ventile</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: right;">8.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Parents ventile standard deviation</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">5.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 1</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">6.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 2</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">6.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 3</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">6.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 4</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">7.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 5</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">7.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 6</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">7.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 7</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">8.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 8</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">10.8</td>
+<td style="text-align: right;">9.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 9</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">9.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 10</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">9.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 11</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">10.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 12</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">10.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 13</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">9.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 14</td>
+<td style="text-align: right;">11.8</td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: right;">10.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 15</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">10.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 16</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">12.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 17</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">11.8</td>
+<td style="text-align: right;">12.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 18</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">12.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean ventile for children from v. 19</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">12.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean ventile for children from v. 20</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">13.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>NE PAS RETOURNER AVANT D’Y AVOIR ETE INVITE</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<p>&nbsp; &nbsp; &nbsp;</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Déroulé de l’examen</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>&nbsp; &nbsp;</p>
+<p>Durée de l’examen :</p>
+<p>&nbsp;</p>
+<ul style="margin-left:1cm;">
+<li>
+⠀⠀⠀• Sans tiers-temps : 1h15
+</li>
+<li>
+⠀⠀⠀• Avec tiers-temps : 1h40
+</li>
+</ul>
+<p>&nbsp; &nbsp;</p>
+<p>Matériel autorisé :</p>
+<p>&nbsp;</p>
+<ul style="margin-left:1cm;">
+<li>
+⠀⠀⠀• Crayon(s)
+</li>
+<li>
+⠀⠀⠀• Feuille de notes A4 recto manuscrite
+</li>
+</ul>
+<p>&nbsp; &nbsp;</p>
+<p>Copies :</p>
+<p>&nbsp;</p>
+<ul style="margin-left:1cm;">
+<li>
+⠀⠀⠀• Ecrire son nom sur chaque copie
+</li>
+<li>
+⠀⠀⠀• Lever la main si besoin de copie/brouillon supplémentaire
+</li>
+</ul>
+<p>&nbsp; &nbsp;</p>
+<p>Langue :</p>
+<p>&nbsp;</p>
+<ul style="margin-left:1cm;">
+<li>
+⠀⠀⠀• L’énoncé est en anglais et en français
+</li>
+<li>
+⠀⠀⠀• Rédiger les réponses soit en anglais soit en français
+</li>
+</ul>
+<p>&nbsp; &nbsp;</p>
+<p>Le barème est indicatif et peut être sujet à modifications.</p>
+<p>&nbsp; &nbsp;</p>
+<p>&nbsp; &nbsp;</p>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

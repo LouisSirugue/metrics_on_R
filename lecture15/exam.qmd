@@ -1,0 +1,301 @@
+---
+title: "Introduction to Econometrics & R Programming"
+author: "Final Exam"
+date: today
+date-format: "[CPES 2 - Fall 2023]"
+format: pdf
+editor: source
+editor_options: 
+  chunk_output_type: console
+geometry:
+  - margin=2.5cm
+header-includes: 
+  - \usepackage{longtable}
+---
+
+```{r, include = F}
+library(readxl)
+library(tidyverse)
+library(kableExtra)
+library(ggthemr)
+ggthemr("pale")
+options(knitr.kable.NA = '')
+```
+
+# Exercise 1: Coin flips (/7,5)
+
+> Consider two coins, both with a value on each side. Coin A has the value 0 on one side and the value 100 on the other. Coin B has the value 100 on one side and the value 200 on the other. Denote $x$ the outcome of flipping the two coins and summing the values of the visible sides. Consider that both coins are balanced, such that each of their side has a 50% chance of being drawn.  
+*On considère deux pièces, chacune ayant une valeur sur chaque face. La pièce A a la valeur 0 sur une face et 100 sur l'autre. La pièce B a la valeur 100 sur une face et 200 sur l'autre. On note $x$ la somme des faces visibles après le lancer des deux pièces. On considère que les pièces sont équilibrées, telles que chaque face a une probabilité d'être tirée égale à 50 %.*
+
+## Question 1
+
+a) Is the distribution of $x$ left-skewed, right-skewed, or symmetrical? Justify your answer.[/1]{.aside}  
+*La distribution de $x$ est-elle étalée à gauche, à droite, ou symétrique ? Justifiez.*
+
+
+b) Compute the first and second theoretical moments of the distribution of $x$.[/2]{.aside}  
+*Calculez le premier et le deuxième moment théorique de la distribution de $x$.*
+
+## Question 2
+
+You flip both coins 200 times and gather the outcome every time. The resulting distribution has a mean of 185 and a variance of 5,000. This mean seems a bit far from its expected value for the coins to actually be balanced, but can you reject this hypothesis at the 95% confidence level?[/2]{.aside}  
+*Vous lancez les deux pièces 200 fois et documentez le résultat à chaque fois. La distribution qui en résulte a une moyenne de 185 et une variance de 5 000. Cette moyenne semble un peu loin de son espérance pour que les pièces soient effectivement équilibrées, mais pouvez-vous rejeter cette hypothèse au seuil de confiance de 95 % ?*
+
+## Question 3
+
+> You gathered the outcome of each coin flip in a `csv` file that you import in R as follows:  
+*Vous avez documenté le résultat de chaque tirage dans un fichier `csv` que vous importez ainsi :*
+
+```{r, eval=F}
+flips <- read.csv("C:/User/data/flips.csv")
+str(flips)
+```
+```{r, echo = F}
+flips <- data.frame(x = c(sample(c(100, 200, 200, 300), 200, replace = T), NA)) 
+str(flips)
+```
+
+> When trying to compute the mean, you obtain the following outcome:  
+*Lorsque vous tentez de calculer la moyenne, vous obtenez le résultat suivant :*
+
+```{r}
+mean(flips$x)
+```
+
+What is the problem and where does it seem to come from?[/1,5]{.aside}  
+*Quel est le problème et d'où semble-t'il venir ?*
+
+## Question 4
+
+> You then run the following code to compute descriptive statistics on the variable but you obtain the following error.  
+*Vous exécutez ensuite le code suivant pour calculer des statistiques descriptives mais vous obtenez l'erreur suivante.*
+
+```{r, eval=F}
+flips %>% 
+  summarise(mean = mean(x), 
+            median = median(x), 
+            sd = sd(x))
+```
+
+`Error in flips %>% summarise(mean = mean(x), median = median(x), sd = sd(x)) : 
+  could not find function "%>%"`
+  
+How would you solve this issue?[/1]{.aside}  
+*Comment régleriez-vous ce problème ?*
+
+# Exercise 2: Intergenerational income mobility (/12,5)
+
+> In Economics, the study of intergenerational income mobility generally consists in characterizing the joint distribution of individuals' income and the income of their parents. To do so, it is common to rank individuals from those who earn the lowest incomes to those who earn the highest incomes, and to divide this income distribution in 100 groups of 1% of the population. These groups are called *percentile income ranks*. Denote $p^p$ the percentile rank of parents in their income distribution, from 1 to 100, and $p^c$ the percentile rank attained by their children once they are adults, from 1 to 100. One way to measure intergenerational income mobility is to estimate the following regression:  
+*En économie, l'étude de la mobilité intergénérationelle consiste généralement en la caractéristation de la distribution jointe entre le revenu des individus et le revenu de leurs parents. Pour ce faire, il est commun d'ordonner les individus de celui dont les revenus sont les plus faibles à celui dont les revenus sont les plus élevés, et de diviser cette distribution des revenus en 100 groupes de 1 % de la population. Ces groupes peuvent être considérés comme des rangs en centiles de revenus. On note $p^p$ le rang en centile des parents dans leur distribution des revenus, de 1 à 100, et $p^c$ le rang en centile atteint par leurs enfants à l'âge adulte, de 1 à 100. Une façon de mesurer la mobilité intergénérationnelle de revenus est d'estimer la régression suivante :*
+$$p^c_i = \alpha + \beta\times p^p_i+\varepsilon_i$$
+
+## Question 1
+
+a) Using the income tax records of more than 40 million individuals in the United States, Chetty et al. (2014) estimated $\beta$ to be equal to 0.34. Interpret this coefficient.[/1]{.aside}  
+*À partir des données fiscales de plus de 40 millions d'individus aux États-Unis, Chetty et al. (2014) ont estimé la valeur de $\beta$ à 0,34. Interprétez ce coefficient.*
+
+b) Using the same data, it can be shown that $Cor(p^p, p^c)$ is also equal to 0.34. Why is this not a coincidence?[/1]{.aside}  
+*À partir des mêmes données, on peut montrer que $Cor(p^p, p^c)$ vaut aussi 0,34. Pourquoi est-ce que cela n'est pas une coïncidence ?*
+
+## Question 2
+
+> For each percentile rank $p^p$ of the parents income distribution, the following graph represents the average percentile income rank $\bar{p}^c_p$ attained by children, separately for France and the United States.  
+*Pour chaque rang en centile $p^p$ de la distribution des revenus des parents, le graphique suivant représente le rang moyen en centile $\bar{p}^c_p$ atteint par les enfants, séparément pour la France et les États-Unis.*
+
+```{r, echo = F, fig.align = 'center'}
+igm <- read_xlsx("Statistics_By_Parent_or_child_Income_Percentile.xlsx", sheet = 2) %>%
+  select(family_rank = par_bin, child_us = kid_fam_bin) %>%
+  full_join(read.csv("fig3B_cef_rank_boot.csv") %>%
+              select(family_rank, child_fr = child_rank),
+            by = "family_rank")
+
+ggplot(igm %>% pivot_longer(-family_rank, names_to = "country", values_to = "child") %>%
+         mutate(Country = ifelse(country == "child_fr", "France", "United-States")),
+       aes(x = family_rank, y = child, color = Country, shape = Country)) + 
+  geom_point() + ylab("Child average percentile income rank") +
+  scale_x_continuous(name = "Parents percentile income rank", 
+                     limits = c(1, 100), breaks = c(1, 10*1:10))
+```
+
+\newpage
+
+a) Draw on the graph the line that would be obtained if the position of children in the income distribution was completely independent from that of their parents. Label this line "A".[/0,5]{.aside}  
+*Tracez sur le graphique la ligne qui serait obtenue si la position des enfants dans la distribution des revenus était complétement indépendante de celle de leurs parents. Notez cette ligne "A".*
+
+b) Draw on the graph the line that would be obtained if every child had the same position as their parents in the income distribution. Label this line "B".[/0,5]{.aside}  
+*Tracez sur le graphique la ligne qui serait obtenue si chaque enfant avait la même position que leurs parents dans la distribution des revenus. Notez cette ligne "B".*
+
+c) Do the two lines cross, and if so, at which coordinates?[/1]{.aside}  
+*Les deux lignes se croisent-elles, et si oui, à quelles coordonnées ?*
+
+## Question 3
+
+a) Which country has the highest intergenerational income mobility in the bottom quartile? Motivate your answer.[/0,5]{.aside}  
+*Quel pays a la mobilité intergénérationnelle la plus élevée dans le quartile le plus défavorisé ? Justifiez votre réponse.*
+
+b) Which country has the highest intergenerational income mobility in the top 5%? Motivate your answer.[/0,5]{.aside}  
+*Quel pays a la mobilité intergénérationnelle la plus élevée parmi le top 5 % ? Justifiez votre réponse.*
+
+## Question 4
+
+a) Would regressing $\bar{p}^c_p$ on $p^p$ provide a higher $R^2$ on the US data or on the French data, and why?[/1]{.aside}  
+*La régression de $\bar{p}^c_p$ sur $p^p$ produirait-elle un $R^2$ plus élevé sur les données françaises ou états-uniennes, et pourquoi ?*
+
+b) Would regressing $\bar{p}^c_p$ on a third-order polynomial of $p^p$ provide a higher $R^2$ on the US data or on the French data, and why?[/1]{.aside}  
+*La régression de $\bar{p}^c_p$ sur un polynome d'ordre 3 de $p^p$ produirait-elle un $R^2$ plus élevé sur les données françaises ou états-uniennes, et pourquoi ?*
+
+## Question 5
+
+> The following graph shows the relationship between parents *ventile* income rank and the average *ventile* income rank of children, separately for those who grew up in Paris, in the Nord department, and in the Rhône department. Ventiles are used instead of centile because of sample size issues. Ventiles are computed based on the national income distribution. Table 2 in Annex provides the underlying values to this graph and additional information on the distribution of the variables $p^p$ and $\bar{p}^c_p$ in these three departments. Table 1 reports the regression results corresponding to this graph.  
+*Le graphique suivant représente la relation entre le rang en vingtile de revenus des parents et le rang moyen en vingtile de leurs enfants, séparément pour ceux qui ont grandi à Paris, dans le département du Nord, et dans le Rhône. Les vingtiles sont utilisés au lieu des centiles pour des raisons de taille d'échantillon. Les vingtiles sont calculés à partir de la distribution nationale des revenus. Le tableau 2 en Annexe documente les valeurs sous-jacentes à ce graphique ainsi que des informations supplémentaires sur la distribution des variables $p^p$ et $\bar{p}^c_p$ dans ces trois départements. Le tableau 1 reporte les résultats de régression correpondants à ce graphique.*
+
+```{r, echo = F, message = F, warning = F, fig.align = 'center', fig.height=3.25}
+dep <- read.csv("figE10_local_rank_cef.csv")
+dep3 <- dep %>% 
+  filter(dep %in% c(59, 75, 69)) %>%
+  mutate(dep = case_when(dep == 75 ~ "Paris",
+                         dep == 59 ~ "Nord",
+                         dep == 69 ~ "Rhône"),
+         dep = relevel(factor(dep), "Paris"),
+         child_rank = child_rank/5)
+
+ggplot(dep3 %>% rename(Department = dep), 
+       aes(x = family_ventile, y =child_rank, 
+           color = Department, shape = Department)) + 
+  geom_point() + geom_smooth(method = "lm", se = F) + 
+  scale_y_continuous(name = "Child average ventile income rank", 
+                     limits = c(1, 20), breaks = c(1, seq(5, 20, 5))) + 
+  scale_x_continuous(name = "Parents average ventile income rank", 
+                     limits = c(1, 20), breaks = c(1, seq(5, 20, 5)))
+
+library(huxtable)
+huxreg("Child ventile" = lm(child_rank ~ family_ventile*dep, dep3),
+       statistics = c(N = "nobs", R2 = "r.squared"),
+       coefs = c("Parents ventile" = "family_ventile",
+                 "Department: Nord" = "depNord",
+                 "Department: Rhône" = "depRhône",
+                 "Parents ventile x Department: Nord" = "family_ventile:depNord",
+                 "Parents ventile x Department: Rhône" = "family_ventile:depRhône",
+                 "Constant" = "(Intercept)")) %>%
+  set_caption("")
+```
+
+
+a) Interpret the results associated with:[/3]{.aside}  
+*Interprétez les résultats associés à :*
+ * Department: Nord
+ * Parents ventile x Department: Nord
+ * Parents ventile x Department: Rhône
+
+b) What is the ventile-ventile correlation in the Rhône department?[/1]{.aside}  
+*Quelle est la corrélation vingtile-vingtile dans le département du Rhône ?*
+
+c) Compare the expected ventile rank for children whose parents locate at the 10th ventile in these three departments.[/1,5]{.aside}  
+*Comparez l'espérance du rang en vingtile pour les enfants dont les parents sont situés au 10ème vingtile dans ces trois départements.*
+
+\newpage
+
+## Annex
+
+```{r, echo = F}
+rbind(tribble(~variable, ~Paris, ~`Rhône`, ~Nord,
+              "", NA, NA, NA,
+              "Mean child ventile", 12, 10.6, 9.16,
+              "Child ventile standard deviation", 4.8, 5, 5.3,
+              "Mean parents ventile", 13.8, 11.4, 8.2,
+              "Parents ventile standard deviation", 3.7, 4, 5.5),
+      dep3 %>% 
+        select(dep, variable = family_ventile, child_rank) %>% 
+        pivot_wider(names_from = "dep", values_from = "child_rank") %>%
+        arrange(variable) %>%
+        mutate(variable = paste("Mean ventile for children from v.", variable)),
+      tribble(~variable, ~Paris, ~`Rhône`, ~Nord,
+              "", NA, NA, NA)) %>%
+  rename(` ` = variable) %>%
+  kable(booktabs = T, digits = 1, caption = "", longtable = T)
+```
+
+\newpage
+\newgeometry{top = 5cm, left = 3.5cm, right = 3.5cm, bottom = 5cm}
+\thispagestyle{empty}
+\large
+
+::: {.callout-warning}
+## **NE PAS RETOURNER AVANT D’Y AVOIR ETE INVITE**
+:::
+
+\ 
+\ 
+\ 
+
+::: {.callout-note}
+## **Déroulé de l’examen**  
+
+\ 
+\ 
+
+Durée de l'examen :  
+
+\ 
+
+<ul style = "margin-left:1cm;">
+  <li>⠀⠀⠀• Sans tiers-temps : 1h15</li>
+  <li>⠀⠀⠀• Avec tiers-temps : 1h40</li>
+</ul>
+
+\ 
+\ 
+
+Matériel autorisé :
+
+\ 
+
+<ul style = "margin-left:1cm;">
+  <li>⠀⠀⠀• Crayon(s)</li>
+  <li>⠀⠀⠀• Feuille de notes A4 recto manuscrite</li>
+</ul> 
+
+\ 
+\ 
+
+Copies :
+
+\ 
+
+<ul style = "margin-left:1cm;">
+  <li>⠀⠀⠀• Ecrire son nom sur chaque copie</li>
+  <li>⠀⠀⠀• Lever la main si besoin de copie/brouillon supplémentaire</li>
+</ul> 
+
+\ 
+\ 
+
+Langue :
+
+\ 
+
+<ul style = "margin-left:1cm;">
+  <li>⠀⠀⠀• L’énoncé est en anglais et en français</li>
+  <li>⠀⠀⠀• Rédiger les réponses soit en anglais soit en français</li>
+</ul>
+
+\ 
+\ 
+
+Le barème est indicatif et peut être sujet à modifications.
+
+\ 
+\ 
+
+\begin{center}
+  Toute sortie est définitive.
+\end{center}
+\begin{center}
+  Le sujet est à rendre dans la copie double.
+\end{center}
+
+\ 
+\ 
+
+:::
+
