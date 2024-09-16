@@ -1,6 +1,6 @@
 ## Introduction to Econometrics & Programming
 
-This repository hosts all the source code and meterial used to create the content of the course *Introduction to Econometrics & Programming* taught to CPES 2 undergraduate students at PSL university. 
+This repository hosts all the source code and meterial used to create the content of the course *Introduction to Econometrics & R Programming* taught to CPES 2 undergraduate students at PSL university. 
 
 The compiled version of the course is accessible at this webpage: [https://louissirugue.github.io/metrics_on_R/home.html](https://louissirugue.github.io/metrics_on_R/home.html).
 
