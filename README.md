@@ -1,4 +1,4 @@
-## Introduction to Econometrics & Programming
+## Introduction to Econometrics & R Programming
 
 This repository hosts all the source code and meterial used to create the content of the course *Introduction to Econometrics & R Programming* taught to CPES 2 undergraduate students at PSL university. 
 
